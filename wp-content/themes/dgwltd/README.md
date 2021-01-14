@@ -1,4 +1,4 @@
-# dgwltd Wordpress theme
+# DGW.ltd Wordpress theme
 
 ## Requirements
 
