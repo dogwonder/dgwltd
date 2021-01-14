@@ -91,7 +91,7 @@ if(is_search() || is_404()) {
 			<div class="cookie-notice__content">
 			<p class="cookie-notice__text">
 				<?php
-				$cookieUrl = '<a href="' . esc_url(home_url('/cookies/')) . '">' . __('our cookie statement', 'dgwltd') . '</a>';
+				$cookieUrl = '<a href="' . esc_url(home_url('/cookie-policy/')) . '">' . __('our cookie statement', 'dgwltd') . '</a>';
 				printf(
 					esc_html__('We use cookies to give you the best experience, read %s.', 'dgwltd'),
 					$cookieUrl
