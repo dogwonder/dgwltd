@@ -33,7 +33,3 @@ $govuk-font-family-gds-transport: "Helvetica Neue", Helvetica, Arial, sans-serif
 ## Gallery
 
 `.dgwltd-gallery` to make a Wordpress gallery block into a modal one (and make sure link to settings are large)
-
-## PDFs
-
-`wp-content/uploads/PDF_EXTENDED_TEMPLATES`
