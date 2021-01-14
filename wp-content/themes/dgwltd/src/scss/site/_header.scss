@@ -1,0 +1,392 @@
+//Vars
+$nav-height: 64px;
+
+//Masthead
+.dgwltd-masthead {
+  margin: 0;
+  padding: 0;
+  // position: sticky;
+  // top: 0;
+  z-index: 9999;
+  background-color: var(--background);
+  .logo {
+    fill: var(--highlight);
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.fixed-header {
+  .dgwltd-masthead {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    background-color: transparent;
+  }
+  .entry-content .dgwltd-block:first-of-type {
+    padding-top: 78px !important;
+  }
+}
+
+.admin-bar.fixed-header {
+  .dgwltd-masthead {
+    top:32px;
+  }
+}
+
+
+
+.dgwltd-masthead-container {
+  @include mq($until: desktop) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    .dgwltd-masthead__logo {}
+    .dgwltd-nav {}
+    .dgwltd-masthead__cta {
+      grid-column: 1 / span 2;
+      text-align: center;
+      margin:var(--gap-20) auto;
+    }
+  }
+  display: flex;
+  flex-direction: row;
+  padding: var(--gap-20);
+  justify-content: space-between;
+  max-width: var(--contentWidth);
+  @include mq($from: desktop) {
+    min-height: auto;  
+  }
+  align-items: center;
+  position: relative;
+  width: 100%;
+
+  //Logo
+  .dgwltd-masthead__logo {
+    line-height: 1;
+    > a {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      &:visited {
+        color: inherit;
+      }
+      &:focus {
+        box-shadow: none;
+        background-color: white;
+      }
+    }
+
+    svg {
+      width: 60px;
+      height: auto;
+      fill: black;
+    }
+  }
+
+  //CTA
+  .dgwltd-masthead__cta {
+    .dgwltd-button {
+      margin:0;
+    }
+  }
+
+
+}
+
+.govuk-skip-link:link, 
+.govuk-skip-link:focus {
+  color: black !important;
+  text-decoration: underline;
+}
+
+.main-navigation {
+  z-index: $z-low;
+  display: flex;
+  
+  .dgwltd-menu {
+    margin:0;
+    padding: 0;
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+
+    //Keyboard access on for desktop
+    .button-show-subnav {
+      display: none;
+      -webkit-appearance: none;
+      background-color: transparent;
+      border: 0;
+      padding: 0;
+      position: relative;
+      text-align: center;
+      @include mq($from: desktop) {
+        display: block;
+        width: 20px;
+        height: 20px;
+        margin-right: var(--gap-10);
+      }
+      &:after {
+        display: block;
+        position: absolute;
+        content: "";
+        top: 0;
+        width: 100%;
+        color: var(--highlight);
+        @include mq($from: desktop) {
+          top: 6px;
+          right: 5px;
+          @include govuk-shape-arrow(
+            $direction: down,
+            $base: 8px,
+            $display: inline-block
+          );
+        }
+      }
+      &:hover:after {
+        @include mq($from: desktop) {
+          @include govuk-shape-arrow(
+            $direction: up,
+            $base: 8px,
+            $display: inline-block
+          );
+        }
+      }
+    }
+
+    .menu-item {
+      list-style-type: none;
+      // font-size: 1rem;
+      // line-height: $nav-height; //Same as header
+      @include rhythm(18, 64);
+      text-align: left;
+      position: relative;
+      margin: 0;
+      padding: 0;
+      &:last-of-type {
+        margin: 0;
+      }
+      a {
+        display: block;
+        text-decoration: none;
+        padding:var(--gap-15) var(--gap-20);
+        @include mq($from: desktop) {
+          padding:0 8px;
+          margin:0;
+        }
+        display: inline-block;
+        color: var(--highlight);
+        &:hover {
+          text-decoration: underline;
+        }
+        &:focus {
+          text-decoration: none;
+          border: 0;
+        }
+      }
+
+      // &.current-menu-ancestor,
+      &.current-menu-item {
+        > a {
+          color: var(--highlight);
+          text-decoration: underline;
+          // font-weight: 700;
+          &:focus {
+            text-decoration: none;
+          }
+        }
+      }
+
+      &.menu-item-has-children {
+        @include mq($from: desktop) {
+          display: flex;
+          align-items: center;
+          > a {
+            padding-right:0;
+            margin-right:0;
+          }
+        }
+      }
+
+      //Hover/Click method
+      // &.menu-item-has-children:focus-within,
+      // &.menu-item-has-children:hover {
+      //   border-color: var(--border);
+      //   .sub-menu {
+      //     display: block;
+      //   }
+      // }
+
+      //With JS - see a11yMenu()
+      &.menu-item-has-children a:hover {
+        ~ .sub-menu {
+          display: block;
+        }
+      }
+
+      &.menu-item-has-children.menu-open {
+        .sub-menu {
+          display: block;
+        }
+        //a11y menu for opening menu via button
+        .button-show-subnav {
+          &:after {
+            @include mq($from: desktop) {
+              top: 6px;
+              @include govuk-shape-arrow(
+                $direction: up,
+                $base: 8px,
+                $display: inline-block
+              );
+            }
+          }
+        }
+      }
+
+    }
+
+    //Sub menu
+    .sub-menu {
+      display: block;
+      background-color: var(--alt);
+      width: 100%;
+      @include mq($from: desktop) {
+        display: none;
+        z-index: $z-high;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        width: 300px;
+        border: 0;
+      }
+      .menu-item {
+        padding: 0;
+        margin: 0;
+        line-height: 1;
+        > a {
+          display: block;
+          margin:0;
+          padding: var(--gap-10) var(--gap-20);
+          @include mq($from: desktop) {
+            padding: var(--gap-10);
+          }
+        }
+      }
+    }
+
+    &.nav-show {
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      margin: 0;
+      z-index: 9998;
+      padding: var(--gap-20) 0 0;
+      font-size: var(--size-21);
+      background-color: rgba(26,30,30,.9);
+      backdrop-filter: blur(5px) contrast(.8);
+      width: 100%;
+      height: 100vh;
+      max-width: 100%;
+      .menu-item {
+        margin: 0;
+        padding: 0;
+        line-height: 1;
+        @include rhythm(21, 21);
+        > a {
+          display: block;
+          color: var(--alt);
+        }
+        &.menu-item-has-children {
+          @include mq($from: desktop) {
+            display: flex;
+          }
+        }
+      }
+      .sub-menu {
+        background-color: transparent;
+        margin-bottom: var(--gap-20);
+        .menu-item {
+          margin: 0;
+          @include rhythm(17, 17);
+        }
+      }
+    }
+  }
+}
+
+
+//Navigation Toggle
+.nav-toggle {
+  margin: 0 0 0 auto;
+  padding: 0;
+  display: none;
+  color: var(--alt);
+  box-shadow: none;
+  font-size: var(--size-19);
+  font-weight: bold;
+  background-color: transparent;
+  border:0;
+  width: 44px;
+  height: 44px;
+  &:hover {
+    background-color: transparent;
+  }
+  svg {
+    fill: var(--highlight);
+    width: 27px;
+    height: 27px;
+    margin-left:auto;
+  }
+  .open {
+    display: block;
+  }
+  .close {
+    display: none;
+    stroke: white;
+    stroke-width: 50;
+  }
+  &.nav-open {
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+    margin: 0;
+    z-index: 9999;
+  }
+}
+
+//JS progressive enhancement
+.js-enabled {
+  .main-navigation {
+    .dgwltd-menu {
+      @include mq($until: desktop) {
+        display: none;
+      }
+    }
+  }
+  .masthead-is-open {
+    .main-navigation {
+      .dgwltd-menu {
+        display: block;
+      }
+    } 
+  }
+  .nav-toggle {
+    @include mq($until: desktop) {
+      display: block;
+    }
+  }
+}
+
+//If masthead open
+.masthead-is-open {
+  .dgwltd-masthead-container {
+    .nav-toggle {
+      .open {display: none;}
+      .close {display: block;}
+    }
+  }
+}

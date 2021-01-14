@@ -1,0 +1,83 @@
+/*
+* Styles for labels and legends, including making legends look like labels.
+*
+* Used in the theme.css front-end stylesheet and admin.css.
+*/
+
+.gform_wrapper {
+
+	.gfield_label {
+		font-size: 1rem;
+		font-weight: 700;
+		margin-bottom: 0.5rem;
+		display: inline-block;
+		padding: 0;
+	}
+
+	.ginput_complex label,
+	.gform_fileupload_rules,
+	.gfield_header_item {
+		font-size: 0.9375rem;
+		padding-top: 0.3125rem;
+	}
+
+	fieldset,
+	legend {
+		background: none;
+	}
+
+	fieldset {
+		margin: 0;
+	}
+
+	legend {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	&.left_label,
+	&.right_label {
+
+		fieldset.gfield,
+		fieldset.gfield {
+			padding: 1rem 1rem 1rem 30%;
+
+			.ginput_container:not(.ginput_container_time),
+			.gfield_description,
+			.ginput_container:not(.ginput_container_time),
+			.gfield_description {
+				width: 100%;
+			}
+		}
+
+		legend.gfield_label {
+			left: 0;
+		}
+
+		.gfield:not(.gsection):not(.gfield_html):not(fieldset),
+		.gfield:not(.gsection):not(.gfield_html):not(fieldset) {
+			justify-content: flex-start;
+		}
+
+		.gfield_html.gfield_html_formatted,
+		.gfield_html.gfield_html_formatted {
+			display: flex;
+		}
+
+		.gfield.gfield_html:not(.gfield_html_formatted) .gf-html-container,
+		.gfield.gfield_html:not(.gfield_html_formatted) .gf-html-container {
+			width: 100%;
+		}
+	}
+
+	&.right_label {
+		legend.gfield_label {
+			text-align: right;
+		}
+	}
+
+	&:not(.top_label) .ginput_container.ginput_single_email {
+		margin-left: 0;
+	}
+
+}

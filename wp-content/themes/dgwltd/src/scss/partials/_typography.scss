@@ -1,0 +1,171 @@
+html { font-family: var(--sans), Helvetica, Arial, sans-serif; }
+
+/*
+line height to at least 1½ × the font size;
+space below paragraphs to at least 2 × the font size;
+letter spacing to at least 0.12 × the font size;
+word spacing to at least 0.16 × the font size.
+from https://www.w3.org/TR/WCAG21/#text-spacing
+*/
+
+body {
+  @include rhythm(18, 21);
+  @include mq($from: tablet) {
+    @include rhythm(22, 27);
+  }
+  font-weight: normal;
+  -webkit-font-smoothing: antialiased;
+  background: var(--background);
+  color: var(--text-color);
+  text-align: left;
+}
+
+//Typography
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--highlight);
+  font-weight: bold;
+  line-height: 1;
+  margin: 0 0 var(--gap-15);
+  letter-spacing: 0.1px;
+}
+
+//Usage @extend %dgwltd-heading-m;
+
+//Override typeface
+.govuk-heading-xl,
+.govuk-heading-l,
+.govuk-heading-m,
+.govuk-heading-s {
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: var(--gap-10);
+}
+
+%dgwltd-heading-xl,
+.dgwltd-heading-xl,
+h1 {
+  font-weight: bold;
+  @include rhythm(32, 35);
+  @include mq($from: tablet) {
+    @include rhythm(48, 50);
+    letter-spacing: -1px;
+  }
+  margin-bottom: var(--gap-20);
+}
+
+%dgwltd-heading-l,
+.dgwltd-heading-l,
+h2 {
+  font-weight: bold;
+  @include rhythm(24, 30);
+  @include mq($from: tablet) {
+    @include rhythm(32, 35);
+    letter-spacing: -1px;
+  }
+  margin-bottom: var(--gap-10);
+}
+
+%dgwltd-heading-m,
+.dgwltd-heading-m,
+h3 {
+  font-weight: bold;
+  @include rhythm(22, 27);
+  @include mq($from: tablet) {
+    @include rhythm(24, 30);
+  }
+  margin-bottom: var(--gap-10);
+}
+
+%dgwltd-heading-s,
+.dgwltd-heading-s,
+h4 {
+  font-weight: bold;
+  @include rhythm(18, 21);
+  @include mq($from: tablet) {
+    @include rhythm(22, 27);
+  }
+  margin-bottom: var(--gap-10);
+}
+
+%dgwltd-heading-xs,
+.dgwltd-heading-xs,
+h5,
+h6 {
+  font-weight: bold;
+  @include rhythm(14, 16);
+  @include mq($from: tablet) {
+    @include rhythm(16, 20);
+  }
+}
+
+%dgwltd-body,
+.dgwltd-body, 
+.govuk-body, 
+p {
+  font-weight: normal;
+  font-family: var(--sans);
+  @include rhythm(16, 24);
+  @include mq($from: tablet) {
+    @include rhythm(19, 27);
+  }
+}
+
+%dgwltd-body-m,
+.dgwltd-body-m {
+  @include rhythm(22, 27);
+  @include mq($from: tablet) {
+    @include rhythm(26, 32);
+  }
+  margin-bottom: var(--gap-20);
+}
+
+%dgwltd-body-l,
+.dgwltd-body-l {
+  @include rhythm(24, 30);
+  @include mq($from: tablet) {
+    @include rhythm(36, 40);
+  }
+  margin-bottom: var(--gap-20);
+}
+
+%dgwltd-body-s,
+.dgwltd-body-s {
+  @include rhythm(16, 20);
+  @include mq($from: tablet) {
+    @include rhythm(18, 21);
+  }
+}
+
+
+ul,
+ol {
+  padding-left: 0;
+  list-style-position: outside;
+}
+
+blockquote p {
+  hanging-punctuation: first;
+  text-indent: -5px;
+}
+
+//reset button link style
+.not-a-button,
+%not-a-button {
+  border:0;
+  padding:0;
+  font-size:inherit;
+  text-decoration: underline;
+  &:hover {
+      text-decoration: none;
+  }
+  @include rhythm(18, 21);
+  @include mq($from: tablet) {
+      @include rhythm(22, 27);
+  }
+}
+

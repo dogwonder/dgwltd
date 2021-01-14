@@ -1,0 +1,92 @@
+/* -----------------------------------------------------------------------------
+ *
+ * Components: Errors and Warnings
+ *
+ * ----------------------------------------------------------------------------- */
+
+.gf_editor_error {
+	align-items: center;
+	background-color: var( --c-white );
+	border-left: 4px solid var( --c-error );
+	box-sizing: border-box;
+	color: var( --c-text );
+	display: flex;
+	font-size: var(--t-font-size-base);
+	justify-content: space-between;
+	margin: 0 0 0.3125rem;
+	min-height: 3.75rem;
+	padding: 0.375rem 0.75rem;
+	position: fixed;
+	width: calc(100% - 33.125rem);
+}
+
+.folded .gf_editor_error {
+	width: calc(100% - 25.375rem);
+}
+
+.gf_editor_error .error_dismiss svg {
+	fill: currentColor;
+	outline: none;
+}
+
+.gf_editor_error .error_dismiss:hover{
+	color: #1E1E1E;
+}
+
+.gf_editor_error .error_dismiss{
+	color: #6c7781;
+	cursor: pointer;
+	background-color: transparent;
+	border: none;
+	outline: none;
+}
+
+.field_setting.error input {
+	border: 1px solid var(--c-error);
+	color: var(--c-error);
+
+	&:focus {
+		padding: 0 0.75rem;
+	}
+
+}
+
+.field_setting.accessibility_warning {
+	align-items: center;
+	border: 1.5px solid var( --c-yellow );
+	border-radius: 3px;
+	display: flex;
+	line-height: 1em;
+	margin: 0.875rem 0;
+	padding: 0.875rem;
+}
+
+div.field_setting.field_error {
+	align-items: center;
+	background-color: var(--c-background-red);
+	border: 1.5px solid var(--c-red);
+	border-radius: 3px;
+	color: var(--c-red);
+	display: flex;
+	margin: 1rem 0;
+	line-height: 1em;
+	padding: 0.875rem;
+	position: relative;
+}
+
+.field_setting.field_error p {
+	color: var(--c-error);
+	margin: 1rem 0;
+}
+
+.field_setting.accessibility_warning svg, .field_setting.field_error svg {
+	margin-right: 0.375rem;
+	min-width: 1.5rem;
+}
+
+.field_setting.accessibility_warning a,
+.field_setting.accessibility_warning a:hover,
+.field_setting.field_error a,
+.field_setting.field_error a:hover {
+	color: #191E23;
+}

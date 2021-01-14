@@ -1,0 +1,54 @@
+/*!
+Theme Name: dgwltd
+Theme URI: https://dogwonder.co.uk
+Author: Dogwonder Ltd
+Author URI: https://dogwonder.co.uk
+Description: A custom WordPress based Underscores.me
+Version: 1.0.1
+License: GNU General Public License v2 or later
+License URI: LICENSE
+Text Domain: dgltd
+Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+
+dgltd is based on Underscores https://underscores.me/, (C) 2012-2017 Automattic, Inc.
+Underscores is distributed under the terms of the GNU GPL v2 or later.
+*/
+
+.wp-caption {
+}
+.wp-caption img {
+}
+.wp-caption p.wp-caption-text {
+}
+.wp-smiley {
+}
+.bypostauthor {
+}
+
+.sticky {
+}
+
+.gallery dl {
+}
+.gallery dt {
+}
+.gallery dd {
+}
+.gallery dl a {
+}
+.gallery dl img {
+}
+.gallery-caption {
+}
+
+.size-full {
+}
+.size-large {
+}
+.size-medium {
+}
+.size-thumbnail {
+}

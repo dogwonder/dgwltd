@@ -1,0 +1,44 @@
+//These are custom block sections to allow block background colors
+.dgwltd-section {
+    //Bump it oput to full width
+    padding:0 !important;
+    grid-column: 1 / span 3 !important;
+    display: grid;
+    grid-template-columns: 1fr minmax(min-content, var(--contentWidth)) 1fr;
+    .dgwltd-cta__inner {
+        grid-column: 2 / span 1;
+        padding:var(--gap-40) var(--gap-20) !important;
+        @include mq($from: tablet) {
+            padding:var(--gap-80) var(--gap-20) !important;
+        }
+    }
+}
+
+.dgwltd-section--grey {
+    background-color: var(--alt);
+}
+
+.dgwltd-section--blue {
+    background-color: var(--primary);
+}
+
+.dgwltd-section--orange {
+    background-color: var(--secondary);
+}
+
+.dgwltd-section--blue, 
+.dgwltd-section--orange {
+    h1, h2, h3, p, p > a {
+        color: white;
+    }
+    .wp-block-button .wp-block-button__link {
+        color: white;
+        background-color: transparent;
+        border-color: white;
+        &:hover {
+            color: white;
+            border-color: white;
+            background-color: var(--button-hover);
+        }
+    }
+}

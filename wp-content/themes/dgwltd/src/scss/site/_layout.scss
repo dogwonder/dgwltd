@@ -1,0 +1,132 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+//Sticky footer
+.dgwltd-wrapper {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: 0;
+}
+
+.dgwltd-container {
+  flex-grow: 1;
+  //Offset for mobile menu - calculated by javascript - toggleNav()
+  //margin-top: calc(var(--submenu-offset) - 1px); //with a 5px phantom offset
+}
+
+.dgwltd-masthead,
+.dgwltd-container,
+.dgwltd-footer {
+  flex-shrink: 0;
+}
+
+//Content spacing - for header, footer and main content area
+.govuk-width-container {
+  max-width: var(--contentWidth);
+  margin: 0 auto;
+  padding: var(--gap-20);
+  @include mq($from: tablet) {
+    padding: var(--gap-40) var(--gap-20);
+  }
+  //Pages exception
+  .page {
+    @include mq($from: desktop) {
+      max-width: 80%;
+    }
+  }
+}
+
+.govuk-main-wrapper {
+  padding:0;
+}
+
+//Full width
+.dgwltd-full-container {
+  .dgwltd-main-wrapper {
+    .entry-heading, 
+    .entry-content  {
+      display: grid;
+      grid-template-columns: 1fr minmax(min-content, var(--contentWidth)) 1fr;
+      > * {
+        grid-column: 2 / span 1;
+        padding: 0 var(--gap-20);
+        // padding: var(--gap-40) var(--gap-20);
+        // @include mq($from: tablet) {
+        //   padding: var(--gap-80) var(--gap-20);
+        // }
+      }
+      > p, 
+      > h2, 
+      > h3 {
+        padding-bottom: 0;
+      }
+      > p:last-of-type {
+        margin: 0 0 var(--gap-40);
+      }
+    }
+    .entry-heading {
+      padding-top: var(--gap-40);
+      > * {
+        margin: 0;
+        padding: 0 var(--gap-20);
+      }
+    }
+    .entry-content {
+      //Exceptions
+      .dgwltd-block.dgwltd-block--image:last-of-type {
+        margin-bottom: 0;
+      }
+      .wp-block-separator {
+        margin: var(--gap-20);
+        padding:0;
+      }
+      //Image
+      .dgwltd-block--image {
+        padding:0;
+        &.full-width {
+          grid-column: 1 / span all;
+        }
+      }
+      //Groups
+      .wp-block-group {
+        grid-column: 1 / span all;
+        padding:0;
+        .wp-block-group__inner-container {
+          max-width: var(--contentWidth);
+          margin: 0 auto;
+          padding: var(--gap-40) var(--gap-20);
+          @include mq($from: tablet) {
+            padding: var(--gap-80) var(--gap-20);
+          }
+          > h1, 
+          > h2, 
+          > h3 {
+            @include mq($from: tablet) {
+              max-width: 66.6666%
+            }
+          }
+          > p:last-of-type {
+            margin:0;
+          }
+        }
+        .wp-block-quote {
+          padding-left:0;
+          &:before {
+            left:0;
+          }
+        }
+      }
+    }
+  }
+}
+
+.page-template-template-layout {
+  .dgwltd-footer {
+    margin:0;
+  }
+}

@@ -1,0 +1,13 @@
+.govuk-breadcrumbs {
+  .govuk-breadcrumbs__list-item {
+    color: var(--text-color);
+    margin-left: 0;
+    margin-right: var(--gap-10);
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+  .govuk-breadcrumbs__link {
+    color: var(--highlight);
+  }
+}

@@ -1,0 +1,184 @@
+//Add margin to top 
+h2 ~ .dgwltd-block--cards_inner {
+  margin-top:var(--gap-20);
+}
+
+//Flexbox fallback
+.dgwltd-block--cards_inner {
+  display: block;
+  @include mq($from: tablet) {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    .dgwltd-card {
+      width: calc(33.3333% - 15px);
+    }
+  }
+}
+
+//If grid supported
+@supports (display: grid) {
+  .dgwltd-block--cards_inner {
+    display: grid;
+    -ms-display: grid;
+    grid-column-gap: var(--gap-30);
+    grid-template-columns: repeat(1, 1fr);
+    @include mq($from: tablet) {
+      grid-template-columns: 1fr 1fr 1fr;
+      .dgwltd-card {
+        width: 100%;
+      }
+    }
+
+    //Exceptions
+    .dgwltd-cards-2 & {
+      grid-template-columns: 1fr 1fr;
+      @include mq($from: desktop) {
+        grid-template-columns: 1fr 1fr 1fr;        
+      }
+    }
+
+  }
+}
+
+//Single card
+.dgwltd-card {
+  margin-bottom: var(--gap-30);
+  @include mq($from: desktop) {
+    margin-bottom: var(--gap-40);
+  }
+  width: 100%;
+
+  .dgwltd-card__inner {
+    display: block;
+    height: 100%;
+    position: relative;
+    text-decoration: none !important;
+    background-color: var(--card);
+    color: var(--text-color);
+    text-align: left;
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:hover,
+    &:active {
+      .dgwltd-card__heading {
+        text-decoration: none;
+      }
+    }
+
+    &:focus {
+      background-color: white;
+      outline: 3px solid var(--focus) !important;
+      box-shadow: 0 0 0 4px var(--focus) !important;
+    }
+
+  }
+
+  .dgwltd-card__image {
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    .frame {
+      --x: 3;
+      --y: 2;
+    }
+    img {
+      margin: 0;
+      max-width: 100%;
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+  }
+
+  .dgwltd-card__caption {
+    @include rhythm(14, 16);
+    font-weight: 300;
+    color: var(--highlight);
+  }
+
+  .dgwltd-card__heading {
+    @extend %dgwltd-heading-s;
+    display: inline-block;
+    width: 100%;
+    text-decoration: underline;
+    color: var(--highlight);
+    > a {
+      color:inherit;
+      text-decoration: none;
+      &:hover {
+        color:var(--hover);
+      }
+    }
+    margin: 0 0 var(--gap-10);
+    text-decoration: none;
+  }
+
+  .dgwltd-card__description {
+    @extend %dgwltd-body-s;
+  }
+
+  .dgwltd-card__content {
+    padding: var(--gap-20);
+    p {
+      @include mq($from: tablet) {
+        max-width: 100%;
+      }
+    }
+
+    .govuk-summary-list {
+      margin: var(--gap-10) 0 0;
+      .govuk-summary-list__key, 
+      .govuk-summary-list__value {
+        padding:var(--gap-5);
+        padding-left: 0;
+        margin: 0 0 var(--gap-5);
+        @extend %dgwltd-body-s;
+      }
+    }
+  }
+
+  .dgwltd-card__description {
+
+  }
+
+  //Reversed
+  &[data-state='reversed'] {
+      .dgwltd-card__inner {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .dgwltd-card__image {
+        order: 2;
+      }
+      .dgwltd-card__content {
+        order: 1;
+      }
+  }
+
+  //Inverse
+  &[data-theme='light'] {
+    .dgwltd-card__inner {
+      background-color: var(--alt);
+      color: var(--highlight);
+      .dgwltd-card__heading > a {
+        color: var(--highlight);
+        &:focus {
+          color: white;
+        }
+      }
+      .govuk-summary-list__key,
+      .govuk-summary-list__value {
+        color: var(--highlight);
+      }
+    }
+  }
+}

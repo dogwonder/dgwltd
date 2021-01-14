@@ -1,0 +1,62 @@
+//For lists blogs / team etc
+.dgwltd-list {
+  .dgwltd-list__item {
+    margin: 0 0 var(--gap-20);
+    padding-bottom: var(--gap-20);
+    border-bottom: 1px solid var(--border);
+    &:last-child {
+      border: 0;
+    }
+  }
+  .dgwltd-list__wrapper {
+    display: flex;
+    flex-direction: column;
+    @include mq($from: tablet) {
+      flex-direction: row;
+    }
+    align-items: flex-start;
+  }
+  //Furniture
+  .dgwltd-list__content {
+    flex: 1;
+    order: 2;
+    @include mq($from: tablet) {
+      order: 1;
+    }
+  }
+  .dgwltd-list__figure {
+    flex: 0 1 100%;
+    order: 1;
+    margin: 0 0 var(--gap-20) 0;
+    @include mq($from: tablet) {
+      order: 2;
+      flex: 0 1 30%;
+      margin: var(--gap-20) 0 0 var(--gap-20);
+    }
+    .post-thumbnail {
+      display: block;
+    }
+    img {
+      width: 100%;
+      height: inherit;
+      object-fit: cover;
+      object-position: 50% 50%;
+    }
+  }
+  .entry-content {
+    margin: var(--gap-20) 0;
+  }
+  //Details
+  .dgwltd-list__title {
+    @extend %dgwltd-heading-m;
+    margin: 0 0 var(--gap-20);
+  }
+  .dgwltd-list__meta {
+    .posted-on {
+      margin-right: var(--gap-20);
+    }
+  }
+  .dgwltd-button {
+    text-decoration: none;
+  }
+}

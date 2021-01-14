@@ -1,0 +1,39 @@
+//Gallery
+.wp-block-gallery {
+    margin-bottom: 0;
+    ul.blocks-gallery-grid {
+        padding: 0;
+        margin: 0;
+        width:100%;
+    }
+    figure {
+        @extend %frame;
+    }
+    &.columns-2  {
+        figure {
+            --x: 1;
+            --y: 1;
+        }
+        .blocks-gallery-item {
+            width: calc((100% - 20px)/2);
+            margin: 0 20px 20px 0;
+            @include mq($from: desktop) {
+                width: calc((100% - 30px)/2);
+                margin: 0 30px 30px 0;
+            }
+            &:nth-of-type(2n) {
+                margin-right:0;
+            }
+        }
+    }
+}
+
+// To use PhotoSwipe gallery class = .dgwltd-gallery && link to media file in settings
+.pswp__zoom-wrap {
+    @extend %frame;
+    --x: 4 !important;
+    --y: 3 !important;
+}
+.pswp__img {
+    
+}

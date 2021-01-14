@@ -1,0 +1,41 @@
+
+//Hero block
+.dgwltd-block--feature {
+
+    &.has-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      background-color:var(--footer);
+      grid-column: 1 / span 3 !important;
+      padding:0 !important;
+      h2 {
+        @extend %dgwltd-heading-xl;
+        margin-bottom:var(--gap-30);
+      }
+      h2, h3, p, .govuk-body {
+        color:inherit;
+      }
+      .dgwltd-feature__wrapper {
+        position: relative;
+        z-index:2;
+        width:100%;
+        margin:0;
+        padding: var(--gap-80) max(var(--gap-20), 50vw - var(--contentWidth) / 2);
+        .dgwltd-feature__inner {
+          @include mq($from: desktop) {
+            max-width: 66.666%;
+          }
+        }
+      }
+    }
+
+    &.has-overlay {
+      h2, h3, p, .govuk-body {
+        color: white;
+      }
+    }
+    
+     
+  }

@@ -1,0 +1,196 @@
+### 2.5-beta-3
+- Added tweaks to the form editor to improve design, perfomrance and usability.
+- Added drag and drop support to the form editor for touch devices.
+- Added cosmetic tweaks to the settings pages.
+- Added the [gform_form_settings_initial_values](https://docs.gravityforms.com/gform_form_settings_initial_values/) filter enabling the default setting values for the Form Settings page to be customized.
+- Added confirmation popup when deleting a form from the form editor.
+- Added responsive improvements to the form editor.
+- Updated the styles of admin notices.
+- Updated the design of the help page.
+- Updated the Gutenberg block preview.
+- Updated the styling of the "invalid license" notice.
+- Updated the required indicator in the settings pages to improve accessibility.
+- Updated the active/inactive indicator on the list pages for forms, confirmations, notifications and feeds.
+- Updated some styles for IE11.
+- Fixed the List field to properly display the field in the form editor.
+- Fixed the "select all entries" banner on the entry list page.
+- Fixed the consent field to use fieldset container for better accessibility.
+- Fixed the unsaved changes warning on the setting pages to not show when fields fetch external data and reload the page.
+- Fixed duplicate preview link display on certain admin screens.
+- Fixed an issue where currency fields were not being properly converted to currency.
+- Fixed an issue with drag and drop functionality in the form editor on WordPress 5.6.
+- Fixed an issue where the required field indicator is duplicated when changing the field layout.
+- Fixed the screen options on the entries and forms list pages.
+- Fixed the FOUT on the sidebar tabs of the form editor.
+- Fixed an issue with the color picker being squished on smaller screen widths.
+- Updated the design of the form editor.
+- Updated the classes that control the widths of fields to include a prefix.
+- Updated front-end styles.
+- Fixed issue with textarea fields not retaining default value settings.
+- Fixed an issue when extra fields were displayed in Feed Settings when using mapped fields.
+- Fixed styles for button active and hover states.
+- Fixed database upgrade errors when running MYSQL versions earlier than 8.0.17.
+- Fixed a JS error when selecting page settings in the form editor before selecting any other fields.
+- Fixed display of confirmation notice when disabling logging.
+- Fixed an issue with the display of time fields in settings pages.
+- Fixed an issue where the required indicator doesn't show up until a form is saved.
+- Fixed a display issue where settings panel can display behind the fields header.
+- Fixed a PHP notice on the entry list page.
+- Fixed an issue with the suppression of admin notices.
+- Fixed an issue with columns not being saved in the editor.
+- Fixed progress bar styles.
+- Fixed an issue in the form editor where fields can be dragged off screen.
+- Fixed an issue with creidt card expiration sublabels not respecting position setting.
+- Fixed an issue with Required Indicators changing when updated via Javascript.
+- API: Added the gchoice class to radio field output to match checkbox approach and allow addons/themes easier targeting.
+- API: Settings API - Fixed the ANY dependency operator.
+- API: Updated the classes that control the widths of fields to include a prefix.
+- API: Moved the JavaScript hooks functionality out of gravityforms.js to an inline header script to allow for scripts to be loaded in the footer on the theme.
+- API: Settings API - Updated the namespace from Rocketgenius\Gravity_Forms to Gravity_Forms\Gravity_Forms\Settings.
+- API: Settings API - Fixed an issue where generic map would not automatically select key sub-choices.
+- API: Settings API - Fixed an issue where non-required key choices could not be selected in a generic map when required keys were defined and custom keys were disabled.
+- API: Fixed an issue where forms can be assigned duplicate titles when using the GFAPI methods for updating forms and form properties.
+- API: Fixed an issue where the form returned by GFAPI::get_form() can include the old title when it has been updated using GFAPI::update_forms_property().
+- API: Settings API - Fixed legacy validation methods always being called.
+- AF: Updated note type to use add-on slug when adding a note to an entry.
+
+
+### 2.5-beta-2
+- Added the [gform_pre_print_scripts](https://docs.gravityforms.com/gform_pre_print_scripts/) and [gform_print_scripts](https://docs.gravityforms.com/gform_print_scripts/) action hooks which are triggered when printing scripts and styles for the form widget.
+- Added cosmetic tweaks.
+- Added $tab_id as the second parameter to the gform_field_settings_tab_content filter.
+- Added the settings submenu dropdown back to the form editor.
+- Added a warning when the user attempts to navigate with unsaved changes in Form Settings.
+- Added MultiSelects back as an input option for Post Category and Post Tags fields and added a warning about their accessibility implications.
+- Added scrollbar back into the form editor.
+- Added indicator for hidden fields in the form editor.
+- Added header to validation summary tooltip.
+- Added the gform_editor_field_settings filter to allow the settings to be filter for a field in the form editor.
+- Added icons to the settings tabs on the import/export page.
+- Added accessibility enhancements to the credit card field and the Post Custom Field.
+- Added the gform_selectwoo script to the list of no conflict scripts. Credit: the team at Gravity PDF.
+- Updated the settings panel interface for choices fields.
+- Updated the display of admin notifications.
+- Updated the asset enqueuing process to be more DRY and testable.
+- Updated the Field Search box in the Editor to be universal instead of per-field-group.
+- Updated the active icons to be SVGs for use on hi-res displays.
+- Updated the settings page styles.
+- Updated the uninstall tab to allow for uninstalling all add-ons.
+- Updated the title of the dashboard widget.
+- Updated the design of progress bar, added new design options.
+- Updated the Field Sidebar display in the Form Editor to show Field IDs next to the Field Type.
+- Updated third-party scripts dependent on core scripts to use the defer attribute.
+- Removed the conditional logic animations from the admin pages.
+- Fixed the display and functionality of merge tags for textarea fields.
+- Fixed the path to the legacy forms css file for the tiny mce editor.
+- Fixed an issue with field settings inputs width on the form editor.
+- Fixed an issue where text could overlap the success and error icons in the settings pages.
+- Fixed an issue on the Edit Entry screen where date and time inputs are inappropriately sized.
+- Fixed spacing between required asterisk and field label on Feed Settings screen.
+- Fixed an issue where a Section field is stuck in a column.
+- Fixed how field map settings fields count the number of possible choices.
+- Fixed a PHP notice on Custom Settings Pages created by AddOns.
+- Fixed an issue with CSS specificity for front-end theme styles.
+- Fixed an issue with Options fields not updating dynamically to display Product Fields as options.
+- Fixed the appearance of form switcher dropdown.
+- Fixed an issue with the display of Entry page metabox expand/collapse arrows.
+- Fixed an issue with translations so new translations are downloaded when user switches languages.
+- Fixed an issue with the markup for the choices for checkboxes and radio button fields.
+- Fixed an issue with the dropdown field width on the form editor.
+- Fixed an issue with third-party addons potentially introducing security risks by calling deprecated validate_*_settings methods.
+- Fixed an issue with a broken aria reference in the file upload field.
+- Fixed an issue with Form Previews showing a FOUT before rendering completely.
+- Fixed an issue with Form Columns not responding to browser width changes.
+- Fixed an issue with Multiselect inputs not updating when choices were modified.
+- Fixed an issue on the Edit Entry screen where date and time inputs were inappropriately sized.
+- Fixed an issue with Textarea placeholders not updating on Form Save.
+- Fixed a fatal error on admin pages when user doesn't have administrator permissions.
+- Fixed an issue with the Locking modal not displaying on the Form Settings page.
+- Fixed wording on text field conditional logic.
+- Fixed inconsistent margins on import/export pages.
+- Fixed the color of the icon in the "Add Form" button in TinyMCE.
+- Fixed inconsistent fonts.
+- Fixed the default margins setting on the HTML field.
+- Fixed the styles of the success message on form settings pages.
+- Fixed a deprecation notice with PHP 7.2+ which occurs when using the Captcha field and the reCAPTCHA keys are not configured. Credit: The Gravity PDF team.
+- Fixed the width of checkboxes and radio inputs on the Entry Details Edit page.
+- Fixed an issue that allows Honeypot fields to be visible in forms.
+- Fixed an issue with REST API Credentials.
+- Fixed styles on some settings pages.
+- Fixed left and right label alignment.
+- Fixed an issue with form submission when the selected page is invalid.
+- Fixed an issue with warnings on the Logging settings page.
+- Fixed styles on some settings pages.
+- Fixed left and right label alignment.
+- Fixed an issue with form submission when the selected page is invalid.
+- Fixed an issue with warnings on the Logging settings page.
+- Fixed database column widths for MySQL 8.0.17+.
+- Fixed some RTL issues in the form editor. Some RTL issues are pending.
+- Fixed success message when form settings are saved.
+- Fixed valid and invalid feedback markers on text fields.
+- Fixed a conflict between the form switcher and other Select2 instances on the page.
+- Fixed an issue with support for custom form settings.
+- Fixed an issue with the form editor which doesn't allow fields to be dragged into a column on the first row of fields.
+- Fixed an issue with forms rendered in the WordPress dashboard; init scripts are now rendered in the admin footer.
+- API: Settings API - fixed an issue with select fields without any choices throwing a warning.
+- API: Settings API - fixed an issue with settings fieldsets not adhering to proper mark-up rules.
+- API: Settings API - fixed an issue with Payment Feed Add-ons displaying Trial fields incorrectly.
+- API: Fixed an issue with field name parsing not working for those with array values.
+- API: Settings API - Fixed mismatched border colors when using the append property with a Text field.
+- API: Settings API - Fixed field value feedback only applying to text inputs.
+- API: Settings API - Added support for localized strings when enqueuing scripts.
+- API: Settings API - fixed an issue which prevents custom settings from uploading files.
+- API: Fixed missing table headers on field map settings fields.
+- API: Fixed issue with the select custom settings field. This addresses issues in the settings for the User Registration and Twilio Add-Ons.
+- API: Fixed issue with the select custom settings field. This addresses issues in the settings for the User Registration and Twilio Add-Ons.
+- API: Fixed radio button choices with icons not appearing on the same line.
+- API: fixed issues with the field map setting and the checkbox and select setting.
+- AF: Fixed the add_note method so it displays the proper styles for successes and errors.
+- AF: Fixed an issue with the timing of the settings initialization which can result in add-ons not displaying settings correctly.
+
+
+### 2.5-beta-1
+- Added security enhancements.
+- Added gform_confirmation_settings_fields filter to modify confirmation settings fields to replace deprecated gform_confirmation_ui_settings filter.
+- Added [gform_editor_sidebar_panels](https://docs.gravityforms.com/gform_editor_sidebar_panels/) filter and [gform_editor_sidebar_panel_content](https://docs.gravityforms.com/gform_editor_sidebar_panel_content/) action to add custom panels to the form editor sidebar.
+- Added [gform_field_settings_tabs](https://docs.gravityforms.com/gform_field_settings_tabs/) filter and [gform_field_settings_tab_content](https://docs.gravityforms.com/gform_field_settings_tab_content/) action to add custom field settings tabs.
+- Added gform_form_settings_fields filter to modify form settings fields to replace deprecated gform_form_settings filter.
+- Added gform_notification_settings_fields filter to modify form settings fields to replace deprecated gform_notification_ui_settings filter.
+- Added gform_frontend_pages_evaluated javascript action fires after the page conditional logic on the form has been evaluated, allowing further actions to be performed.
+- Added gform_frontend_page_visible javascript action fires after a page step turns visible, allowing further actions to be performed.
+- Added gform_frontend_page_hidden javascript action fires after a page step turns hidden, allowing further actions to be performed.
+- Added support for TranslationsPress to manage translations for Gravity Forms core and add-ons. Translation files will be delivered via the WordPress translation updates system.
+- Added accessibility enhancements for the Post Tags field.
+- Added alternative text to the Post Image field.
+- Added specified format to the Date Field and Date Picker.
+- Added the accessibility warning when "Enhanced User Interface" is enabled.
+- Added a fall back for an empty label. The placeholder or description can be used when no field label is set.
+- Added a new field property "errors" to store field setting errors.
+- Added support for putting fields into columns inside the form editor.
+- Added the list of validation errors to the top of the form. Each validation error links to the respective field.
+- Added a form setting to control the required field indicator.
+- Added a message to the top of the form to explain the meaning of the required fields indicator. This is not displayed when the indicator is set to "Required".
+- Added a notice to the top of the form clarifying the meaning of the required field indicator.
+- Added gform_required_legend filter to customize the required field indicator notice.
+- Added the {created_by} merge tag to display information about the user who created the entry. Credit: the team at Gravity PDF.
+- Added the {date_created} merge tag to display the date an entry was created. Credit: the team at Gravity PDF.
+- Added the {date_updated} merge tag to display the date an entry was last updated. Formatted using the same modifiers as {date_created}. Credit: the team at Gravity PDF.
+- Added the {payment_date} merge tag to display the date the payment was received. Formatted using the same modifiers as {date_created}. Credit: the team at Gravity PDF.
+- Added the autocomplete field settings to the following fields: Single-Line Text, Drop-Down, Number, Name, Phone, Address, Email. Further details: https://docs.gravityforms.com/accessibility-for-developers/#autocomplete
+- Updated the database schema to accommodate IPV6 addresses
+- Updated the Checkbox field to use a button element for Select All toggle.
+- Updated the heading structure to improve accessibility.
+- Updated multi-input fields to use the fieldset tag.
+- Updated the markup to help screen readers announce the confirmation message when the form is embedded with AJAX.
+- Updated the Calculation field to announce the updated price.
+- Updated the Forms icon to use our new logo.
+- Updated the Post image field to display the allowed file extensions.
+- Updated the File Upload field to display the allowed files extensions, the maximum number of allowed fields, and maximum file sizes.
+- Updated the delete file button in the File Upload field to a trash button. It is now a button element instead of an image.
+- Updated the Time field to provide the required format as a placeholder.
+- Updated the progress bar and submit button to react more appropriately to conditional logic.
+- Updated the Gravity Forms scripts to use the defer attribute.
+- Updated the default value of the gform_init_scripts_footer filter from false to true. Init scripts are now outputted in the footer and are triggered on the DOMContentLoaded event.
+- Removed the gform_notification_validation filter.
+- API: Added the Gravity Forms Settings API.
+- AF: Updated the Add-On Settings API to use the new Gravity Forms Settings API. Some changes to custom settings may be required.

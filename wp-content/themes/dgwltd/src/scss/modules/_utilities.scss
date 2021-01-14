@@ -1,0 +1,194 @@
+//Accessibility
+
+//Text meant only for screen readers
+.screen-reader-text, //need for wordpress
+.visually-hidden {
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute !important;
+  width: 1px;
+  /* many screen reader and browser combinations announce broken words as they would appear visually */
+  word-wrap: normal !important;
+}
+
+//Skip link
+.skip-link {
+  background-color: #f1f1f1;
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.2);
+  color: #21759b;
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  left: -9999em;
+  outline: none;
+  padding: 15px 23px 14px;
+  text-decoration: none;
+  text-transform: none;
+  top: -9999em;
+}
+
+.skip-link:focus {
+  clip: auto;
+  height: auto;
+  left: 6px;
+  top: 7px;
+  width: auto;
+  z-index: 100000;
+}
+
+//SVGs
+.defs-only {
+	position: absolute;
+	height: 0; width: 0;
+	overflow: none;
+	left: -100%;
+}
+
+//Aspect ratio
+%frame, 
+.frame {
+  --x: 3;
+  --y: 2;
+  padding-bottom: calc((var(--y) / var(--x)) * 100%);
+  position: relative;
+  > * {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  > img,
+  > video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: 0;
+  }
+}
+
+@media screen and (-ms-high-contrast: active),
+  screen and (-ms-high-contrast: none) {
+  /* IE10+ specific styles go here */
+  .dgwltd-card__image {
+    display: block;
+  }
+  .frame > * {
+    position: relative;
+  }
+}
+
+//Background image
+.block__background {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  figure {
+    margin: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  img {
+    object-fit: cover;
+    object-position: 50% 50%;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+  }
+}
+
+//Alignment
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+
+
+//Badge
+%tag,
+.tag {
+  text-decoration: none !important;
+  border-radius: 9999px;
+  color: #252f3f;
+  background-color: var(--alt);
+  padding:.25rem .625rem;
+  font-size:14px;
+}
+
+a.tag {
+  &:hover {
+    background-color: var(--active);
+  }
+}
+
+//Last item
+.last {
+  margin:0 !important;
+}
+
+//Block heights
+$heights: (
+  "100": 100vh,
+  "90": 90vh,
+  "80": 80vh,
+  "70": 70vh,
+  "60": 60vh,
+  "50": 50vh,
+  "40": 40vh,
+  "30": 30vh,
+  "20": 20vh
+);
+
+@each $value, $height in $heights {
+  .height--#{$value} {
+    min-height: calc(#{$height} - 64px);
+  }
+}
+
+//Custom CSS
+
+
+//Turn off animations when user has chosen reduced motion
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+//oEmbed responsive
+.embed-container { 
+  position: relative; 
+  padding-bottom: 56.25%;
+  overflow: hidden;
+  max-width: 100%;
+  height: auto;
+} 
+
+.embed-container iframe,
+.embed-container object,
+.embed-container embed { 
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

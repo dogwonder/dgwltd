@@ -1,0 +1,49 @@
+//Grid
+
+/* flexbox fallback */
+.dgwltd-grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+
+.dgwltd-grid__item {
+  position: relative;
+  margin: 0 0 var(--gap-20) 0;
+  width: 100%;
+  @include mq($from: tablet) {
+    margin: 0 2% var(--gap-20) 0;
+    width: 31%;
+  }
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+}
+
+@supports (display: grid) {
+  .dgwltd-grid {
+    /* css grid */
+    display: grid;
+    -ms-display: grid;
+
+    /* 20px gutter */
+    grid-gap: var(--gap-20);
+
+    /* Columns and Rows */
+    grid-template-columns: 1fr;
+    @include mq($from: tablet) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    grid-auto-rows: auto;
+    grid-auto-flow: row dense;
+  }
+  .dgwltd-grid__item {
+    margin: 0;
+    width: auto;
+    grid-column-start: auto;
+    grid-row-start: auto;
+  }
+}

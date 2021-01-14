@@ -1,0 +1,62 @@
+//Box sizing
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+//Links
+a {
+  color: var(--text-color);
+  text-decoration: underline;
+  &:visited {
+    // color: var(--visited);
+  }
+  &:hover {
+    color: var(--hover);
+    text-decoration: none;
+  }
+  &:active {
+    color: var(--highlight);
+    text-decoration: none;
+  }
+  &:focus {
+    color: black !important;
+    background-color: var(--focus);
+    outline: 3px solid transparent;
+    box-shadow: 0 -2px var(--focus), 0 4px #0b0c0c;
+    text-decoration: none;
+  }
+  &.dgwltd-button {
+    color: white;
+  }
+}
+
+hr {
+  margin: var(--gap-20) 0;
+  @include mq($from: tablet) {
+    margin: var(--gap-30) 0;
+  }
+  height: 1px;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+//Themes
+$color-map: (
+  "black": black,
+  "white": white,
+  "orange": #f8864c,
+  "blue": #00466e,
+);
+@each $key, $value in $color-map {
+  .bg--#{$key} {
+    background-color: $value;
+    @include text-contrast($value);
+    a,
+    a:hover {
+      color: inherit;
+    }
+  }
+}

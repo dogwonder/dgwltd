@@ -1,0 +1,31 @@
+//Summary block
+.dgwltd-block--summary-list {
+    .govuk-summary-list__row {
+      border: 0;
+      margin:0;
+      display: flex;
+      flex-direction: column;
+      @include mq($from: tablet) {
+          flex-direction: row;
+      }
+    }
+  }
+  
+  .govuk-summary-list__key,
+  .govuk-summary-list__value,
+  .govuk-summary-list__actions {
+    border: 0;
+  }
+  
+  .govuk-summary-list__key {
+    font-weight: $bold;
+    color: var(--text-color);
+  }
+  
+  .govuk-summary-list__value {
+    color: var(--text-color);
+    > a {
+      color: var(--text-color);
+    }
+  }
+  

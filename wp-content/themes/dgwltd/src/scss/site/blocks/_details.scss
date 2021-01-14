@@ -1,0 +1,15 @@
+//Details block
+.dgwltd-block--details {
+    .govuk-details__summary:before {
+      border-left-color: var(--highlight);
+    }
+    .govuk-details__summary-text {
+      color: var(--highlight);
+    }
+    .govuk-details__text {
+      color: var(--text-color);
+      border-color: var(--highlight);
+    }
+  }
+  
+  

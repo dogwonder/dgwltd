@@ -1,0 +1,1 @@
+<svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="m225.87 451.35 215.06-433.49 58.18 27.68-215.06 433.46zm-27.17-297.08-134 104.43v5.72l133.55 103.44-37.7 48.67-156.41-126.84v-55.83l158.8-127.8z" fill-rule="nonzero"/></svg>

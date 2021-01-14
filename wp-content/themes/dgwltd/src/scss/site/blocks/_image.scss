@@ -1,0 +1,43 @@
+//Image block
+.dgwltd-block__image {
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 0 var(--gap-20);
+    &.full-width {
+      padding: 0;
+    }
+    .frame {
+      --x: 1;
+      -ms-scroll-limit-y-min: 1;
+      img {
+        object-position: 50% 0;
+      }
+    }
+    @include mq($from: desktop) {
+      .frame {
+        --x: 16;
+        --y: 4;
+      }
+    }
+    img {
+      margin: 0;
+      max-width: 100%;
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+}
+
+//Exceptions
+.wp-block-column .dgwltd-block__image {
+  padding:0;
+}
+
+.wp-block-group .dgwltd-block__image {
+  padding: 0;
+  margin: var(--gap-40) 0;
+}

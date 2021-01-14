@@ -1,0 +1,34 @@
+//404
+.error404 {
+  .dgwltd-menu-404 {
+    margin-left: var(--gap-20);
+    ul {
+      margin-left: var(--gap-20);
+    }
+  }
+}
+
+//Search
+.search-results,
+.search-no-results {
+  .site-search__form {
+    display: flex;
+    .govuk-input {
+      height: 45px;
+    }
+    .govuk-button {
+      height: 45px;
+      @extend %dgwltd-button;
+    }
+    .icon-search {
+      width: 20px;
+      fill: white;
+    }
+  }
+}
+
+.no-results {
+  ul {
+    margin-left: var(--gap-20);
+  }
+}

@@ -1,0 +1,164 @@
+//Z-index
+$z-low: 1;
+$z-high: 10;
+$z-higher: 11;
+
+//Font size
+$default-font-size: 1.188rem; //19px
+$default-line-height: 1.31579; //25px
+
+//Variables
+$bold: 700;
+
+//Themes
+$text-color: #414042;
+$black: black;
+$white: white;
+
+//Measures - for margin / padding
+$gaps: (5, 10, 15, 20, 25, 30, 35, 40, 50, 80);
+
+$sizes: (
+  80: 5rem,
+  48: 3rem,
+  36: 2.25rem,
+  32: 2rem,
+  27: 1.688rem,
+  24: 1.5rem,
+  19: 1.188rem,
+  16: 1rem,
+  14: 0.875rem,
+);
+
+//Redeclare from vendor/_mq.scss -- https://github.com/sass-mq/sass-mq
+$mq-breakpoints: (
+  mobile: 320px,
+  tablet: 641px,
+  desktop: 769px,
+) !default;
+
+//CSS Vars - usage var(--background)
+:root {
+
+  --contentWidth: 1140px;
+
+  //Typefaces, 300, 600, 700
+  --serif: Georgia, serif; 
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+  --background: #ffffff;
+  --alt: #fafafa;
+
+  --card: #f2f2f2; 
+  --meta: #424042;
+
+  --border: hsl(200, 12%, 60%);
+  --border-light: #ced1d6;
+  --border-dark: #414042;
+  --radius: 1rem;
+
+  --text-color: hsl(98, 0%, 0%);
+  --highlight: hsl(205, 100%, 18%); //#00466e
+  --primary: hsl(205, 100%, 18%); //#00466e;
+  --secondary: hsl(18, 86%, 58%); //#f8864c;
+  --blue-light: hsl(205, 100%, 90%);
+
+  --hover: hsl(205, 100%, 10%);
+  --visited: #4c2c92;
+
+  --active: hsl(203, 70%, 81%);
+  --focus: #fd0;
+
+  --success: #00703c;
+  --error: #d4351c;
+
+  --button-text-color: white;
+  --button-background: hsl(205, 100%, 18%);
+  --button-hover: hsl(205, 100%, 10%);
+  --button-disabled: hsl(12, 10%, 91%);
+
+  --button-background-secondary: hsla(86, 45%, 53%);
+  --button-hover-secondary: hsla(86, 45%, 43%);
+
+  --button-light-background: #ffffff;
+  --button-light-hover: hsl(231, 92%, 90%);
+
+  --submenu-offset: 0;
+
+  @each $gap in $gaps {
+    --gap-#{$gap}: #{$gap}px;
+  }
+
+  @each $key, $value in $sizes {
+    --size-#{$key}: #{$value};
+  }
+
+}
+
+//Generates classes for margin and padding, e.g .m-t-10, p.b.20. 
+@each $prop, $abbrev in (margin: m, padding: p) {
+  @each $gap in $gaps {
+
+    .#{$abbrev}-a-#{$gap} { #{$prop}:        #{$gap}px #{$gap}px !important; } // a = All sides
+    .#{$abbrev}-t-#{$gap} { #{$prop}-top:    #{$gap}px !important; }
+    .#{$abbrev}-r-#{$gap} { #{$prop}-right:  #{$gap}px !important; }
+    .#{$abbrev}-b-#{$gap} { #{$prop}-bottom: #{$gap}px !important; }
+    .#{$abbrev}-l-#{$gap} { #{$prop}-left:   #{$gap}px !important; }
+
+  }
+}
+
+
+//PX To EM
+//Usage font-size: em(32);
+@function em($pixels, $context: 16) {
+  @return #{$pixels/$context}em;
+}
+
+//Color contrast
+@mixin text-contrast($n) {
+  $color-brightness: round(
+    (red($n) * 299) + (green($n) * 587) + (blue($n) * 114) / 1000
+  );
+  $light-color: round(
+    (red(#ffffff) * 299) + (green(#ffffff) * 587) + (blue(#ffffff) * 114) / 1000
+  );
+
+  @if abs($color-brightness) < ($light-color/2) {
+    color: $white;
+    border-color: $white;
+  } @else {
+    color: $text-color;
+    border-color: $text-color;
+  }
+}
+
+//Font and line height calulation, with unitless line-height
+// Base font size of 16px and line-height of 1.25
+// Usage
+// @include rhythm(48, 50);
+@mixin rhythm($sizeValue: 16, $heightValue: 20) {
+  //Font sizes px + rem
+  font-size: $sizeValue + px; //fallback for old browsers
+  font-size: (0.0625 * $sizeValue) + rem;
+  //Line height - unitless
+  line-height: $heightValue / $sizeValue;
+}
+
+//Aspect ratio
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+  > .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}

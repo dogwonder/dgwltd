@@ -1,0 +1,79 @@
+%dgwltd-button,
+.dgwltd-button, 
+.wp-block-button__link {
+  appearance: none;
+  display: inline-block;
+  font-weight: bold;
+  @include rhythm(18, 18);
+  color: var(--button-text-color);
+  padding: 1rem 3rem 0.8rem 1rem;
+  margin: var(--gap-15) 0;
+  text-decoration: none;
+  border: 2px solid var(--button-background);
+  background-color: var(--button-background);
+  border-radius: 0.5rem;
+  box-shadow: none;
+  cursor: pointer;
+  @include mq($from: tablet) {
+    margin: 0 0 var(--gap-30);
+    line-height: 1;
+  }
+  &:hover {
+    border-color: var(--button-hover);
+    background-color: var(--button-hover);
+  }
+  &:link,
+  &:visited,
+  &:focus,
+  &:active {
+    text-decoration: none;
+  }
+  &:focus,
+  &:focus:not(:active):not(:hover) {
+    // box-shadow: 0 -2px var(--button-background), 0 4px black;
+  }
+  &[disabled] {
+    background-color: var(--button-disabled);
+    color: white;
+    cursor: not-allowed;
+  }
+
+  &.secondary {
+    background-color: var(--button-background-secondary);
+    &:hover {
+      background-color: var(--button-hover-secondary);
+    }
+  }
+}
+
+
+//Remove default outline
+.govuk-button {
+  box-shadow: none;
+}
+
+.dgwltd-button > a {
+  color: white;
+  text-decoration: none;
+  &:hover {
+    color: white;
+  }
+}
+
+%dgwltd-button--small, 
+.dgwltd-button--small {
+  font-size: var(--size-14);
+  padding: var(--gap-5) var(--gap-10);
+}
+
+%dgwltd-button--ghost, 
+.dgwltd-button--ghost {
+  background-color: transparent;
+  color: var(--button-background);
+  &:hover {
+    background-color: var(--button-background);
+    color: white;
+  }
+}
+
+

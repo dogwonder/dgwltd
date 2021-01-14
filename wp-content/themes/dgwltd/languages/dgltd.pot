@@ -1,0 +1,462 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: dgwltd\n"
+"POT-Creation-Date: 2020-04-07 12:07+0100\n"
+"PO-Revision-Date: 2020-04-07 12:07+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.3\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: style.css\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: node_modules\n"
+
+#: 404.php:19 template-parts/_molecules/breadcrumb.php:89
+msgid "404, page not found"
+msgstr ""
+
+#: 404.php:23
+msgid "There may be an error in the link you followed to get here. "
+msgstr ""
+
+#: footer.php:27
+msgid "Support links"
+msgstr ""
+
+#: footer.php:36
+msgid "Legal information links"
+msgstr ""
+
+#: footer.php:46
+msgid "Social Links"
+msgstr ""
+
+#: functions.php:54
+msgid "Primary"
+msgstr ""
+
+#: functions.php:55
+msgid "Support"
+msgstr ""
+
+#: functions.php:56
+msgid "Legal"
+msgstr ""
+
+#: functions.php:130
+msgid "Sidebar"
+msgstr ""
+
+#: functions.php:132
+msgid "Add widgets here."
+msgstr ""
+
+#: header.php:90
+msgid "This site uses cookies"
+msgstr ""
+
+#: header.php:93
+msgid "our cookie statement"
+msgstr ""
+
+#: header.php:95
+#, php-format
+msgid ""
+"We use cookies to collect information about how you use our website, so that "
+"we can improve your experience. For more information and to find out how to "
+"manage your cookie settings, read %s."
+msgstr ""
+
+#: header.php:109
+msgid "Accept and close"
+msgstr ""
+
+#: header.php:119
+msgid "Skip to main content"
+msgstr ""
+
+#: header.php:129
+msgid "Dogwonder Ltd."
+msgstr ""
+
+#: header.php:134
+msgid "Donate"
+msgstr ""
+
+#: header.php:140 searchform.php:9 searchform.php:11
+#: template-parts/_organisms/location-search.php:38
+#: template-parts/_organisms/proximity-search.php:21
+#: template-parts/_organisms/site-search.php:2
+msgid "Search"
+msgstr ""
+
+#: header.php:146 template-parts/_organisms/site-search.php:8
+msgid "Search site"
+msgstr ""
+
+#: header.php:155
+msgid "Menu"
+msgstr ""
+
+#: header.php:171
+msgid "Open Search"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:15
+msgid "dgwltd Details"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:16
+msgid "Detailed information"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:27
+msgid "dgwltd Cards"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:28
+msgid "Card block for related pages"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:39
+msgid "dgwltd Content"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:40
+msgid "Content block with background colour and padding"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:51
+msgid "dgwltd CTA"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:52
+msgid "Call to action"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:63
+msgid "dgwltd Apply"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:64
+msgid "Link to applicaiton form"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:75
+msgid "dgwltd Opportunity summary"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:76
+msgid "Summary block for opportunities"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:88
+msgid "dgwltd Inset text"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:89
+msgid "Inset text"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:100
+msgid "dgwltd Accordion"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:101
+msgid "Show and hide sections"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:112
+msgid "dgwltd Summary list"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:113
+msgid "Summarise information"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:124
+msgid "dgwltd Related pages"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:125
+msgid "List of related links"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:136
+msgid "dgwltd Service summary"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:137
+msgid "Services summary"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:149
+msgid "dgwltd Location search"
+msgstr ""
+
+#: inc/dgwltd-blocks.php:150
+msgid "Search form for opportunities and services block"
+msgstr ""
+
+#: inc/dgwltd-forms.php:335
+msgid "Back to Last Page"
+msgstr ""
+
+#. translators: %s: post date.
+#: inc/dgwltd-template-tags.php:28
+#, php-format
+msgctxt "post date"
+msgid "%s"
+msgstr ""
+
+#. translators: %s: post author.
+#: inc/dgwltd-template-tags.php:46
+#, php-format
+msgctxt "post author"
+msgid "By %s"
+msgstr ""
+
+#. translators: used between list items, there is a space after the comma
+#: inc/dgwltd-template-tags.php:62
+msgid " "
+msgstr ""
+
+#. translators: 1: list of categories.
+#: inc/dgwltd-template-tags.php:65
+#, php-format
+msgid "Posted in: %1$s"
+msgstr ""
+
+#. translators: used between list items, there is a space after the comma
+#: inc/dgwltd-template-tags.php:69
+msgctxt "list item separator"
+msgid " "
+msgstr ""
+
+#. translators: 1: list of tags.
+#: inc/dgwltd-template-tags.php:72
+#, php-format
+msgid "Tagged: %1$s"
+msgstr ""
+
+#. translators: %s: post title
+#: inc/dgwltd-template-tags.php:82
+#, php-format
+msgid "Leave a Comment<span class=\"visually-hidden\"> on %s</span>"
+msgstr ""
+
+#. translators: %s: Name of current post. Only visible to screen readers
+#: inc/dgwltd-template-tags.php:99
+#, php-format
+msgid "Edit <span class=\"visually-hidden\">%s</span>"
+msgstr ""
+
+#: inc/dgwltd-template-tags.php:193
+#, php-format
+msgid "%1$s"
+msgstr ""
+
+#: index.php:21 template-home.php:24
+msgid "Welcome to"
+msgstr ""
+
+#. translators: %s: search query.
+#: search.php:23 search.php:57
+#, php-format
+msgid "Search results for %s"
+msgstr ""
+
+#: search.php:28
+#, php-format
+msgid "%s for %s"
+msgstr ""
+
+#: search.php:61 template-parts/_molecules/breadcrumb.php:87
+msgid "Search results"
+msgstr ""
+
+#: searchform.php:10
+msgid "Type something&#8230;"
+msgstr ""
+
+#: single.php:21
+msgid "Back to search results"
+msgstr ""
+
+#: template-parts/_blocks/apply.php:30 template-parts/_blocks/apply.php:35
+msgid "Apply"
+msgstr ""
+
+#: template-parts/_blocks/opportunity.php:30
+#: template-parts/_blocks/service.php:30
+#: template-parts/_organisms/card-opportunity.php:43
+#: template-parts/_organisms/card-service.php:42
+msgid "Where"
+msgstr ""
+
+#: template-parts/_blocks/opportunity.php:40
+#: template-parts/_blocks/service.php:40
+#: template-parts/_organisms/card-opportunity.php:53
+#: template-parts/_organisms/card-service.php:52
+msgid "When"
+msgstr ""
+
+#: template-parts/_blocks/related.php:26
+msgid "Related"
+msgstr ""
+
+#: template-parts/_molecules/breadcrumb.php:26
+msgid "Home"
+msgstr ""
+
+#: template-parts/_molecules/breadcrumb.php:62
+msgid "News and stories"
+msgstr ""
+
+#: template-parts/_molecules/breadcrumb.php:73
+#: template-parts/_molecules/breadcrumb.php:81
+msgid "Volunteer"
+msgstr ""
+
+#: template-parts/_molecules/contents-list.php:73
+msgid "Contents"
+msgstr ""
+
+#: template-parts/_molecules/contents-navigation.php:87
+#: template-parts/_molecules/pagination-location.php:19
+#: template-parts/_molecules/pagination-query.php:17
+#: template-parts/_molecules/pagination.php:21
+msgid "Previous page"
+msgstr ""
+
+#: template-parts/_molecules/contents-navigation.php:114
+#: template-parts/_molecules/pagination-location.php:36
+#: template-parts/_molecules/pagination-query.php:34
+#: template-parts/_molecules/pagination.php:39
+msgid "Next page"
+msgstr ""
+
+#: template-parts/_organisms/location-search.php:33
+#: template-parts/_organisms/location-search.php:34
+#: template-parts/_organisms/proximity-search.php:15
+msgid "Enter a town, city or postcode"
+msgstr ""
+
+#: template-parts/_organisms/location-search.php:34
+msgid "Please add a location"
+msgstr ""
+
+#: template-parts/_organisms/proximity-search.php:4
+msgid "Find a volunteering opportunity"
+msgstr ""
+
+#: template-parts/_organisms/proximity-search.php:27
+msgid "Proximity (e.g. 10 miles)"
+msgstr ""
+
+#. translators: %s: search query.
+#: template-parts/_templates/content-no-results.php:17
+#, php-format
+msgid "No results found for %s"
+msgstr ""
+
+#: template-parts/_templates/content-no-results.php:21
+msgid "No results found"
+msgstr ""
+
+#: template-parts/_templates/content-no-results.php:30
+msgid "You could try:"
+msgstr ""
+
+#: template-parts/_templates/content-no-results.php:32
+msgid "check your spelling"
+msgstr ""
+
+#: template-parts/_templates/content-no-results.php:33
+msgid "searching again using other words"
+msgstr ""
+
+#: template-parts/_templates/content-no-results.php:34
+msgid "contacting our helpline"
+msgstr ""
+
+#: template-parts/_templates/content-none.php:15
+msgid "No opportunities found"
+msgstr ""
+
+#: template-parts/_templates/content-none.php:17
+msgid "No services found"
+msgstr ""
+
+#: template-parts/_templates/content-none.php:19
+msgid "No posts found"
+msgstr ""
+
+#: template-parts/_templates/content-none.php:29
+msgid ""
+"We can’t seem to find what you’re looking for. Perhaps searching can help."
+msgstr ""
+
+#: template-search.php:19
+msgid "Search:"
+msgstr ""
+
+#: template-search.php:21
+msgid "Search this website"
+msgstr ""
+
+#. Theme Name of the plugin/theme
+msgid "dgwltd"
+msgstr ""
+
+#. Theme URI of the plugin/theme
+#. Author URI of the plugin/theme
+msgid "https://beta.actiononhearingloss.org.uk/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "A custom WordPress based Underscores.me"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "AOHL"
+msgstr ""
+
+#. Template Name of the plugin/theme
+msgid "dgwltd Home"
+msgstr ""
+
+#. Template Name of the plugin/theme
+msgid "Volunteer application form"
+msgstr ""
+
+#. Template Name of the plugin/theme
+msgid "Guide page"
+msgstr ""
+
+#. Template Name of the plugin/theme
+msgid "Opportunities results page"
+msgstr ""
+
+#. Template Name of the plugin/theme
+msgid "Services results page"
+msgstr ""
+
+#. Template Name of the plugin/theme
+msgid "Blog posts"
+msgstr ""
+
+#. Template Name of the plugin/theme
+msgid "Search page"
+msgstr ""

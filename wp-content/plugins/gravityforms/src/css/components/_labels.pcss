@@ -1,0 +1,55 @@
+/* -----------------------------------------------------------------------------
+ *
+ * Components: Labels
+ *
+ * ----------------------------------------------------------------------------- */
+
+li .section_label,
+li.field_setting > label {
+	color: var( --c-text );
+	display: block;
+	font-size: 0.8125rem;
+	font-weight: normal;
+	line-height: 1.21875rem;
+	margin-bottom: 0.7rem;
+}
+
+.panel-block-tabs__body--settings {
+
+	input[type="checkbox"]:checked + label {
+		color: var(--c-text);
+	}
+
+	li.field_setting {
+
+		select + div,
+		label + div {
+			margin-top: 0.9375rem;
+		}
+
+	}
+
+	li.post_custom_field_setting label + div {
+		margin-top: 0rem;
+	}
+
+	div#gform_input_mask {
+
+		select,
+		input {
+			margin-top: 0.5rem;
+		}
+
+	}
+
+}
+
+.gf_browser_chrome .ui-tabs-panel ul.panel-block-tabs__body--settings {
+
+	li div#field_input_name_container label.inline,
+	li div#autocomplete_attribute_container label.inline,
+	li.post_image_setting label.inline {
+		margin-bottom: 0.5rem !important;
+	}
+
+}

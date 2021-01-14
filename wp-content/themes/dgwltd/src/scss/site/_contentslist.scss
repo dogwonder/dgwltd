@@ -1,0 +1,33 @@
+//Page list
+.dgwltd-contents-list {
+  .dgwltd-contents-list__title {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+    font-weight: normal;
+  }
+  .dgwltd-contents-list__list {
+    list-style-type: none;
+    margin: 0 0 var(--gap-20);
+    li {
+      padding-top: 8px;
+      font-size: 1rem;
+      &:before {
+        display: inline-block;
+        content: "—";
+        font-weight: normal;
+        margin-right: 12px;
+      }
+      &.current_page_item {
+        > a {
+          text-decoration: none;
+          &:visited {
+            color: var(--text-color);
+          }
+        }
+        font-weight: $bold;
+        color: var(--text-color);
+      }
+    }
+  }
+}

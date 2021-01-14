@@ -1,0 +1,21 @@
+{
+    "short_name": "makehappy",
+    "name": "Makehappy",
+    "icons": [
+      {
+        "src": "/wp-content/themes/dgwltd/dist/images/fav/favicon-192x192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "/wp-content/themes/dgwltd/dist/images/fav/favicon-512x512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "/?source=pwa",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#0085d9"
+}

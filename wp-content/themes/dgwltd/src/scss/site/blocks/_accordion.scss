@@ -1,0 +1,19 @@
+
+//Accordion
+.dgwltd-block--accordion {
+    .govuk-accordion__open-all {
+      margin-bottom: var(--gap-10);
+      color: var(--highlight);
+    }
+    .govuk-accordion__section-header {
+      border-color: var(--border);
+    }
+    .govuk-accordion__section-button {
+      font-weight: $bold;
+      &:focus {
+        background-color: var(--focus);
+        box-shadow: 0 -2px var(--focus), 0 4px #0b0c0c;
+      }
+    }
+    .govuk-accordion__icon:before, .govuk-accordion__icon:after {}
+}
