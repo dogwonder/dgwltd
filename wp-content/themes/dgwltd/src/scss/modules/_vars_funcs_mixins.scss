@@ -59,8 +59,10 @@ $mq-breakpoints: (
 
   --text-color: hsl(98, 0%, 0%);
   --highlight: hsl(205, 100%, 18%); //#00466e
-  --primary: hsl(205, 100%, 18%); //#00466e;
-  --secondary: hsl(18, 86%, 58%); //#f8864c;
+
+  --primary: #bbf9fd; //#00466e;
+  --secondary: #f5c8fc; //#f8864c;
+
   --blue-light: hsl(205, 100%, 90%);
 
   --hover: hsl(205, 100%, 10%);

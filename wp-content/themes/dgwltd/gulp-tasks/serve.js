@@ -3,7 +3,7 @@ const browserSync = require('browser-sync').create();
 // Cleaning
 const serve = () => { 
     browserSync.init({
-        proxy: 'makehappy.loc'
+        proxy: 'dgwltd.loc'
     });
 };
 

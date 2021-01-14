@@ -68,6 +68,10 @@ body {
       > p:last-of-type {
         margin: 0 0 var(--gap-40);
       }
+      > ul, 
+      > ol {
+        margin-left: var(--gap-20);
+      }
     }
     .entry-heading {
       padding-top: var(--gap-40);

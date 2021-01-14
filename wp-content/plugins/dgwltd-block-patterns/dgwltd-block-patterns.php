@@ -46,7 +46,7 @@ if ( !class_exists( 'dgwltd__Block_Patterns' ) ) {
 
 			register_block_pattern_category(
 				'blocks',
-				array( 'label' => _x( 'Glyit', 'Block pattern category', 'dgwltd-block-patterns' ) )
+				array( 'label' => _x( 'dgwltd', 'Block pattern category', 'dgwltd-block-patterns' ) )
 			);
 		}
 
@@ -184,7 +184,7 @@ if ( !class_exists( 'dgwltd__Block_Patterns' ) ) {
 					<div class="wp-block-group has-text-color has-background dgwltd-block-group dgwltd-block-group--dark" style="background-color:#00466e;color:#000000"><div class="wp-block-group__inner-container">
 
 					<!-- wp:heading {"level":2} -->
-					<h2 class="has-white-color has-text-color">Make Happy is a creative facilitation and innovation consultancy.</h2>
+					<h2 class="has-white-color has-text-color">Dogwonder Ltd. is a web development agency.</h2>
 					<!-- /wp:heading -->
 
 					<!-- wp:columns -->
@@ -245,7 +245,7 @@ if ( !class_exists( 'dgwltd__Block_Patterns' ) ) {
 					<div class="wp-block-group has-text-color has-background dgwltd-block-group dgwltd-block-group--light" style="background-color:#fafafa;color:#000000"><div class="wp-block-group__inner-container">
 
 					<!-- wp:heading {"level":2} -->
-					<h2>Make Happy is a creative facilitation and innovation consultancy.</h2>
+					<h2>Dogwonder Ltd. is a web development agency.</h2>
 					<!-- /wp:heading -->
 
 					<!-- wp:columns -->
@@ -324,8 +324,8 @@ if ( !class_exists( 'dgwltd__Block_Patterns' ) ) {
 					            <!-- /wp:heading -->
 								<!-- wp:social-links -->
 								<ul class="wp-block-social-links">
-									<!-- wp:social-link {"url":"https://www.linkedin.com/company/makehappy/","service":"linkedin"} /-->
-									<!-- wp:social-link {"url":"hello@makehappy.co.uk","service":"mail"} /-->
+									<!-- wp:social-link {"url":"https://www.linkedin.com/company/dogwonder-ltd/","service":"linkedin"} /-->
+									<!-- wp:social-link {"url":"dogwonder@gmail.com","service":"mail"} /-->
 								</ul>
 								<!-- /wp:social-links -->
 							</div>
@@ -343,8 +343,8 @@ if ( !class_exists( 'dgwltd__Block_Patterns' ) ) {
 					            <!-- /wp:heading -->
 								<!-- wp:social-links -->
 								<ul class="wp-block-social-links">
-									<!-- wp:social-link {"url":"https://www.linkedin.com/company/makehappy/","service":"linkedin"} /-->
-									<!-- wp:social-link {"url":"hello@makehappy.co.uk","service":"mail"} /-->
+									<!-- wp:social-link {"url":"https://www.linkedin.com/company/dogwonder-ltd/","service":"linkedin"} /-->
+									<!-- wp:social-link {"url":"dogwonder@gmail.com","service":"mail"} /-->
 								</ul>
 								<!-- /wp:social-links -->
 							</div>
@@ -362,70 +362,8 @@ if ( !class_exists( 'dgwltd__Block_Patterns' ) ) {
 					            <!-- /wp:heading -->
 								<!-- wp:social-links -->
 								<ul class="wp-block-social-links">
-									<!-- wp:social-link {"url":"https://www.linkedin.com/company/makehappy/","service":"linkedin"} /-->
-									<!-- wp:social-link {"url":"hello@makehappy.co.uk","service":"mail"} /-->
-								</ul>
-								<!-- /wp:social-links -->
-							</div>
-						<!-- /wp:column -->
-					</div>
-					<!-- /wp:columns -->
-
-					<!-- wp:columns -->
-					<div class="wp-block-columns">
-						<!-- wp:column -->
-							<div class="wp-block-column">
-								<!-- wp:image {"align":"center","width":64,"height":64,"sizeSlug":"large","className":"is-style-default"} -->
-								<div class="wp-block-image is-style-default"><figure class="aligncenter size-large is-resized"><img src="https://s.w.org/images/core/5.5/don-quixote-03.jpg" alt="' . __( 'Pencil drawing of Don Quixote' ) . '" width="64" height="64"/></figure></div>
-								<!-- /wp:image -->
-                                <!-- wp:heading {"level":3} -->
-                                <h3>Name surname</h3>
-								<!-- /wp:heading -->
-								<!-- wp:heading {"level":4} -->
-                                <h4>Job Title</h4>
-					            <!-- /wp:heading -->
-								<!-- wp:social-links -->
-								<ul class="wp-block-social-links">
-									<!-- wp:social-link {"url":"https://www.linkedin.com/company/makehappy/","service":"linkedin"} /-->
-									<!-- wp:social-link {"url":"hello@makehappy.co.uk","service":"mail"} /-->
-								</ul>
-								<!-- /wp:social-links -->
-							</div>
-						<!-- /wp:column -->
-						<!-- wp:column -->
-							<div class="wp-block-column">
-								<!-- wp:image {"align":"center","width":64,"height":64,"sizeSlug":"large","className":"is-style-default"} -->
-								<div class="wp-block-image is-style-default"><figure class="aligncenter size-large is-resized"><img src="https://s.w.org/images/core/5.5/don-quixote-03.jpg" alt="' . __( 'Pencil drawing of Don Quixote' ) . '" width="64" height="64"/></figure></div>
-								<!-- /wp:image -->
-                                <!-- wp:heading {"level":3} -->
-                                <h3>Name surname</h3>
-								<!-- /wp:heading -->
-								<!-- wp:heading {"level":4} -->
-                                <h4>Job Title</h4>
-					            <!-- /wp:heading -->
-								<!-- wp:social-links -->
-								<ul class="wp-block-social-links">
-									<!-- wp:social-link {"url":"https://www.linkedin.com/company/makehappy/","service":"linkedin"} /-->
-									<!-- wp:social-link {"url":"hello@makehappy.co.uk","service":"mail"} /-->
-								</ul>
-								<!-- /wp:social-links -->
-							</div>
-						<!-- /wp:column -->
-						<!-- wp:column -->
-							<div class="wp-block-column">
-								<!-- wp:image {"align":"center","width":64,"height":64,"sizeSlug":"large","className":"is-style-default"} -->
-								<div class="wp-block-image is-style-default"><figure class="aligncenter size-large is-resized"><img src="https://s.w.org/images/core/5.5/don-quixote-03.jpg" alt="' . __( 'Pencil drawing of Don Quixote' ) . '" width="64" height="64"/></figure></div>
-								<!-- /wp:image -->
-                                <!-- wp:heading {"level":3} -->
-                                <h3>Name surname</h3>
-								<!-- /wp:heading -->
-								<!-- wp:heading {"level":4} -->
-                                <h4>Job Title</h4>
-					            <!-- /wp:heading -->
-								<!-- wp:social-links -->
-								<ul class="wp-block-social-links">
-									<!-- wp:social-link {"url":"https://www.linkedin.com/company/makehappy/","service":"linkedin"} /-->
-									<!-- wp:social-link {"url":"hello@makehappy.co.uk","service":"mail"} /-->
+									<!-- wp:social-link {"url":"https://www.linkedin.com/company/dogwonder-ltd/","service":"linkedin"} /-->
+									<!-- wp:social-link {"url":"dogwonder@gmail.com","service":"mail"} /-->
 								</ul>
 								<!-- /wp:social-links -->
 							</div>

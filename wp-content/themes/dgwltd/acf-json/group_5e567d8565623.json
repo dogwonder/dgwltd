@@ -61,7 +61,8 @@
             "choices": {
                 "white": "White",
                 "grey": "Grey",
-                "red": "Red"
+                "blue": "Blue",
+                "pink": "Pink"
             },
             "default_value": "white",
             "allow_null": 1,
@@ -148,5 +149,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1605624607
+    "modified": 1610644324
 }

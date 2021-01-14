@@ -159,7 +159,7 @@ $heights: (
 
 @each $value, $height in $heights {
   .height--#{$value} {
-    min-height: calc(#{$height} - 64px);
+    min-height: calc(#{$height} - 64px) !important;
   }
 }
 
