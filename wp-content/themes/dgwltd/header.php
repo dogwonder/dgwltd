@@ -71,7 +71,7 @@ if(is_search() || is_404()) {
 <meta name="twitter:description" content="<?php echo esc_attr($pdMetaInfo['description']) ?>">
 <meta name="twitter:image" content="<?php echo $pdMetaInfo['image'] ?>">
 <?php endif; //SEO plugin check ?>
-<!-- <script async defer data-domain="tropicalislescarnival.org" src="https://plausible.io/js/plausible.js"></script> -->
+<script async defer data-domain="dgw.ltd" src="https://plausible.io/js/plausible.js"></script>
 </head>
 <body <?php body_class(); ?>>
 <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
