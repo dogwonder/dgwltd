@@ -1,6 +1,6 @@
 .cookie-notice {
   display: none;
-  background-color: var(--blue-light);
+  background-color: var(--primary);
   border: 0;
   @include mq($from: desktop) {
     padding: 6px;
@@ -11,7 +11,7 @@
     @include rhythm(14, 25);
   }
   a {
-    color: var(--highlight);
+    color: var(--text-color);
   }
 
   .cookie-notice__content {
@@ -37,22 +37,22 @@
     margin: 10px 5px 5px;
     width:auto;
     border:0;
-    background-color: var(--highlight);
+    background-color: var(--primary);
     color:white;
     font-size: 14px;
     @include mq($from: desktop) {
       font-size: 12px;
       margin: 2px 0 0 5px;
       padding: 2px 8px;
-      color:var(--highlight);
+      color:var(--text-color);
       background-color: transparent;
-      border: 2px solid var(--highlight);
+      border: 2px solid var(--text-color);
     }
     text-decoration: none;
     box-shadow: none;
     &:focus,
     &:hover {
-      background-color: var(--highlight);
+      background-color: var(--text-color);
       color: white;
       cursor: pointer;
     }
