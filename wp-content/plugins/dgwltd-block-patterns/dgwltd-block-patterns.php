@@ -46,7 +46,7 @@ if ( !class_exists( 'dgwltd__Block_Patterns' ) ) {
 
 			register_block_pattern_category(
 				'blocks',
-				array( 'label' => _x( 'dgwltd', 'Block pattern category', 'dgwltd-block-patterns' ) )
+				array( 'label' => _x( 'DGW.ltd', 'Block pattern category', 'dgwltd-block-patterns' ) )
 			);
 		}
 

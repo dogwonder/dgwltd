@@ -6,12 +6,11 @@
   font-weight: bold;
   @include rhythm(18, 18);
   color: var(--button-text-color);
-  padding: 1rem 3rem 0.8rem 1rem;
+  padding: 1rem 0.8rem;
   margin: var(--gap-15) 0;
   text-decoration: none;
   border: 2px solid var(--button-background);
   background-color: var(--button-background);
-  border-radius: 0.5rem;
   box-shadow: none;
   cursor: pointer;
   @include mq($from: tablet) {

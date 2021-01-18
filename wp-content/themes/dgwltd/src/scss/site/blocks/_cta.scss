@@ -31,11 +31,32 @@
         .frame {
           display: flex;
           --x: 4;
-          --y: 3;
+          --y: 3; 
         }
-        // img {
-        //   border-radius: var(--radius);
-        // }
+        &.transform {
+          transform: rotate(5deg); 
+          position: relative;
+          flex-basis: calc(50% - 6rem);
+          .frame {
+            &:after {
+              content: "";
+              border-radius: var(--radius);
+              background-color: var(--border-dark);
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              left: 1.8rem;
+              top: 1.8rem;
+              z-index:1;
+            }
+          }
+          img {
+            z-index:2;
+            border-radius: var(--radius);
+            width:100%;
+          }
+          
+        }
       }
       .dgwltd-cta__content {
         padding: var(--gap-20) 0;
@@ -57,7 +78,13 @@
       .dgwltd-cta__inner {
         flex-direction: row-reverse;
       }
-      .dgwltd-cta__image {}
+      .dgwltd-cta__image {
+        &.transform {
+          align-items: flex-start;
+          transform: rotate(-5deg); 
+          margin-right: auto;
+        }
+      }
       .dgwltd-cta__content {
         @include mq($from: tablet) {
           padding: 0 0 0 var(--gap-40);

@@ -12,25 +12,13 @@ $page_template = get_page_template_slug( $parent );
 if($page_template !== 'template-guide.php') :
 
     $parentID = $post->ID;
-
-    //get the title or the override title
-    if(get_field('overide_title', $post->ID)) :
-        $pageTitle = get_field('overide_title', $post->ID);
-    else :
-        $pageTitle = get_the_title($post->ID);
-    endif;
+    $pageTitle = get_the_title($post->ID);
 
 else : 
     
     //Parent ID is the parent's ID
     $parentID = $parent;
-
-    //get the title or the override title
-    if(get_field('overide_title', $parent)) :
-        $pageTitle = get_field('overide_title', $parent);
-    else :
-        $pageTitle = get_the_title($parent);
-    endif;
+    $pageTitle = get_the_title($parent);
 
 endif;
 
@@ -68,7 +56,7 @@ if ( $childrenIds ) : ?>
 
     <aside class="dgwltd-navigation-container" role="complementary">
     <nav class="dgwltd-contents-list dgwltd-contents-list--pages" aria-label="Pages in this section" role="navigation">
-        <h2 class="dgwltd-contents-list__title"><?php esc_html_e('Contents', 'dgwltd') ?></h2>
+        <h4 class="dgwltd-contents-list__title"><?php esc_html_e('Contents', 'dgwltd') ?></h4>
         <ol class="dgwltd-contents-list__list">
 
             <?php //First get the parent title if it exists and if parent remove link ?>
@@ -90,11 +78,7 @@ if ( $childrenIds ) : ?>
             <?php while ($childpages_query->have_posts()) : $childpages_query->the_post(); ?>
                 <?php //$current = array_search( $post->ID, $childrenIds ); ?>
                 <?php //echo $current  ?>
-                <?php if(get_field('overide_title', $post->ID)) : ?>
-                <?php $childTitle = get_field('overide_title', $post->ID); ?>
-                <?php else : ?>
                 <?php $childTitle = get_the_title( $post->ID ); ?>
-                <?php endif; ?>
                 <li class="page_item<?php echo ($post->ID == $currentpostID ? ' current_page_item' : ''); ?>"<?php echo ($post->ID == $currentpostID ? ' aria-current="page"' : ''); ?>><a href="<?php echo get_permalink() ?>"><?php echo $childTitle; ?></a></li>
             <?php endwhile; ?>
             <?php wp_reset_postdata(); ?>

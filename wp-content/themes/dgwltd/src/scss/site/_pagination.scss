@@ -1,54 +1,17 @@
 .dgwltd-pagination {
   margin: var(--gap-30) 0;
+  
   .dgwltd-pagination__list {
     padding:0;
     list-style-type: none;
     display: flex;
     flex-direction: column;
   }
+
   .dgwltd-pagination__item {
     border-top: 1px solid var(--border);
   }
-  .dgwltd-pagination__link {
-    display: block;
-    text-decoration: none;
-    padding: var(--gap-15) var(--gap-10) var(--gap-20);
-    > * {
-      color: var(--alt);
-    }
-    &:hover {
-      > * {
-        color: var(--hover);
-      }
-    }
-    &:visited {
-      .dgwltd-pagination__link-title {
-        color: var(--alt);
-      }
-      &:hover {
-        > * {
-          color: var(--hover);
-        }
-      }
-    }
-    &:active,
-    &:focus {
-      background-color: var(--focus);
-      .dgwltd-pagination__item {
-        border-top: 1px solid var(--highlight);
-      }
-      .dgwltd-pagination__link-title, 
-      .dgwltd-pagination__link-label {
-        color: var(--highlight);
-      }
-      .dgwltd-pagination__link-icon {
-        fill: var(--highlight);
-      }
-    }
-  }
-  .dgwltd-pagination__item-pagination__link-icon {
-    width: 20px;
-  }
+  
   .dgwltd-pagination__link-title {
     display: block;
     font-weight: $bold;
@@ -56,14 +19,67 @@
       margin-left: var(--gap-5);
     }
   }
+
   .dgwltd-pagination__link-icon {
-    fill: var(--border);
+    fill: currentColor;
   }
+
   .dgwltd-pagination__link-label {
     font-size: 1rem;
     text-decoration: underline;
     margin: var(--gap-5) 0 0 23px;
     display: inline-block;
+  }
+
+  .dgwltd-pagination__link {
+    display: block;
+    text-decoration: none;
+    padding: var(--gap-15) var(--gap-10) var(--gap-20);
+    color: var(--highlight);
+    
+    > * {
+      color: currentColor;
+    }
+
+    &:hover {
+      > * {
+        color: var(--hover);
+      }
+      .dgwltd-pagination__link-icon {
+        fill: var(--hover);
+      }
+    }
+
+    &:visited {
+      > * {
+        color: var(--visited);
+      }
+      .dgwltd-pagination__link-icon {
+        fill: var(--visited);
+      }
+      &:hover {
+        > * {
+          color: var(--hover);
+        }
+        .dgwltd-pagination__link-icon {
+          fill: var(--hover);
+        }
+      }
+    }
+    &:active,
+    &:focus {
+      background-color: var(--focus);
+      .dgwltd-pagination__item {
+        border-top: 1px solid var(--text-color);
+      }
+      .dgwltd-pagination__link-title, 
+      .dgwltd-pagination__link-label {
+        color: var(--text-color);
+      }
+      .dgwltd-pagination__link-icon {
+        fill: var(--text-color);
+      }
+    }
   }
   &.dgwltd-pagination--pages {
     .dgwltd-pagination__list {

@@ -72,7 +72,7 @@ $block_template = array(
                 $imageMedium = $image['sizes']['dgwltd-medium']; 
                 $imageAlt =  esc_attr($image['alt']); 
                 ?>
-                <figure class="dgwltd-cta__image">
+                <figure class="dgwltd-cta__image transform">
                 <picture class="frame">
                 <source media="(min-width: 769px)" srcset="<?php echo ($imageMedium ?  $imageMedium : $imageSmall); ?>">
                 <img src="<?php echo $imageSmall; ?>" alt="<?php echo ($imageAlt ?  $imageAlt : ''); ?>" loading="lazy" />

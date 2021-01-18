@@ -12,8 +12,7 @@
 get_header();
 
 //Post parent ID (which can be 0 if there is no parent)
-$parent = wp_get_post_parent_id( $id )
-
+$parent = wp_get_post_parent_id( $id );
 
 //Check the page template so we can ignore stray parents
 $page_template = get_page_template_slug( $parent );
@@ -24,7 +23,9 @@ if (class_exists('acf')) {
 }
 ?>
 <div id="primary" class="govuk-width-container">
+
     <?php get_template_part('template-parts/_molecules/breadcrumb'); ?>
+
     <div class="govuk-main-wrapper">
     
     <?php while ( have_posts() ) : the_post(); ?>

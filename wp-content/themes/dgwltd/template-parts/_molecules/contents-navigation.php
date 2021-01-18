@@ -93,13 +93,7 @@ endif;
             <span class="visually-hidden">:</span>
             <?php if ($parent) : ?>
             <span class="dgwltd-pagination__link-label">
-                <?php 
-                if(get_field('overide_title', $prevId)) : 
-                    echo get_field('overide_title', $prevId); 
-                else : 
-                    echo get_the_title( $prevId );
-                endif; 
-                 ?>
+                <?php echo get_the_title( $prevId ); ?>
             </span>
             <?php endif; ?>
 		</a>
