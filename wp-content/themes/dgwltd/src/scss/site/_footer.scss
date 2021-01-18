@@ -46,14 +46,11 @@
       display: flex;
       align-items: center;
       text-align: center;
-      &:hover {
-        background-color: var(--highlight);
-      }
       &:focus {
         box-shadow: none;
         background-color: transparent;
         .icon-social {
-          fill: white;
+          fill: var(--alt);
         }
       }
     }
