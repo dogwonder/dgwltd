@@ -16,25 +16,6 @@ $nav-height: 64px;
   }
 }
 
-.fixed-header {
-  .dgwltd-masthead {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    background-color: transparent;
-  }
-  .entry-content .dgwltd-block:first-of-type {
-    padding-top: 78px !important;
-  }
-}
-
-.admin-bar.fixed-header {
-  .dgwltd-masthead {
-    top:32px;
-  }
-}
-
-
 
 .dgwltd-masthead-container {
   @include mq($until: desktop) {

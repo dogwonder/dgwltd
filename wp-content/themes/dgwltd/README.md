@@ -7,6 +7,7 @@
 | PHP >= 7.3.x    | `php -v`     | [php.net](http://php.net/manual/en/install.php) |
 | Node.js >= 12.0 | `node -v`    | [nodejs.org](http://nodejs.org/)                |
 | gulp >= 4.0.0   | `gulp -v`    | `npm install -g gulp`                           |
+| acfpro >= 5.9.4 |              | [advancedcustomfields.com](https://www.advancedcustomfields.com/pro/)         |
 
 ## Build
 
@@ -31,6 +32,10 @@ $govuk-font-family-gds-transport: "Helvetica Neue", Helvetica, Arial, sans-serif
 ```
 
 ## Custom blocks
+
+This requires [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/pro/). 
+
+These are saved in `dgwltd\acf-json`
 
 - DG Accordion - based on GOV.UK's [accordian pattern](https://design-system.service.gov.uk/components/accordion/) 
 - DG Cards - grid of cards linking to other pages, title, exerpt and featured image 

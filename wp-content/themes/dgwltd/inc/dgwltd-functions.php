@@ -16,13 +16,6 @@ function dgwltd_body_classes( $classes ) {
 	// Adds a class of hfeed to non-singular pages.
 
 	global $post;
-	
-	if (class_exists('acf')) {
-		$fixedHeader =  get_field('fixed_header', $post->ID) ? : '';
-		if($fixedHeader) {
-			$classes[] = 'fixed-header';
-		}
-	}
 
 	if ( ! is_singular() ) {
 		$classes[] = 'hfeed';
