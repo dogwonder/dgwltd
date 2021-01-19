@@ -110,10 +110,9 @@ if(is_search() || is_404()) {
 				) );
 				?>
 				</nav><!-- #site-navigation -->
-
 	
 		</div><!--/container-->
 
 	</header><!-- #masthead -->
 	
-	<main id="content" tabindex="-1" class="dgwltd-container">
+	<main id="content" class="dgwltd-container">
