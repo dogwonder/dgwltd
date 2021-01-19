@@ -38,15 +38,13 @@
     width:auto;
     border:0;
     background-color: var(--primary);
-    color:white;
+    color:var(--text-color);
+    border: 2px solid var(--text-color);
     font-size: 14px;
+    padding: 2px 8px;
     @include mq($from: desktop) {
       font-size: 12px;
       margin: 2px 0 0 5px;
-      padding: 2px 8px;
-      color:var(--text-color);
-      background-color: transparent;
-      border: 2px solid var(--text-color);
     }
     text-decoration: none;
     box-shadow: none;
@@ -58,7 +56,6 @@
     }
   }
 }
-
 
 .cookie-notice.open {
   display: flex;

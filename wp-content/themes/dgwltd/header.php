@@ -77,42 +77,10 @@ if(is_search() || is_404()) {
 <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
 <div id="page" class="dgwltd-wrapper">
 	<header id="masthead" class="dgwltd-masthead">
-		<div id="cookieNotice" class="cookie-notice" role="region" aria-label="cookie banner">
-			<noscript>
-			<style>
-			#cookieNotice {display:block;}
-			#cookieButton {display:none;}
-			</style>
-			</noscript>
-			<?php 
-			if (class_exists('acf') && get_field('cookie_notice_text', 'options')) :
-				echo get_field('cookie_notice_text', 'options');
-			else : ?>
-			<div class="cookie-notice__content">
-			<p class="cookie-notice__text">
-				<?php
-				$cookieUrl = '<a href="' . esc_url(home_url('/cookie-policy/')) . '">' . __('our cookie statement', 'dgwltd') . '</a>';
-				printf(
-					esc_html__('We use cookies to give you the best experience, read %s.', 'dgwltd'),
-					$cookieUrl
-				);
-				?>
-			</p>
-			<?php endif; ?>
-			<div class="cookie-notice__buttons">
-			<?php 
-			if (class_exists('acf') && get_field('cookie_notice_button_text', 'options')) : ?>
-			<button id="cookieButton" class="dgwltd-button" type="button">
-				<?php echo get_field('cookie_notice_button_text', 'options'); ?>
-			</button>
-			<?php else : ?>
-			<button id="cookieButton" class="dgwltd-button" type="button" aria-label="Accept cookies and close notice">
-				<?php esc_html_e('Accept and close', 'dgwltd') ?>
-			</button>
-			<?php endif; ?>
-			</div>
-			</div>
-		</div>
+		
+		<?php 
+		// Optional - if you need a cookie notice - also needs JS cookienotice() and cookies.scss
+		//get_template_part('template-parts/_organisms/cookie-notice'); ?>
 
 		<div id="skiplink-container">
 			<a href="#content" class="govuk-skip-link"><?php esc_html_e('Skip to main content', 'dgwltd') ?></a>
@@ -143,15 +111,9 @@ if(is_search() || is_404()) {
 				?>
 				</nav><!-- #site-navigation -->
 
-				<?php /* ?>
-				<div class="dgwltd-masthead__cta">
-					<a class="dgwltd-button m-r-5" href="<?php echo home_url( '/' ); ?>get-in-touch/" rel="home" title="<?php esc_html_e('Get certified', 'dgwltd' ) ?>"><?php esc_html_e('Get in touch', 'dgwltd' ) ?></a>
-				</div><!-- .masthead__logo -->
-				<?php */ ?>
-
 	
 		</div><!--/container-->
 
 	</header><!-- #masthead -->
 	
-	<main id="content" class="dgwltd-container">
+	<main id="content" tabindex="-1" class="dgwltd-container">

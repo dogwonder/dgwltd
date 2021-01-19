@@ -15,12 +15,14 @@
 
 
     &.has-image {
+
       .dgwltd-cta__inner {
         padding: 0;
         display: flex;
         flex-direction: column;
         @include mq($from: tablet) {
           flex-direction: row;
+          justify-content: space-between;
         }
       }
       .dgwltd-cta__image {
@@ -29,24 +31,35 @@
         }
         margin: 0;
         .frame {
+          @include mq($until: tablet) {
+            width:85%;
+            margin:0 auto 2rem;
+          }
           display: flex;
           --x: 4;
           --y: 3; 
         }
-        &.transform {
-          transform: rotate(5deg); 
+        &.transform { 
           position: relative;
-          flex-basis: calc(50% - 6rem);
+          @include mq($from: desktop) {
+            margin:0 auto;
+            flex-basis: calc(50% - 8rem);
+            transform: rotate(5deg); 
+          }
           .frame {
             &:after {
               content: "";
               border-radius: var(--radius);
-              background-color: var(--border-dark);
+              background-color: var(--alt);
               width: 100%;
               height: 100%;
               position: absolute;
-              left: 1.8rem;
-              top: 1.8rem;
+              left: 1rem;
+              top: 1rem;
+              @include mq($from: desktop) {
+                left: 1.5rem;
+                top: 1.5rem;
+              }
               z-index:1;
             }
           }
@@ -66,6 +79,28 @@
           padding: 0 var(--gap-40) 0 0;
         }
       }
+
+      &.dgwltd-section--blue {
+        .dgwltd-cta__image {
+          &.transform {
+            .frame:after {
+              background-color: var(--secondary-darker);
+            }
+          }
+        }
+      }
+    
+      &.dgwltd-section--pink {
+        .dgwltd-cta__image {
+        &.transform {
+            .frame:after {
+              background-color: var(--primary-darker);
+            }
+          }
+        }
+      }
+
+
     }
     
     .dgwltd-button {
@@ -76,13 +111,22 @@
     //Reversed
     &[data-state='reversed'] {
       .dgwltd-cta__inner {
-        flex-direction: row-reverse;
+        flex-direction: column-reverse;
+        @include mq($from: tablet) {
+          flex-direction: row-reverse;
+        }
+      }
+      .frame {
+        @include mq($until: tablet) {
+          margin:0 auto 2rem;
+        }
       }
       .dgwltd-cta__image {
         &.transform {
           align-items: flex-start;
-          transform: rotate(-5deg); 
-          margin-right: auto;
+          @include mq($from: tablet) {
+            transform: rotate(-5deg); 
+          }
         }
       }
       .dgwltd-cta__content {

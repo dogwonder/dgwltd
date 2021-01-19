@@ -60,8 +60,13 @@ $mq-breakpoints: (
   --text-color: hsl(98, 0%, 0%);
   --highlight: hsl(205, 100%, 20%); //#00466e
 
-  --primary: #bbf9fd; 
-  --secondary: #ebcefc;
+  --color-primary:184, 94%;
+  --color-secondary: 282, 84%;
+  --l: 88%;
+  --primary: hsl(var(--color-primary),var(--l));
+  --primary-darker: hsl(var(--color-primary),calc(var(--l) - 10%));
+  --secondary: hsl(var(--color-secondary),var(--l));
+  --secondary-darker: hsl(var(--color-secondary),calc(var(--l) - 10%));
 
   --blue: #00DBDE; 
   --pink: #d92ab8;

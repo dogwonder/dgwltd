@@ -171,21 +171,6 @@ import '../vendor/lite-youtube-embed'; //Vimeo embed - https://github.com/slight
 
     };
 
-    const subMenu = (elem)=>{    
-        
-        const menu = document.querySelector(elem);
-        const submenus = menu.querySelectorAll('.menu-item-has-children');
-
-        Array.prototype.forEach.call(submenus, function(el, i){
-            el.addEventListener("mouseover", function(event){
-                this.classList.add('menu-open');
-            });
-            el.addEventListener("mouseout", function(event){
-                this.classList.remove('menu-open');
-            });
-        });
-    };
-
     const a11yMenu = (elem)=>{    
 
         //https://www.w3.org/WAI/tutorials/menus/flyout/#flyoutnavmousefixed
@@ -193,6 +178,10 @@ import '../vendor/lite-youtube-embed'; //Vimeo embed - https://github.com/slight
         const menu = document.querySelector(elem);
         const submenus = menu.querySelectorAll('.menu-item-has-children');
         // console.log(submenus.length);
+
+        //If no classes found bail
+        // console.log(submenus);
+        if (!submenus) return;
 
         Array.prototype.forEach.call(submenus, function(el, i){
             let timer;
@@ -284,11 +273,10 @@ import '../vendor/lite-youtube-embed'; //Vimeo embed - https://github.com/slight
 
     //Init
     document.addEventListener("DOMContentLoaded", function() {
-        cookieSet();
-        toggleNav('#nav-toggle', '#nav-primary', '#masthead');
-        // subMenu('#nav-primary');
-        a11yMenu('#nav-primary');
+        // cookieSet(); // Optional
         // blockContrast('.has-background');
+        a11yMenu('#nav-primary');
+        toggleNav('#nav-toggle', '#nav-primary', '#masthead');
         cardClick('.dgwltd-card');
      });
     
