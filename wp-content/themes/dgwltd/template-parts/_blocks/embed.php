@@ -18,7 +18,7 @@ if( !empty($block['className']) ) {
 }
 
 $embed = get_field('embed', false, false) ? : '';
-$v = parse_video_uri( $embed ); 
+$v = dgwltd_parse_video_uri( $embed ); 
 $vid = $v['id'];
 //Classes
 $block_classes = array($className);

@@ -219,7 +219,7 @@ require get_template_directory() . '/inc/dgwltd-functions.php';
 /**
  * Functions for Advanced Custom Fields
  */
-require get_template_directory() . '/inc/dgwltd-acf.php';
+//require get_template_directory() . '/inc/dgwltd-acf.php';
 
 /**
  * Custom gutenberg blocks for this theme.

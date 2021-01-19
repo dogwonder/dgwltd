@@ -31,22 +31,22 @@ And replace font-family from `govuk/settings/_typography-font-families.scss`
 $govuk-font-family-gds-transport: "Helvetica Neue", Helvetica, Arial, sans-serif;
 ```
 
-## Custom blocks
+## Custom blocks (optional)
 
-This requires [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/pro/). 
+This requires [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/pro/). $$ - but it really is the great plugin ever made. 
 
 These are saved in `dgwltd\acf-json`
 
-- DG Accordion - based on GOV.UK's [accordian pattern](https://design-system.service.gov.uk/components/accordion/) 
-- DG Cards - grid of cards linking to other pages, title, exerpt and featured image 
-- DG CTA - call to action split text and image
-- DG Details - based on GOV.UK's [details pattern](https://design-system.service.gov.uk/components/details/)
-- DG Embed - lite embed custom element for [Youtube](https://github.com/paulirish/lite-youtube-embed) and [Vimeo](https://github.com/slightlyoff/lite-vimeo)
-- DG Feature - text and background image similar to hero but less showy
-- DG Image - custom image with aspect ratio variables
-- DG Hero - hero section with big image / video as background
-- DG Summary list - based on GOV.UK's [summary list pattern](https://design-system.service.gov.uk/components/summary-list/) 
-- DG Related pages - list of related links
+- DGW.ltd Accordion - based on GOV.UK's [accordian pattern](https://design-system.service.gov.uk/components/accordion/) 
+- DGW.ltd Cards - grid of cards linking to other pages, title, exerpt and featured image 
+- DGW.ltd CTA - call to action split text and image
+- DGW.ltd Details - based on GOV.UK's [details pattern](https://design-system.service.gov.uk/components/details/)
+- DGW.ltd Embed - lite embed custom element for [Youtube](https://github.com/paulirish/lite-youtube-embed) and [Vimeo](https://github.com/slightlyoff/lite-vimeo)
+- DGW.ltd Feature - text and background image similar to hero but less showy
+- DGW.ltd Image - custom image with aspect ratio variables
+- DGW.ltd Hero - hero section with big image / video as background
+- DGW.ltd Summary list - based on GOV.UK's [summary list pattern](https://design-system.service.gov.uk/components/summary-list/) 
+- DGW.ltd Related pages - list of related links
 
 ## Custom block patterns
 
@@ -64,7 +64,7 @@ Built as a plugin `dgwltd-block-patterns` this allows for pre-made collections o
 
 `template-layout.php` 
 
-For home and gateway pages, allows for full width blocks (e.g. DG Hero / DG Feature) these can be used in any post or page but would be restricted to a fixed width and look weird. 
+For home and gateway pages, allows for full width blocks (e.g. DGW.ltd Hero / DGW.ltd Feature) these can be used in any post or page but would be restricted to a fixed width and look weird. 
 
 
 ### Guide template

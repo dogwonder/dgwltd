@@ -88,7 +88,7 @@ if ( ! function_exists( 'dgwltd_env' ) ) :
 		$site_url = site_url();
 		switch ($env) {
 			case 'dev':
-				if(strpos($site_url, 'tropicalisles.test') !== FALSE) {
+				if(strpos($site_url, 'localhost:3000') !== FALSE) {
 					return true;
 				}
 				break;
@@ -110,9 +110,9 @@ function dgwltd_sort_dates( $a, $b ) {
 }
 endif;
 
-if ( ! function_exists( 'parse_video_uri' ) ) :
+if ( ! function_exists( 'dgwltd_parse_video_uri' ) ) :
 	/* Parse the video uri/url to determine the video type/source and the video id */
-	function parse_video_uri( $url ) {
+	function dgwltd_parse_video_uri( $url ) {
 			
 		// Parse the url 
 		$parse = parse_url( $url );
@@ -180,4 +180,4 @@ if ( ! function_exists( 'parse_video_uri' ) ) :
 			
 		}
 	}
-	endif;
+endif;
