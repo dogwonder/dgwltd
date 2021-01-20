@@ -20,13 +20,13 @@
       .dgwltd-feature__wrapper {
         position: relative;
         z-index:2;
-        width:100%;
-        margin:0;
-        padding: var(--gap-80) max(var(--gap-20), 50vw - var(--contentWidth) / 2);
+        display: grid;
+        //Then create a subgrid
+        grid-template-columns: 1fr minmax(min-content, var(--containerWidth)) 1fr;
         .dgwltd-feature__inner {
-          @include mq($from: desktop) {
-            max-width: 66.666%;
-          }
+          //Snap back to our container
+          grid-column: 2 / span 1;
+          padding:var(--gap-40) var(--gap-20);
         }
       }
     }

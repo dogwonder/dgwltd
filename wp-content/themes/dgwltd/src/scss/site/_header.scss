@@ -18,28 +18,15 @@ $nav-height: 64px;
 
 
 .dgwltd-masthead-container {
-  @include mq($until: desktop) {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    .dgwltd-masthead__logo {}
-    .dgwltd-nav {}
-    .dgwltd-masthead__cta {
-      grid-column: 1 / span 2;
-      text-align: center;
-      margin:var(--gap-20) auto;
-    }
-  }
+
+  position: relative;
   display: flex;
   flex-direction: row;
-  padding: var(--gap-20);
   justify-content: space-between;
-  max-width: var(--contentWidth);
-  @include mq($from: desktop) {
-    min-height: auto;  
-  }
   align-items: center;
-  position: relative;
-  width: 100%;
+
+  //Width
+  @extend %container;
 
   //Logo
   .dgwltd-masthead__logo {

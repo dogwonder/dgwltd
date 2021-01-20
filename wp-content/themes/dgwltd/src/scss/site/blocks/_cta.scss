@@ -2,9 +2,6 @@
 //CTA block
 .dgwltd-block--cta {
 
-    .dgwltd-cta__inner {
-      
-    }
 
     .dgwltd-cta__content {
       text-align: left;
@@ -15,14 +12,14 @@
 
 
     &.has-image {
-
       .dgwltd-cta__inner {
-        padding: 0;
         display: flex;
         flex-direction: column;
+        padding:var(--gap-40) var(--gap-20);
         @include mq($from: tablet) {
           flex-direction: row;
           justify-content: space-between;
+          padding:var(--gap-80) var(--gap-20);
         }
       }
       .dgwltd-cta__image {

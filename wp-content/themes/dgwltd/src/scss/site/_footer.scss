@@ -2,13 +2,13 @@
 .dgwltd-footer {
   padding: 0;
   border: 0;
-  // background-color: var(--highlight);
   background-color: var(--blue);
   background-image: linear-gradient(225deg, var(--blue) 0%, var(--pink) 100%);
   color: white;
   text-align: center;
   font-family: var(--sans);
   margin-top: var(--gap-40);
+
   ul li,
   p {
     font-size: 1rem;
@@ -16,9 +16,6 @@
   a,
   a:visited {
     color: white;
-  }
-  .govuk-width-container {
-    padding: var(--gap-40) var(--gap-20);
   }
 
   .govuk-footer__navigation {

@@ -27,17 +27,11 @@ body {
 
 //Content spacing - for header, footer and main content area
 .govuk-width-container {
-  max-width: var(--contentWidth);
-  margin: 0 auto;
-  padding: var(--gap-20);
-  @include mq($from: tablet) {
-    padding: var(--gap-40) var(--gap-20);
-  }
+  position: relative;
+  @extend %container;
   //Pages exception
   .page {
-    @include mq($from: desktop) {
-      max-width: 80%;
-    }
+    width: clamp(16rem, 90vw, var(--contentWidth));
   }
 }
 
@@ -50,21 +44,21 @@ body {
   .dgwltd-main-wrapper {
     .entry-heading, 
     .entry-content  {
+      //Allows for full width sections 
       display: grid;
-      grid-template-columns: 1fr minmax(min-content, var(--contentWidth)) 1fr;
+      grid-template-columns: 1fr minmax(min-content, var(--containerWidth)) 1fr;
       > * {
         grid-column: 2 / span 1;
         padding: 0 var(--gap-20);
-        // padding: var(--gap-40) var(--gap-20);
-        // @include mq($from: tablet) {
-        //   padding: var(--gap-80) var(--gap-20);
-        // }
       }
       > p, 
       > h2, 
       > h3 {
         padding-bottom: 0;
       }
+      // > p {
+      //   max-width: var(--contentWidth);
+      // }
       > p:last-of-type {
         margin: 0 0 var(--gap-40);
       }
@@ -101,17 +95,14 @@ body {
         grid-column: 1 / span all;
         padding:0;
         .wp-block-group__inner-container {
-          max-width: var(--contentWidth);
-          margin: 0 auto;
-          padding: var(--gap-40) var(--gap-20);
-          @include mq($from: tablet) {
-            padding: var(--gap-80) var(--gap-20);
-          }
+          //Width
+          position: relative;
+          @extend %container;
           > h1, 
           > h2, 
           > h3 {
             @include mq($from: tablet) {
-              max-width: 66.6666%
+              max-width: var(--contentWidth);
             }
           }
           > p:last-of-type {

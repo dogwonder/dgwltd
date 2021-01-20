@@ -45,6 +45,18 @@
 	left: -100%;
 }
 
+//Container
+%container, 
+.container {
+  //Wrapper utility https://piccalil.li/quick-tip/use-css-clamp-to-create-a-more-flexible-wrapper-utility
+  //90vw is the ideal with 16rem (256px) as min and 70rem (1120px) as max
+  width: 90vw;
+  width: clamp(16rem, 90vw, var(--containerWidth));
+  max-width: 100%; //override gov.uk
+  margin: 0 auto;
+  padding: var(--gap-20);
+}
+
 //Aspect ratio
 %frame, 
 .frame {

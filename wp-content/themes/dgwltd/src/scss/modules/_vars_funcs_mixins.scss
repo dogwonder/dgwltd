@@ -40,7 +40,8 @@ $mq-breakpoints: (
 //CSS Vars - usage var(--background)
 :root {
 
-  --contentWidth: 1140px;
+  --containerWidth: 70rem; //1120px
+  --contentWidth: 52rem; //832px
 
   //Typefaces, 300, 600, 700
   --serif: Georgia, serif; 
