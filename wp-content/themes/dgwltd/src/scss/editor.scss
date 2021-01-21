@@ -22,7 +22,8 @@
 [data-type='acf/dgwltd-feature'], 
 [data-type='acf/dgwltd-cta'], 
 [data-type='acf/dgwltd-cards'] {
-  max-width: 960px;
+  max-width:100%;
+  width: clamp(16rem, 90vw, 52rem);
   background-color: #f4f5f7;
   border: 1px solid #e5e7eb;
   box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
