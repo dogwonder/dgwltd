@@ -1,41 +1,30 @@
 <?php
+
 /**
- * Plugin Name:       dgwltd: Block Patterns
- * Plugin URI:        https://richholman.com
- * Description:       A collection of block patterns for displaying content.
- * Version:           1.0.0
- * License:           GPL version 3 or any later version
- * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
- * Text Domain:       dgwltd-block-patterns
+ * Define the block patterns
  *
- *     This plugin is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     any later version.
+ * Loads and defines the block patterns for this plugin
  *
- *     This plugin is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- *     GNU General Public License for more details.
+ * @link       https://dgw.ltd
+ * @since      1.0.0
+ *
+ * @package    Dgwltd_Blocks
+ * @subpackage Dgwltd_Blocks/includes
  */
 
-// Do not load directly.
-if ( ! defined( 'ABSPATH' ) ) {
-	die( '-1' );
-}
+/**
+ * Define the blocks functionality.
+ *
+ * Loads and defines the block patterns for this plugin
+ *
+ * @since      1.0.0
+ * @package    Dgwltd_Blocks
+ * @subpackage Dgwltd_Blocks/includes
+ * @author     Rich Holman <dogwonder@gmail.com>
+ */
+class Dgwltd_Blocks_Patterns {
 
-if ( !class_exists( 'dgwltd__Block_Patterns' ) ) {
-	class dgwltd__Block_Patterns {
-
-		/**
-		 * Extension initialization and hooks.
-		 */
-		
-		public function __construct() {
-			add_action( 'init', array( $this, 'dgwltd_register_block_categories' ) );
-			add_action( 'init', array( $this, 'dgwltd_register_block_patterns' ) );
-		}
-
+  
 		/**
 		 * Register Event Block Pattern Category
 		 */
@@ -383,29 +372,5 @@ if ( !class_exists( 'dgwltd__Block_Patterns' ) ) {
 				register_block_pattern( $pattern, $definition );
 			}
 		}
-	}
-	// Initialize the plugin
-	$initialisation = new dgwltd__Block_Patterns();
+
 }
-
-
-
-// Snippets
-
-// Check if active
-// /** Check if Ninja forms is active. */
-// if ( function_exists( 'ninja_forms' ) ) {
-// 	$content .= ' <!-- wp:ninja-forms/form {"formID":1,"formName":"Contact Me ( ID: 1 )"} -->
-// 		<div class="wp-block-ninja-forms-form">[ninja_forms id=1]</div>
-// 		<!-- /wp:ninja-forms/form -->';
-// 	/**
-// 	 * If not, display a message asking to install and activate the plugin.
-// 	 * -This can be improved to make sure that the message is not displayed to visitors.
-// 	*/
-// } elseif ( current_user_can( 'publish_posts' ) ) {
-// 	$content .= '<!-- wp:paragraph --><p>' . __( 'Please install a contact form plugin to use with this pattern.', 'text-domain' ) . '</p><!-- /wp:paragraph -->';
-// }
-
-// Image uri
-// <!-- wp:cover {"className":"theme-slug-contact-form", "url":"' . esc_url( get_theme_file_uri( 'assets/images/flora.png' ) ) . '",
-// 	"id":2038,"gradient":"blush-light-purple","contentPosition":"top center","align":"wide"} -->

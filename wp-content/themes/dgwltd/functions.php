@@ -119,7 +119,6 @@ if ( ! function_exists( 'dgwltd_setup' ) ) :
 		//Add editor style
 		add_theme_support( 'editor-styles' );
 		// add_editor_style(get_template_directory_uri() . '/dist/css/editor.css');
-		add_editor_style(get_template_directory_uri() . '/dist/css/editor.css?v=1584711386');
 
 		/*
 		* Adds starter content to highlight the theme on fresh sites.
@@ -219,12 +218,7 @@ require get_template_directory() . '/inc/dgwltd-functions.php';
 /**
  * Functions for Advanced Custom Fields
  */
-//require get_template_directory() . '/inc/dgwltd-acf.php';
-
-/**
- * Custom gutenberg blocks for this theme.
- */
-require get_template_directory() . '/inc/dgwltd-blocks.php';
+require get_template_directory() . '/inc/dgwltd-acf.php';
 
 /**
  * Functions for forms

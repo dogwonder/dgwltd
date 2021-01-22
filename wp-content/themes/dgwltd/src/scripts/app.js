@@ -1,7 +1,5 @@
 //Import ES6 dependencies - per ES6 imports, we can omit the `.js` at the end.
-import Cookies from '../vendor/js.cookie'; // Cookie functionality
-import '../vendor/lite-vimeo-embed'; //Youtube embed - https://github.com/paulirish/lite-youtube-embed
-import '../vendor/lite-youtube-embed'; //Vimeo embed - https://github.com/slightlyoff/lite-vimeo
+//import Cookies from '../vendor/js.cookie'; // Cookie functionality - optional
 
 ;(function () {
 
@@ -58,7 +56,6 @@ import '../vendor/lite-youtube-embed'; //Vimeo embed - https://github.com/slight
         //ES6 for depenencies
         // window.Cookies = require('js-cookie');
         
-
         // Cookie vars
         var cookieNotice = document.getElementById('cookieNotice');
         var cookieButton = document.getElementById('cookieButton');
