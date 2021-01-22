@@ -101,7 +101,7 @@ class Dgwltd_Blocks_Public {
 
 	}
 
-	public function dgwltd_parse_video_uri( $url ) {	
+	public static function dgwltd_parse_video_uri( $url ) {	
 		
 		// Parse the url 
 		$parse = parse_url( $url );
