@@ -16,7 +16,6 @@
     "gulp": "^4.0.2",
     "gulp-better-rollup": "^4.0.1",
     "gulp-clean-css": "^4.3.0",
-    "gulp-concat": "^2.6.1",
     "gulp-sass": "^4.1.0",
     "gulp-terser": "^2.0.0",
     "rollup": "^2.36.0",
@@ -24,8 +23,5 @@
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "sass": "^1.26.9"
-  },
-  "devDependencies": {
-    "merge-stream": "^2.0.0"
   }
 }

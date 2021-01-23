@@ -14,7 +14,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       dgwltd: Blocks
- * Plugin URI:        http://dgw.ltd
+ * Plugin URI:        http://dgw.ltd based on http://wppb.io // https://github.com/DevinVinson/WordPress-Plugin-Boilerplate
  * Description:       A collection of custom ACF blocks
  * Version:           1.0.0
  * Author:            Dogwonder Ltd
@@ -26,9 +26,7 @@
  */
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
-}
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
  * Currently plugin version.

@@ -74,7 +74,7 @@ class Dgwltd_Blocks_Public {
 		 * class.
 		 */
 
-		// wp_enqueue_style( $this->Dgwltd_Blocks, plugin_dir_url( __FILE__ ) . 'css/dgwltd-blocks-public.css', array(), $this->version, 'all' );
+		// wp_enqueue_style( $this->Dgwltd_Blocks, plugin_dir_url( __FILE__ ) . 'css/theme.css', array(), $this->version, 'all' );
 
 	}
 

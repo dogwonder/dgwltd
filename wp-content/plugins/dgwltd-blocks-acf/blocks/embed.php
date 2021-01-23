@@ -7,7 +7,6 @@
  * @param   bool $is_preview True during AJAX preview.
  * @param   (int|string) $post_id The post ID this block is saved to.
  */
-
 $id = 'block-' . $block['id'];
 if( !empty($block['anchor']) ) {
     $id = $block['anchor'];
@@ -19,7 +18,7 @@ if( !empty($block['className']) ) {
 }
 
 $embed = get_field('embed', false, false) ? : '';
-$v = Dgwltd_Blocks_Public::dgwltd_parse_video_uri( $embed ); 
+$v = dgwltd_parse_video_uri( $embed ); 
 $vid = $v['id'];
 //Classes
 $block_classes = array($className);
