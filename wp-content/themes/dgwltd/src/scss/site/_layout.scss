@@ -27,11 +27,10 @@ body {
 
 //Content spacing - for header, footer and main content area
 .govuk-width-container {
-  position: relative;
   @extend %container;
   //Pages exception
   .page {
-    width: clamp(16rem, 90vw, var(--contentWidth));
+    max-width: var(--contentWidth);
   }
 }
 
@@ -96,7 +95,6 @@ body {
         padding:0;
         .wp-block-group__inner-container {
           //Width
-          position: relative;
           @extend %container;
           > h1, 
           > h2, 

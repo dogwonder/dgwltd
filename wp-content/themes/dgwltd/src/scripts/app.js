@@ -81,6 +81,7 @@
 
     }
 
+
     //Vanilla nav toggle button
     const toggleNav = (button, elem, masthead)=>{
 
@@ -103,55 +104,71 @@
         // Init 
         // toggleNav('.navigation button', '.navigation ul');
 
+    
         const toggleMenu = document.querySelector(button);
         const menu = document.querySelector(elem);
         const header = document.querySelector(masthead);
+
+        //https://piccalil.li/tutorial/build-a-light-and-global-state-system
+
+        window.subscribers = [];
         
-        // console.log(menuHeight);
+        const defaultState = {
+            status: 'open',
+            enabled: false,
+        };
+
+        const state = new Proxy(defaultState, {
+            set(state, key, value) {
+                const oldState = {...state};
+
+                state[key] = value;
+
+                window.subscribers.forEach(callback => callback(state, oldState));
+
+                return state;
+            }
+        });
+
+        // console.log(state.enabled);
+
+        const observer = new ResizeObserver((observedItems) => {
+            const { contentRect } = observedItems[0];
+            state.enabled = contentRect.width <= '769';
+            // console.log(state.enabled);
+        });
+
+        observer.observe(header);
+
+        // header.setAttribute('status', state.status);
+        // header.setAttribute('enabled', state.enabled ? 'true' : 'false');
+        // header.setAttribute('status', state.status);
+
+        // console.log(state.enabled);
+        // console.log(state.status);
+
+        // if (!state.enabled) {
+        //     console.log('HI!');
+        //     return;
+        // }
+
+        // switch (state.status) {
+        //     case 'open':
+        //       break;
+        //     case 'closed':
+        //       break;
+        //   }
 
         toggleMenu.addEventListener('click', function(event) {
             // The JSON.parse function helps us convert the attribute from a string to a real boolean (true/false).
             const open = JSON.parse(toggleMenu.getAttribute('aria-expanded'));
-            // console.log(('#' + menu.id));
             // console.log(elem);
             toggleMenu.setAttribute('aria-expanded', !open);
-
-            //Close all other open menus
-            const openMenus = document.querySelectorAll('.nav-show');
-
-            openMenus.forEach(function (nav) {
-                // console.log('Open ' + nav.id);
-                // console.log('-----');
-                // console.log('Menu ' + menu.id);
-                if(nav.id !== menu.id) {
-                    //Remove other menu opened classes
-                    nav.classList.toggle('nav-show');
-                    // console.log('Open ' + nav.id);
-                    var otherNav = document.querySelector('[aria-controls="' + nav.id + '"]');
-                    // console.log(otherNav);
-                    //Change the other navigation open state
-                    otherNav.classList.remove('nav-open');
-
-                    //Toggle the masthead state (if open close it)
-                    header.classList.toggle('masthead-is-open');
-
-                    //Remove the header class for the other navigation
-                    header.classList.remove('open-' + nav.id);
-                }
-
-            });
-
             menu.classList.toggle('nav-show');
             toggleMenu.classList.toggle('nav-open');
 
-            //Menu height for offset
-            // console.log(menu.offsetHeight);
-            let root = document.documentElement; //Remove padding
-            root.style.setProperty('--submenu-offset', menu.offsetHeight + 'px');
-
             if (header) {
                 header.classList.toggle('masthead-is-open');
-                header.classList.toggle('open-' + menu.id);
             }
         });
 
@@ -162,7 +179,7 @@
             menu.classList.remove('nav-show');
             toggleMenu.classList.remove('nav-open');
             if (header) {
-            header.classList.remove('masthead-is-open');
+                header.classList.remove('masthead-is-open');
             }
         });
 

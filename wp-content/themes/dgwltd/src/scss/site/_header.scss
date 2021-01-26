@@ -336,6 +336,9 @@ $nav-height: 64px;
     }
   }
   .masthead-is-open {
+    .dgwltd-masthead-container {
+      width:100%;
+    }
     .main-navigation {
       .dgwltd-menu {
         display: block;

@@ -2,9 +2,9 @@
 .dgwltd-footer {
   padding: 0;
   border: 0;
-  background-color: var(--blue);
-  background-image: linear-gradient(225deg, var(--blue) 0%, var(--pink) 100%);
-  color: white;
+  background-color: var(--primary);
+  background-image: linear-gradient(225deg, var(--primary) 0%, var(--secondary) 100%);
+  color: var(--text-color);
   text-align: center;
   font-family: var(--sans);
   margin-top: var(--gap-40);
@@ -12,10 +12,6 @@
   ul li,
   p {
     font-size: 1rem;
-  }
-  a,
-  a:visited {
-    color: white;
   }
 
   .govuk-footer__navigation {
@@ -47,7 +43,7 @@
         box-shadow: none;
         background-color: transparent;
         .icon-social {
-          fill: var(--alt);
+          fill: var(--highlight);
         }
       }
     }
@@ -56,7 +52,6 @@
       height: 30px;
       margin:0;
       display: block;
-      fill: white;
     }
   }
 
@@ -79,9 +74,7 @@
         margin-bottom: var(--gap-5);
       }
       > a {
-        color: white;
         &:focus {
-          color:black !important;
           background-color: white;
           box-shadow: 0 4px black;
         }

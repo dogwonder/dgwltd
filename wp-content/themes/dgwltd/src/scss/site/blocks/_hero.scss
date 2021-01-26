@@ -23,17 +23,11 @@
         color:inherit;
       }
       .dgwltd-hero__wrapper {
-        position: relative;
         z-index:2;
-        width:100%;
-        display: grid;
-        grid-template-columns: 1fr minmax(min-content, var(--containerWidth)) 1fr;
+        //Width
+        @extend %container;
         .dgwltd-hero__inner {
-          grid-column: 2 / span 1;
-          padding:var(--gap-20);
-          .dgwltd-hero__content {
-            width: clamp(16rem, 90vw, var(--contentWidth));
-          }
+          max-width: var(--contentWidth);
         }
         h1 {
           margin-bottom:var(--gap-30);

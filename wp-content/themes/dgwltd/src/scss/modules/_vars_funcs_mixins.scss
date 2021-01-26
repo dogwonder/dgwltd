@@ -64,15 +64,10 @@ $mq-breakpoints: (
   --color-primary:184, 94%;
   --color-secondary: 282, 84%;
   --l: 88%;
-  --primary: hsl(var(--color-primary),var(--l));
+  --primary: hsl(var(--color-primary),var(--l)); //blue
   --primary-darker: hsl(var(--color-primary),calc(var(--l) - 10%));
-  --secondary: hsl(var(--color-secondary),var(--l));
+  --secondary: hsl(var(--color-secondary),var(--l));  //pink
   --secondary-darker: hsl(var(--color-secondary),calc(var(--l) - 10%));
-
-  --blue: #00DBDE; 
-  --pink: #d92ab8;
-
-  --blue-light: hsl(205, 100%, 90%);
 
   --hover: hsl(205, 100%, 10%);
   --visited: #4c2c92;
