@@ -102,19 +102,19 @@
         // #menu:not([hidden]) {pointer-events: all;}
 
         // Init 
-        // toggleNav('.navigation button', '.navigation ul');
+        // toggleNav('.navigation button', '.navigation ul', '#header');
 
     
-        const toggleMenu = document.querySelector(button);
+        const toggleButton = document.querySelector(button);
         const menu = document.querySelector(elem);
         const header = document.querySelector(masthead);
-
+        
         //https://piccalil.li/tutorial/build-a-light-and-global-state-system
 
         window.subscribers = [];
         
         const defaultState = {
-            status: 'open',
+            status: 'closed',
             enabled: false,
         };
 
@@ -130,113 +130,51 @@
             }
         });
 
-        // console.log(state.enabled);
-
         const observer = new ResizeObserver((observedItems) => {
             const { contentRect } = observedItems[0];
-            state.enabled = contentRect.width <= '769';
-            // console.log(state.enabled);
+            // console.log(contentRect);
+            // console.log(observedItems[0]);
+            if (contentRect.width <= '769') {
+                state.enabled = true;
+                observedItems[0].target.setAttribute('enabled', state.enabled);
+              } else {
+                state.enabled = false;
+                observedItems[0].target.setAttribute('enabled', state.enabled);
+            }
+            
         });
 
         observer.observe(header);
 
-        // header.setAttribute('status', state.status);
-        // header.setAttribute('enabled', state.enabled ? 'true' : 'false');
-        // header.setAttribute('status', state.status);
+        toggleButton.addEventListener('click', function(event) {
 
-        // console.log(state.enabled);
-        // console.log(state.status);
-
-        // if (!state.enabled) {
-        //     console.log('HI!');
-        //     return;
-        // }
-
-        // switch (state.status) {
-        //     case 'open':
-        //       break;
-        //     case 'closed':
-        //       break;
-        //   }
-
-        toggleMenu.addEventListener('click', function(event) {
             // The JSON.parse function helps us convert the attribute from a string to a real boolean (true/false).
-            const open = JSON.parse(toggleMenu.getAttribute('aria-expanded'));
-            // console.log(elem);
-            toggleMenu.setAttribute('aria-expanded', !open);
-            menu.classList.toggle('nav-show');
-            toggleMenu.classList.toggle('nav-open');
+            const open = JSON.parse(toggleButton.getAttribute('aria-expanded'));
+
+            state.status = open ? 'closed' : 'open';
+            toggleButton.setAttribute('aria-expanded', !open);
+            menu.setAttribute('status', state.status);
 
             if (header) {
                 header.classList.toggle('masthead-is-open');
             }
+
         });
 
         //Close menu if user clicks escape
         window.addEventListener('keydown', function(event) {
+
             if (!event.key.includes('Escape')) { return; }
-            toggleMenu.setAttribute('aria-expanded', 'false');
-            menu.classList.remove('nav-show');
-            toggleMenu.classList.remove('nav-open');
+            toggleButton.setAttribute('aria-expanded', 'false');
+            state.status = 'closed';
+            menu.setAttribute('status', state.status);
+
             if (header) {
                 header.classList.remove('masthead-is-open');
             }
+            
         });
 
-    };
-
-    const a11yMenu = (elem)=>{    
-
-        //https://www.w3.org/WAI/tutorials/menus/flyout/#flyoutnavmousefixed
-
-        const menu = document.querySelector(elem);
-        const submenus = menu.querySelectorAll('.menu-item-has-children');
-        // console.log(submenus.length);
-
-        //If no classes found bail
-        // console.log(submenus);
-        if (!submenus) return;
-
-        Array.prototype.forEach.call(submenus, function(el, i){
-            let timer;
-            // const submenu = el.querySelector('.sub-menu');
-            // console.log(el.querySelector('[aria-haspopup="true"]'));
-            el.addEventListener("mouseover", function(event){
-                this.classList.add('menu-open');
-                clearTimeout(timer);
-            });
-            el.addEventListener("mouseout", function(event){
-                timer = setTimeout(function(event){    
-                    el.classList.remove('menu-open');
-                }, 500);
-            });
-        });
-
-
-        //Use button as toggle
-        Array.prototype.forEach.call(submenus, function(el, i){
-            var activatingA = el.querySelector('a');
-            var btn = '<button class="button-show-subnav"><span class="visually-hidden">show submenu for "' + activatingA.text + '"</span></button>';
-            activatingA.insertAdjacentHTML('afterend', btn);
-        
-            el.querySelector('button').addEventListener("click",  function(event){
-
-                //Toggle menu open class
-                this.parentNode.classList.toggle('menu-open');
-
-                //Set aria attributes based on whether menu is open or closed
-                if (this.parentNode.classList.contains('menu-open')) {
-                    this.parentNode.querySelector('a').setAttribute('aria-expanded', "true");
-                    this.parentNode.querySelector('button').setAttribute('aria-expanded', "true");
-                } else {
-                    this.parentNode.querySelector('a').setAttribute('aria-expanded', "false");
-                    this.parentNode.querySelector('button').setAttribute('aria-expanded', "false");
-                }
-                event.preventDefault();
-                return false;
-            });
-        });
-        
     };
 
     const blockContrast = (elem)=>{    
@@ -289,8 +227,7 @@
     document.addEventListener("DOMContentLoaded", function() {
         // cookieSet(); // Optional
         // blockContrast('.has-background');
-        a11yMenu('#nav-primary');
-        toggleNav('#nav-toggle', '#nav-primary', '#masthead');
+        toggleNav('#nav-toggle', '#site-navigation', '#masthead');
         cardClick('.dgwltd-card');
      });
     

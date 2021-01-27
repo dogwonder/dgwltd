@@ -76,7 +76,7 @@ if(is_search() || is_404()) {
 <body <?php body_class(); ?>>
 <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
 <div id="page" class="dgwltd-wrapper">
-	<header id="masthead" class="dgwltd-masthead">
+	<header id="masthead" class="dgwltd-masthead" enabled="false">
 		
 		<?php 
 		// Optional - if you need a cookie notice - also needs JS cookienotice() and cookies.scss
@@ -95,7 +95,7 @@ if(is_search() || is_404()) {
 					</a>
 				</div><!-- .masthead__logo -->
 
-				<nav id="site-navigation" class="main-navigation dgwltd-nav" aria-label="primary">
+				<nav id="site-navigation" class="main-navigation dgwltd-nav" aria-label="primary" >
 				<button class="nav-toggle" id="nav-toggle" aria-label="Show or hide Top Level Navigation" aria-controls="nav-primary" aria-expanded="false">
 					<svg class="open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"/></svg>
 					<svg class="close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><line x1="75" y1="75" x2="439" y2="439"/><line x1="439" y1="75" x2="75" y2="439"/></svg>
