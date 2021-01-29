@@ -71,9 +71,9 @@ function dgwltd_get_starter_content() {
 				),
 			),
 
-			// Assign a menu to the "footer" location.
+			// Assign a menu to the "legal" location.
 			'legal'  => array(
-				'name'  => esc_html__( 'Legal menu', 'twentytwentyone' ),
+				'name'  => esc_html__( 'Legal menu', 'dgwltd' ),
 				'items' => array(
 				),
 			),

@@ -14,7 +14,10 @@
 - `npm run start` — Compile assets when file changes are made
 - `npm run production` — Compile assets for production
 
+
 ## Overrides for Framework
+
+This site uses the [GOV.UK design system](https://design-system.service.gov.uk) as the underlying framework. It's used pretty sparingly but userful for [components](https://design-system.service.gov.uk/components/) such as forms and other [layouts](https://design-system.service.gov.uk/styles/layout/)
 
 Comment out `govuk/helpers/_typography.scss` to remove GOV.UK typography
 
@@ -31,11 +34,19 @@ And replace font-family from `govuk/settings/_typography-font-families.scss`
 $govuk-font-family-gds-transport: "Helvetica Neue", Helvetica, Arial, sans-serif;
 ```
 
+## Other notable 3rd party integrations
+
+- [Photoswipe](Photoswipe) integration for galleries
+- [Youtube](https://github.com/paulirish/lite-youtube-embed) and [Vimeo](https://github.com/slightlyoff/lite-vimeo) lite plugins (render the video as a screenshot until a user interacts with the video to save bandwidth)
+- [js.cookie](https://github.com/js-cookie/js-cookie) (disabled) for cookie integration but the [example website](https://dgw.ltd) uses plausible analytics (see `header.php`) so we don't need to display a cookie banner. 
+
 ## Custom blocks (optional)
+
+These are actived via a custom plugin *dgwltd: Blocks*
 
 This requires [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/pro/). $$ - but it really is the great plugin ever made. 
 
-These are saved in `dgwltd\acf-json`
+These are saved in `wp-plugins\dgwltd-blocks\src\acf-json`
 
 - DGW.ltd Accordion - based on GOV.UK's [accordian pattern](https://design-system.service.gov.uk/components/accordion/) 
 - DGW.ltd Cards - grid of cards linking to other pages, title, exerpt and featured image 
@@ -50,13 +61,17 @@ These are saved in `dgwltd\acf-json`
 
 ## Custom block patterns
 
-Built as a plugin `dgwltd-block-patterns` this allows for pre-made collections of blocks, accessible under the 'DGW.ltd' in patterns dropdown
+Included in the plugin *dgwltd: Blocks* alkonhside the custom blocks this allows for pre-made collections of blocks, accessible under the 'DGW.ltd' in patterns dropdown
 
 - Supporters
 - FAQs
 - Columns - dark
 - Columns - light
 - Meet the team
+
+## Starter content (experimental)
+
+Sets up a few pages (home, about, contact and blog) and menus (prinary, footer and legal) located in `starter-content.php` this can be activated by using the Wordpress customiser. 
 
 ## Templates
 
