@@ -3149,32 +3149,73 @@ Content-Type: text/html;
 		return $local_timestamp - ( get_option( 'gmt_offset' ) * 3600 );
 	}
 
+	/**
+	 * Formats the given date/time for display.
+	 *
+	 * @since unknown
+	 * @since 2.4.23 Fixed empty default date and time options.
+	 *
+	 * @param string $gmt_datetime The UTC date/time value to be formatted.
+	 * @param bool   $is_human     Indicates if a human readable time difference such as "1 hour ago" should be returned when within 24hrs of the current time. Defaults to true.
+	 * @param string $date_format  The format the value should be returned in. Defaults to an empty string; the date format from the WordPress general settings, if configured, or Y-m-d.
+	 * @param bool   $include_time Indicates if the time should be included in the returned string. Defaults to true; the time format from the WordPress general settings, if configured, or H:i.
+	 *
+	 * @return string
+	 */
 	public static function format_date( $gmt_datetime, $is_human = true, $date_format = '', $include_time = true ) {
 		if ( empty( $gmt_datetime ) ) {
 			return '';
 		}
 
-		//adjusting date to local configured Time Zone
-		$lead_gmt_time   = mysql2date( 'G', $gmt_datetime );
-		$lead_local_time = self::get_local_timestamp( $lead_gmt_time );
-
-		if ( empty( $date_format ) ) {
-			$date_format = get_option( 'date_format' );
-		}
+		$gmt_time = mysql2date( 'G', $gmt_datetime );
 
 		if ( $is_human ) {
-			$time_diff = time() - $lead_gmt_time;
+			$time_diff = time() - $gmt_time;
 
-			if ( $time_diff > 0 && $time_diff < 24 * 60 * 60 ) {
-				$date_display = sprintf( esc_html__( '%s ago', 'gravityforms' ), human_time_diff( $lead_gmt_time ) );
-			} else {
-				$date_display = $include_time ? sprintf( esc_html__( '%1$s at %2$s', 'gravityforms' ), date_i18n( $date_format, $lead_local_time, true ), date_i18n( get_option( 'time_format' ), $lead_local_time, true ) ) : date_i18n( $date_format, $lead_local_time, true );
+			if ( $time_diff > 0 && $time_diff < DAY_IN_SECONDS ) {
+				return sprintf( esc_html__( '%s ago', 'gravityforms' ), human_time_diff( $gmt_time ) );
 			}
-		} else {
-			$date_display = $include_time ? sprintf( esc_html__( '%1$s at %2$s', 'gravityforms' ), date_i18n( $date_format, $lead_local_time, true ), date_i18n( get_option( 'time_format' ), $lead_local_time, true ) ) : date_i18n( $date_format, $lead_local_time, true );
 		}
 
-		return $date_display;
+		$local_time = self::get_local_timestamp( $gmt_time );
+
+		if ( empty( $date_format ) ) {
+			$date_format = self::get_default_date_format();
+		}
+
+		if ( $include_time ) {
+			$time_format = self::get_default_time_format();
+
+			return sprintf( esc_html__( '%1$s at %2$s', 'gravityforms' ), date_i18n( $date_format, $local_time, true ), date_i18n( $time_format, $local_time, true ) );
+		}
+
+		return date_i18n( $date_format, $local_time, true );
+	}
+
+	/**
+	 * Returns the date format from the WordPress general settings, if configured, or Y-m-d.
+	 *
+	 * @since 2.4.23
+	 *
+	 * @return string
+	 */
+	public static function get_default_date_format() {
+		$date_format = trim( get_option( 'date_format' ) );
+
+		return $date_format ? $date_format : 'Y-m-d';
+	}
+
+	/**
+	 * Returns the time format from the WordPress general settings, if configured, or H:i.
+	 *
+	 * @since 2.4.23
+	 *
+	 * @return string
+	 */
+	public static function get_default_time_format() {
+		$time_format = trim( get_option( 'time_format' ) );
+
+		return $time_format ? $time_format : 'H:i';
 	}
 
 	public static function get_selection_value( $value ) {
@@ -3913,20 +3954,35 @@ Content-Type: text/html;
 		return self::match_file_extension( $file_name, self::get_disallowed_file_extensions() ) || strpos( strtolower( $file_name ), '.php.' ) !== false;
 	}
 
+	/**
+	 * Check the file type/extension to ensure it's allowed, and that the extension matches the actual file type.
+	 *
+	 * @since unknown
+	 *
+	 * @param array  $file      The file array.
+	 * @param string $file_name The file name.
+	 *
+	 * @return bool|WP_Error
+	 */
 	public static function check_type_and_ext( $file, $file_name = '' ) {
 		if ( empty( $file_name ) ) {
 			$file_name = $file['name'];
 		}
-		$tmp_name = $file['tmp_name'];
-		// Whitelist the mime type and extension
-		$wp_filetype     = wp_check_filetype_and_ext( $tmp_name, $file_name );
-		$ext             = empty( $wp_filetype['ext'] ) ? '' : $wp_filetype['ext'];
-		$type            = empty( $wp_filetype['type'] ) ? '' : $wp_filetype['type'];
-		$proper_filename = empty( $wp_filetype['proper_filename'] ) ? '' : $wp_filetype['proper_filename'];
 
-		if ( $proper_filename ) {
+		$tmp_name = $file['tmp_name'];
+
+		// Use wp_check_filetype_and_ext() to verify the details of the file.
+		$wp_filetype     = wp_check_filetype_and_ext( $tmp_name, $file_name );
+		$ext             = $wp_filetype['ext'];
+		$type            = $wp_filetype['type'];
+		$proper_filename = $wp_filetype['proper_filename'];
+
+		// When a proper_filename value exists, it could be a security issue if it's different than the original file name.
+		if ( $proper_filename && strtolower( $proper_filename ) !== strtolower( $file_name ) ) {
 			return new WP_Error( 'invalid_file', esc_html__( 'There was an problem while verifying your file.' ) );
 		}
+
+		// If either $ext or $type are empty, WordPress doesn't like this file and we should bail.
 		if ( ! $ext ) {
 			return new WP_Error( 'illegal_extension', esc_html__( 'Sorry, this file extension is not permitted for security reasons.' ) );
 		}
@@ -5226,6 +5282,8 @@ Content-Type: text/html;
 				'conditionalLogicHelperText' => __( 'To use conditional logic, please create a field that supports conditional logic.', 'gravityforms' ),
 				'categories'                 => GFForms::get_post_category_options(),
 				'addressOptions'             => GFForms::get_address_rule_value_options( rgget( 'id' ) ),
+				'addRuleText'                => __( 'add another rule', 'gravityforms' ),
+				'removeRuleText'             => __( 'remove this rule', 'gravityforms' ),
 			);
 		}
 
@@ -6021,6 +6079,43 @@ Content-Type: text/html;
 		return false;
 	}
 
+	/**
+	 * Localize i18n strings needed for admin and theme.
+	 *
+	 * @since 2.5
+	 */
+	public static function localize_gform_i18n() {
+		wp_localize_script(
+			'gform_gravityforms', 'gform_i18n', array(
+				'datepicker' => array(
+					'days'   => array(
+						'monday'    => esc_html__( 'Mon', 'gravityforms' ),
+						'tuesday'   => esc_html__( 'Tue', 'gravityforms' ),
+						'wednesday' => esc_html__( 'Wed', 'gravityforms' ),
+						'thursday'  => esc_html__( 'Thu', 'gravityforms' ),
+						'friday'    => esc_html__( 'Fri', 'gravityforms' ),
+						'saturday'  => esc_html__( 'Sat', 'gravityforms' ),
+						'sunday'    => esc_html__( 'Sun', 'gravityforms' ),
+					),
+					'months' => array(
+						'january'   => esc_html__( 'January', 'gravityforms' ),
+						'february'  => esc_html__( 'February', 'gravityforms' ),
+						'march'     => esc_html__( 'March', 'gravityforms' ),
+						'april'     => esc_html__( 'April', 'gravityforms' ),
+						'may'       => esc_html__( 'May', 'gravityforms' ),
+						'june'      => esc_html__( 'June', 'gravityforms' ),
+						'july'      => esc_html__( 'July', 'gravityforms' ),
+						'august'    => esc_html__( 'August', 'gravityforms' ),
+						'september' => esc_html__( 'September', 'gravityforms' ),
+						'october'   => esc_html__( 'October', 'gravityforms' ),
+						'november'  => esc_html__( 'November', 'gravityforms' ),
+						'december'  => esc_html__( 'December', 'gravityforms' ),
+					),
+				),
+			)
+		);
+	}
+
 	public static function localize_gform_gravityforms_multifile() {
 		wp_localize_script(
 			'gform_gravityforms', 'gform_gravityforms', array(
@@ -6055,6 +6150,26 @@ Content-Type: text/html;
 	public static function localize_legacy_check( $script ) {
 			$form = RGFormsModel::get_form_meta( rgget( 'id' ) );
 			wp_localize_script( $script, 'gf_legacy', array( 'is_legacy' => GFCommon::is_legacy_markup_enabled( $form ) ) );
+	}
+
+	/**
+	 * Localize legacy checks for each form on the page.
+	 *
+	 * @since 2.5
+	 *
+	 * @see gform_gf_legacy_multi
+	 */
+	public static function localize_gf_legacy_multi() {
+
+		/**
+		 * Allows users to filter the legacy checks for any form on the page.
+		 *
+		 * @since 2.5
+		 *
+		 * @param array
+		 */
+		$data = apply_filters( 'gform_gf_legacy_multi', array() );
+		wp_localize_script( 'gform_gravityforms', 'gf_legacy_multi', $data );
 	}
 
 	public static function send_resume_link( $message, $subject, $email, $embed_url, $resume_token ) {
@@ -6879,6 +6994,8 @@ Content-Type: text/html;
 			return sprintf( '<i class="fa %s"></i>', esc_attr( $icon ) );
 		} else if ( strpos( $icon, 'dashicons' ) === 0 ) {
 			return sprintf( '<i class="dashicons %s"></i>', esc_attr( $icon ) );
+		} else if ( strpos( $icon, 'gform-icon' ) === 0 ) {
+			return sprintf( '<i class="gform-icon %s"></i>', esc_attr( $icon ) );
 		}
 
 		return null;

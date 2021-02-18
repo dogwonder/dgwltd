@@ -195,7 +195,7 @@ class GF_Field extends stdClass implements ArrayAccess {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a dashicons class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.5
 	 *
@@ -1178,7 +1178,7 @@ class GF_Field extends stdClass implements ArrayAccess {
 				<span class="gfield-field-action__description">' . esc_html__( 'Move', 'gravityforms' ) . '</span>
 			</span>';
 
-		$field_icon = '<span class="gfield-field-action gfield-icon dashicons ' . $this->get_form_editor_field_icon() . '"></span>';
+		$field_icon = '<span class="gfield-field-action gfield-icon">' . GFCommon::get_icon_markup( array( 'icon' => $this->get_form_editor_field_icon() ) ) . '</span>';
 
 		$admin_buttons = "
 			<div class='gfield-admin-icons'>

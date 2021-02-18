@@ -25,6 +25,19 @@ class GF_Field_Total extends GF_Field {
 	}
 
 	/**
+	 * Returns the field's form editor icon.
+	 *
+	 * This could be an icon url or a gform-icon class.
+	 *
+	 * @since 2.5
+	 *
+	 * @return string
+	 */
+	public function get_form_editor_field_icon() {
+		return 'gform-icon--total';
+	}
+
+	/**
 	 * Returns the HTML markup for the field's containing element.
 	 *
 	 * @since 2.5

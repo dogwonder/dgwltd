@@ -45,7 +45,12 @@ $mq-breakpoints: (
 
   //Typefaces, 300, 600, 700
   --serif: Georgia, serif; 
-  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+  //System font as default
+  --sans: -apple-system, BlinkMacSystemFont,
+  "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+  "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
 
   --background: #ffffff;
   --alt: #fafafa;

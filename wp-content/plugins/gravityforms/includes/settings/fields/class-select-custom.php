@@ -143,15 +143,14 @@ class Select_Custom extends Base {
 		$html = $this->get_description();
 
 		$html .= sprintf(
-			'<span class="%s">%s<div class="gform-settings-select-custom__custom" %s>%s%s</div></span>', // @todo Change class prefix.
+			'<span class="%s">%s<div class="gform-settings-select-custom__custom" %s>%s%s</div>%s</span>',
 			esc_attr( $this->get_container_classes() ),
 			$this->inputs['select']->markup(),
 			$custom_input_display,
 			count( $this->inputs['select']->choices ) > 1 ? '<button type="button" class="gform-settings-select-custom__reset"><span class="screen-reader-text">' . esc_html__( 'Reset', 'gravityforms' ) . '</span></button>' : '',
-			$this->inputs['custom']->markup()
+			$this->inputs['custom']->markup(),
+			$this->get_error_icon()
 		);
-
-		$html .= $this->get_error_icon();
 
 		return $html;
 

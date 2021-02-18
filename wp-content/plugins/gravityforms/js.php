@@ -1176,6 +1176,31 @@ if ( ! class_exists( 'GFForms' ) ) {
 		mysack.onError = function () {
 			alert(<?php echo json_encode( esc_html__( 'Ajax error while adding field', 'gravityforms' ) ); ?>)
 		};
+
+		mysack.onCompletion = function() {
+			/**
+			 * Do something after we make an AJAX call to get a field preview.
+			 *
+			 * @since 2.5
+			 *
+			 * @param {object} form  The Form object
+			 * @param {object} field The field for which the preview was refreshed.
+			 * @param {string} index The index of the affected field.
+			 */
+			gform.doAction( 'gform_after_get_field_markup', form, field, index );
+		};
+
+		/**
+		 * Do something before we make an AJAX call to get a field preview.
+		 *
+		 * @since 2.5
+		 *
+		 * @param {object} form  The Form object
+		 * @param {object} field The field for which the preview was refreshed.
+		 * @param {string} index The index of the affected field.
+		 */
+		gform.doAction( 'gform_before_get_field_markup', form, field, index );
+
 		mysack.runAJAX();
 
 		return true;
@@ -1204,6 +1229,15 @@ if ( ! class_exists( 'GFForms' ) ) {
 			field = GetSelectedField();
 		var fieldId = field.id,
 			data = {'action': 'rg_refresh_field_preview', 'rg_refresh_field_preview': '<?php echo wp_create_nonce( 'rg_refresh_field_preview' ) ?>', 'field': jQuery.toJSON(field), 'formId': form.id};
+
+		/**
+		 * Do something before a field's preview has been refreshed.
+		 *
+		 * @since 2.5
+		 *
+		 * @param {string} The field ID for which the preview was refreshed.
+		 */
+		gform.doAction( 'gform_before_refresh_field_preview', field.id );
 
 		jQuery.post(ajaxurl, data,
 			function (data) {

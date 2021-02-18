@@ -40,6 +40,17 @@ $govuk-font-family-gds-transport: "Helvetica Neue", Helvetica, Arial, sans-serif
 - [Youtube](https://github.com/paulirish/lite-youtube-embed) and [Vimeo](https://github.com/slightlyoff/lite-vimeo) lite plugins (render the video as a screenshot until a user interacts with the video to save bandwidth)
 - [js.cookie](https://github.com/js-cookie/js-cookie) (disabled) for cookie integration but the [example website](https://dgw.ltd) uses plausible analytics (see `header.php`) so we don't need to display a cookie banner. 
 
+
+## Analytics
+
+I am using [Plausible.io](https://plausible.io/simple-web-analytics) a simple privacy focused analyics service, as such I don't need to set a cookie banner. 
+
+Obviously you would want to add you'r own analytics so replace `<script async defer data-domain="dgw.ltd" src="https://plausible.io/js/plausible.js"></script>` from `header.php`
+
+Note: if you do use Plausible you can [exclude it](https://plausible.io/docs/excluding) recording your own visits by pasting this into the developer console `localStorage.plausible_ignore=true`
+
+
+
 ## Custom blocks (optional)
 
 These are actived via a custom plugin *dgwltd: Blocks*
@@ -79,7 +90,7 @@ Sets up a few pages (home, about, contact and blog) and menus (prinary, footer a
 
 `template-layout.php` 
 
-For home and gateway pages, allows for full width blocks (e.g. DGW.ltd Hero / DGW.ltd Feature) these can be used in any post or page but would be restricted to a fixed width and look weird. 
+For home and gateway pages, allows for full width blocks (e.g. DGW.ltd Hero / DGW.ltd Feature) these can be used in any post or page but would be restricted to a fixed width and look weird. This also removes the page title (can be re-added via a heading block)
 
 
 ### Guide template

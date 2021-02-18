@@ -2151,7 +2151,20 @@ function gformValidateFileSize( field, max_file_size ) {
                 html = "<button class='gform_delete_file' onclick='gformDeleteUploadedFile(" + formId + "," + fieldId + ", this);'><span class='dashicons dashicons-trash' aria-hidden='true'></span><span class='screen-reader-text'>" + strings.delete_file + ': ' + file.name + "</span></button> " + html;
             }
 
-            html = gform.applyFilters( 'gform_file_upload_markup', html, file, up, strings, imagesUrl );
+	        /**
+	         * Allows the markup for the file to be overridden.
+	         *
+	         * @since 1.9
+	         * @since 2.4.23 Added the response param.
+	         *
+	         * @param {string} html      The HTML for the file name and delete button.
+	         * @param {object} file      The file upload properties. See: https://www.plupload.com/docs/v2/File.
+	         * @param {object} up        The uploader properties. See: https://www.plupload.com/docs/v2/Uploader.
+	         * @param {object} strings   Localized strings relating to file uploads.
+	         * @param {string} imagesURL The base URL to the Gravity Forms images directory.
+	         * @param {object} response  The response from GFAsyncUpload.
+	         */
+	        html = gform.applyFilters( 'gform_file_upload_markup', html, file, up, strings, imagesUrl, response );
 
             $( '#' + file.id ).html( html );
 
@@ -2505,6 +2518,20 @@ jQuery( document ).ready( function() {
 	jQuery( document ).on( 'click', function( e ) {
 		if ( ! jQuery( e.target ).closest( '#gform-form-toolbar__menu .has_submenu' ).length ) {
 			jQuery( '.gform-form-toolbar__submenu.open' ).removeClass( 'open' );
+		}
+	} );
+} );
+
+/**
+ * Add a containing class to fields with multiple inputs that we want to display inline.
+ *
+ * @since 2.5
+ */
+jQuery( document ).ready( function() {
+	var settingsFields = jQuery( '.gform-settings-field' );
+	settingsFields.each( function() {
+		if ( jQuery( this ).find( '> .gform-settings-input__container' ).length > 1 ) {
+			jQuery( this ).addClass( 'gform-settings-field--multiple-inputs' );
 		}
 	} );
 } );

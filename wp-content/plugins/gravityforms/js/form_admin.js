@@ -159,9 +159,21 @@ function CreateConditionalLogic(objectType, obj){
         str += GetRuleFields(objectType, i, rule.fieldId);
         str += GetRuleOperators(objectType, i, rule.fieldId, rule.operator);
         str += GetRuleValues(objectType, i, rule.fieldId, rule.value);
-        str += "<button type='button' class='add_field_choice' title='add another rule' onclick=\"InsertRule('" + objectType + "', " + (i+1) + ");\" onkeypress=\"InsertRule('" + objectType + "', " + (i+1) + ");\" ></button>";
+        str += "<button " +
+            "type='button' " +
+            "class='add_field_choice gform-st-icon gform-st-icon--circle-plus' " +
+            "title='add another rule' " +
+            "onclick=\"InsertRule('" + objectType + "', " + (i+1) + ");\" " +
+            "onkeypress=\"InsertRule('" + objectType + "', " + (i+1) + ");\"" +
+            "></button>";
         if(obj.conditionalLogic.rules.length > 1 )
-            str += "<button type='button' class='delete_field_choice' title='remove this rule' onclick=\"DeleteRule('" + objectType + "', " + i + ");\" onkeypress=\"DeleteRule('" + objectType + "', " + i + ");\" ></button></li>";
+            str += "<button " +
+                "type='button' " +
+                "class='delete_field_choice gform-st-icon gform-st-icon--circle-minus' " +
+                "title='remove this rule' " +
+                "onclick=\"DeleteRule('" + objectType + "', " + i + ");\" " +
+                "onkeypress=\"DeleteRule('" + objectType + "', " + i + ");\"" +
+                "></button></li>";
 
         str += "</div>";
     }

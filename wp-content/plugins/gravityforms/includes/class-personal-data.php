@@ -151,7 +151,7 @@ class GF_Personal_Data {
 						'tooltip'     => gform_tooltip( 'personal_data_enable', null, true ),
 						'disabled'    => empty( $identification_field_choices ),
 						'after_input' => ! empty( $identification_field_choices ) ? '' : sprintf(
-							'<div class="alert error">%s</div>',
+							'<div class="notice-error gf-notice alert error">%s</div>',
 							esc_html__( 'You must add an email address field to the form in order to enable this setting.', 'gravityforms' )
 						),
 					),

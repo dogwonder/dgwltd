@@ -248,6 +248,7 @@ abstract class GFAddOn {
 	 * Override this function to add initialization code (i.e. hooks) for the admin site (WP dashboard)
 	 */
 	public function init_admin() {
+		$this->maybe_cache_gravityapi_oauth_response();
 
 		// enqueues admin scripts
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ), 10, 0 );
@@ -341,6 +342,54 @@ abstract class GFAddOn {
 		add_filter( 'gform_print_styles', array( $this, 'enqueue_print_styles' ), 10, 2 );
 		add_action( 'gform_enqueue_scripts', array( $this, 'enqueue_scripts' ), 10, 2 );
 
+	}
+
+	/**
+	 * Check for a response from the Gravity API and temporarily cache the value to a transient.
+	 *
+	 * This method cannot be extended because it's intended for use only by first-party Gravity Forms add-ons.
+	 *
+	 * @since 2.4.23
+	 */
+	private function maybe_cache_gravityapi_oauth_response() {
+		GFForms::include_gravity_api();
+
+		$referer     = isset( $_SERVER['HTTP_REFERER'] ) ? wp_parse_url( esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) ) : array();
+		$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? wp_parse_url( esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) ) : array();
+
+		if (
+			( rgar( $referer, 'host' ) !== rgar( wp_parse_url( GRAVITY_API_URL ), 'host' ) )
+			|| empty( $request_uri )
+		) {
+			return;
+		}
+
+		// Set up post data.
+		$data = array_filter(
+			array(
+				'auth_payload' => sanitize_text_field( rgpost( 'auth_payload' ) ),
+				'state'        => sanitize_text_field( rgpost( 'state' ) ),
+			)
+		);
+
+		// Get the query string to check which add-on is being authenticated.
+		parse_str(
+			rgar( $request_uri, 'query' ),
+			$query
+		);
+
+		$addon = rgar( $query, 'subview' );
+
+		if (
+			// Couldn't determine the add-on, no request was cached, or the response doesn't contain what we expect.
+			! $addon
+			|| ! get_transient( "gravityapi_request_{$addon}" )
+			|| count( $data ) !== 2
+		) {
+			return;
+		}
+
+		set_transient( "gravityapi_response_{$addon}", $data, 10 * MINUTE_IN_SECONDS );
 	}
 
 	/**
@@ -834,7 +883,7 @@ abstract class GFAddOn {
 				}
 				if ( isset( $script['callback'] ) && is_callable( $script['callback'] ) ) {
 					$args = compact( 'form', 'is_ajax' );
-					call_user_func_array( $script['callback'], $args );
+					call_user_func_array( $script['callback'], array_values( $args ) );
 				}
 			}
 		}
@@ -4637,22 +4686,13 @@ abstract class GFAddOn {
 					$url  = add_query_arg( array( 'view' => $tab['name'] ) );
 
 					// Get tab icon.
-					$icon_markup = '<i class="dashicons dashicons-admin-generic"></i>';
-					if ( strpos( rgar( $tab, 'icon' ), '<svg' ) !== false ) {
-						$icon_markup = $tab['icon'];
-					} else if ( filter_var( rgar( $tab, 'icon' ), FILTER_VALIDATE_URL ) ) {
-						$icon_markup = sprintf( '<img src="%s" />', esc_attr( $tab['icon'] ) );
-					} else if ( strpos( rgar( $tab, 'icon' ), 'fa' ) === 0 ) {
-						$icon_markup = sprintf( '<i class="fa %s"></i>', esc_attr( $tab['icon'] ) );
-					} else if ( strpos( rgar( $tab, 'icon' ), 'dashicons' ) === 0 ) {
-						$icon_markup = sprintf( '<i class="dashicons %s"></i>', esc_attr( $tab['icon'] ) );
-					}
+					$icon_markup = GFCommon::get_icon_markup( $tab );
 
 					printf(
 						'<a href="%s"%s><span class="icon">%s</span> <span class="label">%s</span></a>',
 						esc_url( $url ),
 						$current_tab === $tab['name'] ? ' class="active"' : '',
-						$icon_markup,
+						is_null( $icon_markup ) ? '<i class="dashicons dashicons-admin-generic"></i>' : $icon_markup,
 						esc_html( $label )
 					);
 				}
@@ -4881,7 +4921,7 @@ abstract class GFAddOn {
 			?>
 			<form action="" method="post" class="gform-settings-panel gform-settings-panel__addon-uninstall">
 				<?php wp_nonce_field( 'uninstall', 'gf_addon_uninstall' ); ?>
-				<div class="gform-settings-panel__content gform-kitchen-sink">
+				<div class="gform-settings-panel__content">
 					<div class="addon-logo dashicons"><?php echo $icon_markup; ?></div>
 					<div class="addon-uninstall-text">
 						<h4 class="gform-settings-panel__title"><?php printf( esc_html__( '%s', 'gravityforms' ), $this->get_short_title() ) ?></h4>
@@ -5079,6 +5119,10 @@ abstract class GFAddOn {
 		if ( false === $this->_enable_rg_autoupgrade && ! self::is_gravityforms_supported( $this->_min_gravityforms_version ) ) {
 			$message = $this->plugin_message();
 			self::display_plugin_message( $message, true );
+		}
+
+		if ( ! $this->_enable_rg_autoupgrade ) {
+			return;
 		}
 
 		GFForms::maybe_display_update_notification( $plugin_name, $plugin_data, $this->get_slug(), $this->_version );

@@ -55,7 +55,7 @@ class Text extends Base {
 		$html = $this->get_description();
 
 		$html .= sprintf(
-			'<span class="%s"><input type="%s" name="%s_%s" value="%s" %s %s />%s</span>',
+			'<span class="%s"><input type="%s" name="%s_%s" value="%s" %s %s />%s %s</span>',
 			esc_attr( $this->get_container_classes() ),
 			esc_attr( $this->input_type ),
 			esc_attr( $this->settings->get_input_name_prefix() ),
@@ -63,13 +63,13 @@ class Text extends Base {
 			esc_attr( htmlspecialchars( $value, ENT_QUOTES ) ),
 			$this->get_describer() ? sprintf( 'aria-describedby="%s"', $this->get_describer() ) : '',
 			implode( ' ', $this->get_attributes() ),
-			isset( $this->append ) ? sprintf( '<span class="gform-settings-field__text-append">%s</span>', esc_html( $this->append ) ) : ''
+			isset( $this->append ) ? sprintf( '<span class="gform-settings-field__text-append">%s</span>', esc_html( $this->append ) ) : '',
+			$this->get_error_icon()
 		);
 
 		// Insert after input markup.
-		$html .= isset( $this->after_input ) ? $this->after_input : '';
 
-		$html .= $this->get_error_icon();
+		$html .= isset( $this->after_input ) ? $this->after_input : '';
 
 		return $html;
 

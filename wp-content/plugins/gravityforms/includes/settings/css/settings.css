@@ -95,6 +95,126 @@
 
 }
 
+/* Components */
+
+/* -----------------------------------------------------------------------------
+ *
+ * Components: Inputs for the Settings Pages
+ *
+ * ----------------------------------------------------------------------------- */
+
+/* For stying field with multiple side by side inputs */
+
+.gform-settings-field--multiple-inputs label, .gform-settings-field--multiple-inputs .gform-settings-description {
+		flex-basis: 100%;
+	}
+
+.gform-settings-field--multiple-inputs .gform-settings-input__container {
+		display: inline-flex;
+		flex-direction: column;
+	}
+
+.gform-settings-field--multiple-inputs .gform-settings-input__container--with-append {
+		flex-direction: row;
+		flex-wrap: nowrap;
+	}
+
+.gform-settings-field--multiple-inputs .gform-settings-input__container--with-append.gform-settings-input__container--invalid {
+		flex-wrap: wrap;
+
+	}
+
+.gform-settings-field--multiple-inputs .gform-settings-input__container--with-append.gform-settings-input__container--invalid input {
+			flex: 1;
+		}
+
+.gform-settings-field--multiple-inputs .gform-settings-input__container--with-append.gform-settings-input__container--invalid .gform-settings-validation__error {
+			flex-basis: 100%;
+		}
+
+/* ---------------------------------------------------
+	System Status & Updates
+--------------------------------------------------- */
+
+.gform-settings__content table.gform_system_report,
+.gform-settings__content table.plugins {
+	background: #FFFFFF;
+	border-radius: 3px;
+	border: 1px solid #E3E6EF;
+	box-shadow: 0px 1px 4px rgba(18, 25, 97, 0.0779552);
+	overflow: hidden;
+	width: 100%;
+}
+
+.gform-settings__content table.gform_system_report > thead, .gform-settings__content table.plugins > thead {
+		font-weight: 700;
+		margin: 0;
+	}
+
+.gform-settings__content table.gform_system_report > thead > tr, .gform-settings__content table.plugins > thead > tr {
+			font-size: .875rem;
+			line-height: 3.285714286rem;
+			min-height: 2rem;
+			padding-left: 1.071428571rem;
+			padding-right: .857142857rem;
+			position: relative;
+		}
+
+.gform-settings__content table.gform_system_report td,
+	.gform-settings__content table.gform_system_report th,
+	.gform-settings__content table.plugins td,
+	.gform-settings__content table.plugins th {
+		text-align: left;
+		padding: 0 1rem;
+	}
+
+.gform-settings__content table.gform_system_report td.plugin-title, .gform-settings__content table.plugins td.plugin-title {
+		white-space: normal;
+		vertical-align: top;
+	}
+
+.gform-settings__content table.gform_system_report > tbody > tr:nth-child( odd ), .gform-settings__content table.plugins > tbody > tr:nth-child( odd ) {
+		background: #F6F9FC;
+	}
+
+.gform-settings__content table.gform_system_report td,
+	.gform-settings__content table.gform_system_report th {
+		height: 2.5rem;
+	}
+
+.gform-settings__content table.plugins  > thead > tr {
+		background: transparent none repeat 0 0 / auto auto padding-box border-box scroll;
+		background: initial;
+	}
+
+.gform-settings__content table.plugins  > thead > tr > #name,
+		.gform-settings__content table.plugins  > thead > tr > #description {
+			font-weight: 400;
+		}
+
+.gform-settings__content table.plugins #updates {
+		box-shadow: 0 1px #EBEBF2;
+	}
+
+.gform-settings__content table.plugins .inactive td {
+		box-shadow: none;
+	}
+
+#gf_copy_report:active,
+#gf_copy_report:focus,
+#gf_copy_report {
+	color: #3E7CA6;
+	text-decoration: none;
+	box-shadow: none;
+	border: none;
+
+}
+
+#gf_copy_report i {
+	font-size: 14px;
+	line-height: 20px;
+}
+
 body {
 
 	background: #F6F9FC;
@@ -107,6 +227,12 @@ body {
 #wpcontent {
 
 	padding-left: 0;
+
+}
+
+html[dir=rtl] #wpcontent {
+
+	padding-right: 0;
 
 }
 
@@ -147,6 +273,14 @@ body {
 .gform-settings__wrapper--full {
 	-ms-grid-columns: auto;
 	grid-template-columns: auto;
+}
+
+.gform_form_settings_wrap--full-width #gf-admin-notices-wrapper,
+.gform_form_settings_wrap--full-width .gform-settings__wrapper {
+	margin: 0 1.25rem 0;
+	max-width: 100%;
+	padding-left: 0;
+	padding-right: 0;
 }
 
 .gform-settings__wrapper > .notice,
@@ -204,6 +338,11 @@ body {
 .gforms_form_settings_wrap #gform-form-toolbar__menu > li > a svg,
 .gforms_form_settings_wrap #gform-form-toolbar__menu > li > a .fa {
 	display: none;
+}
+
+.gform-form-toolbar {
+	box-shadow: rgba(58, 58, 87, 0.082) 0px 1px 4px, rgba(44, 44, 64, 0.063) 0px 1px 0px;
+	border-bottom: 0px;
 }
 
 /* ---------------------------------------------------
@@ -693,6 +832,18 @@ div.addon-logo.dashicons {
 	padding-right: 3.25rem;
 }
 
+.rtl .gform-settings-input__container--feedback-success input:not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]) {
+	background-position: 2% 50%;
+	padding-left: 3.25rem;
+	padding-right: 1rem;
+}
+
+.rtl .gform-settings-input__container--feedback-error input:not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]) {
+	background-position: 2% 50%;
+	padding-left: 3.25rem;
+	padding-right: 1rem;
+}
+
 .gform-settings-panel__content input[type="email"],
 .gform-settings-panel__content input[type="number"],
 .gform-settings-panel__content input[type="password"],
@@ -903,8 +1054,10 @@ div.addon-logo.dashicons {
 	border-right: 1px solid #D6D7E3;
 	border-radius: 0 0 3px 3px;
 	display: block;
+	margin-bottom: 0;
 	max-height: 13.4375rem;
 	overflow-y: scroll;
+	padding: 0;
 
 }
 
@@ -1103,6 +1256,27 @@ html[dir="rtl"] .gform-settings-field__toggleable-inputs {
 
 }
 
+.gform-settings-input__container--with-append.gform-settings-input__container--invalid,
+.gform-settings-input__container--with-merge-tag.gform-settings-input__container--invalid {
+
+	flex-wrap: wrap;
+
+}
+
+.gform-settings-input__container--with-append.gform-settings-input__container--invalid textarea, .gform-settings-input__container--with-merge-tag.gform-settings-input__container--invalid textarea {
+		flex: 1;
+	}
+
+.gform-settings-input__container--with-append.gform-settings-input__container--invalid input, .gform-settings-input__container--with-merge-tag.gform-settings-input__container--invalid input {
+		flex: 1;
+	}
+
+.gform-settings-input__container--with-append .gform-settings-validation__error {
+
+	flex-basis: 100%;
+
+}
+
 .gform-settings-input__container .all-merge-tags {
 
 	vertical-align: top;
@@ -1123,7 +1297,7 @@ html[dir="rtl"] .gform-settings-field__toggleable-inputs {
 	background: #FFFFFF;
 	height: 35px;
 	border: 1px solid #3E7DA6;
-	box-shadow: 0px 2px 1px rgba(28, 31, 63, 0.0634624);
+	box-shadow: 0 2px 1px rgba(28, 31, 63, 0.0634624);
 	border-radius: 3px;
 	padding: .625rem 1.125rem;
 	line-height: .875rem;
@@ -1132,12 +1306,13 @@ html[dir="rtl"] .gform-settings-field__toggleable-inputs {
 
 .gform-settings__wrapper .button:hover {
 
-	box-shadow: 0px 4px 6px rgba(28, 31, 63, 0.0837013);
+	box-shadow: 0 4px 6px rgba(28, 31, 63, 0.0837013);
 
 }
 
 .gform-settings__wrapper .button.primary {
 
+	backface-visibility: hidden;
 	background: #3E7DA6;
 	height: auto;
 	height: initial;
@@ -1149,8 +1324,9 @@ html[dir="rtl"] .gform-settings-field__toggleable-inputs {
 	font-weight: 500;
 	line-height: 1;
 	padding: .625rem 1.125rem;
-	transition: all .3s ease;
 	margin-left: 0;
+	transition: transform .3s ease, box-shadow .3s ease, background-color .3s ease;
+	-webkit-backface-visibility: hidden;
 
 }
 
@@ -1160,6 +1336,20 @@ html[dir="rtl"] .gform-settings-field__toggleable-inputs {
 	transform: translate( 0, -2px );
 
 }
+
+.gforms_edit_form .button.primary.gform-add-new-form {
+
+	border: 1px solid transparent;
+
+}
+
+.gforms_edit_form .button.primary.gform-add-new-form:focus {
+		transform: translate( 0, -2px );
+	}
+
+.gforms_edit_form .button.primary.gform-add-new-form:active {
+		transform: translate( 0, -1px );
+	}
 
 .gform-settings__wrapper .button.large {
 
@@ -1185,6 +1375,14 @@ html[dir="rtl"] .gform-settings-field__toggleable-inputs {
 
 	margin-bottom: .625rem;
 
+}
+
+html:not([dir="rtl"]) .gform-settings-field .gform-settings-input__container + .gform-settings-input__container {
+	margin-left: 0.625rem;
+}
+
+html[dir="rtl"] .gform-settings-field .gform-settings-input__container + .gform-settings-input__container {
+	margin-right: 0.625rem;
 }
 
 .gform-settings-choice {
@@ -1438,6 +1636,8 @@ html[dir="rtl"] .gform-settings-field__toggleable-inputs {
 .gform-settings-field__conditional-logic .gf_conditional_logic_rules_container {
 
 	display: flex;
+	flex-direction: row;
+	align-items: center;
 
 }
 
@@ -1478,8 +1678,6 @@ html[dir="rtl"] .gform-settings-field__toggleable-inputs {
 
 }
 
-.gform-settings-field__conditional-logic .add_field_choice,
-.gform-settings-field__conditional-logic .delete_field_choice,
 .gform-settings-generic-map__button {
 
 	background-color: #FFF;
@@ -1499,7 +1697,6 @@ html[dir="rtl"] .gform-settings-field__toggleable-inputs {
 
 }
 
-.gform-settings-field__conditional-logic .add_field_choice,
 .gform-settings-generic-map__button--add {
 
 	background-image: url( 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik02IDBhMSAxIDAgMDAtMSAxdjRIMWExIDEgMCAwMDAgMmg0djRhMSAxIDAgMTAyIDBWN2g0YTEgMSAwIDEwMC0ySDdWMWExIDEgMCAwMC0xLTF6IiBmaWxsPSIjRjE1QTI5Ii8+PC9zdmc+' );
@@ -1513,7 +1710,6 @@ html[dir="rtl"] .gform-settings-field__toggleable-inputs {
 	margin: 0 calc(1.25rem + 3px) 0 3px;
 }
 
-.gform-settings-field__conditional-logic .delete_field_choice,
 .gform-settings-generic-map__button--delete {
 
 	background-image: url( 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMCAxYTEgMSAwIDAxMS0xaDEwYTEgMSAwIDExMCAySDFhMSAxIDAgMDEtMS0xeiIgZmlsbD0iI0YxNUEyOSIvPjwvc3ZnPg==' );
@@ -1701,7 +1897,7 @@ html[dir="rtl"] .gform-settings-field__text-append {
 .gform-settings-field__text_and_select .gform-settings-input__container {
 
 	display: inline-flex;
-	margin-right: .25rem;
+	flex-wrap: wrap;
 	position: relative;
 
 }
@@ -1793,6 +1989,7 @@ html:not([dir="rtl"]) .gform-settings-input__container--with-merge-tag .wp-edito
 .gform-settings-validation__error {
 
 	color: #E54C3B;
+	flex-basis: 100%;
 	font-size: .75rem;
 	line-height: 1.375rem;
 	margin-top: .5625rem;
@@ -1861,6 +2058,14 @@ html:not([dir="rtl"]) .gform-settings-input__container--with-merge-tag .wp-edito
 
 }
 
+.rtl .gform-settings__wrapper .alert,
+.rtl #TB_window .alert,
+.rtl #gf-admin-notices-wrapper .gf-notice {
+
+	padding: 1.25rem 4.375rem 1.25rem 3rem;
+
+}
+
 .gform-settings__wrapper .alert p:first-child,
 #gf-admin-notices-wrapper .gf-notice p:first-child {
 
@@ -1903,6 +2108,24 @@ html:not([dir="rtl"]) .gform-settings-input__container--with-merge-tag .wp-edito
 	left: 1.1875rem;
 	margin-top: -.8125rem;
 	width: 1.625rem;
+
+}
+
+.rtl .gform-settings__wrapper .alert:before,
+.rtl #TB_window .alert:before,
+.rtl #gf-admin-notices-wrapper .gf-notice:before {
+
+	right: .5rem;
+	left: auto;
+
+}
+
+.rtl .gform-settings__wrapper .alert:after,
+.rtl #TB_window .alert:after,
+.rtl #gf-admin-notices-wrapper .gf-notice:after {
+
+	right: 1.1875rem;
+	left: auto;
 
 }
 
@@ -2108,8 +2331,8 @@ Notifications
 .gform-settings-panel__content .tablenav select {
 
 	line-height: 1.1875rem;
-	padding-bottom: .4375rem;
-	padding-top: .4375rem;
+	padding-bottom: .5rem;
+	padding-top: .5rem;
 
 }
 
@@ -2129,87 +2352,6 @@ Notifications
 
 	width: auto;
 
-}
-
-/* ---------------------------------------------------
-	System Status & Updates
---------------------------------------------------- */
-
-.gform-settings__content table.gform_system_report,
-.gform-settings__content table.plugins {
-
-	background: #FFFFFF;
-	border: 1px solid #E3E6EF;
-	box-shadow: 0px 1px 4px rgba(18, 25, 97, 0.0779552);
-	border-radius: 3px;
-	width: 100%;
-	overflow: hidden;
-}
-
-.gform-settings__content table.gform_system_report > thead,
-.gform-settings__content table.plugins > thead {
-	font-weight: 700;
-	margin: 0;
-}
-
-.gform-settings__content table.gform_system_report > thead > tr,
-.gform-settings__content table.plugins > thead > tr {
-	font-size: .875rem;
-	min-height: 2rem;
-	line-height: 3.285714286rem;
-	padding-left: 1.071428571rem;
-	padding-right: .857142857rem;
-	position: relative;
-}
-
-.gform-settings__content table.plugins > thead > tr {
-	background: transparent none repeat 0 0 / auto auto padding-box border-box scroll;
-	background: initial;
-}
-
-.gform-settings__content table.gform_system_report td,
-.gform-settings__content table.gform_system_report th,
-.gform-settings__content table.plugins td,
-.gform-settings__content table.plugins th {
-
-	height: 2.5rem;
-	text-align: left;
-	padding-left: 1rem ;
-
-}
-
-.gform-settings__content table.gform_system_report > tbody > tr:nth-child( odd ),
-.gform-settings__content table.plugins > tbody > tr:nth-child( odd ) {
-
-	background: #F6F9FC;
-
-}
-
-.gform-settings__content table.plugins > thead > tr#updates {
-	box-shadow: 0 1px #EBEBF2;
-}
-
-.gform-settings__content table.plugins .inactive td {
-	box-shadow: none;
-}
-
-.gform-settings__content table.plugins > thead > tr > #name, .gform-settings__content table.plugins > thead > tr > #description {
-	font-weight: 400;
-}
-
-#gf_copy_report:active,
-#gf_copy_report:focus,
-#gf_copy_report {
-	color: #3E7CA6;
-	text-decoration: none;
-	box-shadow: none;
-	border: none;
-
-}
-
-#gf_copy_report i {
-	font-size: 14px;
-	line-height: 20px;
 }
 
 /* ---------------------------------------------------

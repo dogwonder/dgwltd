@@ -73,10 +73,10 @@ class Toggle extends Base {
 		// Insert after input markup.
 		$html .= rgobj( $this, 'after_input' );
 
-		$html .= '</span>';
-
 		// If field failed validation, add error icon.
 		$html .= $this->get_error_icon();
+
+		$html .= '</span>';
 
 		return $html;
 

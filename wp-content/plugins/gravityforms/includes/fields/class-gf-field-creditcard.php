@@ -24,6 +24,19 @@ class GF_Field_CreditCard extends GF_Field {
 		return esc_attr__( 'Allows users to enter credit card information.', 'gravityforms' );
 	}
 
+	/**
+	 * Returns the field's form editor icon.
+	 *
+	 * This could be an icon url or a gform-icon class.
+	 *
+	 * @since 2.5
+	 *
+	 * @return string
+	 */
+	public function get_form_editor_field_icon() {
+		return 'gform-icon--credit-card';
+	}
+
 	function get_form_editor_field_settings() {
 		return array(
 			'conditional_logic_field_setting',

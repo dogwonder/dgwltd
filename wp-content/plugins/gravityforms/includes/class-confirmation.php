@@ -1135,7 +1135,7 @@ class GFConfirmationTable extends WP_List_Table {
 		switch ( rgar( $item, 'type' ) ) {
 
 			case 'message':
-				return '<a class="limit-text">' . wp_kses_post( $item['message'] ) . '</a>';
+				return '<a class="limit-text">' . wp_strip_all_tags( $item['message'] ) . '</a>';
 
 			case 'page':
 

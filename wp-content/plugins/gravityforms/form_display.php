@@ -2347,8 +2347,19 @@ class GFFormDisplay {
 			} else {
 
 				$assets[] = new GF_Style_Asset( 'gform_base' );
-				$assets[] = new GF_Style_Asset( 'gform_theme' );
 
+				/**
+				 * Allows users to disable the main theme.css file from being loaded on the Front End.
+				 *
+				 * @since 2.5-beta-3
+				 *
+				 * @param boolean Whether to disable the theme css.
+				 */
+				$disable_theme_css = apply_filters( 'gform_disable_form_theme_css', false );
+
+				if ( ! $disable_theme_css ) {
+					$assets[] = new GF_Style_Asset( 'gform_theme' );
+				}
 			}
 
 			if ( self::has_password_visibility( $form ) ) {
@@ -2385,6 +2396,12 @@ class GFFormDisplay {
 		$assets[] = $gf_main;
 
 		$has_logic = false;
+
+		add_filter( 'gform_gf_legacy_multi', function( $data ) use ( $form ) {
+			$data[ $form['id'] ] = GFCommon::is_legacy_markup_enabled( $form );
+
+			return $data;
+		}, 10, 1 );
 
 		if ( self::has_conditional_logic( $form ) ) {
 			$has_logic = true;

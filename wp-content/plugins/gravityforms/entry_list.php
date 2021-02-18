@@ -184,7 +184,7 @@ class GFEntryList {
 
 		$option_values = self::get_screen_options_values();
 
-		// If the filter is not available for the form then use 'all'
+		// If the filter is not available for the form then use 'all'.
 		$selected_filter = 'all';
 		foreach ( $filters as $filter ) {
 			if ( $option_values['default_filter'] == $filter['id'] ) {
@@ -203,11 +203,13 @@ class GFEntryList {
 
 		$radios_str = join( "\n", $radios_arr );
 
-		$filter_title  = esc_html__( 'Default Filter', 'gravityforms' );
-		$pagination_title = esc_html__( 'Pagination', 'gravityforms' );
-		$entries_label = esc_html__( 'Number of entries per page:', 'gravityforms' );
+		$filter_title         = esc_html__( 'Default Filter', 'gravityforms' );
+		$pagination_title     = esc_html__( 'Pagination', 'gravityforms' );
+		$entries_label        = esc_html__( 'Number of entries per page:', 'gravityforms' );
+		$display_mode_title   = esc_html__( 'Display Mode', 'gravityforms' );
+		$display_modes_markup = join( "\n", self::get_display_modes_markup() );
 
-		$button = get_submit_button( esc_html__( 'Apply', 'gravityforms' ), 'button button-primary', 'screen-options-apply', false );
+		$button  = get_submit_button( esc_html__( 'Apply', 'gravityforms' ), 'button button-primary', 'screen-options-apply', false );
 		$return .= "
 			<fieldset class='screen-options'>
             <legend>{$filter_title}</legend>
@@ -224,10 +226,56 @@ class GFEntryList {
             	<input type='hidden' name='wp_screen_options[option]' value='gform_entries_screen_options' />
             	<input type='hidden' name='wp_screen_options[value]' value='yes' />
 			</fieldset>
+			<fieldset class='metabox-prefs'>
+			<h5>{$display_mode_title}</h5>
+			</fieldset>
+				{$display_modes_markup}
 			<p class='submit'>
 			$button
 			</p>";
 		return $return;
+	}
+
+	/**
+	 * Returns the markup for the display modes screen option.
+	 *
+	 * @since   2.5
+	 *
+	 * @return array $display_modes_arr The markup for the display modes option.
+	 */
+	private static function get_display_modes_markup() {
+
+		$display_modes = array(
+			array(
+				'id'    => 'standard',
+				'label' => esc_html__( 'Standard', 'gravityforms' ),
+			),
+			array(
+				'id'    => 'full_width',
+				'label' => esc_html__( 'Full Width', 'gravityforms' ),
+			),
+		);
+
+		$display_modes_arr = array();
+
+		$option_values = self::get_screen_options_values();
+
+		// If the display mode is not set then use 'standard'.
+		$selected_display_mode = 'standard';
+
+		foreach ( $display_modes as $display_mode ) {
+			$id    = esc_attr( $display_mode['id'] );
+			$label = esc_attr( $display_mode['label'] );
+
+			if ( $option_values['display_mode'] === $display_mode['id'] ) {
+				$selected_display_mode = $option_values['display_mode'];
+			}
+
+			$checked             = checked( $display_mode['id'], $selected_display_mode, false );
+			$display_modes_arr[] = sprintf( '<label for="%s_view_mode"><input type="radio" name="gform_entries_display_mode" id="%s_view_mode" value="%s" %s />%s</label>', $id, $id, $id, $checked, $label );
+		}
+
+		return $display_modes_arr;
 	}
 
 	/**
@@ -240,6 +288,7 @@ class GFEntryList {
 		$default_values = array(
 			'per_page'       => 20,
 			'default_filter' => 'all',
+			'display_mode'   => 'standard',
 		);
 
 		$option_values = get_user_option( 'gform_entries_screen_options' );
@@ -263,10 +312,10 @@ class GFEntryList {
 		$form = GFFormsModel::get_form_meta( $form_id );
 		$table = new GF_Entry_List_Table( array( 'form_id' => $form_id, 'form' => $form ) );
 
-		$table->prepare_items();
-		$table->output_scripts();
 		wp_print_styles( array( 'thickbox', 'gform_settings' ) );
 		GFForms::admin_header();
+		$table->prepare_items();
+		$table->output_scripts();
 		?>
 			<form id="entry_list_form" method="post" class="gform-settings-panel__content">
 				<?php

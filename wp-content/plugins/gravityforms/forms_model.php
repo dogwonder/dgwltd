@@ -6820,10 +6820,34 @@ class GFFormsModel {
 		return self::update_form_meta( $form_id, $notifications, 'notifications' );
 	}
 
-	public static function get_form_ids( $active = true, $trash = false ) {
+	/**
+	 * Returns the ids of the specified forms.
+	 *
+	 * @since unknown
+	 * @since 2.5 added $sort_column and $sort_dir parameters.
+	 *
+	 * @param bool 	 $active      True if active forms are returned. False to get inactive forms. Defaults to true.
+	 * @param bool	 $trash       True if trashed forms are returned. False to exclude trash. Defaults to false.
+	 * @param string $sort_column The column to sort the results on.
+	 * @param string $sort_dir    The sort direction, ASC or DESC.
+	 *
+	 * @return array of form IDs.
+	 */
+	public static function get_form_ids( $active = true, $trash = false, $sort_column = 'id', $sort_dir = 'ASC' ) {
 		global $wpdb;
 		$table   = self::get_form_table_name();
-		$sql     = $wpdb->prepare( "SELECT id from $table where is_active = %d and is_trash = %d", (bool) $active, (bool) $trash );
+
+		$sort_keyword = $sort_dir == 'ASC' ? 'ASC' : 'DESC';
+
+		$db_columns = GFFormsModel::get_form_db_columns();
+
+		if ( ! in_array( strtolower( $sort_column ), $db_columns ) ) {
+			$sort_column = 'id';
+		}
+
+		$order_by = ! empty( $sort_column ) ? "ORDER BY $sort_column $sort_keyword" : '';
+
+		$sql     = $wpdb->prepare( "SELECT id from $table where is_active = %d and is_trash = %d $order_by", (bool) $active, (bool) $trash );
 		$results = $wpdb->get_col( $sql );
 
 		return $results;

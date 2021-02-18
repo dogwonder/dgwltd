@@ -860,7 +860,6 @@ function LoadFieldSettings(){
     jQuery("#field_date_input_type").val(field["dateType"]);
     jQuery("#gfield_calendar_icon_url").val(field["calendarIconUrl"] == undefined ? "" : field["calendarIconUrl"]);
     jQuery('#field_date_format').val(field['dateFormat'] == undefined ? "mdy" : field['dateFormat']);
-    jQuery('#field_date_format_placement').val(field['dateFormatPlacement'] == undefined ? "below" : field['dateFormatPlacement']);
     jQuery('#field_time_format').val(field['timeFormat'] == "24" ? "24" : "12");
 
     SetCalendarIconType(field["calendarIconType"], true);
@@ -1176,7 +1175,7 @@ function getAllFieldSettings( field ) {
 		var additionalSettings = fieldSettings[ field.inputType ];
 
 		if ( additionalSettings.length > 0 ) {
-			allSettings += "," + additionalSettings;
+			allSettings += ", " + additionalSettings;
 		}
 	}
 
@@ -1185,7 +1184,7 @@ function getAllFieldSettings( field ) {
 	/**
 	 * gform_editor_field_settings
 	 *
-	 * Modify the editor settings that are used for the current field, including those inhereted from the inputType.
+	 * Modify the editor settings that are used for the current field, including those inherited from the inputType.
 	 *
 	 * @since 2.5
 	 *
@@ -1204,13 +1203,6 @@ function ToggleDateSettings(field){
     var isDatePicker = field["dateType"] == "datepicker";
     var isDateDropDown = field["dateType"] == "datedropdown";
 
-    if ( isDatePicker && ( field.dateFormatPlacement === 'hidden_label' ) ) {
-		SetFieldAccessibilityWarning( 'date_format_placement_setting', 'below' );
-	} else {
-		ResetFieldAccessibilityWarning();
-	}
-
-    jQuery('.date_format_placement_setting').toggle(isDatePicker);
     jQuery('.placeholder_setting').toggle(isDatePicker);
     jQuery('.default_value_setting').toggle(isDatePicker);
     jQuery('.sub_label_placement_setting').toggle(isDateField);
@@ -2470,7 +2462,19 @@ function InitializeFields(){
 
 
     jQuery('.field_settings, #form_settings, #last_page_settings, #pagination_settings, .form_delete_icon, .all-merge-tags').click(function(event){
-        event.stopPropagation();
+
+	    /**
+	     * Fires when an element in the FormEditor is clicked that should have no effect.
+	     *
+	     * This action is useful if you need to perform an action using the click event without forcing propagation.
+	     *
+	     * @since 2.5
+	     *
+	     * @param {DomEvent} event The dom event.
+	     */
+    	gform.doAction( 'formEditorNullClick', event );
+
+    	event.stopPropagation();
     });
 
 
@@ -2541,8 +2545,9 @@ function ShowSettings( element ) {
 		var label = field_button.find( '.button-text' ).text();
 		var description = field_button.data( 'description' );
 		// If we have a custom icon img, get it
-		var icon_img = field_button.find( '.button-icon img' );
-		var icon_classes = field_button.find( '.button-icon' ).attr( 'class' );
+		var $button_icon = field_button.find( '.button-icon' );
+		var icon_img = $button_icon.find( 'img' );
+		var icon_classes = $button_icon.children().attr( 'class' );
 	}
 	// Show field icon and description in sidebar
 	jQuery( '#nothing_selected' ).hide();
@@ -3124,37 +3129,13 @@ function SetDateFormat( format ) {
 	if ( field.dateType === 'datepicker' ) {
 		var formatLabel = jQuery( '#field_date_format option:selected' ).text();
 
-		if ( field.dateFormatPlacement !== 'placeholder' ) {
-			jQuery( '.field_selected .gfield_date_format span' )
-				.text( formatLabel );
-		} else {
-			if ( field.placeholder === '' ) {
-				jQuery( '.field_selected input[name="ginput_datepicker"]' )
-					.attr( 'placeholder', formatLabel );
-			}
+		if ( field.placeholder === '' ) {
+			jQuery( '.field_selected input[name="ginput_datepicker"]' )
+				.attr( 'placeholder', formatLabel );
 		}
 	}
 
 	LoadDateInputs();
-}
-
-/**
- * Set the date format placement when the setting is changed.
- *
- * @since 2.5
- *
- * @param {string} placement The placement.
- */
-function SetDateFormatPlacement( placement ){
-	SetFieldProperty( "dateFormatPlacement", placement );
-
-	if ( placement === 'hidden_label' ) {
-		SetFieldAccessibilityWarning( 'date_format_placement_setting', 'below' );
-	} else {
-		ResetFieldAccessibilityWarning();
-	}
-
-	RefreshSelectedFieldPreview();
 }
 
 function LoadDateInputs(){
@@ -3587,10 +3568,16 @@ function SetFieldDescriptionPlacement(descriptionPlacement){
     });
 }
 
-function SetFieldSubLabelPlacement(subLabelPlacement){
-    SetFieldProperty("subLabelPlacement", subLabelPlacement);
+function SetFieldSubLabelPlacement( subLabelPlacement ) {
+	SetFieldProperty( "subLabelPlacement", subLabelPlacement );
 
-    RefreshSelectedFieldPreview();
+	RefreshSelectedFieldPreview( function() {
+		if ( "above" === subLabelPlacement ) {
+			jQuery( ".field_selected" ).addClass( "field_sublabel_above" ).removeClass( "field_sublabel_below" );
+		} else {
+			jQuery( ".field_selected" ).addClass( "field_sublabel_below" ).removeClass( "field_sublabel_above" );
+		}
+	} );
 }
 
 function SetFieldVisibility( visibility, handleInputs, isInit ) {

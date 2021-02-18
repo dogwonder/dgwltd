@@ -137,10 +137,10 @@ class Radio extends Base {
 			);
 		}
 
-		$html .= '</span>';
-
 		// If field failed validation, add error icon.
 		$html .= $this->get_error_icon();
+
+		$html .= '</span>';
 
 		return $html;
 

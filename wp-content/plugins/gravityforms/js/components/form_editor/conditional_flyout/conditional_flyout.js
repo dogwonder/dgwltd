@@ -7,11 +7,47 @@ var FOCUSED_BEFORE_DIALOG   = null;
 var FOCUSED_BEFORE_RENDER = null;
 
 /**
+ * Get a parent based on selector plus passed in child element
+ *
+ * @param el
+ * @param selector
+ * @returns {null|*}
+ */
+
+function getClosest( el, selector ) {
+	var matchesFn;
+	var parent;
+
+	[ 'matches', 'webkitMatchesSelector', 'mozMatchesSelector', 'msMatchesSelector', 'oMatchesSelector' ].some( function( fn ) {
+		if ( typeof document.body[ fn ] === 'function' ) {
+			matchesFn = fn;
+			return true;
+		}
+		return false;
+	} );
+
+	while ( el ) {
+		parent = el.parentElement;
+		if ( parent && parent[ matchesFn ]( selector ) ) {
+			return parent;
+		}
+
+		el = parent;
+	}
+
+	return null;
+}
+
+/**
  * Set the focus to the first focusable child of the given element
  *
  * @param {Element} node The element to focus within.
+ * @param {Event} event Passed event from some handlers
  */
-function setFocusToFirstItem( node ) {
+function setFocusToFirstItem( node, event ) {
+	if ( event && event.target && ! getClosest( event.target, '#' + node.id ) ) {
+		return;
+	}
 	var focusableChildren = getFocusableChildren( node );
 
 	if ( focusableChildren.length ) {
@@ -136,12 +172,16 @@ function renderView( html, container, config, echo ) {
 
 	if ( FOCUSED_BEFORE_RENDER.id ) {
 		window.setTimeout( function() {
+			if ( document.getElementById( FOCUSED_BEFORE_RENDER.id ) == null ) {
+				return;
+			}
+
 			document.getElementById( FOCUSED_BEFORE_RENDER.id ).focus();
 		}, 10 );
 	}
 
 	return true;
-};
+}
 
 /**
  * Get a field object from the given ID.
@@ -343,12 +383,13 @@ function GFConditionalLogic( fieldId, objectType ) {
 	this.visible    = false;
 
 	// Prebind event listener callbacks to maintain references
-	this._handleToggleClick  = this.handleToggleClick.bind( this );
-	this._handleFlyoutChange = this.handleFlyoutChange.bind( this );
-	this._handleBodyClick    = this.handleBodyClick.bind( this );
-	this._handleSidebarClick = this.handleSidebarClick.bind( this );
-	this._maintainFocus      = this._maintainFocus.bind( this );
-	this._bindKeypress       = this._bindKeypress.bind( this );
+	this._handleToggleClick    = this.handleToggleClick.bind( this );
+	this._handleFlyoutChange   = this.handleFlyoutChange.bind( this );
+	this._handleBodyClick      = this.handleBodyClick.bind( this );
+	this._handleAccordionClick = this.handleAccordionClick.bind( this );
+	this._handleSidebarClick   = this.handleSidebarClick.bind( this );
+	this._maintainFocus        = this._maintainFocus.bind( this );
+	this._bindKeypress         = this._bindKeypress.bind( this );
 
 	this.init();
 }
@@ -386,7 +427,7 @@ GFConditionalLogic.prototype.renderFlyout = function() {
 		conditionalLogic: gf_vars.conditional_logic_text,
 		enable: gf_vars.enable,
 		desc: gf_vars.conditional_logic_desc,
-		main: this.renderMainControls(),
+		main: this.renderMainControls( false ),
 	};
 
 	var html = gf_vars.conditionalLogic.views.flyout;
@@ -397,10 +438,14 @@ GFConditionalLogic.prototype.renderFlyout = function() {
 /**
  * Render the main controls.
  *
+ * @param {boolean} echo
+ *
  * @return {boolean|string}
  */
-GFConditionalLogic.prototype.renderMainControls = function() {
+GFConditionalLogic.prototype.renderMainControls = function( echo ) {
+
 	var config = {
+		enabledClass: this.state.enabled ? 'active' : '',
 		actionType: this.state.actionType,
 		logicType: this.state.logicType,
 		objectTypeText: this.getObjectTypeText(),
@@ -417,7 +462,11 @@ GFConditionalLogic.prototype.renderMainControls = function() {
 
 	var html = gf_vars.conditionalLogic.views.main;
 
-	return renderView( html, this.els.flyouts[ this.objectType ], config, false );
+	if ( ! echo ) {
+		return renderView( html, this.els.flyouts[ this.objectType ], config, false );
+	}
+
+	renderView( html, this.els.flyouts[ this.objectType ].querySelector( '.conditional_logic_flyout__main' ), config, true );
 };
 
 /**
@@ -645,6 +694,8 @@ GFConditionalLogic.prototype.renderRule = function( rule, idx ) {
 		deleteClass: this.state.rules.length > 1 ? 'active' : '',
 		value: rule.value,
 		valueMarkup: this.renderRuleValue( rule, idx ),
+		addRuleText: gf_vars.conditionalLogic.addRuleText,
+		removeRuleText: gf_vars.conditionalLogic.removeRuleText,
 	};
 
 	var html = gf_vars.conditionalLogic.views.rule;
@@ -858,7 +909,7 @@ GFConditionalLogic.prototype.showFlyout = function() {
 /**
  * Toggle the flyout when button is clicked.
  */
-GFConditionalLogic.prototype.toggleFlyout = function() {
+GFConditionalLogic.prototype.toggleFlyout = function( restoreFocus ) {
 	this.renderFlyout();
 	this.renderRules();
 
@@ -871,6 +922,10 @@ GFConditionalLogic.prototype.toggleFlyout = function() {
 	this.visible = !this.visible;
 
 	var self = this;
+
+	if ( ! restoreFocus ) {
+		return;
+	}
 
 	window.setTimeout( function() {
 		self.handleFocus();
@@ -891,6 +946,8 @@ GFConditionalLogic.prototype.updateState = function( stateKey, stateValue ) {
 
 	if ( stateKey === 'enabled' ) {
 		this.renderSidebar();
+		this.renderMainControls( true );
+		this.renderRules();
 	}
 };
 
@@ -978,7 +1035,7 @@ GFConditionalLogic.prototype.updateForm = function() {
  */
 GFConditionalLogic.prototype.handleToggleClick = function( e ) {
 	if ( e.target.classList.contains( 'conditional_logic_accordion__toggle_button' ) || e.target.classList.contains( 'conditional_logic_accordion__toggle_button_icon' ) ) {
-		this.toggleFlyout();
+		this.toggleFlyout( true );
 	}
 };
 
@@ -1002,7 +1059,7 @@ GFConditionalLogic.prototype.handleSidebarClick = function( e ) {
 	}
 
 	if ( ('jsCloseFlyout' in e.target.dataset) ) {
-		this.toggleFlyout();
+		this.toggleFlyout( true );
 	}
 };
 
@@ -1039,7 +1096,23 @@ GFConditionalLogic.prototype.handleBodyClick = function( e ) {
 	}
 
 	if ( this.visible && !this.els.flyouts[ this.objectType ].contains( e.target ) ) {
-		this.toggleFlyout();
+		this.toggleFlyout( true );
+	}
+
+};
+
+/**
+ * Handle clicks on sidebar accordion items.
+ *
+ * @param {Event} e
+ */
+GFConditionalLogic.prototype.handleAccordionClick = function( e ) {
+	if (
+		this.visible &&
+		! e.target.classList.contains( 'conditional_logic_accordion__toggle_button') &&
+		! e.target.classList.contains( 'conditional_logic_accordion__toggle_button_icon' )
+	) {
+		this.toggleFlyout( false );
 	}
 };
 
@@ -1051,6 +1124,7 @@ GFConditionalLogic.prototype.addEventListeners = function() {
 	this.els.flyouts[ this.objectType ].addEventListener( 'click', this._handleSidebarClick );
 	this.els.flyouts[ this.objectType ].addEventListener( 'change', this._handleFlyoutChange );
 	document.body.addEventListener( 'click', this._handleBodyClick );
+	gform.addAction( 'formEditorNullClick', this._handleAccordionClick );
 }
 
 /**
@@ -1074,7 +1148,7 @@ GFConditionalLogic.prototype._bindKeypress = function( event ) {
 	// further effects from the ESCAPE key and hide the dialog
 	if ( this.visible && event.which === ESCAPE_KEY ) {
 		event.preventDefault();
-		this.toggleFlyout();
+		this.toggleFlyout( true );
 	}
 
 	// If the dialog is shown and the TAB key is being pressed, make sure the
@@ -1141,7 +1215,7 @@ GFConditionalLogic.prototype._maintainFocus = function( event ) {
 	// If the dialog is shown and the focus is not within the dialog element,
 	// move it back to its first focusable child
 	if ( this.visible && !this.els.flyouts[ this.objectType ].contains( event.target ) ) {
-		setFocusToFirstItem( this.els.flyouts[ this.objectType ] );
+		setFocusToFirstItem( this.els.flyouts[ this.objectType ], event );
 	}
 };
 

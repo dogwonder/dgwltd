@@ -215,16 +215,15 @@ class Generic_Map extends Base {
 
 		$html .= sprintf(
 			'<span class="%1$s"><input type="hidden" name="%2$s" value=\'%3$s\' />
-				<div id="%4$s" class="gform-settings-field-map__container"></div></span>
-				<script type="text/javascript">initializeFieldMap( \'%4$s\', %5$s );</script></span>',
+				<div id="%4$s" class="gform-settings-field-map__container"></div>%5$s</span>
+				<script type="text/javascript">initializeFieldMap( \'%4$s\', %6$s );</script></span>',
 			esc_attr( $this->get_container_classes() ),
 			$input_name, // Input name
 			wp_json_encode( $this->get_value() ? $this->get_value() : array() ), // Input value
 			$container_name, // Container name
+			$this->get_error_icon(),
 			wp_json_encode( $js_params )// JS params
 		);
-
-		$html .= $this->get_error_icon();
 
 		return $html;
 

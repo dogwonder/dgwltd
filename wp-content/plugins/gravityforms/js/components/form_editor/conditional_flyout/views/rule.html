@@ -7,6 +7,8 @@
 	</select>
 
 	{{ valueMarkup }}
-	<button type="button" class="add_field_choice" data-js-add-rule title="add another rule"></button>
-	<button type="button" class="delete_field_choice {{ deleteClass }}" data-js-delete-rule title="remove this rule"></button>
+	<div class="conditional_logic_flyout__rule-controls">
+		<button type="button" class="add_field_choice gform-st-icon gform-st-icon--circle-plus" data-js-add-rule title="{{ addRuleText }}"></button>
+		<button type="button" class="delete_field_choice gform-st-icon gform-st-icon--circle-minus {{ deleteClass }}" data-js-delete-rule title="{{ removeRuleText }}"></button>
+	</div>
 </div>

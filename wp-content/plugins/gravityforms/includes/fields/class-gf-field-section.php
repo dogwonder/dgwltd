@@ -26,14 +26,14 @@ class GF_Field_Section extends GF_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a dashicons class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'dashicons-minus';
+		return 'gform-icon--section';
 	}
 
 	function get_form_editor_field_settings() {

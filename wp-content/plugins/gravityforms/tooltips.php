@@ -8,8 +8,6 @@ if ( ! class_exists( 'GFForms' ) ) {
  * Enqueue the styles and scripts required for the tooltips.
  */
 function enqueue_tooltip_scripts() {
-
-	wp_enqueue_style( 'gform_tooltip' );
 	wp_enqueue_style( 'gform_font_awesome' );
 
 	wp_enqueue_script( 'gform_tooltip_init' );
@@ -215,7 +213,7 @@ function gform_tooltip( $name, $css_class = '', $return = false ) {
 
 	$tooltip = sprintf(
 		'<a href="#" onclick="return false;" onkeypress="return false;" class="gf_tooltip %s" %s title="%s">
-			<svg width="4" height="8" fill="#242748" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 1.214C.224.926.504.704.842.545A2.57 2.57 0 011.947.308c.265 0 .518.04.757.12.24.08.456.196.648.35.192.153.344.352.455.597.112.244.168.52.168.827 0 .185-.023.362-.07.53a1.782 1.782 0 01-.2.465 3.224 3.224 0 01-.27.376 4.733 4.733 0 01-.323.345c-.054.052-.133.124-.235.219a8.5 8.5 0 00-.235.223c-.054.054-.114.12-.18.196a.98.98 0 00-.146.218.55.55 0 00-.053.209l-.024.432h-.973L1.26 4.92c0-.067.004-.132.012-.195a.845.845 0 01.048-.189l.062-.165a.797.797 0 01.096-.168 7.16 7.16 0 00.103-.149c.023-.033.064-.085.125-.156a5.956 5.956 0 01.266-.29l.137-.141c.204-.218.36-.417.467-.597.108-.18.161-.383.161-.607 0-.272-.081-.483-.244-.635-.164-.152-.376-.228-.638-.228-.192 0-.382.051-.57.153a1.309 1.309 0 00-.466.422L0 1.214zm1.031 5.75c0-.202.073-.375.218-.518a.725.725 0 01.53-.216c.201 0 .375.072.52.216a.702.702 0 01.218.517.695.695 0 01-.218.516.718.718 0 01-.52.213.73.73 0 01-.53-.213.695.695 0 01-.218-.516z"/></svg>
+			<i class="gform-icon gform-icon--question-mark"></i>
 		</a>',
 		esc_attr( $css_class ),
 		esc_attr( $tooltip_class ),

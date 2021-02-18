@@ -29,11 +29,8 @@
 }
 
 // To use PhotoSwipe gallery class = .dgwltd-gallery && link to media file in settings
-.pswp__zoom-wrap {
-    @extend %frame;
-    --x: 4 !important;
-    --y: 3 !important;
-}
-.pswp__img {
-    
-}
+// .pswp__zoom-wrap {
+//     @extend %frame;
+//     --x: 4 !important;
+//     --y: 3 !important;
+// }

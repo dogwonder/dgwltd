@@ -253,7 +253,7 @@ class GFSettings {
 			<header class="gform-settings-panel__header">
 				<h4 class="gform-settings-panel__title"><?php esc_html_e( 'Uninstall Gravity Forms', 'gravityforms' ); ?></h4>
 			</header>
-			<div class="gform-settings-panel__content gform-kitchen-sink">
+			<div class="gform-settings-panel__content">
 				<p class="alert error">
 					<?php esc_html_e('This operation deletes ALL Gravity Forms settings. If you continue, you will NOT be able to retrieve these settings.', 'gravityforms'); ?>
 				</p>

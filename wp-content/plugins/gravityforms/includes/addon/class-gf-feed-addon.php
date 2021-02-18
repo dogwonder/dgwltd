@@ -1302,7 +1302,7 @@ abstract class GFFeedAddOn extends GFAddOn {
 				<h4 class="gform-settings-panel__title"><span><?php echo $this->feed_list_title() ?></span></h4>
 			</header>
 
-			<div class="gform-settings-panel__content gform-kitchen-sink">
+			<div class="gform-settings-panel__content">
 				<form id="gform-settings" action="" method="post">
 					<?php
 					$feed_list = $this->get_feed_table( $form );

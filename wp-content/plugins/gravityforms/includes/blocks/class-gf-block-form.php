@@ -235,7 +235,7 @@ class GF_Block_Form extends GF_Block {
 		}
 
 		// Get form objects.
-		$form_objects = GFAPI::get_forms();
+		$form_objects = GFAPI::get_forms( true, false, 'title', 'ASC' );
 
 		// Loop through forms, add conditional logic check.
 		foreach ( $form_objects as $form ) {

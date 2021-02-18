@@ -54,7 +54,7 @@ if (!is_single() && !is_page() || empty($pdMetaInfo['description'])) {
 	$pdMetaInfo['description'] = strip_shortcodes(esc_attr(get_bloginfo('description')));
 }
 if(is_search() || is_404()) {
-	$pdMetaInfo['url'] = 'http://dgw.ltd';
+	$pdMetaInfo['url'] = 'https://dgw.ltd';
 } else {
 	$pdMetaInfo['url'] = get_the_permalink($post->ID);
 }

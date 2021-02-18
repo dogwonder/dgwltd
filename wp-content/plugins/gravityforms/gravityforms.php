@@ -3,7 +3,7 @@
 Plugin Name: Gravity Forms
 Plugin URI: https://gravityforms.com
 Description: Easily create web forms and manage form entries within the WordPress admin.
-Version: 2.5-beta-3
+Version: 2.5-beta-3.1
 Author: Gravity Forms
 Author URI: https://gravityforms.com
 License: GPL-2.0+
@@ -11,7 +11,7 @@ Text Domain: gravityforms
 Domain Path: /languages
 
 ------------------------------------------------------------------------
-Copyright 2009-2020 Rocketgenius, Inc.
+Copyright 2009-2021 Rocketgenius, Inc.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -220,7 +220,7 @@ class GFForms {
 	 *
 	 * @var string $version The version number.
 	 */
-	public static $version = '2.5-beta-3';
+	public static $version = '2.5-beta-3.1';
 
 	/**
 	 * Handles background upgrade tasks.
@@ -245,9 +245,6 @@ class GFForms {
 
 		// Load in Settings Framework.
 		require_once( GFCommon::get_base_path() . '/includes/settings/class-settings.php' );
-
-		// Load deprecated classes to notify developers about changes in GF 2.5.
-		require_once GFCommon::get_base_path() . '/includes/gf-25-deprecated-namespaces.php';
 
 		/**
 		 * Fires when Gravity Forms has loaded.
@@ -311,6 +308,7 @@ class GFForms {
 		add_action( 'gform_preview_header', array( 'GFCommon', 'output_hooks_javascript' ) );
 		add_action( 'wp_head', array( 'GFCommon', 'output_hooks_javascript' ) );
 		add_action( 'gform_pre_print_scripts', array( 'GFCommon', 'output_hooks_javascript' ) );
+		add_action( 'gform_enqueue_scripts', array( 'GFCommon', 'localize_gf_legacy_multi' ), 9999 );
 
 		if ( self::get_page() === 'form_editor' ) {
 			add_action( 'admin_head', array( 'GFForms', 'preload_webfonts' ), 0, 0 );
@@ -321,6 +319,8 @@ class GFForms {
 		}
 
 		self::register_scripts();
+
+		GFCommon::localize_gform_i18n();
 
 		self::init_background_upgrader();
 
@@ -1099,6 +1099,7 @@ class GFForms {
 				'wp-tinymce',
 				'wp-tinymce-root',
 				'wp-tinymce-lists',
+				'gform_selectwoo',
 			),
 			'gf_new_form'                => array(
 				'thickbox',
@@ -2546,10 +2547,12 @@ class GFForms {
 			'jquery',
 			'gform_gravityforms'
 		), $version );
+		wp_register_script( 'gform_datepicker_legacy', $base_url . "/js/datepicker-legacy{$min}.js", array(), $version, true );
 		wp_register_script( 'gform_datepicker_init', $base_url . "/js/datepicker{$min}.js", array(
 			'jquery',
 			'jquery-ui-datepicker',
 			'gform_gravityforms',
+			'gform_datepicker_legacy',
 		), $version, true );
 		wp_register_script( 'gform_form_editor_conditional_flyout', $base_url . "/js/components/form_editor/conditional_flyout/conditional_flyout{$min}.js", array(
 			'jquery',
@@ -2593,7 +2596,8 @@ class GFForms {
 		), $version );
 		wp_register_script( 'gform_shortcode_ui', $base_url . "/js/shortcode-ui{$min}.js", array(
 			'jquery',
-			'wp-backbone'
+			'wp-backbone',
+			'wp-i18n'
 		), $version, true );
 		wp_register_script( 'gform_system_report_clipboard', $base_url . '/includes/system-status/js/clipboard.min.js', array( 'jquery' ), $version, true );
 		wp_register_script( 'gform_preview', $base_url . "/js/preview{$min}.js", array( 'jquery' ), $version, false );
@@ -2604,7 +2608,6 @@ class GFForms {
 		wp_register_style( 'gform_chosen', $base_url . "/legacy/css/chosen{$min}.css", array(), $version );
 		wp_register_style( 'gform_shortcode_ui', $base_url . "/css/shortcode-ui{$min}.css", array(), $version );
 		wp_register_style( 'gform_font_awesome', $base_url . "/css/font-awesome{$min}.css", null, $version );
-		wp_register_style( 'gform_tooltip', $base_url . "/css/tooltip{$min}.css", array( 'gform_font_awesome' ), $version );
 		wp_register_style( 'gform_dashicons', $base_url . "/css/dashicons{$min}.css", array(), $version );
 		wp_register_style( 'gform_settings', $base_url . "/includes/settings/css/settings{$min}.css", array(), $version );
 		wp_register_style( 'gform_editor', $base_url . "/css/editor{$min}.css", array(), $version );
@@ -4514,8 +4517,17 @@ class GFForms {
 	public static function admin_header( $tabs = array(), $toolbar = true ) {
 		// Print admin styles.
 		wp_print_styles( array( 'jquery-ui-styles', 'gform_admin', 'gform_settings', 'wp-pointer' ) );
+
+		// Set class for display mode on entries list page.
+		$view_class = null;
+		if ( isset( $_GET['page'] ) && $_GET['page'] === 'gf_entries' && ! isset( $_GET['lid'] ) ) {
+			if ( class_exists( 'GFEntryList' ) ) {
+				$option_values = GFEntryList::get_screen_options_values();
+				$view_class    = ( $option_values['display_mode'] === 'full_width' ) ? ' gform_form_settings_wrap--full-width' : null;
+			}
+		}
 		?>
-		<div class="wrap gforms_edit_form gforms_form_settings_wrap <?php echo GFCommon::get_browser_class() ?>">
+		<div class="wrap gforms_edit_form gforms_form_settings_wrap <?php echo GFCommon::get_browser_class() . $view_class; ?>">
 
 		<?php GFCommon::gf_header(); ?>
 
@@ -4613,7 +4625,7 @@ class GFForms {
 		$form = GFAPI::get_form( $id );
 
 		?>
-		<div id="gform-form-toolbar">
+		<div id="gform-form-toolbar" class="gform-form-toolbar">
 
 			<div class="gform-form-toolbar__container">
 
@@ -4622,13 +4634,24 @@ class GFForms {
 					<?php self::form_switcher(); ?>
 				</div>
 
-				<ul id="gform-form-toolbar__menu">
+				<ul id="gform-form-toolbar__menu" class="gform-form-toolbar__menu">
 					<?php
 					$menu_items = apply_filters( 'gform_toolbar_menu', self::get_toolbar_menu_items( $id ), $id );
-					echo self::format_toolbar_menu_items( $menu_items );
+					foreach ( $menu_items as $key => $item ) {
+						if ( in_array( $key, array( 'edit', 'settings', 'entries' ) ) ) {
+							$fixed_menu_items[ $key ] = $item;
+						} else {
+							$dynamic_menu_items[ $key ] = $item;
+						}
+					}
+					echo self::format_toolbar_menu_items( $fixed_menu_items );
+					if ( ! empty( $dynamic_menu_items ) ) {
+						echo '<span class="gform-form-toolbar__divider"></span>';
+						echo GFForms::format_toolbar_menu_items( $dynamic_menu_items );
+					}
 					?>
 				</ul>
-				<div id="gf_toolbar_buttons_container" class="gform-form-toolbar__buttons">
+				<div id="gf_toolbar_buttons_container" class="gform-form-toolbar__buttons gf_toolbar_buttons_container">
 					<?php
 					$preview_args = array(
 						'form_id' => $id,
@@ -4710,7 +4733,7 @@ class GFForms {
 						$label        = rgar( $menu_item, 'label' );
 						$sub_menu_str = self::toolbar_sub_menu_items( $sub_menu_items, $compact );
 					}
-					$link_class = esc_attr( rgar( $menu_item, 'link_class' ) ) . $submenu_class;
+					$link_class = esc_attr( rgar( $menu_item, 'link_class' ) ) . ' ' . $submenu_class;
 					$icon       = rgar( $menu_item, 'icon' );
 					$url        = esc_url( rgar( $menu_item, 'url' ) );
 					$aria_label = rgar( $menu_item, 'aria-label' );
@@ -5136,37 +5159,51 @@ class GFForms {
 	 */
 	public static function maybe_auto_update( $update, $item ) {
 
-		if ( isset( $item->slug ) && $item->slug == 'gravityforms' ) {
-
-			GFCommon::log_debug( 'GFForms::maybe_auto_update() - Starting auto-update for gravityforms.' );
-
-			$auto_update_disabled = self::is_auto_update_disabled();
-			GFCommon::log_debug( 'GFForms::maybe_auto_update() - $auto_update_disabled: ' . var_export( $auto_update_disabled, true ) );
-
-			if ( $auto_update_disabled || version_compare( GFForms::$version, $item->new_version, '=>' ) ) {
-				GFCommon::log_debug( 'GFForms::maybe_auto_update() - Aborting update.' );
-
-				return false;
-			}
-
-			$current_major = implode( '.', array_slice( preg_split( '/[.-]/', GFForms::$version ), 0, 1 ) );
-			$new_major     = implode( '.', array_slice( preg_split( '/[.-]/', $item->new_version ), 0, 1 ) );
-
-			$current_branch = implode( '.', array_slice( preg_split( '/[.-]/', GFForms::$version ), 0, 2 ) );
-			$new_branch     = implode( '.', array_slice( preg_split( '/[.-]/', $item->new_version ), 0, 2 ) );
-
-			if ( $current_major == $new_major && $current_branch == $new_branch ) {
-				GFCommon::log_debug( __METHOD__ . '() - OK to update.' );
-
-				return true;
-			} else {
-				GFCommon::log_debug( __METHOD__ . '() - Aborting update. Not on the same major version.' );
-
-				return false;
-			}
+		if ( ! isset( $item->slug ) || $item->slug !== 'gravityforms' ) {
+			return $update;
 		}
 
-		return $update;
+		GFCommon::log_debug( 'GFForms::maybe_auto_update() - Starting auto-update for gravityforms.' );
+
+		$auto_update_disabled = self::is_auto_update_disabled();
+		GFCommon::log_debug( 'GFForms::maybe_auto_update() - $auto_update_disabled: ' . var_export( $auto_update_disabled, true ) );
+
+		if ( $auto_update_disabled || version_compare( GFForms::$version, $item->new_version, '>=' ) ) {
+			GFCommon::log_debug( 'GFForms::maybe_auto_update() - Aborting update.' );
+
+			return false;
+		}
+
+		if ( self::should_update_to_version( $item->new_version ) ) {
+			GFCommon::log_debug( __METHOD__ . '() - OK to update.' );
+
+			return true;
+		}
+
+		GFCommon::log_debug( __METHOD__ . sprintf( '() - Aborting. Automatically updating from %s to %s is not supported.', GFForms::$version, $item->new_version ) );
+
+		return false;
+
+	}
+
+	/**
+	 * Determines if the current version should update to the offered version.
+	 *
+	 * @since 2.4.22.4
+	 *
+	 * @param string $offered_ver The version number to be compared against the installed version number.
+	 *
+	 * @return bool
+	 */
+	public static function should_update_to_version( $offered_ver ) {
+		if ( version_compare( GFForms::$version, $offered_ver, '>=' ) ) {
+			return false;
+		}
+
+		$current_branch = implode( '.', array_slice( preg_split( '/[.-]/', GFForms::$version ), 0, 2 ) );
+		$new_branch     = implode( '.', array_slice( preg_split( '/[.-]/', $offered_ver ), 0, 2 ) );
+
+		return $current_branch == $new_branch;
 	}
 
 	/**
@@ -5176,46 +5213,11 @@ class GFForms {
 	 * @access  public
 	 *
 	 * @used-by GFForms::maybe_auto_update()
-	 * @used    DISALLOW_FILE_MODS
-	 * @used    WP_INSTALLING
-	 * @used    AUTOMATIC_UPDATER_DISABLED
-	 * @used    GFORM_DISABLE_AUTO_UPDATE
 	 *
 	 * @return bool True if auto update is disabled.  False otherwise.
 	 */
 	public static function is_auto_update_disabled() {
-
-		// Currently WordPress won't ask Gravity Forms to update if background updates are disabled.
-		// Let's double check anyway.
-
-		// WordPress background updates are disabled if you don't want file changes.
-		if ( defined( 'DISALLOW_FILE_MODS' ) && DISALLOW_FILE_MODS ) {
-			return true;
-		}
-
-		if ( defined( 'WP_INSTALLING' ) ) {
-			return true;
-		}
-
-		$wp_updates_disabled = defined( 'AUTOMATIC_UPDATER_DISABLED' ) && AUTOMATIC_UPDATER_DISABLED;
-
-		/**
-		 * Overrides the WordPress AUTOMATIC_UPDATER_DISABLED constant.
-		 *
-		 * @since Unknown
-		 *
-		 * @param bool $wp_updates_disabled True if disables.  False otherwise.
-		 */
-		$wp_updates_disabled = apply_filters( 'automatic_updater_disabled', $wp_updates_disabled );
-
-		if ( $wp_updates_disabled ) {
-			GFCommon::log_debug( __METHOD__ . '() - Background updates are disabled in WordPress.' );
-
-			return true;
-		}
-
-		// Now check Gravity Forms Background Update Settings
-
+		// Check Gravity Forms Background Update Settings.
 		$enabled = get_option( 'gform_enable_background_updates' );
 		GFCommon::log_debug( 'GFForms::is_auto_update_disabled() - $enabled: ' . var_export( $enabled, true ) );
 
@@ -5752,6 +5754,7 @@ class GFForms {
 			$return                   = array();
 			$return['default_filter'] = sanitize_key( rgpost( 'gform_default_filter' ) );
 			$return['per_page']       = sanitize_key( rgpost( 'gform_per_page' ) );
+			$return['display_mode']   = sanitize_key( rgpost( 'gform_entries_display_mode' ) );
 		} elseif ( $option = 'gform_forms_per_page' ) {
 			$return = $value;
 		}

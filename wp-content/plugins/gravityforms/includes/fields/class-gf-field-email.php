@@ -27,14 +27,14 @@ class GF_Field_Email extends GF_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a dashicons class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'dashicons-email-alt2';
+		return 'gform-icon--mail';
 	}
 
 	function get_form_editor_field_settings() {
@@ -181,7 +181,7 @@ class GF_Field_Email extends GF_Field {
                         </div>";
 			} else {
 				return "<div class='ginput_container ginput_container_email ginput_single_email' {$single_style}>
-                            <input class='{$class}' name='input_{$id}' type='{$html_input_type}' class='" . esc_attr( $class ) . "' disabled='disabled' {$single_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$single_autocomplete_attribute} />
+                            <input name='input_{$id}' type='{$html_input_type}' class='" . esc_attr( $class ) . "' disabled='disabled' {$single_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$single_autocomplete_attribute} />
                             <div class='gf_clear gf_clear_complex'></div>
                         </div>
                         <div class='ginput_complex ginput_container ginput_container_email ginput_confirm_email' {$confirm_style} id='{$field_id}_container'>

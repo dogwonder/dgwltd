@@ -106,6 +106,9 @@ class Textarea extends Base {
 			$html .= ob_get_contents();
 			ob_end_clean();
 
+			// If field failed validation, add error icon.
+			$html .= $this->get_error_icon();
+
 			$html .= '</span>';
 
 		} else {
@@ -115,19 +118,18 @@ class Textarea extends Base {
 			$html = $this->get_description();
 
 			$html .= sprintf(
-				'<span class="%s"><textarea name="%s_%s" %s %s>%s</textarea></span>',
+				'<span class="%s"><textarea name="%s_%s" %s %s>%s</textarea>%s</span>',
 				esc_attr( $this->get_container_classes() ),
 				esc_attr( $this->settings->get_input_name_prefix() ),
 				esc_attr( $this->name ),
 				$this->get_describer() ? sprintf( 'aria-describedby="%s"', $this->get_describer() ) : '',
 				implode( ' ', $this->get_attributes() ),
-				esc_textarea( $value )
+				esc_textarea( $value ),
+				// If field failed validation, add error icon.
+				$this->get_error_icon()
 			);
 
 		}
-
-		// If field failed validation, add error icon.
-		$html .= $this->get_error_icon();
 
 		return $html;
 

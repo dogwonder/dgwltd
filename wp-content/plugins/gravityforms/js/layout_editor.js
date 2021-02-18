@@ -209,9 +209,63 @@
 	} );
 
 	// Re-initialize the field after it's markup is refreshed (e.g. after the description is updated).
-	gform.addAction( 'gform_after_refresh_field_preview', function ( fieldId ) {
+	gform.addAction( 'gform_after_refresh_field_preview', function( fieldId ) {
 		initElement( $( '#field_' + fieldId ) );
 	} );
+
+	gform.addAction( 'gform_before_get_field_markup', function( form, field, index ) {
+		addFieldPlaceholder( field, index );
+	} );
+
+	gform.addAction( 'gform_after_get_field_markup', function( form, field, index ) {
+		removeFieldPlaceholder();
+	} );
+
+	gform.addAction( 'gform_before_refresh_field_preview', function( field_id ) {
+		addFieldUpdateIndicator( field_id );
+	} );
+
+	gform.addAction( 'gform_after_refresh_field_preview', function( field_id ) {
+		removeFieldUpdateIndicator( field_id );
+	} );
+
+	function addFieldPlaceholder( field, index ) {
+
+		var fieldString = '<li data-js-field-loading-placeholder><div class="dropzone__loader">' +
+			'<div class="dropzone__loader-item dropzone__loader-label"></div>' +
+			'<div class="dropzone__loader-item dropzone__loader-content"></div>' +
+			'</div></li>';
+
+		//sets up DOM for new field
+		if ( typeof index != 'undefined' ) {
+			if ( index === 0 ) {
+				$( '#gform_fields' ).prepend( fieldString );
+			} else {
+				$( '#gform_fields' ).children().eq( index - 1 ).after( fieldString );
+			}
+		} else {
+			$( '#gform_fields' ).append( fieldString );
+		}
+
+		$( '[data-js-field-loading-placeholder]' ).setGridColumnSpan( columnCount );
+
+		$( '#form_editor_fields_container' ).addClass( 'dropzone-loader-visible' );
+
+		moveByTarget( $( '[data-js-field-loading-placeholder]' ), $indicator( false ).data( 'target' ), $indicator( false ).data( 'where' ) );
+	}
+
+	function removeFieldPlaceholder() {
+		$( '#form_editor_fields_container' ).removeClass( 'dropzone-loader-visible' );
+		$( '[data-js-field-loading-placeholder]' ).remove();
+	}
+
+	function addFieldUpdateIndicator( field_id ) {
+		jQuery( "#field_" + field_id ).addClass( 'loading' );
+	}
+
+	function removeFieldUpdateIndicator( field_id ) {
+		jQuery( "#field_" + field_id ).removeClass( 'loading' );
+	}
 
 	/**
 	 * Initialize a form field so that it can be dragged and resized.
@@ -282,7 +336,7 @@
 				},
 			} )
 			.resizable( {
-				handles: 'e',
+				handles: 'e, w',
 				start: function() {
 					max = null;
 					$container.addClass( 'resizing' );
@@ -323,7 +377,7 @@
 
 					$().add( ui.helper ).add( ui.element )
 						// Resizable will set a width with each increment, we have to deliberately override this.
-						.css( 'width', 'auto' )
+						.css( 'width', 'auto' ).css( 'left', 'auto' )
 						.setGridColumnSpan( span );
 
 					if ( $sibling ) {
@@ -503,24 +557,26 @@
 
 				$target.addClass( 'hovering' );
 
+				if ( isSpacer( $target ) ) {
+					$target = $target.prev();
+					sibPos = $target.position();
+					where = 'right';
+				}
+
 				var where = whichArea( helperLeft, helperTop, sibArea, $target.outerWidth(), $target.outerHeight() ),
 					targetGroupId = getGroupId( $target ),
-					$targetGroup = getGroup( targetGroupId ),
+					$targetGroup = getGroup( targetGroupId, false ),
 					isGroupMaxed = $targetGroup.length >= ( columnCount / min );
+
+				var available = isSpaceAvailable( ui, $target );
 
 				if ( where === 'left' || where === 'right' ) {
 					// Columns are not supported in Legacy markup or with Page or Section fields.
 					if ( ! areColumnsEnabled( $target, $elem ) ) {
 						return;
-					} else if ( isGroupMaxed ) {
+					} else if ( isGroupMaxed || ( available === false ) ) {
 						return;
 					}
-				}
-
-				if ( isSpacer( $target ) ) {
-					$target = $target.prev();
-					sibPos = $target.position();
-					where = 'right';
 				}
 
 				$indicator().data( {
@@ -676,6 +732,45 @@
 	}
 
 	/**
+	 * Check if a group has room to accommodate an additional field.
+	 *
+	 * @param {object} ui      jQuery UI helper object which manages the current state.
+	 * @param {jQuery} $target The element over which the dragged element was last positioned.
+	 */
+	function isSpaceAvailable( ui, $target ) {
+		var targetSpan, splitSpan, $targetGroup, groupId, $spacer;
+
+		groupId = getGroupId( $target );
+		$targetGroup = getGroup( groupId );
+
+		// Figure out if we're dropping a field onto a spacer or next to a spacer.
+		if ( isSpacer( $target ) ) {
+			$spacer = $target;
+			$target = $target.prev();
+		} else if ( isSpacer( $target.next() ) && $targetGroup.index( $target.next() ) !== false ) {
+			$spacer = $target.next();
+		}
+
+		// If we're dropping onto or next to a spacer, set the target span to the spacer span.
+		targetSpan = $spacer ? $spacer.getGridColumnSpan() : null;
+
+		// Determine the span of the field we're dropping in.
+		if ( targetSpan ) {
+			splitSpan = targetSpan;
+		} else if ( isEvenSplit( $targetGroup ) ) {
+			splitSpan = columnCount / ( $targetGroup.length + 1 ); // +1 for the element about to be added to this group.
+		} else {
+			targetSpan = $target.getGridColumnSpan();
+			splitSpan = targetSpan / 2;
+		}
+
+		// If the span of the field we're dropping in calculates to less than 3, no space available.
+		if ( parseInt( splitSpan ) < 3 ) {
+			return false;
+		}
+	}
+
+	/**
 	 * Move the given element based on the specified target and location.
 	 *
 	 * @param {jQuery} $elem   The element to be moved.
@@ -702,13 +797,13 @@
 			$spacer = $target.next();
 		}
 
-		if ( $spacer ) {
+		movingIntoTargetGroup = where === 'left' || where === 'right';
+
+		if ( $spacer && movingIntoTargetGroup ) {
 			targetSpan = $spacer.getGridColumnSpan();
 			removeSpacer( $spacer );
 			$targetGroup = getGroup( groupId );
 		}
-
-		movingIntoTargetGroup = where === 'left' || where === 'right';
 
 		if ( where == 'top' ) {
 			$target = $targetGroup.first();
@@ -790,10 +885,17 @@
 	 *
 	 * @returns {jQuery}
 	 */
-	function getGroup( groupId ) {
-		return $elements()
-			.filter( '[data-groupId="{0}"]'.format( groupId ) )
-			.not( '.ui-draggable-dragging' );
+	function getGroup( groupId, spacers ) {
+		if ( spacers || 'undefined' === typeof( spacers ) ) {
+			return $elements()
+				.filter( '[data-groupId="{0}"]'.format( groupId ) )
+				.not( '.ui-draggable-dragging' );
+		} else {
+			return $elements()
+				.filter( '[data-groupId="{0}"]'.format( groupId ) )
+				.not( '.ui-draggable-dragging' )
+				.not( '.spacer' );
+		}
 	}
 
 	/**

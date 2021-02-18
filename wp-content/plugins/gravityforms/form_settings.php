@@ -74,6 +74,13 @@ class GFFormSettings {
 	 * @return void
 	 */
 	public static function form_settings_ui() {
+		$form_id = rgget( 'id' );
+
+		// Form ID isn't valid (it's either deleted or just not an existing form ID)
+		if ( ! GFAPI::form_id_exists( $form_id ) ) {
+			GFCommon::log_error( __METHOD__ . '(): Invalid Form ID: ' . $form_id );
+			wp_die( 'Invalid Form ID' );
+		}
 
 		self::page_header();
 
@@ -765,6 +772,10 @@ class GFFormSettings {
 	 */
 	private static function get_initial_values( $form ) {
 		$initial_values = array();
+
+		if ( empty( $form ) ) {
+			return $initial_values;
+		}
 
 		// Get all of the current values.
 		foreach ( $form as $key => $value ) {

@@ -182,7 +182,7 @@ class GFFormList {
                     <div class="form-list-head">
                     <h2> <?php esc_html_e( 'Forms', 'gravityforms' ); ?> </h2>
                         <?php if ( GFCommon::current_user_can_any( 'gravityforms_create_form' ) ) {
-                            echo '<button class="button primary add-new-h2" href="" onclick="return loadNewFormModal();" onkeypress="return loadNewFormModal();">' . esc_html__( 'Add New', 'gravityforms' ) . '</button>';
+                            echo '<button class="button gform-add-new-form primary add-new-h2" onclick="return loadNewFormModal();" onkeypress="return loadNewFormModal();">' . esc_html__( 'Add New', 'gravityforms' ) . '</button>';
                         } ?>
                     </div>
                     <div class="form-list-nav">
@@ -798,7 +798,7 @@ class GF_Form_List_Table extends WP_List_Table {
 						$message       = __( "You don't have adequate permission to trash forms.", 'gravityforms' );
 						$message_class = 'error';
 					}
-					break;				
+					break;
 				case 'duplicate' :
 					check_ajax_referer( "gf_duplicate_form_{$form_id}" );
 
@@ -909,30 +909,30 @@ class GF_Form_List_Table extends WP_List_Table {
 	}
 
 	public static function compare_view_count_asc( $a, $b ) {
-	    return $a->view_count > $b->view_count;
+	    return $a->view_count <=> $b->view_count;
 	}
 
 	public static function compare_view_count_desc( $a, $b ) {
-	    return $a->view_count < $b->view_count;
+	    return $b->view_count <=> $a->view_count;
 	}
 
 	public static function compare_entry_count_asc( $a, $b ) {
-	    return $a->entry_count > $b->entry_count;
+	    return $a->entry_count <=> $b->entry_count;
 	}
 
 	public static function compare_entry_count_desc( $a, $b ) {
-	    return $a->entry_count < $b->entry_count;
+	    return $b->entry_count <=> $a->entry_count;
 	}
 
 	public static function compare_conversion_asc( $a, $b ) {
 		$a_conversion = $a->view_count > 0 ? $a->entry_count / $a->view_count : 0;
 		$b_conversion = $b->view_count > 0 ? $b->entry_count / $b->view_count : 0;
-	    return $a_conversion > $b_conversion;
+	    return $a_conversion <=> $b_conversion;
 	}
 
 	public static function compare_conversion_desc( $a, $b ) {
 	    $a_conversion = $a->view_count > 0 ? $a->entry_count / $a->view_count : 0;
 		$b_conversion = $b->view_count > 0 ? $b->entry_count / $b->view_count : 0;
-	    return $a_conversion < $b_conversion;
+	    return $b_conversion <=> $a_conversion;
 	}
 }

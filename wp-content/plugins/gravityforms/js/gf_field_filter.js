@@ -255,8 +255,14 @@
         if(!allowMultiple)
             return str;
 
-        str += "<button class='gform-add add_field_choice' alt='{0}' title='{1}'></button>".format(gf_vars.addFieldFilter, gf_vars.addFieldFilter);
-        str += "<button class='gform-remove delete_field_choice' alt='" + gf_vars.removeFieldFilter + "' title='" + gf_vars.removeFieldFilter + "'> </button>";
+        str += "<button " +
+	        "class='gform-add add_field_choice gform-st-icon gform-st-icon--circle-plus' " +
+	        "title='{0}'" +
+	        "></button>".format(gf_vars.addFieldFilter);
+        str += "<button " +
+	        "class='gform-remove delete_field_choice gform-st-icon gform-st-icon--circle-minus' " +
+	        "title='" + gf_vars.removeFieldFilter + "'" +
+	        "></button>";
         return str;
     }
 
@@ -291,7 +297,10 @@
     function displayNoFiltersMessage () {
         var str = "";
         str += "<div id='gform-no-filters' >" + gf_vars.addFieldFilter;
-        str += "<button class='gform-add add_field_choice' alt='{0}' title='{1}'></div>".format(gf_vars.addFieldFilter, gf_vars.addFieldFilter);
+        str += "<button " +
+	        "class='gform-add add_field_choice gform-st-icon gform-st-icon--circle-plus' " +
+	        "title='{0}'" +
+	        "></div>".format(gf_vars.addFieldFilter);
         $("#gform-field-filters").html(str);
         if(isResizable){
             $container.css({'min-height': '', 'border-bottom': ''});

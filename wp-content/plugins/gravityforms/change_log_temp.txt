@@ -1,5 +1,46 @@
+### 2.5-beta-3.1
+- Added the [gform_disable_form_theme_css](https://docs.gravityforms.com/gform_disable_form_theme_css/) filter to allow users to keep the Form Theme CSS file from being enqueued.
+- Added a display mode screen option to set the container width on the entries list.
+- Added a new design for all form datepickers in the admin.
+- Added a new design for all theme datepickers.
+- Added the tooltips back to the form editor.
+- Removed the date format display from the date field.
+- Removed backward compatibility fallback for deprecated Rocketgenius\Gravity_Forms namespace.
+- Fixed custom field settings tabs in the form editor.
+- Fixed an issue where resizing fields in the form editor could push them to a second line.
+- Fixed the bullet points in settings page so they don't display in dropdowns.
+- Fixed the display of error messages on the entry list page.
+- Fixed the error message display on the personal data page.
+- Fixed the conditional flyout sizing.
+- Fixed the conditional flyout scrolling for long rule sets.
+- Fixed the outside link click being intercepted when conditional flyout open.
+- Fixed the conditional flyout, form editor sidebar and form editor toolbar positioning under 783px.
+- Fixed a display issue with paging on entries and forms list screens.
+- Fixed all conditional logic add and remove icons to use the new design.
+- Fixed some visibility issues for labels in the form editor.
+- Fixed merge tag height in form editor to indicate scroll capability more readily.
+- Fixed the display of choice field settings when they are displayed with values.
+- Fixed the checked choices icon in the field settings to make it consistent.
+- Fixed the results page links in the toolbar so they are always clickable.
+- Fixed the display of the credit card field in the form editor.
+- Fixed the display of the product field in the form editor.
+- Fixed the display of the consent field in the form editor.
+- Fixed the display of the list field in the form editor.
+- Fixed the display of the date field in the form editor.
+- Fixed the drag handle offset for the form editor in Firefox.
+- Fixed the display of the add and delete row buttons in conditional logic flyout.
+- Fixed the styling of the error and success messages on Settings pages.
+- Fixed an issue with resizing fields in the editor in RTL.
+- Fixed some display problems with the time field.
+- Fixed an issue that causes errors on the Form Settings page if an invalid Form ID is provided.
+- Updated the field icons in the form editor.
+- Updated the form editor conditional logic UI to hide the conditions when the setting is disabled.
+- AF: Added support for Gravity Forms font icons.
+- API: Fixed field settings classes not being properly separated in the form editor.
+- API: Updated get_forms method to accept optional parameters to order returned forms.
+
 ### 2.5-beta-3
-- Added tweaks to the form editor to improve design, perfomrance and usability.
+- Added tweaks to the form editor to improve design, performance and usability.
 - Added drag and drop support to the form editor for touch devices.
 - Added cosmetic tweaks to the settings pages.
 - Added the [gform_form_settings_initial_values](https://docs.gravityforms.com/gform_form_settings_initial_values/) filter enabling the default setting values for the Form Settings page to be customized.
@@ -40,7 +81,7 @@
 - Fixed an issue with columns not being saved in the editor.
 - Fixed progress bar styles.
 - Fixed an issue in the form editor where fields can be dragged off screen.
-- Fixed an issue with creidt card expiration sublabels not respecting position setting.
+- Fixed an issue with credit card expiration sublabels not respecting position setting.
 - Fixed an issue with Required Indicators changing when updated via Javascript.
 - API: Added the gchoice class to radio field output to match checkbox approach and allow addons/themes easier targeting.
 - API: Settings API - Fixed the ANY dependency operator.
@@ -58,14 +99,14 @@
 ### 2.5-beta-2
 - Added the [gform_pre_print_scripts](https://docs.gravityforms.com/gform_pre_print_scripts/) and [gform_print_scripts](https://docs.gravityforms.com/gform_print_scripts/) action hooks which are triggered when printing scripts and styles for the form widget.
 - Added cosmetic tweaks.
-- Added $tab_id as the second parameter to the gform_field_settings_tab_content filter.
+- Added $tab_id as the second parameter to the [gform_field_settings_tab_content](https://docs.gravityforms.com/gform_field_settings_tab_content/) filter.
 - Added the settings submenu dropdown back to the form editor.
 - Added a warning when the user attempts to navigate with unsaved changes in Form Settings.
 - Added MultiSelects back as an input option for Post Category and Post Tags fields and added a warning about their accessibility implications.
 - Added scrollbar back into the form editor.
 - Added indicator for hidden fields in the form editor.
 - Added header to validation summary tooltip.
-- Added the gform_editor_field_settings filter to allow the settings to be filter for a field in the form editor.
+- Added the [gform_editor_field_settings](https://docs.gravityforms.com/gform_editor_field_settings/) filter to allow the available field settings to be modified in the form editor.
 - Added icons to the settings tabs on the import/export page.
 - Added accessibility enhancements to the credit card field and the Post Custom Field.
 - Added the gform_selectwoo script to the list of no conflict scripts. Credit: the team at Gravity PDF.
@@ -151,7 +192,7 @@
 
 ### 2.5-beta-1
 - Added security enhancements.
-- Added gform_confirmation_settings_fields filter to modify confirmation settings fields to replace deprecated gform_confirmation_ui_settings filter.
+- Added [gform_confirmation_settings_fields](https://docs.gravityforms.com/gform_confirmation_settings_fields/) filter to modify confirmation settings fields to replace deprecated gform_confirmation_ui_settings filter.
 - Added [gform_editor_sidebar_panels](https://docs.gravityforms.com/gform_editor_sidebar_panels/) filter and [gform_editor_sidebar_panel_content](https://docs.gravityforms.com/gform_editor_sidebar_panel_content/) action to add custom panels to the form editor sidebar.
 - Added [gform_field_settings_tabs](https://docs.gravityforms.com/gform_field_settings_tabs/) filter and [gform_field_settings_tab_content](https://docs.gravityforms.com/gform_field_settings_tab_content/) action to add custom field settings tabs.
 - Added gform_form_settings_fields filter to modify form settings fields to replace deprecated gform_form_settings filter.

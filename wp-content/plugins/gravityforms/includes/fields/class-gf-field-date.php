@@ -27,14 +27,14 @@ class GF_Field_Date extends GF_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a dashicons class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'dashicons-calendar-alt';
+		return 'gform-icon--date';
 	}
 
 	/**
@@ -62,7 +62,6 @@ class GF_Field_Date extends GF_Field {
 			'visibility_setting',
 			'duplicate_setting',
 			'date_format_setting',
-			'date_format_placement_setting',
 			'default_value_setting',
 			'placeholder_setting',
 			'description_setting',
@@ -182,7 +181,6 @@ class GF_Field_Date extends GF_Field {
 		}
 
 		$format           = empty( $this->dateFormat ) ? 'mdy' : esc_attr( $this->dateFormat );
-		$format_placement = empty( $this->dateFormatPlacement ) ? 'below' : esc_attr( $this->dateFormatPlacement );
 		$date_info        = GFCommon::parse_date( $value, $format );
 
 		$day_value   = esc_attr( rgget( 'day', $date_info ) );
@@ -247,13 +245,7 @@ class GF_Field_Date extends GF_Field {
 		$year_step_attribute = $is_html5 ? "step='1'" : '';
 
 		// A11y improvements for the date picker field.
-		$date_format_label   = $date_format_sr_text = esc_attr__( 'Date Format: ', 'gravityforms' );
-		$date_format_label   .= $this->get_date_format();
-		$date_format_sr_text .= $this->get_date_format( 'screen_reader_text' );
-		$date_format_label   = ( $format_placement === 'hidden_label' || $format_placement === 'placeholder' ) ? '' : "<div class='gfield_date_format' aria-hidden='true'>{$date_format_label}</div>";
-
-		$date_format_label_above = ( $format_placement === 'above' )  ? $date_format_label : '';
-		$date_format_label_below = ( $format_placement === 'below' )  ? $date_format_label : '';
+		$date_format_sr_text = $this->get_date_format( 'screen_reader_text' );
 
 		$clear_multi_div_open = GFCommon::is_legacy_markup_enabled( $form ) ? '<div class="clear-multi">' : '';
 		$clear_multi_div_close = GFCommon::is_legacy_markup_enabled( $form ) ? '</div>' : '';
@@ -311,7 +303,7 @@ class GF_Field_Date extends GF_Field {
 			$day_dropdown   = "<div class='gfield_date_dropdown_day ginput_date_dropdown ginput_container ginput_container_date' id='gfield_dropdown_date_day' style='display:$dropdown_display'>" . $this->get_day_dropdown( '', "{$field_id}_2", rgar( $date_info, 'day' ), '', $disabled_text, $day_placeholder_value ) . '</div>';
 			$year_dropdown  = "<div class='gfield_date_dropdown_year ginput_date_dropdown ginput_container ginput_container_date' id='gfield_dropdown_date_year' style='display:$dropdown_display'>" . $this->get_year_dropdown( '', "{$field_id}_3", rgar( $date_info, 'year' ), '', $disabled_text, $year_placeholder_value, $form ) . '</div>';
 
-			$field_string = "<div class='ginput_container ginput_container_date' id='gfield_input_datepicker' style='display:$datepicker_display'>{$date_format_label_above}<input name='ginput_datepicker' type='text' {$date_picker_placeholder} {$disabled_text} value='{$picker_value}'/><img src='" . GFCommon::get_base_url() . "/images/calendar.png' id='gfield_input_datepicker_icon' style='display:$icon_display'/>{$date_format_label_below}</div>";
+			$field_string = "<div class='ginput_container ginput_container_date' id='gfield_input_datepicker' style='display:$datepicker_display'><input name='ginput_datepicker' type='text' {$date_picker_placeholder} {$disabled_text} value='{$picker_value}'/><img src='" . GFCommon::get_base_url() . "/images/calendar.png' id='gfield_input_datepicker_icon' style='display:$icon_display'/></div>";
 
 			switch ( $field_position ) {
 				case 'dmy' :
@@ -533,9 +525,7 @@ class GF_Field_Date extends GF_Field {
 				$describedby_attribute  = $this->get_aria_describedby( array( "{$field_id}_date_format'" ) );
 
 				return "<div class='ginput_container ginput_container_date'>
-							{$date_format_label_above}
                             <input name='input_{$id}' id='{$field_id}' type='text' value='{$picker_value}' class='datepicker {$class} {$format} {$icon_class}' {$tabindex} {$disabled_text} {$date_picker_placeholder} {$describedby_attribute} {$invalid_attribute} {$required_attribute}/>
-                            {$date_format_label_below}
                             <span id='{$field_id}_date_format' class='screen-reader-text'>{$date_format_sr_text}</span>
                         </div>
                         <input type='hidden' id='gforms_calendar_icon_$field_id' class='gform_hidden' value='$icon_url'/>";
@@ -669,7 +659,6 @@ class GF_Field_Date extends GF_Field {
 
 		return $this->dateFormat;
 	}
-
 
 	/**
 	 * Returns a JS script to be rendered in the front end of the form.
@@ -970,7 +959,7 @@ class GF_Field_Date extends GF_Field {
 	 * @return string
 	 */
 	public function get_field_placeholder_attribute() {
-		if ( $this->dateType === 'datepicker' && $this->dateFormatPlacement === 'placeholder' && empty( $this->placeholder ) ) {
+		if ( $this->dateType === 'datepicker' && empty( $this->placeholder ) ) {
 			$format = $this->is_form_editor() ? wp_strip_all_tags( $this->get_date_format() ) : $this->get_date_format();
 
 			return sprintf( "placeholder='%s'", esc_attr( $format ) );

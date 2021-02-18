@@ -288,20 +288,20 @@ AND ANY CHANGES MADE HERE WILL BE OVERWRITTEN.
 		width: 1rem;
 	}
 
-.panel-block-tabs__body--settings input[type="radio"] + label {
+.panel-block-tabs__body--settings input[type="radio"]:not(.field-choice-type--radio) + label {
 			outline: none;
 			margin-right: 0.3rem;
 		}
 
-.panel-block-tabs__body--settings input[type="radio"]:focus + label:before {
+.panel-block-tabs__body--settings input[type="radio"]:not(.field-choice-type--radio):focus + label:before {
 					box-shadow: 0 0 0 2px #BED8ED;
 				}
 
-.panel-block-tabs__body--settings input[type="radio"]:disabled + label:before{
+.panel-block-tabs__body--settings input[type="radio"]:not(.field-choice-type--radio):disabled + label:before{
 			opacity: .6;
 		}
 
-.panel-block-tabs__body--settings input[type="radio"]:not(.field-choice-type) + label:before {
+.panel-block-tabs__body--settings input[type="radio"]:not(.field-choice-type--radio):not(.field-choice-type) + label:before {
 					background-color: #FFFFFF;
 					border-radius: 50%;
 					border: 1px solid #9092B2;
@@ -315,7 +315,7 @@ AND ANY CHANGES MADE HERE WILL BE OVERWRITTEN.
 					width: 1.25rem;
 				}
 
-.panel-block-tabs__body--settings input[type="radio"]:not(.field-choice-type) + label:hover:before {
+.panel-block-tabs__body--settings input[type="radio"]:not(.field-choice-type--radio):not(.field-choice-type) + label:hover:before {
 						background-image: url(../images/grey-bullet.svg);
 						background-position: center;
 						background-repeat: no-repeat;
@@ -324,19 +324,19 @@ AND ANY CHANGES MADE HERE WILL BE OVERWRITTEN.
 						display: inline-block;
 					}
 
-.panel-block-tabs__body--settings input[type="radio"]:not(.field-choice-type) + label::-moz-selection {
+.panel-block-tabs__body--settings input[type="radio"]:not(.field-choice-type--radio):not(.field-choice-type) + label::-moz-selection {
 					background: transparent;
 				}
 
-.panel-block-tabs__body--settings input[type="radio"]:not(.field-choice-type) + label::selection {
+.panel-block-tabs__body--settings input[type="radio"]:not(.field-choice-type--radio):not(.field-choice-type) + label::selection {
 					background: transparent;
 				}
 
-.panel-block-tabs__body--settings input[type="radio"]:not(.field-choice-type):checked:focus + label:before {
+.panel-block-tabs__body--settings input[type="radio"]:not(.field-choice-type--radio):not(.field-choice-type):checked:focus + label:before {
 							box-shadow: 0 0 0 2px #BED8ED;
 						}
 
-.panel-block-tabs__body--settings input[type="radio"]:not(.field-choice-type):checked + label:before {
+.panel-block-tabs__body--settings input[type="radio"]:not(.field-choice-type--radio):not(.field-choice-type):checked + label:before {
 						background-color: #FFFFFF;
 						background-image: url(../images/bullet.svg);
 						background-position: center;
@@ -409,7 +409,7 @@ AND ANY CHANGES MADE HERE WILL BE OVERWRITTEN.
 					background: transparent;
 				}
 
-.panel-block-tabs__body--settings input[type="checkbox"]:not(.gform-field__toggle-input):checked + label:before {
+.panel-block-tabs__body--settings input[type="checkbox"]:not(.gform-field__toggle-input):checked:not(.field-choice-type--checkbox) + label:before {
 					background-color: #3E7DA6;
 					background-image: url(../images/check.svg);
 					background-position: center;
@@ -419,9 +419,19 @@ AND ANY CHANGES MADE HERE WILL BE OVERWRITTEN.
 
 .panel-block-tabs__body--settings .choice_with_value .field-choice-text,
 	.panel-block-tabs__body--settings #field_choices .field-choice-text {
-		flex: 1 0 auto;
+		flex: 1;
 		max-width: 14.75rem;
+		min-width: 1px;
+	}
+
+.panel-block-tabs__body--settings .field-choice-text {
 		width: 80%;
+	}
+
+.panel-block-tabs__body--settings .choice_with_value .field-choice-text + .field-choice-value {
+		margin: 0 0.25rem;
+		flex: 1;
+		min-width: 1px;
 	}
 
 .panel-block-tabs__body--settings input:disabled, .panel-block-tabs__body--settings textarea:disabled, .panel-block-tabs__body--settings select:disabled {
@@ -435,10 +445,6 @@ html[dir="rtl"] .panel-block-tabs__body--settings input[type="radio"]:not(.field
 			margin-left: 0.3rem;
 			margin-right: 0;
 			margin-right: initial;
-		}
-
-html[dir="rtl"] .panel-block-tabs__body--settings input[type="radio"] + label {
-			margin-right: 0;
 		}
 
 textarea:focus,
@@ -486,7 +492,7 @@ select:focus{
 	}
 
 html[dir="rtl"] .all-merge-tags, html[dir="rtl"] .all-merge-tags.textarea {
-		margin: 0 10px 0 0;
+		margin: 0 0.5rem 0 0;
 	}
 
 .merge-tag-support{
@@ -712,52 +718,25 @@ li.field_setting > label {
     width: 120px !important;
 }
 
-.gf_conditional_logic_rules_container .delete_field_choice:before{
-    content: "\f460";
-}
-
-.gf_conditional_logic_rules_container .add_field_choice:before{
-    content: "\f132";
-}
-
 .conditional_logic_flyout .add_field_choice,
-.conditional_logic_flyout .delete_field_choice {
-    align-items: center;
-    background: none;
-    border-radius: 100px;
-    border: 1px solid #9092B2;
-    box-shadow: 0 2px 2px rgba(58, 58, 87, 0.0596411);
-    color: #3985B7;
-    cursor: pointer;
-    display: flex;
-    font-family: 'dashicons';
-    font-size: 10px;
-    height: 16px;
-    justify-content: center;
-    margin-top: .35rem;
-    padding: 0;
-    transition: all .15s ease;
-    width: 16px;
-}
-
-.conditional_logic_flyout .add_field_choice:hover,
-    .conditional_logic_flyout .add_field_choice:focus,
-    .conditional_logic_flyout .delete_field_choice:hover,
-    .conditional_logic_flyout .delete_field_choice:focus {
-        border-color: #3E7DA6;
+    .conditional_logic_flyout .delete_field_choice {
+        top: 0.5625rem;
     }
 
-.gf_browser_safari .conditional_logic_flyout .add_field_choice:before, .gf_browser_safari .conditional_logic_flyout .delete_field_choice:before {
-            position: relative;
-            top: -2px;
-        }
+.conditional_logic_flyout .add_field_choice {
+        margin-left: 0.625rem;
+    }
 
-.conditional_logic_flyout .delete_field_choice:before {
-    content: "\f460";
+.conditional_logic_flyout .delete_field_choice {
+        margin-left: 0.1875rem;
+    }
+
+html[dir=rtl] .conditional_logic_flyout .add_field_choice {
+    margin: 0 0.625rem 0 0;
 }
 
-.conditional_logic_flyout .add_field_choice:before {
-    content: "\f543";
+html[dir=rtl] .conditional_logic_flyout .delete_field_choice {
+    margin: 0 0.375rem 0 0;
 }
 
 .conditional_logic_flyout .delete_field_choice {
@@ -768,6 +747,14 @@ li.field_setting > label {
 .conditional_logic_flyout .delete_field_choice.active {
         opacity: 1;
         pointer-events: auto;
+    }
+
+.conditional-flyout__main-fields {
+    display: none;
+}
+
+.conditional-flyout__main-fields.active {
+        display: block;
     }
 
 .conditional_logic_flyout_container {
@@ -798,11 +785,19 @@ li.field_setting > label {
 .conditional_logic_flyout {
     background: #FFFFFF;
     bottom: 0;
-    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 5.75rem);
     left: 10px;
     opacity: 0;
     position: absolute;
+    top: 0;
     z-index: -10;
+}
+
+html[dir=rtl] .conditional_logic_flyout {
+    right: 10px;
+    left: auto;
 }
 
 .conditional_logic_wrapper .conditional_logic_accordion {
@@ -844,18 +839,21 @@ li.field_setting > label {
     }
 
 .conditional_logic_wrapper .conditional_logic_accordion__status_indicator {
-        margin-left: 10px;
+        margin-left: 0.625rem;
         display: none;
     }
 
 .conditional_logic_wrapper .conditional_logic_accordion__status_indicator .gform-status-indicator {
             background: #ECEDF8;
-            border-radius: 12px;
+            border-radius: 0.75rem;
             border: 1px solid #D5D7E9;
             cursor: auto;
-            font-size: 11px;
-            height: 22px;
-            padding: .155rem .725rem .155rem 1.725rem;
+            display: inline-block;
+            font-size: 0.687rem;
+            height: 1.375rem;
+            line-height: 1.375rem;
+            padding: 0 0.5rem 0 1.5rem;
+            width: auto;
         }
 
 .conditional_logic_wrapper .conditional_logic_accordion__status_indicator .gform-status-indicator svg {
@@ -933,6 +931,24 @@ li.field_setting > label {
             display: block;
         }
 
+html[dir=rtl] .conditional_logic_wrapper .conditional_logic_accordion__label {
+        padding: 0 1rem 0 0;
+    }
+
+html[dir=rtl] .conditional_logic_wrapper .conditional_logic_accordion__status_indicator {
+        margin-right: 10px;
+        margin-left: 0;
+        display: none;
+    }
+
+html[dir=rtl] .conditional_logic_wrapper .conditional_logic_accordion__status_indicator .gform-status-indicator {
+            padding: 0 1.5rem 0 0.5rem;
+        }
+
+html[dir=rtl] .conditional_logic_wrapper .conditional_logic_accordion__toggle button {
+            padding: 0 0 0 1.125rem;
+        }
+
 button.conditional_logic_flyout__close {
     align-items: center;
     background: #FFFFFF;
@@ -946,6 +962,7 @@ button.conditional_logic_flyout__close {
     font-size: 1.25rem;
     height: 1.625rem;
     justify-content: center;
+    outline: none;
     position: absolute;
     right: 25px;
     top: 15px;
@@ -981,7 +998,7 @@ button.conditional_logic_flyout__close:hover_icon, button.conditional_logic_flyo
                 0 8px 8px rgba(18, 25, 97, 0.03),
                 0 16px 16px rgba(18, 25, 97, 0.03);
     box-sizing: border-box;
-    padding: 20px 25px;
+    padding-top: 1.25rem;
     width: calc(100vw - 270px);
 
 }
@@ -1005,7 +1022,7 @@ button.conditional_logic_flyout__close:hover_icon, button.conditional_logic_flyo
 @media (min-width: 1260px) {
 
 .conditional_logic_flyout {
-        width: auto
+        width: 650px
 
 }
     }
@@ -1025,7 +1042,7 @@ button.conditional_logic_flyout__close:hover_icon, button.conditional_logic_flyo
         }
 
 .conditional_logic_flyout__head {
-        padding-bottom: 1.25rem;
+        padding: 0 1.5625rem 1.25rem;
         position: relative;
     }
 
@@ -1033,10 +1050,10 @@ button.conditional_logic_flyout__close:hover_icon, button.conditional_logic_flyo
             background: #ECEDF8;
             bottom: 0;
             content: '';
-            height: 1px;
-            left: -25px;
+            height: 0.0625rem;
+            left: 0;
             position: absolute;
-            width: calc(100% + 50px);
+            width: 100%;
         }
 
 .conditional_logic_flyout__title {
@@ -1061,7 +1078,8 @@ button.conditional_logic_flyout__close:hover_icon, button.conditional_logic_flyo
 
 .conditional_logic_flyout__body {
         font-size: 0.8125rem;
-        padding-top: 1.25rem;
+        padding: 1.25rem 1.5625rem;
+        overflow-y: auto;
     }
 
 .conditional_logic_flyout__body.panel-block-tabs__body--settings select,
@@ -1077,11 +1095,11 @@ button.conditional_logic_flyout__close:hover_icon, button.conditional_logic_flyo
                 text-overflow: ellipsis;
             }
 
-@media (min-width: 1260px) {
+@media (min-width: 1390px) {
 
 .conditional_logic_flyout__body.panel-block-tabs__body--settings .conditional_logic_flyout__rule select:first-child,
             .conditional_logic_flyout__body.panel-block-tabs__body--settings .gfield_rule_value_dropdown {
-                    width: auto
+                    width: 40%
             }
                 }
 
@@ -1110,6 +1128,11 @@ button.conditional_logic_flyout__close:hover_icon, button.conditional_logic_flyo
         }
             }
 
+.conditional_logic_flyout__rule-controls {
+        white-space: nowrap;
+        width: 3.75rem;
+    }
+
 .conditional_logic_flyout__toggle {
         margin-bottom: 22px;
     }
@@ -1122,6 +1145,11 @@ button.conditional_logic_flyout__close:hover_icon, button.conditional_logic_flyo
         margin-top: 5px;
     }
 
+.conditional_logic_flyout__toggle_input .gform-field__toggle-switch {
+            background-position: 50% 60%;
+            transition: left .25s ease;
+        }
+
 .conditional_logic_flyout__action {
         margin-bottom: 22px;
     }
@@ -1130,7 +1158,287 @@ button.conditional_logic_flyout__close:hover_icon, button.conditional_logic_flyo
         margin-top: 10px;
     }
 
+html[dir=rtl] .conditional_logic_flyout_container {
+    overflow: visible;
+
+}
+
+html[dir=rtl] .conditional_logic_flyout_container.anim-in-ready .conditional_logic_flyout {
+        transform: translateX(98%) translateX(10px);
+    }
+
+html[dir=rtl] .conditional_logic_flyout_container.anim-in-ready.anim-in-active .conditional_logic_flyout {
+        opacity: 1;
+        transform: translateX(100%) translateX(10px);
+        transition: opacity 190ms ease-in-out, transform 190ms ease-in-out;
+    }
+
+html[dir=rtl] .conditional_logic_flyout_container.anim-out-ready .conditional_logic_flyout {
+        opacity: 1;
+        transform: translateX(100%) translateX(10px);
+        transition: opacity 190ms ease-in-out, transform 190ms ease-in-out;
+    }
+
+html[dir=rtl] .conditional_logic_flyout_container.anim-out-ready.anim-out-active .conditional_logic_flyout {
+        opacity: 0;
+        transform: translateX(98%) translateX(10px);
+    }
+
+html[dir=rtl] .conditional_logic_flyout_container button.conditional_logic_flyout__close {
+        left: 1.562rem;
+        right: auto;
+    }
+
+html[dir=rtl] .conditional_logic_flyout_container .conditional_logic_flyout__head {
+        text-align: right;
+    }
+
+html[dir=rtl] .conditional_logic_flyout_container .conditional_logic_flyout__desc {
+        padding-right: 0;
+    }
+
+html[dir=rtl] .conditional_logic_flyout_container .conditional_logic_flyout__body {
+        text-align: right;
+    }
+
+html[dir=rtl] .conditional_logic_flyout_container #field_action_type {
+        margin-right: 0;
+    }
+
+html[dir=rtl] .conditional_logic_flyout_container .conditional_logic_flyout__rule select {
+        margin-right: 0;
+        margin-left: .75rem;
+    }
+
+html[dir=rtl] .conditional_logic_flyout_container .conditional_logic_flyout .add_field_choice {
+        margin-right: .625rem;
+    }
+
+/*
+----------------------------------------------------------------
+
+tooltip.css
+Gravity Forms Admin Tooltip Styles
+http://www.gravityforms.com
+updated: November 6, 2013 12:42 PM
+
+Gravity Forms is a Rocketgenius project
+copyright 2013 Rocketgenius Inc.
+http: //www.rocketgenius.com
+this may not be re-distrubited without the
+express written permission of the author.
+
+NOTE: DO NOT EDIT THIS FILE!
+THIS FILE IS REPLACED DURING AUTO UPGRADE
+AND ANY CHANGES MADE HERE WILL BE OVERWRITTEN.
+
+----------------------------------------------------------------
+*/
+
+.gf_tooltip {
+    align-items: center;
+    background: #ECEDF8;
+    border-radius: 50%;
+    box-sizing: border-box;
+    display: inline-flex;
+    height: 1rem;
+    justify-content: center;
+    margin-left: 0.25rem;
+    text-decoration: none;
+    vertical-align: middle;
+    width: 1rem;
+    position: relative;
+}
+
+.gf_tooltip:before {
+        border: 0.0625rem solid transparent;
+        content: ' ';
+        width: 0.875rem;
+        height: 0.875rem;
+        border-radius: 100%;
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        transition: border-color 200ms ease-in-out, box-shadow 200ms ease-in-out;
+        transition-delay: 100ms;
+    }
+
+.gf_tooltip i {
+    color: #242748;
+    font-size: 0.5rem;
+}
+
+.gf_tooltip:hover,
+.gf_tooltip:active {
+    box-shadow: 0px 2px 2px rgba(58, 58, 87, 0.0796);
+}
+
+.gf_tooltip:hover:before, .gf_tooltip:active:before {
+        border-color: #3E7DA6;
+        box-shadow: 0 0 0 1px #BED8ED;
+    }
+
+.ui-tooltip.ui-widget-content {
+    background: rgba( 28, 31, 63, 0.9 );
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba( 18, 25, 97, 0.0779552 );
+    color: #FFF;
+    font: 400 .8125rem 'Open Sans', sans-serif;
+    line-height: 1.538461538em;
+    max-width: 13.125rem;
+    mix-blend-mode: normal;
+    padding: .625rem 1rem;
+    position: absolute;
+    text-align: center;
+    z-index: 1000;
+}
+
+.ui-tooltip.ui-widget-content a {
+    color: #FFF;
+}
+
+.ui-tooltip.ui-widget-content.arrow-bottom:after {
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid rgba( 28, 31, 63, 0.9 );
+    bottom: -6px;
+    box-shadow: 0 4px 10px rgba( 18, 25, 97, 0.0779552 );
+    content: '';
+    margin-left: -3px;
+    position: absolute;
+}
+
+.ui-tooltip.ui-widget-content.arrow-left:after {
+    border-bottom: 6px solid transparent;
+    border-right: 6px solid rgba( 28, 31, 63, 0.9 );
+    border-top: 6px solid transparent;
+    box-shadow: 0 4px 10px rgba( 18, 25, 97, 0.0779552 );
+    content: '';
+    left: -6px;
+    margin-top: -6px;
+    position: absolute;
+    top: 50%;
+}
+
+.ui-tooltip.ui-widget-content h6 {
+    font: inherit;
+    font-weight: 600;
+    margin: 0;
+}
+
 /* Shared */
+
+/*
+* Styles for basic inputs.
+*
+* Used in the base.css front-end stylesheet and editor.css.
+*/
+
+.gform_wrapper .gfield_checkbox label, .gform_wrapper .gfield_radio label {
+			display: inline-block;
+			font-size: 0.9375rem;
+		}
+
+.gform_wrapper .gfield_checkbox button,
+		.gform_wrapper .gfield_checkbox input[type="text"],
+		.gform_wrapper .gfield_radio button,
+		.gform_wrapper .gfield_radio input[type="text"] {
+			margin-top: 1rem;
+		}
+
+.gform_wrapper input[type="number"] {
+		display: inline-block;
+	}
+
+.gform_wrapper input[type="text"],
+	.gform_wrapper input[type="password"],
+	.gform_wrapper input[type="email"],
+	.gform_wrapper input[type="url"],
+	.gform_wrapper input[type="date"],
+	.gform_wrapper input[type="month"],
+	.gform_wrapper input[type="time"],
+	.gform_wrapper input[type="datetime"],
+	.gform_wrapper input[type="datetime-local"],
+	.gform_wrapper input[type="week"],
+	.gform_wrapper input[type="number"],
+	.gform_wrapper input[type="search"],
+	.gform_wrapper input[type="tel"],
+	.gform_wrapper input[type="color"],
+	.gform_wrapper textarea,
+	.gform_wrapper select {
+		font-size: 0.9375rem;
+		padding: 0.5rem;
+		margin-bottom: 0;
+		margin-top: 0;
+	}
+
+.gform_wrapper .chosen-container-multi,
+	.gform_wrapper .ginput_product_price,
+	.gform_wrapper .ginput_product_price_label,
+	.gform_wrapper .ginput_quantity_label {
+		font-size: 0.9375rem;
+	}
+
+.gform_wrapper .chosen-choices {
+		padding: 0.5rem;
+	}
+
+.gform_wrapper .ginput_container_date {
+		display: flex;
+		flex-flow: row wrap;
+		align-items: center;
+	}
+
+.gform_wrapper .ginput_container_date .datepicker_with_icon.large {
+				width: calc(100% - 3rem);
+			}
+
+.gform_wrapper .ginput_container_date img.ui-datepicker-trigger {
+			display: block;
+			margin-left: 0.8rem;
+			max-width: 1.6rem;
+			max-height: 1.6rem;
+		}
+
+.gform_wrapper .gfield_chainedselect.horizontal select {
+				min-width: 6.25rem;
+			}
+
+.gform_wrapper .gform_show_password {
+		color: inherit;
+		background: transparent;
+		height: 100%;
+		display: flex;
+		align-items: center;
+	}
+
+.gform_wrapper .gform_show_password:hover,
+		.gform_wrapper .gform_show_password:focus {
+			background: transparent;
+		}
+
+.gform_wrapper .gfield_consent_description {
+		max-height: 15rem;
+		overflow-y: scroll;
+		border: 1px solid #ddd;
+		margin-top: 0.5rem;
+		padding: 0.5rem;
+		font-size: 0.8em;
+	}
+
+.gform_wrapper .ginput_product_price_wrapper {
+		display: inline-block;
+	}
+
+.gform_wrapper .ginput_product_price,
+	.gform_wrapper .ginput_shipping_price {
+		color: #900;
+	}
+
+.gform_wrapper .ginput_total {
+		color: #060;
+	}
 
 /*
 * Form grid layout
@@ -1155,7 +1463,6 @@ button.conditional_logic_flyout__close:hover_icon, button.conditional_logic_flyo
 
 .gform_wrapper .gfield {
 		grid-column: 1 / -1;
-		margin-bottom: 1rem;
 	}
 
 .gform_wrapper .gfield.gfield--width-full {
@@ -1250,10 +1557,6 @@ button.conditional_logic_flyout__close:hover_icon, button.conditional_logic_flyo
 			width: 100%;
 		}
 
-.gform_wrapper .ginput_container_time select {
-		padding: 0 0.5rem;
-	}
-
 .gform_wrapper .ginput_container_address span {
 		flex: 0 0 50%;
 	}
@@ -1277,6 +1580,14 @@ button.conditional_logic_flyout__close:hover_icon, button.conditional_logic_flyo
 		.gform_wrapper .ginput_container_address span:not(.ginput_full):not(:last-of-type):not(:nth-last-of-type(2)) {
 			margin-bottom: 0.5rem;
 		}
+			html[dir=rtl] .gform_wrapper .ginput_complex:not(.ginput_container_address) span:not([style*="display:none"]):not(.ginput_full) ~ span:not(.ginput_full),
+			html[dir=rtl] .gform_wrapper .ginput_complex:not(.ginput_container_address) fieldset:not([style*="display:none"]):not(.ginput_full) ~ span:not(.ginput_full) {
+				padding-right: 1rem;
+			}
+
+			html[dir=rtl] .gform_wrapper .ginput_container_address .ginput_left {
+				padding-left: 1rem;
+			}
 
 }
 
@@ -1289,6 +1600,388 @@ button.conditional_logic_flyout__close:hover_icon, button.conditional_logic_flyo
 	}
 
 }
+
+/*
+* Styles for the list field.
+*
+* Used in the base.css front-end stylesheet and editor.css.
+*/
+
+.gform_wrapper .gfield_list_header,
+	.gform_wrapper .gfield_list_group {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		margin-bottom: 0.5rem;
+	}
+
+.gform_wrapper .gfield_list_group:last-child {
+		margin-bottom: 0;
+	}
+
+.gform_wrapper .gfield_header_item:last-child,
+	.gform_wrapper .gfield_list_icons {
+		width: 48px;
+		flex: none;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+.gform_wrapper .gfield_list_icons button {
+		font-size: 0;
+		background: transparent url('../images/list-add.svg');
+		border: none;
+		width: 16px;
+		height: 16px;
+		opacity: 0.5;
+		padding: 0;
+		transition: opacity .5s ease-out;
+	}
+
+.gform_wrapper .gfield_list_icons button:hover,
+	.gform_wrapper .gfield_list_icons button:focus {
+		opacity: 1.0;
+		outline: none;
+	}
+
+.gform_wrapper .gfield_list_icons button.delete_list_item {
+		margin-left: 5px;
+		background-image: url('../images/list-remove.svg');
+	}
+
+.gform_wrapper .gfield_header_item {
+		word-break: break-word;
+	}
+
+.gform_wrapper .gfield_header_item,
+	.gform_wrapper .gfield_list_group_item {
+		flex-grow: 1;
+		width: 0;
+	}
+
+.gform_wrapper .gfield_header_item + .gfield_header_item:not(:last-child),
+	.gform_wrapper .gfield_list_group_item + .gfield_list_group_item {
+		margin-left: 1rem;
+	}
+
+.gform_wrapper .gfield_list_group_item input,
+	.gform_wrapper .gfield_list_group_item select {
+		width: 100%;
+	}
+
+@media (max-width: 640px) {
+
+		.gform_wrapper .gfield_list_header {
+			display: none;
+		}
+
+		.gform_wrapper .gfield_list_group {
+			display: block;
+			border: 1px solid rgba(0, 0, 0, 0.2);
+			padding: 1rem;
+			margin-bottom: 1rem;
+		}
+
+		.gform_wrapper .gfield_list_group:last-child {
+			margin-bottom: 0;
+		}
+
+		.gform_wrapper .gfield_list_group_item:not(:last-child) {
+			margin-bottom: 0.5rem;
+		}
+
+		.gform_wrapper .gfield_list_group_item:after {
+			content: attr(data-label);
+		}
+
+		.gform_wrapper .gfield_list_icons {
+			width: auto;
+			background-color: rgba(0, 0, 0, 0.1);
+			margin: 1rem -1rem -1rem;
+			padding: 0.75rem 1rem;
+			line-height: 0;
+			text-align: left;
+		}
+
+		.gform_wrapper .gfield_header_item + .gfield_header_item:not(:last-child),
+		.gform_wrapper .gfield_list_group_item + .gfield_list_group_item {
+			margin-left: 0;
+		}
+
+	}
+
+html[dir=rtl] .gform_wrapper .gfield_header_item + .gfield_header_item:not(:last-child),
+	html[dir=rtl] .gform_wrapper .gfield_list_group_item + .gfield_list_group_item {
+		margin-left: 0;
+		margin-right: 1rem;
+	}
+
+/*
+* Styles for the credit card field
+*
+* Used in the base.css front-end stylesheet and editor.css.
+*/
+
+.gform_wrapper .ginput_cardextras {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+.gform_wrapper .ginput_complex .ginput_cardinfo_right input {
+		width: 30%;
+		max-width: 7rem;
+	}
+
+.gform_wrapper .ginput_card_expiration_container {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+.gform_wrapper .ginput_card_expiration_month {
+		flex: 1;
+		margin-right: 1rem;
+	}
+
+.gform_wrapper .ginput_card_expiration_year {
+		flex: 1;
+	}
+
+.gform_wrapper .ginput_cardinfo_right label,
+	.gform_wrapper .ginput_cardinfo_right legend,
+	.gform_wrapper .ginput_cardinfo_left label,
+	.gform_wrapper .ginput_cardinfo_left legend {
+		flex: 1 1 100%;
+	}
+
+html[dir="rtl"] .gform_wrapper .ginput_card_expiration_month {
+		margin-left: 1rem;
+		margin-right: 0;
+	}
+
+html[dir="rtl"] .gform_wrapper .gform_card_icon {
+		float: right;
+	}
+
+html[dir="rtl"] .gform_wrapper .gfield_creditcard_warning .gfield_creditcard_warning_message span {
+		display: block;
+		padding: 0 1.5rem 1rem 0;
+		margin-bottom: 1rem;
+		background-size: 1.5rem 1rem;
+		background-repeat: no-repeat;
+		background-position: right 0.2rem;
+	}
+
+@media (max-width: 640px) {
+
+	.gform_wrapper .ginput_card_expiration {
+		flex: none;
+	}
+
+	.gform_wrapper .ginput_card_expiration_month {
+		margin-bottom: 0.5rem;
+	}
+
+}
+
+/*
+* Styles for credit card icons
+*
+* Used in the base.css front-end stylesheet and core.css.
+*/
+
+.gform_wrapper .gform_card_icon_container {
+		display: flex;
+		height: 32px;
+		margin: 0.5rem 0 0.4rem 0;
+	}
+
+.gform_wrapper .gform_card_icon_container div.gform_card_icon {
+			background-image: url(../images/gf-creditcards.svg);
+			background-repeat: no-repeat;
+			height: 32px;
+			margin-right: 0.3rem;
+			text-indent: -9000px;
+			width: 40px;
+		}
+
+.gform_wrapper .gform_card_icon_container div.gform_card_icon.gform_card_icon_amex {
+				background-position: -167px 0;
+			}
+
+.gform_wrapper .gform_card_icon_container div.gform_card_icon.gform_card_icon_discover {
+				background-position: -221px 0;
+			}
+
+.gform_wrapper .gform_card_icon_container div.gform_card_icon.gform_card_icon_mastercard {
+				background-position: -275px 0;
+			}
+
+.gform_wrapper .gform_card_icon_container div.gform_card_icon.gform_card_icon_visa {
+				background-position: -59px 0;
+			}
+
+.gform_wrapper .gform_card_icon_container div.gform_card_icon.gform_card_icon_jcb {
+				background-position: -329px 0;
+			}
+
+.gform_wrapper .gform_card_icon_container div.gform_card_icon.gform_card_icon_maestro {
+				background-position: -5px 0;
+			}
+
+.gform_wrapper .gform_card_icon_container div.gform_card_icon.gform_card_icon_selected {
+				position: relative;
+			}
+
+.gform_wrapper .gform_card_icon_container div.gform_card_icon.gform_card_icon_selected:after {
+					background: url(../images/gf-creditcards-check.svg) center center no-repeat;
+					bottom: 4px;
+					content: '';
+					display: block;
+					height: 10px;
+					position: absolute;
+					right: 0;
+					width: 13px;
+				}
+
+.gform_wrapper .ginput_container_creditcard .ginput_cardinfo_right {
+			display: inline-flex;
+			justify-content: flex-start;
+			flex-flow: row wrap;
+			align-items: center;
+		}
+
+.gform_wrapper .ginput_container_creditcard .ginput_cardinfo_right label {
+				width: 100%;
+			}
+
+.gform_wrapper .ginput_container_creditcard .ginput_card_security_code_icon {
+			background-image: url(../images/gf-creditcards.svg);
+			background-position: -382px center;
+			background-repeat: no-repeat;
+			display: block;
+			flex: none;
+			height: 32px;
+			margin-left: .3em;
+			width: 40px;
+		}
+
+html[dir=rtl] .gform_wrapper .ginput_container_creditcard .ginput_card_security_code_icon {
+				margin-right: .3em;
+				margin-left: 0;
+			}
+
+/**
+ * Styles for the Date Picker field with the Date Field setting
+ *
+ * Used in base.css and editor.css
+ */
+
+.gform_wrapper .ginput_container_date + .ginput_container_date {
+		margin-left: 1rem;
+	}
+
+.gform_wrapper .ginput_container_date[style*='display:none'] + .ginput_container_date {
+		margin-left: 0;
+	}
+
+.gform_wrapper .ginput_container_date label {
+		display: block;
+	}
+
+html[dir=rtl] .gform_wrapper .ginput_container_date + .ginput_container_date {
+		margin-left: 0;
+		margin-right: 1rem;
+	}
+
+html[dir=rtl] .gform_wrapper .ginput_container_date[style*='display:none'] + .ginput_container_date {
+		margin-right: 0;
+	}
+
+/*
+* Hide screen reader text.
+*
+* Used in the base.css front-end stylesheet.
+*/
+
+.gform_wrapper .screen-reader-text,
+.gform_wrapper .hidden_label .gfield_label,
+.gform_wrapper .hidden_sub_label {
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	-webkit-clip-path: inset(50%);
+	clip-path: inset(50%);
+	height: 1px;
+	width: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	word-wrap: normal !important;
+}
+
+.gform_wrapper button.screen-reader-text:focus {
+	border: 0;
+	clip: auto;
+	-webkit-clip-path: none;
+	        clip-path: none;
+	height: auto;
+	margin: 0;
+	position: static !important;
+	width: auto;
+}
+
+/*
+* Styles for the time field.
+*
+* Used in the theme.css front-end stylesheet and editor.css.
+*/
+
+.gform_wrapper .gfield_time_hour label.hour_label,
+	.gform_wrapper .gfield_time_minute label.minute_label {
+		display: block;
+		font-size: 0.8125rem;
+		margin: 0;
+		padding-top: 0.3125rem;
+	}
+
+.gform_wrapper .ginput_container_time {
+		flex-basis: min-content;
+		min-width: 4rem;
+	}
+
+.gform_wrapper .ginput_container_time input {
+			min-width: 100%;
+		}
+
+.gform_wrapper .gfield_time_minute {
+		position: relative;
+	}
+
+.gform_wrapper .hour_minute_colon {
+		line-height: 2;
+		padding: 0 0.5rem;
+	}
+
+.gform_wrapper .field_sublabel_above .hour_minute_colon {
+		align-self: flex-end;
+	}
+
+.gform_wrapper .gfield_time_ampm {
+		align-items: flex-end;
+		display: flex;
+		margin-left: 1rem;
+	}
+
+.gform_wrapper .hour_minute_colon.below,
+	.gform_wrapper .gfield_time_ampm.below {
+		align-items: flex-start;
+	}
+
+html[dir=rtl] .gform_wrapper .gfield_time_ampm {
+			margin-right: 1rem;
+			margin-left: 0;
+		}
 
 /* Base */
 
@@ -1325,12 +2018,16 @@ button.conditional_logic_flyout__close:hover_icon, button.conditional_logic_flyo
 	font-display: swap;
 }
 
+/** Reset **/
+
+.gforms_edit_form button:focus, .gforms_edit_form li:focus {
+			outline: none;
+		}
+
 /** Font **/
 
-td, button, a, div, li {
-	font-family: inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+.gforms_edit_form {
 	line-height: 1.188rem;
-	-webkit-font-smoothing: antialiased;
 }
 
 /** Page layout **/
@@ -1353,6 +2050,7 @@ body.toplevel_page_gf_edit_forms #wpbody-content{
 
 body.toplevel_page_gf_edit_forms #gform-form-toolbar{
 	margin: 0 0 0 0;
+	border-bottom: 1px solid #ECEDF8;
 	box-shadow: none;
 }
 
@@ -1364,9 +2062,16 @@ body.toplevel_page_gf_edit_forms .gforms_edit_form  {
 	margin: 0 0 0 0 !important;
 	overscroll-behavior-y: none;
 	position: fixed;
-	top: 32px;
+	top: 46px;
 	width: 100%;
 }
+
+@media (min-width: 783px) {
+
+body.toplevel_page_gf_edit_forms .gforms_edit_form  {
+		top: 32px
+}
+	}
 
 body.toplevel_page_gf_edit_forms .gforms_edit_form > table {
 	padding-top: 3.75rem;
@@ -1407,187 +2112,23 @@ body.toplevel_page_gf_edit_forms .gforms_edit_form > table {
 	display: none !important;
 }
 
-/** Toolbar **/
+/** Editor specific toolbar styles **/
 
-#gform-form-toolbar .form_switcher_arrow {
-	margin-left: 0.5rem;
+.gform-form-toolbar {
+	margin: 0;
+	max-width: 100%;
+	padding: 0 0.5rem 0 0;
+	position: fixed;
+	width: calc(100% - 160px);
 }
 
-#gf_toolbar_menu_container {
-	display: flex;
-	height: 36px;
+&.folded .gform-form-toolbar{
+	width: calc(100% - 36px);
 }
-
-#gf_toolbar_menu_container a {
-		display: inline-flex;
-		border-radius: 2px;
-		padding: 6px;
-		margin: 0 !important;
-		font-family: inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-		font-size: 0.8125rem;
-		color: #1C1F3F;
-		background: none;
-		cursor: pointer;
-		border: none;
-		outline: none;
-		transition: color 0.2s ease, box-shadow .1s linear;
-	}
-
-#gf_toolbar_menu_container a svg {
-			stroke: currentColor;
-		}
-
-#gf_toolbar_menu_container a:active {
-			color: inherit;
-		}
-
-#gf_toolbar_menu_container a:focus {
-			box-shadow: 0 0 0 1.5px #3E7DA6;
-			outline: 1px solid transparent;
-		}
-
-#gf_toolbar_menu_container a:hover:not(:active){
-			color: #3E7DA6;
-		}
 
 .gform-form-switcher__container{
 	top: 87px !important;
 }
-
-body.toplevel_page_gf_edit_forms #gform-form-toolbar {
-	align-items: center;
-	background: #FFFFFF;
-	border-bottom: 1px solid #ECEDF8;
-	box-shadow: none;
-	box-sizing: border-box;
-	color: #1C1F3F;
-	display: flex;
-	font-size: 0.8125rem;
-	justify-content: start;
-	margin: 0 0 0 0;
-	max-height: 3.75rem;
-	min-height: 3.75rem;
-	padding: 0 0.5rem 0 0;
-	position: fixed;
-	width: calc(100% - 160px);
-	z-index: 99;
-	-webkit-font-smoothing: antialiased;
-}
-
-body.toplevel_page_gf_edit_forms.folded #gform-form-toolbar{
-	width: calc(100% - 36px);
-}
-
-.gform-form-toolbar .gform-form-toolbar__logo {
-		/* hidden for now, display only when in fullscreen mode */
-		display: none;
-	}
-
-.gform-form-toolbar .gform-form-toolbar__logo a {
-			align-items: center;
-			background: #242748;
-			display: flex;
-			height: 3.813rem;
-			justify-content: center;
-			transition: all ease-in-out 190ms;
-			width: 3.813rem;
-		}
-
-.gform-form-toolbar .gform-form-toolbar__logo a:hover {
-				background: #0F3D6C;
-			}
-
-.gform-form-toolbar .gform-form-toolbar__logo a:hover svg path.g {
-					fill: #0F3D6C;
-				}
-
-.gform-form-toolbar .gform-form-toolbar__form-title {
-		color: #242748;
-		font-family: inherit;
-		font-size: 0.8125rem;
-		font-style: normal;
-		font-weight: 400;
-		height: 1.25rem;
-		letter-spacing: unset;
-		line-height: 1.188rem;
-		margin-right: 0;
-		padding: 0 1.65rem 0 1.25rem;
-	}
-
-.gform-form-toolbar #gform-form-toolbar__menu {
-		display: flex;
-		height: 3.75rem;
-	}
-
-.gform-form-toolbar > li {
-		margin-bottom: 0;
-		padding-top: 0.5625rem;
-	}
-
-.gform-form-toolbar .gform-form-toolbar__divider {
-		display: inline-block;
-		height: 100%;
-		width: 1px;
-		background: #ECEDF8;
-		margin: 0 0.8125rem;
-	}
-
-.gform-form-toolbar a:focus {
-		box-shadow: none;
-		outline: none;
-	}
-
-.gform-form-toolbar__form-title a:focus {
-	box-shadow: none;
-	outline: none;
-}
-
-#gform-form-toolbar__menu li > a:hover {
-	border-bottom-color: #3E7DA6;
-}
-
-.gform-form-toolbar__form-title a.form_switcher_arrow svg {
-	fill: currentColor;
-}
-
-.gform-form-toolbar__form-title a.form_switcher_arrow {
-	color: #1C1F3F;
-}
-
-.gform-form-toolbar__form-title a.form_switcher_arrow:hover {
-	color: #3E7DA6;
-}
-
-#gform-form-toolbar__menu a.gf_toolbar_active {
-		cursor: default;
-	}
-
-#gform-form-toolbar__menu > li > a {
-		color: #1C1F3F;
-		font: inherit;
-	}
-
-#gform-form-toolbar__menu > li > a.gf-topmenu-dynamic svg {
-		fill: currentColor;
-	}
-
-#gform-form-toolbar__menu > li > a.gf-topmenu-dynamic {
-		line-height: 1px;
-		padding-top: 13px;
-		border-bottom: none;
-	}
-
-#gform-form-toolbar__menu .gform-form-toolbar__icon {
-		width: 1.25rem;
-		text-align: center;
-		margin-right: .5rem;
-		display: inline-flex;
-		align-content: center;
-	}
-
-#gform-form-toolbar__menu .gform-form-toolbar__icon svg {
-			max-width: 1.25rem;
-		}
 
 /** Popover **/
 
@@ -1736,9 +2277,16 @@ div.ui-widget-content {
 	height: 100%;
 	position: fixed;
 	right: 0;
-	top: 92px;
+	top: 106px;
 	z-index: 1;
 }
+
+@media (min-width: 783px) {
+
+.editor-sidebar {
+		top: 92px
+}
+	}
 
 .sidebar  {
 	width:370px;
@@ -1867,6 +2415,7 @@ div.ui-widget-content {
 		}
 
 .panel-block-tabs__toggle:focus {
+		outline: none;
 		border-color: #3985B7;
 	}
 
@@ -2197,13 +2746,15 @@ html[dir="rtl"] .field-choice-row .field-choice-button--delete {
 
 html:not([dir="rtl"]) .field-choice-handle {
 	margin-right: 0.3125rem;
+	width: 0.588rem;
 }
 
 html[dir="rtl"] .field-choice-handle {
 	margin-left: 0.3125rem;
+	width: 0.588rem;
 }
 
-#sidebar_field_info{
+#sidebar_field_info {
 	color: #242748;
 	font-size: 0.8125rem;
 	padding: 15px 0px 17px 0px;
@@ -2220,7 +2771,7 @@ html[dir="rtl"] .field-choice-handle {
 		padding-top: 6px;
 	}
 
-#sidebar_field_info #sidebar_field_description #sidebar_field_label{
+#sidebar_field_info #sidebar_field_description #sidebar_field_label {
 		color: #242748;
 		font-size: 13px;
 		font-weight: 500;
@@ -2233,12 +2784,12 @@ html[dir="rtl"] .field-choice-handle {
 		width: 75%;
 	}
 
-#sidebar_field_info #sidebar_field_icon img {
-		margin-top: 20px;
-	}
-
 #sidebar_field_info #sidebar_field_icon {
 		width: 68px;
+		font-size: 1.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 /* Misc */
@@ -2257,18 +2808,18 @@ html[dir="rtl"] .field-choice-handle {
 	color: #007cba;
 }
 
-.gf_editor_status{
+.gf_editor_status {
 	position: fixed;
 	bottom: 0px;
-	left: 176px;
-	height: 50px;
+	left: 11rem;
+	height: 3.125rem;
 	font-family: inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 	font-size: 0.8125rem;
 	background-color: #242748;
 	border-radius: 4px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 	color: #fff;
-	padding: 16px 24px;
+	padding: 1rem 1.5rem;
 	max-width: 600px;
 	box-sizing: border-box;
 	cursor: pointer;
@@ -2278,19 +2829,29 @@ html[dir="rtl"] .field-choice-handle {
 	opacity: 0;
 }
 
+.gf_editor_status a {
+		margin-left: 2rem;
+		color: #fff;
+		height: auto;
+		display: inline-block;
+		line-height: 1.4;
+		padding: 0;
+	}
+
 .gf_editor_status a:focus {
-	box-shadow: none;
-	outline: none;
+			box-shadow: none;
+			outline: none;
+		}
+
+.rtl .gf_editor_status {
+	right: 11rem;
+	left: auto;
 }
 
-.gf_editor_status a {
-	margin-left: 32px;
-	color: #fff;
-	height: auto;
-	display: inline-block;
-	line-height: 1.4;
-	padding: 0;
-}
+.rtl .gf_editor_status a {
+		margin-right: 2rem;
+		margin-left: 0;
+	}
 
 .folded .gf_editor_status {
 	left: 52px;
@@ -2307,6 +2868,7 @@ html[dir="rtl"] .field-choice-handle {
 
 #gfield_settings_choices_container label{
 	padding: 0 0 0 0;
+	width: 1rem;
 }
 
 html:not([dir="rtl"]) #gfield_settings_choices_container label:first-child {
@@ -2317,14 +2879,7 @@ html[dir="rtl"] #gfield_settings_choices_container label:first-child {
 	margin-right: 3.125rem;
 }
 
-#field_choices li input.field-choice-text,
-.field_input_choices li input.field-choice-text,
-.field_setting input.field-choice-input {
-	width: 230px;
-}
-
 #field_columns li input.field-choice-text {
-	width: 230px !important;
 	margin-bottom: 0.5rem;
 }
 
@@ -2338,24 +2893,14 @@ html[dir="rtl"] #gfield_settings_choices_container .gfield_choice_header_label +
 	margin-right: 0.75rem;
 }
 
-#gfield_settings_choices_container input{
-	width: 230px !important;
-}
-
-#gfield_settings_choices_container.choice_with_price .gfield_choice_header_price,
-#gfield_settings_choices_container.choice_with_value .gfield_choice_header_value{
+#gfield_settings_choices_container.choice_with_price .gfield_choice_header_price {
 	width: 120px !important;
 	margin-right: 2px;
 	display: inline-block !important;
 }
 
-#gfield_settings_choices_container.choice_with_price input,
-#gfield_settings_choices_container.choice_with_value input{
+#gfield_settings_choices_container.choice_with_price input {
 	width: 120px !important;
-}
-
-#gfield_settings_choices_container.choice_with_value .field-choice-text + .field-choice-value {
-	margin: 0 0.25rem;
 }
 
 #gfield_settings_choices_container.choice_with_value_and_price .gfield_choice_header_price,
@@ -2431,6 +2976,28 @@ html[dir="rtl"] #gfield_settings_choices_container .gfield_choice_header_label +
 
 .notice {
 	display: none;
+}
+
+#gform_input_mask {
+	padding-top: .25rem;
+}
+
+.gform_inline_options {
+	display: flex;
+	justify-content: flex-start;
+}
+
+.gform_inline_options div {
+		padding-right: .5rem;
+	}
+
+html[dir="rtl"] .gform_inline_options div {
+	padding-right: 0;
+	padding-left: .5rem;
+}
+
+#form_editor_fields_container .gform_wrapper .hour_minute_colon {
+	padding: 0.5rem;
 }
 
 /** RTL */
@@ -2510,7 +3077,8 @@ html[dir="rtl"] .panel-block-tabs__body > li {
 	text-align: right;
 }
 
-html[dir="rtl"] .panel-block-tabs__body--settings input[type="checkbox"] + label::before{
+html[dir="rtl"] .panel-block-tabs__body--settings input[type="checkbox"] + label::before,
+html[dir="rtl"] .panel-block-tabs__body--settings input[type="checkbox"]:not(.gform-field__toggle-input):not(.field-choice-type) + label:before {
 	margin-right: 0;
 	margin-left: 6px;
 }
@@ -2527,18 +3095,6 @@ html[dir="rtl"] .right ul#gf_merge_tag_list {
 	left: 0;
 	right: auto;
 	right: initial;
-}
-
-#gf_merge_tag_list {
-	background: #FFF;
-	border: 1px solid #D9DAE6;
-	border-radius: 3px;
-	box-shadow: 0 3px 5px rgba(0, 0, 0, 0.125);
-	max-height: 12.25rem;
-	overflow: auto;
-	position: absolute;
-	width: 14.625rem !important;
-	z-index: 999;
 }
 
 /* Misc fixes */

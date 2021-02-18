@@ -92,13 +92,12 @@ class Text_And_Select extends Base {
 		$html = $this->get_description();
 
 		$html .= sprintf(
-			'<span class="%s">%s %s</span>',
+			'<span class="%s">%s %s %s</span>',
 			esc_attr( $this->get_container_classes() ),
 			isset( $this->inputs['text'] ) ? $this->inputs['text']->markup() : '',
-			isset( $this->inputs['select'] ) ? $this->inputs['select']->markup() : ''
+			isset( $this->inputs['select'] ) ? $this->inputs['select']->markup() : '',
+			$this->get_error_icon()
 		);
-
-		$html .= $this->get_error_icon();
 
 		return $html;
 

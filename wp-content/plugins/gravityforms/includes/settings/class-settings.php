@@ -601,7 +601,7 @@ class Settings {
 
 			printf(
 				'<div class="alert %s" role="alert">%s</div>',
-				empty( $field_errors ) ? 'success' : 'error',
+				empty( $field_errors ) ? 'gforms_note_success' : 'gforms_note_error',
 				$this->postback_message
 			);
 
@@ -829,11 +829,11 @@ class Settings {
 		}
 
 		// Open settings table.
-		echo '<div class="gform-settings-panel__content gform-kitchen-sink">';
+		echo '<div class="gform-settings-panel__content">';
 
 		// Display section description.
 		if ( rgar( $section, 'description' ) ) {
-			printf( '<div class="gform-settings-description">%s</div>', $section['description'] );
+			printf( '<div class="gform-settings-description gform-kitchen-sink">%s</div>', $section['description'] );
 		}
 
 		/**

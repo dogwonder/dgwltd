@@ -61,19 +61,22 @@ class GFAPI {
 	 * Returns all the form objects.
 	 *
 	 * @since  1.8.11.5
+	 * @since  2.5 added $sort_column and $sort_dir parameters.
 	 * @access public
 	 *
 	 * @uses GFFormsModel::get_form_ids()
 	 * @uses GFAPI::get_form()
 	 *
-	 * @param bool $active True if active forms are returned. False to get inactive forms. Defaults to true.
-	 * @param bool $trash  True if trashed forms are returned. False to exclude trash. Defaults to false.
+	 * @param bool   $active      True if active forms are returned. False to get inactive forms. Defaults to true.
+	 * @param bool   $trash       True if trashed forms are returned. False to exclude trash. Defaults to false.
+	 * @param string $sort_column The column to sort the results on.
+	 * @param string $sort_dir    The sort direction, ASC or DESC.
 	 *
 	 * @return array The array of Form Objects.
 	 */
-	public static function get_forms( $active = true, $trash = false ) {
+	public static function get_forms( $active = true, $trash = false, $sort_column = 'id', $sort_dir = 'ASC' ) {
 
-		$form_ids = GFFormsModel::get_form_ids( $active, $trash );
+		$form_ids = GFFormsModel::get_form_ids( $active, $trash, $sort_column, $sort_dir );
 		if ( empty( $form_ids ) ) {
 			return array();
 		}
