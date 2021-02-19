@@ -74,7 +74,7 @@ if(is_search() || is_404()) {
 <script async defer data-domain="dgw.ltd" src="https://plausible.io/js/plausible.js"></script>
 </head>
 <body <?php body_class('no-js'); ?>>
-<script>document.body.className = document.body.className.replace('no-js', 'js');</script>
+<script>document.body.className = document.body.className.replace('no-js', 'js-enabled');</script>
 <div id="page" class="dgwltd-wrapper">
 	<header id="masthead" class="dgwltd-masthead" enabled="false">
 		
