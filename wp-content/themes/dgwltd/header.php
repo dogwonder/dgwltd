@@ -73,8 +73,8 @@ if(is_search() || is_404()) {
 <?php endif; //SEO plugin check ?>
 <script async defer data-domain="dgw.ltd" src="https://plausible.io/js/plausible.js"></script>
 </head>
-<body <?php body_class(); ?>>
-<script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
+<body <?php body_class('no-js'); ?>>
+<script>document.body.className = document.body.className.replace('no-js', 'js');</script>
 <div id="page" class="dgwltd-wrapper">
 	<header id="masthead" class="dgwltd-masthead" enabled="false">
 		

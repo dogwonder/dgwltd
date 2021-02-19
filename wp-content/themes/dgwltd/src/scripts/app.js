@@ -85,31 +85,12 @@
     //Vanilla nav toggle button
     const toggleNav = (button, elem, masthead)=>{
 
-        // HTML
-        // <nav class="navigation">
-        // <button aria-expanded="false" aria-controls="menu">Menu</button>
-        // <ul id="menu" hidden>
-        //     <li><a href="/">Home</a></li>
-        //     <li><a href="/benefits">Benefits</a></li>
-        //     <li><a href="/pricing">Pricing</a></li>
-        //     <li><a href="/blog">Blog</a></li>
-        // </ul>
-        // </nav>    
+        //https://piccalil.li/tutorial/build-a-light-and-global-state-system
 
-        // CSS
-        // [hidden] { display: none; }
-        // [aria\-expanded=true] {}    
-        // #menu:not([hidden]) {pointer-events: all;}
-
-        // Init 
-        // toggleNav('.navigation button', '.navigation ul', '#header');
-
-    
+        //Set up the vars
         const toggleButton = document.querySelector(button);
         const menu = document.querySelector(elem);
         const header = document.querySelector(masthead);
-        
-        //https://piccalil.li/tutorial/build-a-light-and-global-state-system
 
         window.subscribers = [];
         
@@ -130,6 +111,7 @@
             }
         });
 
+        //If window resized lets watch for when we go bigger than a tablet and switch from the burger menu to a full menu
         const observer = new ResizeObserver((observedItems) => {
             const { contentRect } = observedItems[0];
             // console.log(contentRect);
@@ -144,31 +126,38 @@
             
         });
 
+
+        //Watch the header element 
         observer.observe(header);
 
+        //Now an event listener for the burger menu button
         toggleButton.addEventListener('click', function(event) {
 
             // The JSON.parse function helps us convert the attribute from a string to a real boolean (true/false).
             const open = JSON.parse(toggleButton.getAttribute('aria-expanded'));
 
+            //Switch the state via aria-expanded and set a data attribute status="open" which we can access with CSS
             state.status = open ? 'closed' : 'open';
             toggleButton.setAttribute('aria-expanded', !open);
             menu.setAttribute('status', state.status);
 
+            //Add an additional class to the header just incase we want to do something with it in it's opened state
             if (header) {
                 header.classList.toggle('masthead-is-open');
             }
 
         });
 
-        //Close menu if user clicks escape
+        //Close menu if user hits the escape key
         window.addEventListener('keydown', function(event) {
 
             if (!event.key.includes('Escape')) { return; }
+            //Set aria state and our data attribute
             toggleButton.setAttribute('aria-expanded', 'false');
             state.status = 'closed';
             menu.setAttribute('status', state.status);
 
+            //And remove the class if set
             if (header) {
                 header.classList.remove('masthead-is-open');
             }

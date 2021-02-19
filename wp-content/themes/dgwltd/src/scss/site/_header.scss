@@ -205,14 +205,40 @@ $nav-height: 64px;
   }
 }
 
+//Attempt at fixing Cumulative Layout Shift issue with menu before JS kicks in
+.no-js {
+  .dgwltd-masthead {
+    /* browser decide if x is ok to scroll and show bars on, y hidden */
+    overflow: auto hidden;
+    /* prevent scroll chaining on x scroll */
+    overscroll-behavior-x: contain;
+    /* scrolling should snap children on x */
+    scroll-snap-type: x mandatory;
+    
+    @media (hover: none) {
+      scrollbar-width: none;
+  
+      &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+      }
+    }
+  
+    .dgwltd-nav {
+      display: flex;
+      /* defend against <main> needing 100% */
+      flex-shrink: 0;
+      /* fixes cross browser quarks */
+      min-block-size: fit-content;
+    }
+  }
+}
+
+
 //JS progressive enhancement
-.js-enabled {
+.js {
 
   .dgwltd-masthead {
-    // &[enabled="false"] {
-    //   .nav-toggle { display: none; }
-    //   .dgwltd-menu { display: block; } 
-    // }
     &[enabled="true"] {
       .nav-toggle { display: block; }    
       .dgwltd-menu { display: none; }
