@@ -271,37 +271,8 @@ $nav-height: 64px;
     }
   }
 
-  //AMP version
-  &.amp-enabled {
-
-    .nav-toggle {display:block;}
-    #nav-primary {display:none;}
-    #site-navigation.toggled-on #nav-primary {display:block;}
-    .dgwltd-masthead {overflow: visible;}
-
-    .nav-toggle {
-      position: absolute;
-      z-index:9999;
-      top:2rem;
-      right:0;
-    }
-
-    .toggled-on {
-      .dgwltd-menu {
-        @extend %dgMenu;
-        max-width: calc(100% - 54px);
-      }
-      .nav-toggle {
-        .open {display: none;}
-        .close {display: block;stroke: black;}
-      }
-    }
-    
-  }
   
-
 }
-
 
 //JS progressive enhancement
 .js-enabled {
@@ -336,6 +307,39 @@ $nav-height: 64px;
       
     }
 
+  }
+
+}
+
+
+//AMP version
+.amp-enabled {
+
+  .nav-toggle {
+    display:block;
+    .close {display: none;}
+  }
+  #nav-primary {display:none;}
+  #site-navigation.toggled-on #nav-primary {display:block;}
+  
+  .dgwltd-masthead {overflow: visible;}
+
+  .nav-toggle {
+    position: absolute;
+    z-index:9999;
+    top:2rem;
+    right:0;
+  }
+
+  .toggled-on {
+    .dgwltd-menu {
+      @extend %dgMenu;
+      max-width: calc(100% - 54px);
+    }
+    .nav-toggle {
+      .open {display: none;}
+      .close {display: block;stroke: black;}
+    }
   }
 
 }
