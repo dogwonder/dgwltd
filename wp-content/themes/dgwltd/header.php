@@ -71,15 +71,6 @@ if(is_search() || is_404()) {
 <meta name="twitter:description" content="<?php echo esc_attr($pdMetaInfo['description']) ?>">
 <meta name="twitter:image" content="<?php echo $pdMetaInfo['image'] ?>">
 <?php endif; //SEO plugin check ?>
-<?php
-//AMP plugin check
-if ( is_plugin_active( 'amp/amp.php' ) && amp_is_request()) : ?>
-<style amp-custom>
-.nav-toggle {display:block;}
-#nav-primary {display:none;}
-#site-navigation.toggled-on #nav-primary {display:block;}
-</style>
-<?php endif; ?>
 <script async defer data-domain="dgw.ltd" src="https://plausible.io/js/plausible.js"></script>
 </head>
 <body <?php body_class('no-js'); ?>>
