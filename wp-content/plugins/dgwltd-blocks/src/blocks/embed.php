@@ -44,6 +44,16 @@ $block_classes = array($className);
                     width="500"
                     height="281"
                     ></amp-vimeo>
+                    <?php else : ?>
+                    <amp-iframe
+                    width="200"
+                    height="100"
+                    sandbox="allow-scripts allow-same-origin"
+                    layout="responsive"
+                    frameborder="0"
+                    src="<?php the_field('embed'); ?>"
+                    >
+                    </amp-iframe>
                     <?php endif; ?>
                 <?php else : ?>
                     <?php if($v['type'] == 'youtube') : ?>
