@@ -60,7 +60,7 @@ $block_template = array(
                 ?>
                 <div class="block__background">
                 <?php 
-                //Is the AMP plugin enabled if so provide a dominant background color based on the image
+                //Is the AMP plugin (https://wordpress.org/plugins/amp/) enabled if so provide a dominant background color based on the image
                 if(function_exists('amp_is_request') && amp_is_request()) : ?>
                     <?php 
                         $i = imagecreatefromjpeg($imageSmall); 

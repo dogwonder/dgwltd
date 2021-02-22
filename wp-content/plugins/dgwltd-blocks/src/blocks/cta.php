@@ -77,7 +77,7 @@ $block_template = array(
                 $imageSmallHeight = esc_attr($image['sizes'][ 'dgwltd-small-height' ]);
                 ?>
                 <?php 
-                //Is the AMP plugin enabled if so show the AMP image format
+                //Is the AMP plugin (https://wordpress.org/plugins/amp/) enabled if so show the AMP image format
                 if(function_exists('amp_is_request') && amp_is_request()) : ?>
                 <amp-img alt="<?php echo ($imageAlt ?  $imageAlt : ''); ?>"
                         src="<?php echo $imageSmall; ?>"

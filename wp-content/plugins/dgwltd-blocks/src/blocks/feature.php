@@ -53,7 +53,7 @@ $block_template = array(
 ?>
 
 <?php 
-//Is the AMP plugin enabled if so get the dominant color for the image and set it as a background color
+//Is the AMP plugin (https://wordpress.org/plugins/amp/) enabled if so get the dominant color for the image and set it as a background color
 if(function_exists('amp_is_request') && amp_is_request()) : 
     if( !empty( $image ) ) :
         $i = imagecreatefromjpeg($image['sizes']['dgwltd-small']); 
