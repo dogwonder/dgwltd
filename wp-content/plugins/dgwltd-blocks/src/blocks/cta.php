@@ -72,14 +72,26 @@ $block_template = array(
                 $imageMedium = $image['sizes']['dgwltd-medium']; 
                 $imageAlt = esc_attr($image['alt']); 
                 $imageWidth = esc_attr($image['width']);  
-                $imageHeight = esc_attr($image['height']);  
+                $imageHeight = esc_attr($image['height']);
+                $imageSmallWidth = esc_attr($image['sizes'][ 'dgwltd-small-width' ]);    
+                $imageSmallHeight = esc_attr($image['sizes'][ 'dgwltd-small-height' ]);
                 ?>
+                <?php 
+                //Is the AMP plugin enabled if so show the AMP image format
+                if(function_exists('amp_is_request') && amp_is_request()) : ?>
+                <amp-img alt="<?php echo ($imageAlt ?  $imageAlt : ''); ?>"
+                        src="<?php echo $imageSmall; ?>"
+                        width="<?php echo $imageSmallWidth ?>"
+                        height="<?php echo $imageSmallHeight ?>">
+                </amp-img>
+                <?php else : ?>
                 <figure class="dgwltd-cta__image transform">
-                <picture class="frame">
-                <source media="(min-width: 769px)" srcset="<?php echo ($imageMedium ?  $imageMedium : $imageSmall); ?>">
-                <img src="<?php echo $imageSmall; ?>" alt="<?php echo ($imageAlt ?  $imageAlt : ''); ?>" loading="lazy" />
-                </picture>
+                    <picture class="frame">
+                        <source media="(min-width: 769px)" srcset="<?php echo ($imageMedium ?  $imageMedium : $imageSmall); ?>">
+                        <img src="<?php echo $imageSmall; ?>" alt="<?php echo ($imageAlt ?  $imageAlt : ''); ?>" loading="lazy" />
+                    </picture>
                 </figure>
+                <?php endif; ?>
             <?php endif; ?>    
         </div>
  </div>

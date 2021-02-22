@@ -221,6 +221,11 @@ require get_template_directory() . '/inc/dgwltd-functions.php';
 require get_template_directory() . '/inc/dgwltd-acf.php';
 
 /**
+ * Functions for Google AMP 
+ */
+require get_template_directory() . '/inc/dgwltd-amp.php';
+
+/**
  * Functions for forms
  */
 require get_template_directory() . '/inc/dgwltd-forms.php';

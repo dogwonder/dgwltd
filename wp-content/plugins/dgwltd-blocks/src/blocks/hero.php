@@ -55,14 +55,40 @@ $block_template = array(
                 $imageAlt = esc_attr($image['alt']);  
                 $imageWidth = esc_attr($image['width']);  
                 $imageHeight = esc_attr($image['height']);  
+                $imageSmallWidth = esc_attr($image['sizes'][ 'dgwltd-small-width' ]);    
+                $imageSmallHeight = esc_attr($image['sizes'][ 'dgwltd-small-height' ]);
                 ?>
                 <div class="block__background">
+                <?php 
+                //Is the AMP plugin enabled if so provide a dominant background color based on the image
+                if(function_exists('amp_is_request') && amp_is_request()) : ?>
+                    <?php 
+                        $i = imagecreatefromjpeg($imageSmall); 
+                        for ($x=0;$x<imagesx($i);$x++) {
+                            for ($y=0;$y<imagesy($i);$y++) {
+                                $rgb = imagecolorat($i,$x,$y);
+                                $r   = ($rgb >> 16) & 0xFF;
+                                $g   = ($rgb >> 8) & 0xFF;
+                                $b   = $rgb & 0xFF;
+                                $rTotal += $r;
+                                $gTotal += $g;
+                                $bTotal += $b;
+                                $total++;
+                            }
+                        }
+                        $rAverage = round($rTotal/$total);
+                        $gAverage = round($gTotal/$total);
+                        $bAverage = round($bTotal/$total);
+                    ?>
+                    <figure style="background-color:rgb(<?php echo $rAverage; ?>, <?php echo $gAverage; ?>, <?php echo $bAverage; ?>);"></figure>
+                <?php else : ?>
                     <figure>
                     <picture>
                         <source media="(min-width: 900px)" srcset="<?php echo $imageLarge; ?>">
                         <img src="<?php echo $imageSmall; ?>" alt="" loading="lazy" />
                     </picture>
                     </figure>
+                <?php endif; ?>    
                 </div>
             <?php endif; ?>    
 

@@ -52,14 +52,42 @@ $block_template = array(
 );
 ?>
 
- <div id="<?php echo $id; ?>" class="<?php echo esc_attr(implode(" ", $block_classes)); ?>">
+<?php 
+//Is the AMP plugin enabled if so get the dominant color for the image and set it as a background color
+if(function_exists('amp_is_request') && amp_is_request()) : 
+    $i = imagecreatefromjpeg($image['sizes']['dgwltd-small']); 
+    for ($x=0;$x<imagesx($i);$x++) {
+        for ($y=0;$y<imagesy($i);$y++) {
+            $rgb = imagecolorat($i,$x,$y);
+            $r   = ($rgb >> 16) & 0xFF;
+            $g   = ($rgb >> 8) & 0xFF;
+            $b   = $rgb & 0xFF;
+            $rTotal += $r;
+            $gTotal += $g;
+            $bTotal += $b;
+            $total++;
+        }
+    }
+    $rAverage = round($rTotal/$total);
+    $gAverage = round($gTotal/$total);
+    $bAverage = round($bTotal/$total);
+    $hasrgb = true;
+else :
+    $hasrgb = false;
+endif; ?>
+
+ <div id="<?php echo $id; ?>" class="<?php echo esc_attr(implode(" ", $block_classes)); ?>"<?php echo $rgb = $hasrgb ? ' style="background-color:rgb('. $rAverage . ',' . $gAverage . ',' . $bAverage . ')"' : ''; ?>>
 
             <?php if( !empty( $image ) ) : ?>
                 <?php //print_r($image) ?>
                 <?php 
                 $imageSmall = $image['sizes']['dgwltd-medium']; 
                 $imageLarge = $image['sizes']['dgwltd-large']; 
-                $imageAlt =  esc_attr($image['alt']);  
+                $imageAlt =  esc_attr($image['alt']); 
+                $imageWidth = esc_attr($image['width']);  
+                $imageHeight = esc_attr($image['height']);
+                $imageSmallWidth = esc_attr($image['sizes'][ 'dgwltd-medium-width' ]);    
+                $imageSmallHeight = esc_attr($image['sizes'][ 'dgwltd-medium-height' ]); 
                 ?>
                 <?php if($block_parallax) : ?>
                 <style>
@@ -126,9 +154,7 @@ $block_template = array(
                 <div class="dgwltd-feature__inner">   
 
                 <div class="dgwltd-feature__content">
-
                     <InnerBlocks allowedBlocks="<?php echo esc_attr( wp_json_encode( $allowed_blocks ) ); ?>" template="<?php echo esc_attr( wp_json_encode( $block_template ) ); ?>" />
-
                 </div>
                 
                 </div>
