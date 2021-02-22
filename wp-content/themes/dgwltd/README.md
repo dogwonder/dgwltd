@@ -120,4 +120,4 @@ Based on PhotoSwipe [Javascript gallery](https://photoswipe.com)
 
 ## AMP Support
 
-I've added AMP support if the [AMP plugin](https://wordpress.org/plugins/amp/) is enabled this does stuff like enable the AMP burger menu, `<amp-img>`
+I've added AMP support if the [AMP plugin](https://wordpress.org/plugins/amp/) is enabled this does stuff like enable the AMP burger menu, AMP images and a few other optimisation bits

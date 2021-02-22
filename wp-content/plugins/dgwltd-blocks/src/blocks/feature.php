@@ -142,7 +142,6 @@ endif;
                         #<?php echo $id; ?>.dgwltd-block--feature .block__background img {
                             filter: grayscale(100%) contrast(200%);
                         }
-                        
                         </style>
                     <?php endif; ?>
                     <div class="block__background">
