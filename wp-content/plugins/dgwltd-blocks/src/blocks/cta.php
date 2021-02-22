@@ -70,14 +70,14 @@ $block_template = array(
                 <?php 
                 $imageSmall = $image['sizes']['dgwltd-small']; 
                 $imageMedium = $image['sizes']['dgwltd-medium']; 
-                $imageAlt =  esc_attr($image['alt']); 
-                $imageWidth =  esc_attr($image['width']);  
-                $imageHeight =  esc_attr($image['height']);  
+                $imageAlt = esc_attr($image['alt']); 
+                $imageWidth = esc_attr($image['width']);  
+                $imageHeight = esc_attr($image['height']);  
                 ?>
                 <figure class="dgwltd-cta__image transform">
                 <picture class="frame">
                 <source media="(min-width: 769px)" srcset="<?php echo ($imageMedium ?  $imageMedium : $imageSmall); ?>">
-                <img src="<?php echo $imageSmall; ?>" alt="<?php echo ($imageAlt ?  $imageAlt : ''); ?>" width="<?php echo $imageWidth ?>" height="<?php echo $imageHeight ?>" loading="lazy" />
+                <img src="<?php echo $imageSmall; ?>" alt="<?php echo ($imageAlt ?  $imageAlt : ''); ?>" loading="lazy" />
                 </picture>
                 </figure>
             <?php endif; ?>    

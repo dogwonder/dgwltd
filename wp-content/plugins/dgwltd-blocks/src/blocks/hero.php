@@ -52,15 +52,15 @@ $block_template = array(
                 <?php 
                 $imageSmall = $image['sizes']['dgwltd-medium']; 
                 $imageLarge = $image['sizes']['dgwltd-large']; 
-                $imageAlt =  esc_attr($image['alt']);  
-                $imageWidth =  esc_attr($image['width']);  
-                $imageHeight =  esc_attr($image['height']);  
+                $imageAlt = esc_attr($image['alt']);  
+                $imageWidth = esc_attr($image['width']);  
+                $imageHeight = esc_attr($image['height']);  
                 ?>
                 <div class="block__background">
                     <figure>
                     <picture>
                         <source media="(min-width: 900px)" srcset="<?php echo $imageLarge; ?>">
-                        <img src="<?php echo $imageSmall; ?>" width="<?php echo $imageWidth ?>" height="<?php echo $imageHeight ?>" alt="" loading="lazy" />
+                        <img src="<?php echo $imageSmall; ?>" alt="" loading="lazy" />
                     </picture>
                     </figure>
                 </div>
