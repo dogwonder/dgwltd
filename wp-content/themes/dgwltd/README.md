@@ -111,9 +111,13 @@ Blog / posts list template
 
 Search results template
 
-
 ## Gallery
 
 Add the Additional CSS class(es) `.dgwltd-gallery` to the block 'Gallery' make a Wordpress gallery block into a modal one (and make sure link to settings are Media file)
 
 Based on PhotoSwipe [Javascript gallery](https://photoswipe.com) 
+
+
+## AMP Support
+
+I've added AMP support if the [AMP plugin](https://wordpress.org/plugins/amp/) is enabled this does stuff like enable the AMP burger menu, `<amp-img>`
