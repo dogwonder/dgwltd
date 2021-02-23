@@ -26,12 +26,16 @@ params:
   params:
   - name: text
     type: string
-    required: false
-    description: Text of the navigation item.
+    required: true
+    description: Text for the navigation item. If `html` is provided, the `text` argument will be ignored.
+  - name: html
+    type: string
+    required: true
+    description: HTML for the navigation item. If `html` is provided, the `text` argument will be ignored.
   - name: href
     type: string
     required: false
-    description: Url of the navigation item anchor. Both `href` and `text` attributes for navigation items need to be provided to create an item.
+    description: Url of the navigation item anchor.
   - name: active
     type: boolean
     required: false
@@ -44,6 +48,14 @@ params:
   type: string
   required: false
   description: Classes for the navigation section of the header.
+- name: navigationLabel
+  type: string
+  required: false
+  description: Text for the `aria-label` attribute of the navigation. Defaults to "Navigation menu".
+- name: menuButtonLabel
+  type: string
+  required: false
+  description: Text for the `aria-label` attribute of the button that toggles the navigation. Defaults to "Show or hide navigation menu".
 - name: containerClasses
   type: string
   required: false
@@ -91,6 +103,34 @@ examples:
 
 - name: with navigation
   data:
+    navigation:
+      - href: '#1'
+        text: Navigation item 1
+        active: true
+      - href: '#2'
+        text: Navigation item 2
+      - href: '#3'
+        text: Navigation item 3
+      - href: '#4'
+        text: Navigation item 4
+
+- name: with custom navigation label
+  data:
+    navigationLabel: Custom navigation label
+    navigation:
+      - href: '#1'
+        text: Navigation item 1
+        active: true
+      - href: '#2'
+        text: Navigation item 2
+      - href: '#3'
+        text: Navigation item 3
+      - href: '#4'
+        text: Navigation item 4
+
+- name: with custom menu button label
+  data:
+    menuButtonLabel: Custom button label
     navigation:
       - href: '#1'
         text: Navigation item 1
@@ -179,3 +219,73 @@ examples:
         text: Navigation item 2
       - href: '#3'
         text: Navigation item 3
+
+- name: navigation item with html
+  data:
+    serviceName: Service Name
+    serviceUrl: '/components/header'
+    navigation:
+      - href: '#1'
+        html: <em>Navigation item 1</em>
+        active: true
+      - href: '#2'
+        html: <em>Navigation item 2</em>
+      - href: '#3'
+        html: <em>Navigation item 3</em>
+
+- name: navigation item with text without link
+  data:
+    serviceName: Service Name
+    serviceUrl: '/components/header'
+    navigation:
+      - text: Navigation item 1
+      - text: Navigation item 2
+      - text: Navigation item 3
+
+# Hidden examples are not shown in the review app, but are used for tests and HTML fixtures
+- name: attributes
+  hidden: true
+  data:
+    attributes:
+      data-test-attribute: value
+      data-test-attribute-2: value-2
+- name: classes
+  hidden: true
+  data:
+    classes: app-header--custom-modifier
+- name: custom homepage url
+  hidden: true
+  data:
+    homepageUrl: /
+- name: navigation item with attributes
+  hidden: true
+  data:
+    navigation:
+      - href: /link
+        text: Item
+        attributes:
+          data-attribute: my-attribute
+          data-attribute-2: my-attribute-2
+- name: navigation item with html as text
+  hidden: true
+  data:
+    serviceName: Service Name
+    serviceUrl: '/components/header'
+    navigation:
+      - href: '#1'
+        text: <em>Navigation item 1</em>
+        active: true
+      - href: '#2'
+        text: <em>Navigation item 2</em>
+      - href: '#3'
+        text: <em>Navigation item 3</em>
+- name: navigation item with html without link
+  hidden: true
+  data:
+    serviceName: Service Name
+    serviceUrl: '/components/header'
+    navigation:
+      - html: <em>Navigation item 1</em>
+        active: true
+      - html: <em>Navigation item 2</em>
+      - html: <em>Navigation item 3</em>

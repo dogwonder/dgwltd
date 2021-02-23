@@ -25,7 +25,7 @@ params:
   description: If `maxlength` is set, this is not required. The maximum number of words. If `maxwords` is provided, the `maxlength` argument will be ignored.
 - name: threshold
   type: string
-  required: true
+  required: false
   description: The percentage value of the limit at which point the count message is displayed. If this attribute is set, the count message will be hidden by default.
 - name: label
   type: object
@@ -40,7 +40,7 @@ params:
 - name: errorMessage
   type: object
   required: false
-  description: Options for the errorMessage component (e.g. text).
+  description: Options for the error message component. The error message component will not display if you use a falsy value for `errorMessage`, for example `false` or `null`.
   isComponent: true
 - name: formGroup
   type: object
@@ -59,6 +59,10 @@ params:
   type: object
   required: false
   description: HTML attributes (for example data attributes) to add to the textarea.
+- name: spellcheck
+  type: boolean
+  required: false
+  description: Optional field to enable or disable the spellcheck attribute on the character count.
 - name: countMessage
   type: object
   required: false
@@ -149,3 +153,81 @@ examples:
       threshold: 75
       label:
         text: Full address
+
+# Hidden examples are not shown in the review app, but are used for tests and HTML fixtures
+  - name: classes
+    hidden: true
+    data:
+      id: with-classes
+      name: with-classes
+      maxlength: 10
+      label:
+        text: With classes
+      classes: app-character-count--custom-modifier
+  - name: attributes
+    hidden: true
+    data:
+      id: with-attributes
+      name: with-attributes
+      maxlength: 10
+      label:
+        text: With attributes
+      attributes:
+        data-attribute: my data value
+  - name: formGroup with classes
+    hidden: true
+    data:
+      id: with-formgroup
+      name: with-formgroup
+      maxlength: 10
+      label:
+        text: With formgroup
+      formGroup:
+        classes: app-character-count--custom-modifier
+  - name: custom classes on countMessage
+    hidden: true
+    data:
+      id: with-custom-countmessage-class
+      name: with-custom-countmessage-class
+      maxlength: 10
+      label:
+        text: With custom countMessage class
+      countMessage:
+        classes: app-custom-count-message
+  - name: spellcheck enabled
+    hidden: true
+    data:
+      id: with-spellcheck
+      name: with-spellcheck
+      maxlength: 10
+      label:
+        text: With spellcheck
+      spellcheck: true
+  - name: spellcheck disabled
+    hidden: true
+    data:
+      id: without-spellcheck
+      name: without-spellcheck
+      maxlength: 10
+      label:
+        text: Without spellcheck
+      spellcheck: false
+  - name: custom classes with error message
+    hidden: true
+    data:
+      id: with-custom-error-class
+      name: with-custom-error-class
+      maxlength: 10
+      label:
+        text: With custom error class
+      classes: app-character-count--custom-modifier
+      errorMessage:
+        text: Error message
+  - name: with id starting with number
+    hidden: true
+    data:
+      name: more-detail
+      id: 1_more-detail
+      maxlength: 10
+      label:
+        text: Can you provide more detail?

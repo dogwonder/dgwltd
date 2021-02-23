@@ -3,21 +3,11 @@
 // RESET
 @import "modules/normalize";
 
-//GALLERY
-@import "gallery/main.scss";
-@import "gallery/default-skin/default-skin.scss";
-
 // MEDIA QUERIES
 @import "vendor/mq";
 
-// BASE
-@import "partials/fonts";
-
 // VARIBLES & FUNCTIONS
 @import "modules/vars_funcs_mixins";
-
-// GOV UK FRONTEND - https://github.com/alphagov/govuk-frontend
-@import "govuk/all.scss";
 
 // BASE
 @import "partials/base";

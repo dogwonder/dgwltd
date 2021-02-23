@@ -1,5 +1,7 @@
 /* eslint-env jest */
 
+const sassdoc = require('sassdoc')
+
 const configPaths = require('../../config/paths.json')
 const PORT = configPaths.ports.test
 
@@ -144,7 +146,7 @@ describe('GOV.UK Frontend', () => {
   // the compiled CSS - if it finds anything, it will result in the test
   // failing.
   it('does not contain any unexpected govuk- function calls', async () => {
-    const sass = `@import "all"`
+    const sass = '@import "all"'
 
     const results = await renderSass({ data: sass })
     const css = results.css.toString()
@@ -152,5 +154,26 @@ describe('GOV.UK Frontend', () => {
     const functionCalls = css.match(/_?govuk-[\w-]+\(.*?\)/g)
 
     expect(functionCalls).toBeNull()
+  })
+
+  describe('Sass documentation', () => {
+    it('associates everything with a group', async () => {
+      return sassdoc.parse([
+        `${configPaths.src}/**/*.scss`,
+        `!${configPaths.src}/vendor/*.scss`
+      ])
+        .then(docs => docs.forEach(doc => {
+          return expect(doc).toMatchObject({
+            // Include doc.context.name in the expected result when this fails,
+            // giving you the context to be able to fix it
+            context: {
+              name: doc.context.name
+            },
+            group: [
+              expect.not.stringMatching('undefined')
+            ]
+          })
+        }))
+    })
   })
 })

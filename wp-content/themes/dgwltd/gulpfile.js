@@ -13,6 +13,7 @@ const favicon = require('./gulp-tasks/icons.js');
 const move = require('./gulp-tasks/move.js');
 const clean = require('./gulp-tasks/clean.js');
 const meta = require('./gulp-tasks/meta.js');
+const rename = require('./gulp-tasks/rename.js');
 
 //Build tasks
 const bump = require('./gulp-tasks/bump.js');
@@ -37,7 +38,7 @@ const watcher = () => {
 exports.serve = serve;
 
 // The default (if someone just runs `gulp`) is to run each task in parrallel
-exports.default = series(clean, parallel(sass, scripts, images, move));
+exports.default = series(clean, parallel(sass, scripts, images, move), rename);
 
 // This is our watcher task that instructs gulp to watch directories and
 // act accordingly

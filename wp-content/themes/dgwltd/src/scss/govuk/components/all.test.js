@@ -16,10 +16,16 @@ describe('When nunjucks is configured with a different base path', () => {
     nunjucks.configure(configPaths.src)
   })
 
-  it.each(allComponents)(`render('%s') does not error`, (component) => {
+  it.each(allComponents)('render(\'%s\') does not error', (component) => {
     expect(() => {
       nunjucks.render(`components/${component}/template.njk`, {})
     }).not.toThrow()
+  })
+})
+
+it('_all.scss renders to CSS without errors', () => {
+  return renderSass({
+    file: `${configPaths.src}/components/_all.scss`
   })
 })
 

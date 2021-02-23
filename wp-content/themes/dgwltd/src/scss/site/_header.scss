@@ -159,7 +159,7 @@ $nav-height: 64px;
           &:after {
             @include mq($from: desktop) {
               top: 6px;
-              @include govuk-shape-arrow(
+              @include dgwltd-shape-arrow(
                 $direction: up,
                 $base: 8px,
                 $display: inline-block
@@ -280,7 +280,10 @@ $nav-height: 64px;
   .dgwltd-masthead {
     &[enabled="true"] {
       .nav-toggle { display: block; }    
-      .dgwltd-menu { display: none; }
+      .dgwltd-menu { 
+        display: none;  
+        content-visibility: hidden;
+      }
       .dgwltd-masthead-container {
         width:100%;
       }
@@ -288,6 +291,7 @@ $nav-height: 64px;
       [status="open"] {
         
         .dgwltd-menu {
+          content-visibility: visible;
           @extend %dgMenu;
         }
 

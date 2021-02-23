@@ -15,6 +15,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="preconnect" href="https://plausible.io">
 <link rel="profile" href="https://gmpg.org/xfn/11">
 <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/favicon.png" type="image/x-icon">
 <link rel="apple-touch-icon" sizes="180x180" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/dgwltd-apple-touch-icon-180x180.png">
@@ -32,6 +33,10 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="white" />
 <meta name="msapplication-TileColor" content="#373b47">
 <meta name="theme-color" content="#373b47">
+<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/dist/css/vendor.css" />
+<style type="text/css">
+<?php include(locate_template('dist/css/critical.php')); ?>
+</style>
 <?php wp_head(); ?>
 <?php
 //SEO plugin check

@@ -2,6 +2,7 @@
 
 const nunjucks = require('nunjucks')
 const configPaths = require('../../config/paths.json')
+const crypto = require('crypto')
 
 const { renderTemplate } = require('../../lib/jest-helpers')
 
@@ -44,7 +45,7 @@ describe('Template', () => {
 
   describe('<head>', () => {
     it('can have custom social media icons specified using the headIcons block', () => {
-      const headIcons = `<link rel="govuk-icon" href="/images/ytf-icon.png">`
+      const headIcons = '<link rel="govuk-icon" href="/images/ytf-icon.png">'
 
       const $ = renderTemplate({}, { headIcons })
 
@@ -54,7 +55,7 @@ describe('Template', () => {
     })
 
     it('can have additional content added to the <head> using the head block', () => {
-      const head = `<meta property="foo" content="bar">`
+      const head = '<meta property="foo" content="bar">'
 
       const $ = renderTemplate({}, { head })
 
@@ -137,7 +138,7 @@ describe('Template', () => {
     })
 
     it('can have additional content added after the opening tag using bodyStart block', () => {
-      const bodyStart = `<div>bodyStart</div>`
+      const bodyStart = '<div>bodyStart</div>'
 
       const $ = renderTemplate({}, { bodyStart })
 
@@ -145,16 +146,30 @@ describe('Template', () => {
     })
 
     it('can have additional content added before the closing tag using bodyEnd block', () => {
-      const bodyEnd = `<div>bodyEnd</div>`
+      const bodyEnd = '<div>bodyEnd</div>'
 
       const $ = renderTemplate({}, { bodyEnd })
 
       expect($('body > div:last-of-type').text()).toEqual('bodyEnd')
     })
 
+    describe('inline script that adds "js-enabled" class', () => {
+      it('should match the hash published in docs', () => {
+        const $ = renderTemplate()
+        const script = $('body > script').first().html()
+
+        // Create a base64 encoded hash of the contents of the script tag
+        const hash = crypto.createHash('sha256').update(script).digest('base64')
+
+        // A change to the inline script would be a breaking change, and it would also require
+        // updating the hash published in https://frontend.design-system.service.gov.uk/importing-css-assets-and-javascript/#if-your-javascript-isn-t-working-properly
+        expect('sha256-' + hash).toEqual('sha256-+6WnXIl4mbFTCARd8N3COQmT3bJJmo32N8q8ZSQAIcU=')
+      })
+    })
+
     describe('skip link', () => {
       it('can be overridden using the skipLink block', () => {
-        const skipLink = `<div class="my-skip-link">skipLink</div>`
+        const skipLink = '<div class="my-skip-link">skipLink</div>'
 
         const $ = renderTemplate({}, { skipLink })
 
@@ -165,7 +180,7 @@ describe('Template', () => {
 
     describe('header', () => {
       it('can be overridden using the header block', () => {
-        const header = `<div class="my-header">header</div>`
+        const header = '<div class="my-header">header</div>'
 
         const $ = renderTemplate({}, { header })
 
@@ -196,7 +211,7 @@ describe('Template', () => {
       })
 
       it('can be overridden using the main block', () => {
-        const main = `<main class="my-main">header</main>`
+        const main = '<main class="my-main">header</main>'
 
         const $ = renderTemplate({}, { main })
 
@@ -205,7 +220,7 @@ describe('Template', () => {
       })
 
       it('can have content injected before it using the beforeContent block', () => {
-        const beforeContent = `<div class="before-content">beforeContent</div>`
+        const beforeContent = '<div class="before-content">beforeContent</div>'
 
         const $ = renderTemplate({}, { beforeContent })
 
@@ -223,7 +238,7 @@ describe('Template', () => {
 
     describe('footer', () => {
       it('can be overridden using the footer block', () => {
-        const footer = `<div class="my-footer">footer</div>`
+        const footer = '<div class="my-footer">footer</div>'
 
         const $ = renderTemplate({}, { footer })
 
