@@ -138,7 +138,7 @@ add_action( 'after_setup_theme', 'dgwltd_setup' );
 
 
 //Add Access-Control-Allow-Origin
-add_filter( 'init', 'add_cors_http_header', 11, 1 );
+add_filter( 'send_headers', 'add_cors_http_header' );
 function add_cors_http_header() { 
 	header("Access-Control-Allow-Origin: *"); 
 	header("Access-Control-Allow-Methods: GET"); 
