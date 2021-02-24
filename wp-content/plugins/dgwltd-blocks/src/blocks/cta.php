@@ -76,6 +76,7 @@ $block_template = array(
                 $imageHeight = esc_attr($image['height']);
                 $imageSmallWidth = esc_attr($image['sizes'][ 'dgwltd-small-width' ]);    
                 $imageSmallHeight = esc_attr($image['sizes'][ 'dgwltd-small-height' ]);
+                //For Low quality image placeholders (LQIP)
                 $type = pathinfo($imageTiny, PATHINFO_EXTENSION);
                 $data = file_get_contents($imageTiny);
                 $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
