@@ -139,13 +139,14 @@ add_action( 'after_setup_theme', 'dgwltd_setup' );
 
 if ( ! function_exists( 'add_cors_http_header' ) ) :
 //Add Access-Control-Allow-Origin
+add_action( 'send_headers', 'add_cors_http_header' );
 function add_cors_http_header() { 
 	header("Access-Control-Allow-Origin: *"); 
 	header("Access-Control-Allow-Methods: GET"); 
 	header("Access-Control-Allow-Headers: origin"); 
 }
 endif;
-add_action( 'send_headers', 'add_cors_http_header' );
+
 
 
 //Remove admin stuff - e.g. Emojis
