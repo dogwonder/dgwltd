@@ -137,15 +137,13 @@ endif;
 add_action( 'after_setup_theme', 'dgwltd_setup' );
 
 
-if ( ! function_exists( 'add_cors_http_header' ) ) :
 //Add Access-Control-Allow-Origin
+add_filter( 'init', 'add_cors_http_header', 11, 1 );
 function add_cors_http_header() { 
 	header("Access-Control-Allow-Origin: *"); 
 	header("Access-Control-Allow-Methods: GET"); 
 	header("Access-Control-Allow-Headers: origin"); 
 }
-endif;
-add_filter( 'init', 'add_cors_http_header' );
 
 // add_filter( 'send_headers', 'send_cors_headers', 11, 1 );
 // function send_cors_headers( $headers ) {
