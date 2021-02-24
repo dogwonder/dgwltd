@@ -137,23 +137,23 @@ endif;
 add_action( 'after_setup_theme', 'dgwltd_setup' );
 
 
-// if ( ! function_exists( 'add_cors_http_header' ) ) :
-// //Add Access-Control-Allow-Origin
-// function add_cors_http_header() { 
-// 	header("Access-Control-Allow-Origin: *"); 
-// 	header("Access-Control-Allow-Methods: GET"); 
-// 	header("Access-Control-Allow-Headers: origin"); 
-// }
-// endif;
-// add_action( 'wp_headers', 'add_cors_http_header' );
-
-add_filter( 'wp_headers', 'send_cors_headers', 11, 1 );
-function send_cors_headers( $headers ) {
-    $allowed_domains = array( 'https://dgw.ltd');
-    if ( ! in_array( $_SERVER[ 'HTTP_ORIGIN' ] , $allowed_domains ) ) return $headers;
-    $headers['Access-Control-Allow-Origin'] = $_SERVER[ 'HTTP_ORIGIN' ];
-    return $headers;
+if ( ! function_exists( 'add_cors_http_header' ) ) :
+//Add Access-Control-Allow-Origin
+function add_cors_http_header() { 
+	header("Access-Control-Allow-Origin: *"); 
+	header("Access-Control-Allow-Methods: GET"); 
+	header("Access-Control-Allow-Headers: origin"); 
 }
+endif;
+add_action( 'wp_headers', 'add_cors_http_header', 11, 1 );
+
+// add_filter( 'wp_headers', 'send_cors_headers', 11, 1 );
+// function send_cors_headers( $headers ) {
+//     $allowed_domains = array( 'https://dgw.ltd');
+//     if ( ! in_array( $_SERVER[ 'HTTP_ORIGIN' ] , $allowed_domains ) ) return $headers;
+//     $headers['Access-Control-Allow-Origin'] = $_SERVER[ 'HTTP_ORIGIN' ];
+//     return $headers;
+// }
 
 
 //Remove admin stuff - e.g. Emojis
