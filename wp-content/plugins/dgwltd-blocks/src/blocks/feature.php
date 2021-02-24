@@ -85,7 +85,7 @@ endif;
 
  <div id="<?php echo $id; ?>" class="<?php echo esc_attr(implode(" ", $block_classes)); ?>"<?php echo $rgb = $hasrgb ? ' style="background-color:rgb('. $rAverage . ',' . $gAverage . ',' . $bAverage . ')"' : ''; ?>>
 
-            <?php if( !empty( $image ) ) : ?>
+            <?php if( !empty( $image ) ) : ?>    
                 <?php //print_r($image) ?>
                 <?php 
                 $imageSmall = $image['sizes']['dgwltd-medium']; 
