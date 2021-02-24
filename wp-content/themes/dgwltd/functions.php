@@ -147,7 +147,7 @@ add_action( 'after_setup_theme', 'dgwltd_setup' );
 // endif;
 // add_action( 'init', 'add_cors_http_header' );
 
-add_filter( 'init', 'send_cors_headers', 11, 1 );
+add_filter( 'send_headers', 'send_cors_headers', 11, 1 );
 function send_cors_headers( $headers ) {
     $allowed_domains = array( 'https://dgw.ltd');
     if ( ! in_array( $_SERVER[ 'HTTP_ORIGIN' ] , $allowed_domains ) ) return $headers;
