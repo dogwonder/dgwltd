@@ -88,7 +88,7 @@ $block_template = array(
                 <figure class="dgwltd-cta__image transform">
                     <picture class="frame">
                         <source media="(min-width: 769px)" srcset="<?php echo ($imageMedium ?  $imageMedium : $imageSmall); ?>">
-                        <img src="<?php echo $imageSmall; ?>" alt="<?php echo ($imageAlt ?  $imageAlt : ''); ?>" loading="lazy" />
+                        <img src="<?php echo $imageSmall; ?>" width="<?php echo $imageSmallWidth; ?>" height="<?php echo $imageSmallHeight; ?>" alt="<?php echo ($imageAlt ?  $imageAlt : ''); ?>" loading="lazy" />
                     </picture>
                 </figure>
                 <?php endif; ?>

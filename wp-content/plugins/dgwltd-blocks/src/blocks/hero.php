@@ -87,7 +87,7 @@ $block_template = array(
                     <figure>
                     <picture>
                         <source media="(min-width: 64em)" srcset="<?php echo $imageLarge; ?>">
-                        <img src="<?php echo $imageSmall; ?>" alt="" loading="lazy" />
+                        <img src="<?php echo $imageSmall; ?>" alt="" loading="lazy" width="<?php echo $imageSmallWidth; ?>" height="<?php echo $imageSmallHeight; ?>" />
                     </picture>
                     </figure>
                 <?php endif; ?>    
