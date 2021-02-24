@@ -68,6 +68,7 @@ $block_template = array(
              <?php if( !empty( $image ) ) : ?>
                 <?php //print_r($image) ?>
                 <?php 
+                $imageTiny = $image['sizes']['dgwltd-tiny']; 
                 $imageSmall = $image['sizes']['dgwltd-small']; 
                 $imageMedium = $image['sizes']['dgwltd-medium']; 
                 $imageAlt = esc_attr($image['alt']); 
@@ -75,6 +76,9 @@ $block_template = array(
                 $imageHeight = esc_attr($image['height']);
                 $imageSmallWidth = esc_attr($image['sizes'][ 'dgwltd-small-width' ]);    
                 $imageSmallHeight = esc_attr($image['sizes'][ 'dgwltd-small-height' ]);
+                $type = pathinfo($imageTiny, PATHINFO_EXTENSION);
+                $data = file_get_contents($imageTiny);
+                $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
                 ?>
                 <?php 
                 //Is the AMP plugin (https://wordpress.org/plugins/amp/) enabled if so show the AMP image format
@@ -88,7 +92,7 @@ $block_template = array(
                 <figure class="dgwltd-cta__image transform">
                     <picture class="frame">
                         <source media="(min-width: 769px)" srcset="<?php echo ($imageMedium ?  $imageMedium : $imageSmall); ?>">
-                        <img src="<?php echo $imageSmall; ?>" width="<?php echo $imageSmallWidth; ?>" height="<?php echo $imageSmallHeight; ?>" alt="<?php echo ($imageAlt ?  $imageAlt : ''); ?>" loading="lazy" />
+                        <img src="<?php echo $imageSmall; ?>" width="<?php echo $imageSmallWidth; ?>" height="<?php echo $imageSmallHeight; ?>" alt="<?php echo ($imageAlt ?  $imageAlt : ''); ?>" loading="lazy" style="background-image: url(<?php echo $base64; ?>)" />
                     </picture>
                 </figure>
                 <?php endif; ?>

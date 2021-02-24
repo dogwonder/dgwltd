@@ -43,6 +43,7 @@ if ( ! function_exists( 'dgwltd_setup' ) ) :
 		add_theme_support( 'post-thumbnails' );
 
 		//Image sizes;
+		add_image_size('dgwltd-tiny', 16, 0, false);
 		add_image_size('dgwltd-small', 320, 0, false);
 		add_image_size('dgwltd-medium', 640, 0, false);
 		add_image_size('dgwltd-large', 1536, 0, false );

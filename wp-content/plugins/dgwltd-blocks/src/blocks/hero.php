@@ -50,6 +50,7 @@ $block_template = array(
             <?php if( !empty( $image ) && $block_type == "image" ) : ?>
                 <?php //print_r($image) ?>
                 <?php 
+                $imageTiny = $image['sizes']['dgwltd-tiny']; 
                 $imageSmall = $image['sizes']['dgwltd-medium']; 
                 $imageLarge = $image['sizes']['dgwltd-large']; 
                 $imageAlt = esc_attr($image['alt']);  
@@ -57,6 +58,9 @@ $block_template = array(
                 $imageHeight = esc_attr($image['height']);  
                 $imageSmallWidth = esc_attr($image['sizes'][ 'dgwltd-small-width' ]);    
                 $imageSmallHeight = esc_attr($image['sizes'][ 'dgwltd-small-height' ]);
+                $type = pathinfo($imageTiny, PATHINFO_EXTENSION);
+                $data = file_get_contents($imageTiny);
+                $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
                 ?>
                 <link rel="preload" href="<?php echo $imageSmall; ?>" as="image" media="(max-width: 39.6875em)">
                 <link rel="preload" href="<?php echo $imageLarge; ?>" as="image" media="(min-width: 40.0625em)">
@@ -87,7 +91,7 @@ $block_template = array(
                     <figure>
                     <picture>
                         <source media="(min-width: 64em)" srcset="<?php echo $imageLarge; ?>">
-                        <img src="<?php echo $imageSmall; ?>" alt="" loading="lazy" width="<?php echo $imageSmallWidth; ?>" height="<?php echo $imageSmallHeight; ?>" />
+                        <img src="<?php echo $imageSmall; ?>" alt="" loading="lazy" width="<?php echo $imageSmallWidth; ?>" height="<?php echo $imageSmallHeight; ?>" style="background-image: url(<?php echo $base64; ?>)" />
                     </picture>
                     </figure>
                 <?php endif; ?>    

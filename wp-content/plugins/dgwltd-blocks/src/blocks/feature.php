@@ -88,6 +88,7 @@ endif;
             <?php if( !empty( $image ) ) : ?>    
                 <?php //print_r($image) ?>
                 <?php 
+                $imageTiny = $image['sizes']['dgwltd-tiny']; 
                 $imageSmall = $image['sizes']['dgwltd-medium']; 
                 $imageLarge = $image['sizes']['dgwltd-large']; 
                 $imageAlt =  esc_attr($image['alt']); 
@@ -95,6 +96,9 @@ endif;
                 $imageHeight = esc_attr($image['height']);
                 $imageSmallWidth = esc_attr($image['sizes'][ 'dgwltd-medium-width' ]);    
                 $imageSmallHeight = esc_attr($image['sizes'][ 'dgwltd-medium-height' ]); 
+                $type = pathinfo($imageTiny, PATHINFO_EXTENSION);
+                $data = file_get_contents($imageTiny);
+                $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
                 ?>
                 <?php if($block_parallax) : ?>
                 <style>
@@ -148,7 +152,7 @@ endif;
                         <figure>
                         <picture>
                             <source media="(min-width: 900px)" srcset="<?php echo $imageLarge; ?>">
-                            <img src="<?php echo $imageSmall; ?>" alt="" loading="lazy" />
+                            <img src="<?php echo $imageSmall; ?>" width="<?php echo $imageSmallWidth; ?>" height="<?php echo $imageSmallHeight; ?>" alt="" loading="lazy" style="background-image: url(<?php echo $base64; ?>)" />
                         </picture>
                         </figure>
                     </div>
