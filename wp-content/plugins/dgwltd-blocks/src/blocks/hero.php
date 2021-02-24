@@ -45,7 +45,7 @@ $block_template = array(
 
 ?>
 
- <div id="<?php echo $id; ?>" class="<?php echo esc_attr(implode(" ", $block_classes)); ?>">
+<div id="<?php echo $id; ?>" class="<?php echo esc_attr(implode(" ", $block_classes)); ?>">
 
             <?php if( !empty( $image ) && $block_type == "image" ) : ?>
                 <?php //print_r($image) ?>
@@ -58,6 +58,8 @@ $block_template = array(
                 $imageSmallWidth = esc_attr($image['sizes'][ 'dgwltd-small-width' ]);    
                 $imageSmallHeight = esc_attr($image['sizes'][ 'dgwltd-small-height' ]);
                 ?>
+                <link rel="preload" href="<?php echo $imageSmall; ?>" as="image" media="(max-width: 39.6875em)">
+                <link rel="preload" href="<?php echo $imageLarge; ?>" as="image" media="(min-width: 40.0625em)">
                 <div class="block__background">
                 <?php 
                 //Is the AMP plugin (https://wordpress.org/plugins/amp/) enabled if so provide a dominant background color based on the image
@@ -84,7 +86,7 @@ $block_template = array(
                 <?php else : ?>
                     <figure>
                     <picture>
-                        <source media="(min-width: 900px)" srcset="<?php echo $imageLarge; ?>">
+                        <source media="(min-width: 64em)" srcset="<?php echo $imageLarge; ?>">
                         <img src="<?php echo $imageSmall; ?>" alt="" loading="lazy" />
                     </picture>
                     </figure>

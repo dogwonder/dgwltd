@@ -15,6 +15,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="preconnect" href="https://plausible.io">
+<link rel="preconnect" href="" crossorigin="<?php echo site_url();  ?>">
 <link rel="profile" href="https://gmpg.org/xfn/11">
 <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/favicon.png" type="image/x-icon">
 <link rel="apple-touch-icon" sizes="180x180" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/dgwltd-apple-touch-icon-180x180.png">
@@ -58,7 +60,7 @@ if (!is_single() && !is_page() || empty($pdMetaInfo['description'])) {
 	$pdMetaInfo['description'] = strip_shortcodes(esc_attr(get_bloginfo('description')));
 }
 if(is_search() || is_404()) {
-	$pdMetaInfo['url'] = 'https://dgw.ltd';
+	$pdMetaInfo['url'] = site_url();
 } else {
 	$pdMetaInfo['url'] = get_the_permalink($post->ID);
 }
@@ -81,7 +83,6 @@ if(is_search() || is_404()) {
 <script>document.body.className = document.body.className.replace('no-js', 'js-enabled');</script>
 <div id="page" class="dgwltd-wrapper">
 	<header id="masthead" class="dgwltd-masthead" enabled="false">
-		
 		<?php 
 		// Optional - if you need a cookie notice - also needs JS cookienotice() and cookies.scss
 		//get_template_part('template-parts/_organisms/cookie-notice'); ?>
