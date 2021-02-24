@@ -144,7 +144,7 @@ function add_cors_http_header() {
 	header("Access-Control-Allow-Headers: origin"); 
 }
 endif;
-add_action( 'after_setup_theme', 'add_cors_http_header' );
+add_action( 'init', 'add_cors_http_header' );
 
 
 //Remove admin stuff - e.g. Emojis
