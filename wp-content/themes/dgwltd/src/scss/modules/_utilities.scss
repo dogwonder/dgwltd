@@ -139,6 +139,39 @@
   text-align: left;
 }
 
+//Alerts
+.alert {
+  padding:1rem;
+  border-radius: 0.5rem;
+  background-color: var(--border-light);
+  color: var(--text-color);
+  display: flex;
+  .alert__icon {
+    width: 40px;
+    height:40px;
+    margin-top:0.5rem;
+  }
+  .alert__message {
+    flex: 1;
+    padding-left: var(--gap-10);
+    > * {
+      color:inherit;
+    }
+  }
+  &.warning {
+    background-color: rgb(255, 251, 235);
+    color: rgb(146, 64, 13);
+  }
+  &.error {
+    background-color: rgb(254, 242, 242);
+    color:rgb(153, 27, 26);
+  }
+  &.success {
+    background-color: rgb(236, 253, 245);
+    color: rgb(6, 95, 70);
+  }
+}
+
 
 //Badge
 %tag,
@@ -182,7 +215,6 @@ $heights: (
 }
 
 //Custom CSS
-
 
 //Turn off animations when user has chosen reduced motion
 @media (prefers-reduced-motion: reduce) {

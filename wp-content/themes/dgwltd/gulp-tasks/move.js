@@ -7,7 +7,7 @@ const move = () => {
         .pipe(dest('./dist/scripts'));
     let fav = src(['./src/images/fav/manifest.json'])
         .pipe(dest('./dist/images/fav'));
-    return merge(scripts, fav);
+    return merge(scripts, fav,);
 };
 
 module.exports = move;

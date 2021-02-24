@@ -16,6 +16,6 @@ const scripts = () => {
     .pipe(rollup({ plugins: [babel(), resolve(), commonjs()] }, 'umd'))
     .pipe(terser()) 
     .pipe(dest('./dist/scripts'))
-  };
+};
   
-  module.exports = scripts;
+module.exports = scripts;

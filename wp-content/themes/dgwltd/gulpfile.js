@@ -17,6 +17,7 @@ const rename = require('./gulp-tasks/rename.js');
 
 //Build tasks
 const bump = require('./gulp-tasks/bump.js');
+const sw = require('./gulp-tasks/sw.js');
 const serve = require('./gulp-tasks/serve.js');
 
 //Warnings
@@ -45,4 +46,4 @@ exports.default = series(clean, parallel(sass, scripts, images, move), rename);
 exports.watch = watcher;
 
 //Production tasks
-exports.prod = series(bump, favicon, meta);
+exports.prod = series(bump, sw, favicon, meta);
