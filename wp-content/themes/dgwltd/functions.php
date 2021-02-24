@@ -192,6 +192,11 @@ function dgwltd_scripts() {
 
 	// wp_enqueue_script('dgwltd-js', get_template_directory_uri() . '/dist/scripts/app.js', array('jquery'), $cache_buster, false); 
 
+	// 3.5.1
+	wp_deregister_script('jquery');
+	wp_register_script('jquery', "//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js", false, null);
+	wp_enqueue_script('jquery');
+
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
