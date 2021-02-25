@@ -36,6 +36,11 @@
           --x: 4;
           --y: 3; 
         }
+        img {
+          //For the LQIP
+          background-repeat: no-repeat;
+          background-size: cover;
+        }
         &.transform { 
           position: relative;
           @include mq($from: desktop) {

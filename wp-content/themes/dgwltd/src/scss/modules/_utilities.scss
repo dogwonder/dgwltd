@@ -120,6 +120,9 @@
     right: 0;
   }
   img {
+    //For the LQIP
+    background-repeat: no-repeat;
+    background-size: cover;
     object-fit: cover;
     object-position: 50% 50%;
     width: 100%;
