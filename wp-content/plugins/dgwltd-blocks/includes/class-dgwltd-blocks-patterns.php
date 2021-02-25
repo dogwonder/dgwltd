@@ -302,8 +302,8 @@ class Dgwltd_Blocks_Patterns {
 					<div class="wp-block-columns">
 						<!-- wp:column -->
 							<div class="wp-block-column">
-								<!-- wp:image {"align":"center","width":64,"height":64,"sizeSlug":"large","className":"is-style-default"} -->
-								<div class="wp-block-image is-style-default"><figure class="aligncenter size-large is-resized"><img src="https://s.w.org/images/core/5.5/don-quixote-03.jpg" alt="' . __( 'Pencil drawing of Don Quixote' ) . '" width="64" height="64"/></figure></div>
+								<!-- wp:image {"align":"center","width":64,"height":64,"sizeSlug":"medium","className":"is-style-default"} -->
+								<div class="wp-block-image is-style-default"><figure class="aligncenter size-medium is-resized"><img src="https://s.w.org/images/core/5.5/don-quixote-03.jpg" alt="' . __( 'Pencil drawing of Don Quixote' ) . '" width="64" height="64"/></figure></div>
 								<!-- /wp:image -->
                                 <!-- wp:heading {"level":3} -->
                                 <h3>Name surname</h3>
@@ -321,8 +321,8 @@ class Dgwltd_Blocks_Patterns {
 						<!-- /wp:column -->
 						<!-- wp:column -->
 							<div class="wp-block-column">
-								<!-- wp:image {"align":"center","width":64,"height":64,"sizeSlug":"large","className":"is-style-default"} -->
-								<div class="wp-block-image is-style-default"><figure class="aligncenter size-large is-resized"><img src="https://s.w.org/images/core/5.5/don-quixote-03.jpg" alt="' . __( 'Pencil drawing of Don Quixote' ) . '" width="64" height="64"/></figure></div>
+								<!-- wp:image {"align":"center","width":64,"height":64,"sizeSlug":"medium","className":"is-style-default"} -->
+								<div class="wp-block-image is-style-default"><figure class="aligncenter size-medium is-resized"><img src="https://s.w.org/images/core/5.5/don-quixote-03.jpg" alt="' . __( 'Pencil drawing of Don Quixote' ) . '" width="64" height="64"/></figure></div>
 								<!-- /wp:image -->
                                 <!-- wp:heading {"level":3} -->
                                 <h3>Name surname</h3>
@@ -340,8 +340,8 @@ class Dgwltd_Blocks_Patterns {
 						<!-- /wp:column -->
 						<!-- wp:column -->
 							<div class="wp-block-column">
-								<!-- wp:image {"align":"center","width":64,"height":64,"sizeSlug":"large","className":"is-style-default"} -->
-								<div class="wp-block-image is-style-default"><figure class="aligncenter size-large is-resized"><img src="https://s.w.org/images/core/5.5/don-quixote-03.jpg" alt="' . __( 'Pencil drawing of Don Quixote' ) . '" width="64" height="64"/></figure></div>
+								<!-- wp:image {"align":"center","width":64,"height":64,"sizeSlug":"medium","className":"is-style-default"} -->
+								<div class="wp-block-image is-style-default"><figure class="aligncenter size-medium is-resized"><img src="https://s.w.org/images/core/5.5/don-quixote-03.jpg" alt="' . __( 'Pencil drawing of Don Quixote' ) . '" width="64" height="64"/></figure></div>
 								<!-- /wp:image -->
                                 <!-- wp:heading {"level":3} -->
                                 <h3>Name surname</h3>
