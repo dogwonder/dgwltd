@@ -138,16 +138,16 @@ add_action( 'after_setup_theme', 'dgwltd_setup' );
 
 
 //Add Access-Control-Allow-Origin
-add_action( 'init', 'add_cors_http_header' );
-function add_cors_http_header() { 
-	header("Access-Control-Allow-Origin: *"); 
-	header("Access-Control-Allow-Methods: GET"); 
-	header("Access-Control-Allow-Headers: origin"); 
-}
+// add_action( 'init', 'add_cors_http_header' );
+// function add_cors_http_header() { 
+// 	header("Access-Control-Allow-Origin: *"); 
+// 	header("Access-Control-Allow-Methods: GET"); 
+// 	header("Access-Control-Allow-Headers: origin"); 
+// }
 
 // add_filter( 'send_headers', 'send_cors_headers', 11, 1 );
 // function send_cors_headers( $headers ) {
-//     $allowed_domains = array( 'https://dgw.ltd');
+//     $allowed_domains = array( 'https://dgw.ltd', 'https://pressablecdn.com');
 //     if ( ! in_array( $_SERVER[ 'HTTP_ORIGIN' ] , $allowed_domains ) ) return $headers;
 //     $headers['Access-Control-Allow-Origin'] = $_SERVER[ 'HTTP_ORIGIN' ];
 //     return $headers;
