@@ -19,9 +19,6 @@
 <link rel="preconnect" href="" crossorigin="<?php echo site_url();  ?>">
 <link rel="profile" href="https://gmpg.org/xfn/11">
 <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/favicon.png" type="image/x-icon">
-<link rel="apple-touch-icon" sizes="180x180" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/dgwltd-apple-touch-icon-180x180.png">
-<link rel="apple-touch-icon" sizes="152x152" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/apple-icon-152x152.png">
-<link rel="apple-touch-icon" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/apple-icon.png">
 <!-- Firefox, Chrome, Safari, IE 11+ and Opera. 192x192 pixels in size. -->
 <link rel="icon" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/favicon-192x192.png">
 <!-- Touch Icons - iOS and Android 2.1+ 180x180 pixels in size. --> 

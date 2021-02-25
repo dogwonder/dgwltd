@@ -1,6 +1,6 @@
 {
-    "short_name": "makehappy",
-    "name": "Makehappy",
+    "short_name": "dgwltd",
+    "name": "DGW.ltd",
     "icons": [
       {
         "src": "/wp-content/themes/dgwltd/dist/images/fav/favicon-192x192.png",
@@ -17,5 +17,5 @@
     "background_color": "#ffffff",
     "display": "standalone",
     "scope": "/",
-    "theme_color": "#0085d9"
+    "theme_color": "#000000"
 }
