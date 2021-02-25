@@ -147,7 +147,7 @@ add_action( 'after_setup_theme', 'dgwltd_setup' );
 
 add_filter('allowed_http_origins', 'add_cors_http_header');
 function add_cors_http_header($urls) {
-    $urls[] = 'https://dgw.ltd';
+	$urls[] = array( 'https://www.dgw.ltd', 'http://www.dgw.ltd', 'https://dgw.ltd', 'http://dgw.ltd' ) ;
     return $urls;
 }
 
