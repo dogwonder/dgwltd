@@ -138,12 +138,12 @@ add_action( 'after_setup_theme', 'dgwltd_setup' );
 
 
 //Add Access-Control-Allow-Origin
-// add_action( 'init', 'add_cors_http_header' );
-// function add_cors_http_header() { 
-// 	header("Access-Control-Allow-Origin: *"); 
-// 	header("Access-Control-Allow-Methods: GET"); 
-// 	header("Access-Control-Allow-Headers: origin"); 
-// }
+add_action( 'init', 'add_cors_http_header' );
+function add_cors_http_header() { 
+	header("Access-Control-Allow-Origin: *"); 
+	header("Access-Control-Allow-Methods: GET"); 
+	header("Access-Control-Allow-Headers: origin"); 
+}
 
 // add_filter( 'send_headers', 'send_cors_headers', 11, 1 );
 // function send_cors_headers( $headers ) {
@@ -152,31 +152,6 @@ add_action( 'after_setup_theme', 'dgwltd_setup' );
 //     $headers['Access-Control-Allow-Origin'] = $_SERVER[ 'HTTP_ORIGIN' ];
 //     return $headers;
 // }
-
-add_action('init', 'handle_preflight');
-function handle_preflight() {
-    $origin = get_http_origin();
-    if ($origin === 'https://dgw.ltd') {
-        header("Access-Control-Allow-Origin: *");
-        header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
-        header("Access-Control-Allow-Credentials: true");
-        header('Access-Control-Allow-Headers: Origin, X-Requested-With, X-WP-Nonce, Content-Type, Accept, Authorization');
-        if ('OPTIONS' == $_SERVER['REQUEST_METHOD']) {
-            status_header(200);
-            exit();
-        }
-    }
-}
-
-add_filter('rest_authentication_errors', 'rest_filter_incoming_connections');
-function rest_filter_incoming_connections($errors) {
-    $request_server = $_SERVER['REMOTE_ADDR'];
-    $origin = get_http_origin();
-    if ($origin !== 'https://dgw.ltd') return new WP_Error('forbidden_access', $origin, array(
-        'status' => 403
-    ));
-    return $errors;
-}
 
 
 //Remove admin stuff - e.g. Emojis
