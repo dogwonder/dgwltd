@@ -7,8 +7,8 @@ const precacheFiles = [
   'wp-content/themes/dgwltd/dist/css/critical.css', 
   'wp-content/themes/dgwltd/dist/css/vendor.css', 
   'wp-content/themes/dgwltd/dist/scripts/app.js',
-  'wp-content/themes/dgwltd/images/fav/favicon.png',
-  'wp-content/themes/dgwltd/images/fav/favicon-192x192.png'
+  'wp-content/themes/dgwltd/dist/images/fav/favicon.png',
+  'wp-content/themes/dgwltd/dist/images/fav/favicon-192x192.png'
 ];
 
 self.addEventListener("install", function (event) {

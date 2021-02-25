@@ -138,12 +138,12 @@ add_action( 'after_setup_theme', 'dgwltd_setup' );
 
 
 //Add Access-Control-Allow-Origin
-// add_filter( 'init', 'add_cors_http_header' );
-// function add_cors_http_header() { 
-// 	header("Access-Control-Allow-Origin: *"); 
-// 	header("Access-Control-Allow-Methods: GET"); 
-// 	header("Access-Control-Allow-Headers: origin"); 
-// }
+add_action( 'init', 'add_cors_http_header' );
+function add_cors_http_header() { 
+	header("Access-Control-Allow-Origin: *"); 
+	header("Access-Control-Allow-Methods: GET"); 
+	header("Access-Control-Allow-Headers: origin"); 
+}
 
 // add_filter( 'send_headers', 'send_cors_headers', 11, 1 );
 // function send_cors_headers( $headers ) {
@@ -153,19 +153,7 @@ add_action( 'after_setup_theme', 'dgwltd_setup' );
 //     return $headers;
 // }
 
-function add_cors_http_header(){
-	header("Access-Control-Allow-Origin: *");
-	header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS, READ');
-	header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token,authorization,XMLHttpRequest, user-agent, accept, x-requested-with');
-	header("Access-Control-Allow-Credentials: true");
-  
-	if ( 'OPTIONS' == $_SERVER['REQUEST_METHOD'] ) {
-	  status_header(200);
-	  exit();
-	}
-  }
-  
-  add_action('init','add_cors_http_header');
+
 
 
 //Remove admin stuff - e.g. Emojis
