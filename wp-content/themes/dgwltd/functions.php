@@ -168,6 +168,16 @@ function handle_preflight() {
     }
 }
 
+add_filter('rest_authentication_errors', 'rest_filter_incoming_connections');
+function rest_filter_incoming_connections($errors) {
+    $request_server = $_SERVER['REMOTE_ADDR'];
+    $origin = get_http_origin();
+    if ($origin !== 'https://dgw.ltd') return new WP_Error('forbidden_access', $origin, array(
+        'status' => 403
+    ));
+    return $errors;
+}
+
 
 //Remove admin stuff - e.g. Emojis
 remove_action('wp_head', 'print_emoji_detection_script', 7);
