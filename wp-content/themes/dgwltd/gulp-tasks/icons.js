@@ -10,6 +10,10 @@ const favicon = () => {
                 // Resize all JPG images to three different sizes: 180, and 512 pixels
                 '**/*.png': [
                 {
+                    width: 128,
+                    rename: { suffix: '-128x128' }
+                },
+                {
                     width: 180,
                     rename: { suffix: '-180x180' }
                 },

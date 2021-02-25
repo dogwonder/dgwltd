@@ -14,23 +14,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title><?php bloginfo('name'); ?> &ndash; <?php is_front_page() ? bloginfo('description') : wp_title(''); ?></title>
 <link rel="preconnect" href="https://plausible.io">
-<link rel="preconnect" href="" crossorigin="<?php echo site_url();  ?>">
+<link rel="preconnect" href="<?php echo site_url();  ?>" crossorigin>
 <link rel="profile" href="https://gmpg.org/xfn/11">
-<link rel="shortcut icon" sizes="16x16 32x32 48x48" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/favicon.png" type="image/x-icon">
-<!-- Firefox, Chrome, Safari, IE 11+ and Opera. 192x192 pixels in size. -->
-<link rel="icon" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/favicon-192x192.png">
-<!-- Touch Icons - iOS and Android 2.1+ 180x180 pixels in size. --> 
-<link rel="apple-touch-icon" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/favicon-180x180.png">
-<!-- Safari pinned tab -->
-<link rel="mask-icon" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/favicon.svg" color="#000000">
-<!-- Web app manifest 192x192 and 512x512 -->
-<link rel="manifest" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/manifest.json">
+<link rel="shortcut icon" sizes="16x16 32x32 48x48" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/favicon-128x128.png" type="image/x-icon">
+<link rel="apple-touch-icon" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/favicon-128x128.png">
 <meta name="apple-mobile-web-app-title" content="<?php echo get_bloginfo('name') ?>" />
-<meta name="apple-mobile-web-app-status-bar-style" content="white" />
-<meta name="msapplication-TileColor" content="#75e6ef">
 <meta name="theme-color" content="#75e6ef">
+<link rel="manifest" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/manifest.json">
 <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/dist/css/vendor.css" />
 <style type="text/css">
 <?php include(locate_template('dist/css/critical.php')); ?>
