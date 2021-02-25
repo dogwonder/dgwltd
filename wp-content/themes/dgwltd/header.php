@@ -18,16 +18,17 @@
 <link rel="preconnect" href="https://plausible.io">
 <link rel="preconnect" href="<?php echo site_url();  ?>" crossorigin>
 <link rel="profile" href="https://gmpg.org/xfn/11">
+<?php wp_head(); ?>
+<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/dist/css/vendor.css" />
+<style type="text/css">
+<?php include(locate_template('dist/css/critical.php')); ?>
+</style>
+<script async defer data-domain="dgw.ltd" src="https://plausible.io/js/plausible.js"></script>
 <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/favicon-128x128.png" type="image/x-icon">
 <link rel="apple-touch-icon" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/favicon-128x128.png">
 <meta name="apple-mobile-web-app-title" content="<?php echo get_bloginfo('name') ?>" />
 <meta name="theme-color" content="#75e6ef">
 <link rel="manifest" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/manifest.json">
-<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/dist/css/vendor.css" />
-<style type="text/css">
-<?php include(locate_template('dist/css/critical.php')); ?>
-</style>
-<?php wp_head(); ?>
 <?php
 //SEO plugin check
 if ( !is_plugin_active( 'wordpress-seo/wp-seo.php' ) || !is_plugin_active( 'wordpress-seo-premium/wp-seo-premium.php' ) ) : 
@@ -66,7 +67,6 @@ if(is_search() || is_404()) {
 <meta name="twitter:description" content="<?php echo esc_attr($pdMetaInfo['description']) ?>">
 <meta name="twitter:image" content="<?php echo $pdMetaInfo['image'] ?>">
 <?php endif; //SEO plugin check ?>
-<script async defer data-domain="dgw.ltd" src="https://plausible.io/js/plausible.js"></script>
 </head>
 <body <?php body_class('no-js'); ?>>
 <script>document.body.className = document.body.className.replace('no-js', 'js-enabled');</script>
