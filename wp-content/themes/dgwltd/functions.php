@@ -145,11 +145,11 @@ add_action( 'after_setup_theme', 'dgwltd_setup' );
 // 	header("Access-Control-Allow-Headers: origin"); 
 // }
 
-add_filter('allowed_http_origins', 'add_cors_http_header');
-function add_cors_http_header($urls) {
-	$urls[] = array( 'https://www.dgw.ltd', 'http://www.dgw.ltd', 'https://dgw.ltd', 'http://dgw.ltd' ) ;
-    return $urls;
-}
+// add_filter('allowed_http_origins', 'add_cors_http_header');
+// function add_cors_http_header($urls) {
+// 	$urls[] = array( 'https://www.dgw.ltd', 'http://www.dgw.ltd', 'https://dgw.ltd', 'http://dgw.ltd' ) ;
+//     return $urls;
+// }
 
 //Remove admin stuff - e.g. Emojis
 remove_action('wp_head', 'print_emoji_detection_script', 7);
