@@ -29,8 +29,8 @@
 <link rel="manifest" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/manifest.json">
 <meta name="apple-mobile-web-app-title" content="<?php echo get_bloginfo('name') ?>" />
 <meta name="apple-mobile-web-app-status-bar-style" content="white" />
-<meta name="msapplication-TileColor" content="#373b47">
-<meta name="theme-color" content="#373b47">
+<meta name="msapplication-TileColor" content="#75e6ef">
+<meta name="theme-color" content="#75e6ef">
 <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/dist/css/vendor.css" />
 <style type="text/css">
 <?php include(locate_template('dist/css/critical.php')); ?>
