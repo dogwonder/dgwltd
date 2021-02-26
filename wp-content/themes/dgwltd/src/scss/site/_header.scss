@@ -281,7 +281,7 @@ $nav-height: 64px;
   .dgwltd-masthead {
     &[enabled="true"] {
       .nav-toggle { 
-        display: block; 
+        display: block !important; 
         .open {display: block;}
         .close {display: none;}
       }    
