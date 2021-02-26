@@ -28,6 +28,7 @@
     "gulp-sass": "^4.1.0",
     "gulp-terser": "^2.0.1",
     "html-minifier": "^4.0.0",
+    "lodash.update": "^4.10.2",
     "merge-stream": "^2.0.0",
     "nunjucks": "^3.2.3",
     "rollup": "^2.40.0",
