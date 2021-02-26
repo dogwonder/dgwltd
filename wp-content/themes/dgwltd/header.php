@@ -89,7 +89,18 @@ if(is_search() || is_404()) {
 					</a>
 				</div><!-- .masthead__logo -->
 
+				<nav id="site-navigation" class="main-navigation dgwltd-nav" aria-label="primary" >
 				
+				<?php
+				wp_nav_menu( array(
+					'theme_location' => 'primary',
+					'menu_id' => 'nav-primary',
+					'menu_class' => 'dgwltd-menu',
+					'container'	=> false
+				) );
+				?>
+				</nav><!-- #site-navigation -->
+	
 		</div><!--/container-->
 
 	</header><!-- #masthead -->
