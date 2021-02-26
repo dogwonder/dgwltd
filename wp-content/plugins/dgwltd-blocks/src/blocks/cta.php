@@ -81,22 +81,12 @@ $block_template = array(
                 $data = file_get_contents($imageTiny);
                 $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
                 ?>
-                <?php 
-                //Is the AMP plugin (https://wordpress.org/plugins/amp/) enabled if so show the AMP image format
-                if(function_exists('amp_is_request') && amp_is_request()) : ?>
-                <amp-img alt="<?php echo ($imageAlt ?  $imageAlt : ''); ?>"
-                        src="<?php echo $imageSmall; ?>"
-                        width="<?php echo $imageSmallWidth ?>"
-                        height="<?php echo $imageSmallHeight ?>">
-                </amp-img>
-                <?php else : ?>
                 <figure class="dgwltd-cta__image transform">
                     <picture class="frame">
                         <source media="(min-width: 769px)" srcset="<?php echo ($imageMedium ?  $imageMedium : $imageSmall); ?>">
                         <img src="<?php echo $imageSmall; ?>" width="<?php echo $imageSmallWidth; ?>" height="<?php echo $imageSmallHeight; ?>" alt="<?php echo ($imageAlt ?  $imageAlt : ''); ?>" loading="lazy" style="background-image: url(<?php echo $base64; ?>)" />
                     </picture>
                 </figure>
-                <?php endif; ?>
             <?php endif; ?>    
         </div>
  </div>

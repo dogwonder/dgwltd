@@ -52,38 +52,7 @@ $block_template = array(
 );
 ?>
 
-<?php 
-//Is the AMP plugin (https://wordpress.org/plugins/amp/) enabled if so get the dominant color for the image and set it as a background color
-if(function_exists('amp_is_request') && amp_is_request()) : 
-    if( !empty( $image ) ) :
-        $i = imagecreatefromjpeg($image['sizes']['dgwltd-small']); 
-        for ($x=0;$x<imagesx($i);$x++) {
-            for ($y=0;$y<imagesy($i);$y++) {
-                $rgb = imagecolorat($i,$x,$y);
-                $r   = ($rgb >> 16) & 0xFF;
-                $g   = ($rgb >> 8) & 0xFF;
-                $b   = $rgb & 0xFF;
-                $rTotal += $r;
-                $gTotal += $g;
-                $bTotal += $b;
-                $total++;
-            }
-        }
-        $rAverage = round($rTotal/$total);
-        $gAverage = round($gTotal/$total);
-        $bAverage = round($bTotal/$total);
-    else :
-        $rAverage = '196';
-        $rAverage = '249';
-        $rAverage = '253';
-    endif;
-    $hasrgb = true;
-else :
-    $hasrgb = false;
-endif; 
-?>
-
- <div id="<?php echo $id; ?>" class="<?php echo esc_attr(implode(" ", $block_classes)); ?>"<?php echo $rgb = $hasrgb ? ' style="background-color:rgb('. $rAverage . ',' . $gAverage . ',' . $bAverage . ')"' : ''; ?>>
+ <div id="<?php echo $id; ?>" class="<?php echo esc_attr(implode(" ", $block_classes)); ?>">
 
             <?php if( !empty( $image ) ) : ?>    
                 <?php //print_r($image) ?>

@@ -120,4 +120,137 @@ Based on PhotoSwipe [Javascript gallery](https://photoswipe.com)
 
 ## AMP Support
 
-I've added AMP support if the [AMP plugin](https://wordpress.org/plugins/amp/) is enabled this does stuff like enable the AMP burger menu, AMP images and a few other optimisation bits
+This theme and plugin can have AMP support if the [AMP plugin](https://wordpress.org/plugins/amp/) is enabled. This does stuff like enable the AMP burger menu, AMP images and a few other optimisation bits. 
+
+AMP breaks on quite a lot of the stuff if used in transitional mode (e.g. if we want to retain a similar theme for AMP visitors). 
+
+Enable it the [plugin](https://wordpress.org/plugins/amp/) and if Transitional Mode is chosen the below optional CSS and PHP code can be implemented to provide better support to AMP native. 
+
+Uncomment `@import "site/amp"` in `criticial.css`
+
+Add this to dgwltd_body_classes() in dgwltd-functions.php to add a class for when AMP is enabled and visible to users
+
+```
+//Is the AMP plugin enabled
+if ( is_plugin_active( 'amp/amp.php' ) && amp_is_request() ) {
+  $classes[] = 'amp-enabled';
+}
+```
+
+Uncomment the following in `functions.php`
+
+```
+require get_template_directory() . '/inc/dgwltd-amp.php';
+```
+
+As for the plugin the following partials in `wp-plugins\dgwltd-blocks\src\blocks` could be amended for better AMP support
+
+### cta.php
+
+Add AMP native images
+
+```
+<?php 
+//Is the AMP plugin (https://wordpress.org/plugins/amp/) enabled if so show the AMP image format
+if(function_exists('amp_is_request') && amp_is_request()) : ?>
+<amp-img alt="<?php echo ($imageAlt ?  $imageAlt : ''); ?>"
+        src="<?php echo $imageSmall; ?>"
+        width="<?php echo $imageSmallWidth ?>"
+        height="<?php echo $imageSmallHeight ?>">
+</amp-img>
+<?php else : ?>
+<!-- Usual image -->
+<?php endif; ?>
+```
+
+### embed.php
+
+Add AMP native embeds
+
+```
+<?php 
+//Is the AMP plugin (https://wordpress.org/plugins/amp/) enabled if so provide a dominant background color based on the image
+if(function_exists('amp_is_request') && amp_is_request()) : ?>
+<?php if($v['type'] == 'youtube') : ?>
+<amp-youtube
+data-videoid="<?php echo $vid; ?>"
+layout="responsive"
+width="480"
+height="270"
+></amp-youtube>
+<?php elseif ($v['type'] == 'vimeo') : ?>
+<amp-vimeo
+data-videoid="<?php echo $vid; ?>"
+layout="responsive"
+width="500"
+height="281"
+></amp-vimeo>
+<?php else : ?>
+<amp-iframe
+width="200"
+height="100"
+sandbox="allow-scripts allow-same-origin"
+layout="responsive"
+frameborder="0"
+src="<?php the_field('embed'); ?>"
+>
+</amp-iframe>
+<?php endif; ?>
+<?php else : ?>
+<!-- Usual embed code -->
+<?php endif; ?>
+```
+
+### feature.php & hero.php
+
+Add a background color instead of a background image
+
+```
+<?php 
+//Is the AMP plugin (https://wordpress.org/plugins/amp/) enabled if so get the dominant color for the image and set it as a background color
+if(function_exists('amp_is_request') && amp_is_request()) : 
+    if( !empty( $image ) ) :
+        $i = imagecreatefromjpeg($image['sizes']['dgwltd-small']); 
+        for ($x=0;$x<imagesx($i);$x++) {
+            for ($y=0;$y<imagesy($i);$y++) {
+                $rgb = imagecolorat($i,$x,$y);
+                $r   = ($rgb >> 16) & 0xFF;
+                $g   = ($rgb >> 8) & 0xFF;
+                $b   = $rgb & 0xFF;
+                $rTotal += $r;
+                $gTotal += $g;
+                $bTotal += $b;
+                $total++;
+            }
+        }
+        $rAverage = round($rTotal/$total);
+        $gAverage = round($gTotal/$total);
+        $bAverage = round($bTotal/$total);
+    else :
+        $rAverage = '196';
+        $rAverage = '249';
+        $rAverage = '253';
+    endif;
+    $hasrgb = true;
+else :
+    $hasrgb = false;
+endif; 
+?>
+
+
+<?php 
+//Add background color to a block based on the background image
+echo $rgb = $hasrgb ? ' style="background-color:rgb('. $rAverage . ',' . $gAverage . ',' . $bAverage . ')"' : ''; 
+?>
+
+<?php 
+//Is the AMP plugin (https://wordpress.org/plugins/amp/) enabled if so provide a dominant background color based on the image
+if(function_exists('amp_is_request') && amp_is_request()) : ?>
+<figure style="background-color:rgb(<?php echo $rAverage; ?>, <?php echo $gAverage; ?>, <?php echo $bAverage; ?>);"></figure>
+<?php else : ?>
+<!-- Usual image code -->
+<?php endif; ?>
+```
+
+
+

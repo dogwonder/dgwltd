@@ -69,7 +69,7 @@ if(is_search() || is_404()) {
 <?php endif; //SEO plugin check ?>
 </head>
 <body <?php body_class('no-js'); ?>>
-<script>document.body.className = document.body.className.replace('no-js', 'js-enabled');</script>
+
 <div id="page" class="dgwltd-wrapper">
 	<header id="masthead" class="dgwltd-masthead" enabled="false">
 		<?php 

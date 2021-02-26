@@ -59,6 +59,7 @@ $block_template = array(
                 $imageSmallWidth = esc_attr($image['sizes'][ 'dgwltd-small-width' ]);    
                 $imageSmallHeight = esc_attr($image['sizes'][ 'dgwltd-small-height' ]);
                 //For Low quality image placeholders (LQIP)
+                //For Low quality image placeholders (LQIP)
                 $type = pathinfo($imageTiny, PATHINFO_EXTENSION);
                 $data = file_get_contents($imageTiny);
                 $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
@@ -66,36 +67,12 @@ $block_template = array(
                 <link rel="preload" href="<?php echo $imageSmall; ?>" as="image" media="(max-width: 39.6875em)">
                 <link rel="preload" href="<?php echo $imageLarge; ?>" as="image" media="(min-width: 40.0625em)">
                 <div class="block__background">
-                <?php 
-                //Is the AMP plugin (https://wordpress.org/plugins/amp/) enabled if so provide a dominant background color based on the image
-                if(function_exists('amp_is_request') && amp_is_request()) : ?>
-                    <?php 
-                        $i = imagecreatefromjpeg($imageSmall); 
-                        for ($x=0;$x<imagesx($i);$x++) {
-                            for ($y=0;$y<imagesy($i);$y++) {
-                                $rgb = imagecolorat($i,$x,$y);
-                                $r   = ($rgb >> 16) & 0xFF;
-                                $g   = ($rgb >> 8) & 0xFF;
-                                $b   = $rgb & 0xFF;
-                                $rTotal += $r;
-                                $gTotal += $g;
-                                $bTotal += $b;
-                                $total++;
-                            }
-                        }
-                        $rAverage = round($rTotal/$total);
-                        $gAverage = round($gTotal/$total);
-                        $bAverage = round($bTotal/$total);
-                    ?>
-                    <figure style="background-color:rgb(<?php echo $rAverage; ?>, <?php echo $gAverage; ?>, <?php echo $bAverage; ?>);"></figure>
-                <?php else : ?>
                     <figure>
                     <picture>
                         <source media="(min-width: 64em)" srcset="<?php echo $imageLarge; ?>">
                         <img src="<?php echo $imageSmall; ?>" alt="" loading="lazy" width="<?php echo $imageSmallWidth; ?>" height="<?php echo $imageSmallHeight; ?>" style="background-image: url(<?php echo $base64; ?>)" />
                     </picture>
                     </figure>
-                <?php endif; ?>    
                 </div>
             <?php endif; ?>    
 

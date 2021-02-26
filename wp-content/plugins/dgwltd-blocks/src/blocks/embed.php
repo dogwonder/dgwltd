@@ -27,42 +27,12 @@ $block_classes = array($className);
  <div id="<?php echo $id; ?>" class="<?php echo esc_attr(implode(" ", $block_classes)); ?>">
     <div class="dgwltd-embed__inner">
             <div class="dgwltd-embed__content">
-                <?php 
-                //Is the AMP plugin (https://wordpress.org/plugins/amp/) enabled if so provide a dominant background color based on the image
-                if(function_exists('amp_is_request') && amp_is_request()) : ?>
-                    <?php if($v['type'] == 'youtube') : ?>
-                    <amp-youtube
-                    data-videoid="<?php echo $vid; ?>"
-                    layout="responsive"
-                    width="480"
-                    height="270"
-                    ></amp-youtube>
-                    <?php elseif ($v['type'] == 'vimeo') : ?>
-                    <amp-vimeo
-                    data-videoid="<?php echo $vid; ?>"
-                    layout="responsive"
-                    width="500"
-                    height="281"
-                    ></amp-vimeo>
-                    <?php else : ?>
-                    <amp-iframe
-                    width="200"
-                    height="100"
-                    sandbox="allow-scripts allow-same-origin"
-                    layout="responsive"
-                    frameborder="0"
-                    src="<?php the_field('embed'); ?>"
-                    >
-                    </amp-iframe>
-                    <?php endif; ?>
+                <?php if($v['type'] == 'youtube') : ?>
+                <lite-youtube videoid="<?php echo $vid; ?>"></lite-youtube>    
+                <?php elseif ($v['type'] == 'vimeo') : ?>
+                <lite-vimeo videoid="<?php echo $vid; ?>"></lite-vimeo>
                 <?php else : ?>
-                    <?php if($v['type'] == 'youtube') : ?>
-                    <lite-youtube videoid="<?php echo $vid; ?>"></lite-youtube>    
-                    <?php elseif ($v['type'] == 'vimeo') : ?>
-                    <lite-vimeo videoid="<?php echo $vid; ?>"></lite-vimeo>
-                    <?php else : ?>
-                    <?php the_field('embed'); ?>
-                    <?php endif; ?>
+                <?php the_field('embed'); ?>
                 <?php endif; ?>
             </div>
         </div>

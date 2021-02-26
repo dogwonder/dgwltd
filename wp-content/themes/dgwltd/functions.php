@@ -232,9 +232,9 @@ require get_template_directory() . '/inc/dgwltd-functions.php';
 require get_template_directory() . '/inc/dgwltd-acf.php';
 
 /**
- * Functions for Google AMP 
+ * Functions for Google AMP (optional)
  */
-require get_template_directory() . '/inc/dgwltd-amp.php';
+// require get_template_directory() . '/inc/dgwltd-amp.php';
 
 /**
  * Functions for forms

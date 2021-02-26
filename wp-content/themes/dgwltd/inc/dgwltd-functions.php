@@ -21,11 +21,6 @@ function dgwltd_body_classes( $classes ) {
 		$classes[] = 'hfeed';
 	}
 
-	//Is the AMP plugin (https://wordpress.org/plugins/amp/) enabled
-	if ( is_plugin_active( 'amp/amp.php' ) && amp_is_request() ) {
-		$classes[] = 'amp-enabled';
-	}
-
 	// Adds a class of no-sidebar when there is no sidebar present.
 	if ( ! is_active_sidebar( 'sidebar-1' ) ) {
 		$classes[] = 'no-sidebar';
