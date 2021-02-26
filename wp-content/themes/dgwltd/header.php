@@ -76,10 +76,6 @@ if(is_search() || is_404()) {
 		// Optional - if you need a cookie notice - also needs JS cookienotice() and cookies.scss
 		//get_template_part('template-parts/_organisms/cookie-notice'); ?>
 
-		<div id="skiplink-container">
-			<a href="#content" class="govuk-skip-link"><?php esc_html_e('Skip to main content', 'dgwltd') ?></a>
-		</div>
-
 		<div class="dgwltd-masthead-container">
 
 				<div class="dgwltd-masthead__logo">
