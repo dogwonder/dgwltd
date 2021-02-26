@@ -278,6 +278,7 @@ $nav-height: 64px;
 //JS progressive enhancement
 .js-enabled {
   .dgwltd-menu { 
+    //Cumulative Layout Shift fix - hide the menu if JS is enabled to avoid layout shift, maybe becuase ResizeObserver is too slow? 🤷
     @include mq($until: tablet) {
       display: none;  
     }
