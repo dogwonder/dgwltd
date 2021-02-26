@@ -27,6 +27,7 @@ $nav-height: 64px;
 
   //Width
   @extend %container;
+  width:100%;
 
   //Logo
   .dgwltd-masthead__logo {
@@ -84,7 +85,7 @@ $nav-height: 64px;
       list-style-type: none;
       // font-size: 1rem;
       // line-height: $nav-height; //Same as header
-      @include rhythm(18, 64);
+      @include rhythm(18, 60);
       text-align: left;
       position: relative;
       margin: 0;
@@ -95,7 +96,7 @@ $nav-height: 64px;
       a {
         display: block;
         text-decoration: none;
-        padding:var(--gap-15) var(--gap-20);
+        padding:0 var(--gap-20);
         @include mq($from: desktop) {
           padding:0 8px;
           margin:0;
@@ -279,13 +280,14 @@ $nav-height: 64px;
 
   .dgwltd-masthead {
     &[enabled="true"] {
-      .nav-toggle { display: block; }    
+      .nav-toggle { 
+        display: block; 
+        .open {display: block;}
+        .close {display: none;}
+      }    
       .dgwltd-menu { 
         display: none;  
         content-visibility: hidden;
-      }
-      .dgwltd-masthead-container {
-        width:100%;
       }
       //toggled-on is the AMP class
       [status="open"] {
@@ -293,7 +295,13 @@ $nav-height: 64px;
         .dgwltd-menu {
           content-visibility: visible;
           @extend %dgMenu;
+
+          .menu-item {
+            @include rhythm(21, 44);
+          }
+
         }
+
 
         .nav-toggle {
           position: relative;

@@ -69,7 +69,7 @@ if(is_search() || is_404()) {
 <?php endif; //SEO plugin check ?>
 </head>
 <body <?php body_class('no-js'); ?>>
-
+<script>document.body.className = document.body.className.replace('no-js', 'js-enabled');</script>
 <div id="page" class="dgwltd-wrapper">
 	<header id="masthead" class="dgwltd-masthead" enabled="false">
 		<?php 
@@ -80,7 +80,7 @@ if(is_search() || is_404()) {
 			<a href="#content" class="govuk-skip-link"><?php esc_html_e('Skip to main content', 'dgwltd') ?></a>
 		</div>
 
-		<div class="dgwltd-masthead-container govuk-width-container">
+		<div class="dgwltd-masthead-container">
 
 				<div class="dgwltd-masthead__logo">
 					<a href="<?php echo home_url( '/' ); ?>" rel="home" title="Go to the homepage for <?php bloginfo('name'); ?>">

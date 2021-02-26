@@ -30,7 +30,7 @@ const serve = require('./gulp-tasks/serve.js');
 const watcher = () => {
   watch('./src/images/**/*', {ignoreInitial: true}, images);
   watch('./src/scripts/**/*', {ignoreInitial: true}, scripts);
-  watch('./src/scss/**/*.scss', {ignoreInitial: true}, sass);
+  watch('./src/scss/**/*.scss', {ignoreInitial: true}, parallel(sass, rename));
 };
 
 //Public tasks are exported from this gulpfile, which allows them to be run by the gulp command, e.g. gulp watch, gulp serve
