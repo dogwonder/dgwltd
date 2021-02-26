@@ -277,11 +277,15 @@ $nav-height: 64px;
 
 //JS progressive enhancement
 .js-enabled {
-
+  .dgwltd-menu { 
+    @include mq($until: tablet) {
+      display: none;  
+    }
+  }
   .dgwltd-masthead {
     &[enabled="true"] {
       .nav-toggle { 
-        display: block !important; 
+        display: block; 
         .open {display: block;}
         .close {display: none;}
       }    
