@@ -36,13 +36,13 @@ $accordionSections = get_field('accordion_sections') ? : '';
     ?>
       <div class="govuk-accordion__section">
         <div class="govuk-accordion__section-header">
-        <h4 class="govuk-accordion__section-heading">
+        <h3 class="govuk-accordion__section-heading">
             <?php if(!empty($accordionSectionHeading)) : ?>
               <span class="govuk-accordion__section-button" id="accordion-default-heading-<?php echo get_row_index(); ?>">
                 <?php echo $accordionSectionHeading; ?>
               </span>
             <?php endif; ?>
-        </h4>
+        </h3>
         </div>
         <div id="accordion-default-content-<?php echo get_row_index(); ?>" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1" role="region">
             <?php if(!empty($accordionSectionContent)) : ?>
