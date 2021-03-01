@@ -37,9 +37,10 @@ get_header();
 						*/
 						get_template_part( 'template-parts/_templates/content-list' );
 
-					endwhile; ?>
+					endwhile;
+					?>
 					</div><!-- .dgwltd-list -->
-					<?php	
+					<?php
 						get_template_part( 'template-parts/_molecules/pagination' );
 					else :
 						get_template_part( 'template-parts/_templates/content', 'none' );

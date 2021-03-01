@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * CTA Block Template.
  *
@@ -8,85 +8,91 @@
  * @param   (int|string) $post_id The post ID this block is saved to.
  */
 $id = 'block-' . $block['id'];
-if( !empty($block['anchor']) ) {
-    $id = $block['anchor'];
+if ( ! empty( $block['anchor'] ) ) {
+	$id = $block['anchor'];
 }
 // Create class attribute allowing for custom "className"
 $className = 'dgwltd-block dgwltd-block--cta';
-if( !empty($block['className']) ) {
-    $className .= ' ' . $block['className'];
+if ( ! empty( $block['className'] ) ) {
+	$className .= ' ' . $block['className'];
 }
 
-//Block fields
-$image = get_field('image') ? : '';
+// Block fields
+$image = get_field( 'image' ) ? : '';
 
-//Block options
-$reversed = get_field('reversed') ? : '';
-$background_color = get_field('background_color') ? : '';
-$aspect_ratio = get_field('image_aspect_ratio') ? : '';
-//Use if becuase of illegal offset error https://www.craigwilcox.com/acf-illegal-string-offset/
+// Block options
+$reversed         = get_field( 'reversed' ) ? : '';
+$background_color = get_field( 'background_color' ) ? : '';
+$aspect_ratio     = get_field( 'image_aspect_ratio' ) ? : '';
+// Use if becuase of illegal offset error https://www.craigwilcox.com/acf-illegal-string-offset/
 if ( $aspect_ratio ) :
-    $x = $aspect_ratio['x'] ? : '4';
-    $y = $aspect_ratio['y'] ? : '3';
-    $block_aspect_ratio = 'aspect-' . $x . '_' . $y;
+	$x                  = $aspect_ratio['x'] ? : '4';
+	$y                  = $aspect_ratio['y'] ? : '3';
+	$block_aspect_ratio = 'aspect-' . $x . '_' . $y;
 else :
-    $block_aspect_ratio = '';
+	$block_aspect_ratio = '';
 endif;
 
-//Classes
-$block_color = $background_color ? 'dgwltd-section dgwltd-section--' . $background_color : '';
-$block_image = $image ? 'has-image ' : '';
-$block_classes = array($className, $block_image, $block_color, $block_aspect_ratio);
+// Classes
+$block_color   = $background_color ? 'dgwltd-section dgwltd-section--' . $background_color : '';
+$block_image   = $image ? 'has-image ' : '';
+$block_classes = array( $className, $block_image, $block_color, $block_aspect_ratio );
 
-//JSX Innerblocks - https://www.billerickson.net/innerblocks-with-acf-blocks/
+// JSX Innerblocks - https://www.billerickson.net/innerblocks-with-acf-blocks/
 $allowed_blocks = array( 'core/heading', 'core/paragraph', 'core/button' );
 $block_template = array(
-	array('core/heading', array(
-		'level' => 1,
-		'placeholder' => 'Add title...',
-	)),
-    array( 'core/paragraph', array(
-        'placeholder' => 'Add content...',
-    ) )
+	array(
+		'core/heading',
+		array(
+			'level'       => 1,
+			'placeholder' => 'Add title...',
+		),
+	),
+	array(
+		'core/paragraph',
+		array(
+			'placeholder' => 'Add content...',
+		),
+	),
 );
 ?>
-<?php if($block_aspect_ratio) : ?>
+<?php if ( $block_aspect_ratio ) : ?>
   <style>
-    #<?php echo $id; ?> .dgwltd-cta__image .frame {
-        --x: <?php echo $x; ?>;
-        --y: <?php echo $y; ?>;
-    }
+	#<?php echo $id; ?> .dgwltd-cta__image .frame {
+		--x: <?php echo $x; ?>;
+		--y: <?php echo $y; ?>;
+	}
   </style>
 <?php endif; ?>
- <div id="<?php echo $id; ?>" class="<?php echo esc_attr(implode(" ", $block_classes)); ?>"<?php echo ($reversed ? ' data-state="reversed"' : ''); ?>>
-    <div class="dgwltd-cta__inner">
+ <div id="<?php echo $id; ?>" class="<?php echo esc_attr( implode( ' ', $block_classes ) ); ?>"<?php echo ( $reversed ? ' data-state="reversed"' : '' ); ?>>
+	<div class="dgwltd-cta__inner">
 
-            <div class="dgwltd-cta__content">
-                <InnerBlocks allowedBlocks="<?php echo esc_attr( wp_json_encode( $allowed_blocks ) ); ?>" template="<?php echo esc_attr( wp_json_encode( $block_template ) ); ?>" />
-            </div>
+			<div class="dgwltd-cta__content">
+				<InnerBlocks allowedBlocks="<?php echo esc_attr( wp_json_encode( $allowed_blocks ) ); ?>" template="<?php echo esc_attr( wp_json_encode( $block_template ) ); ?>" />
+			</div>
 
-             <?php if( !empty( $image ) ) : ?>
-                <?php //print_r($image) ?>
-                <?php 
-                $imageTiny = $image['sizes']['dgwltd-tiny']; 
-                $imageSmall = $image['sizes']['dgwltd-small']; 
-                $imageMedium = $image['sizes']['dgwltd-medium']; 
-                $imageAlt = esc_attr($image['alt']); 
-                $imageWidth = esc_attr($image['width']);  
-                $imageHeight = esc_attr($image['height']);
-                $imageSmallWidth = esc_attr($image['sizes'][ 'dgwltd-small-width' ]);    
-                $imageSmallHeight = esc_attr($image['sizes'][ 'dgwltd-small-height' ]);
-                //For Low quality image placeholders (LQIP)
-                $type = pathinfo($imageTiny, PATHINFO_EXTENSION);
-                $data = file_get_contents($imageTiny);
-                $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-                ?>
-                <figure class="dgwltd-cta__image transform">
-                    <picture class="frame">
-                        <source media="(min-width: 769px)" srcset="<?php echo ($imageMedium ?  $imageMedium : $imageSmall); ?>">
-                        <img src="<?php echo $imageSmall; ?>" width="<?php echo $imageSmallWidth; ?>" height="<?php echo $imageSmallHeight; ?>" alt="<?php echo ($imageAlt ?  $imageAlt : ''); ?>" loading="lazy" style="background-image: url(<?php echo $base64; ?>)" />
-                    </picture>
-                </figure>
-            <?php endif; ?>    
-        </div>
+			 <?php if ( ! empty( $image ) ) : ?>
+					<?php // print_r($image) ?>
+					<?php
+					$imageTiny        = $image['sizes']['dgwltd-tiny'];
+					$imageSmall       = $image['sizes']['dgwltd-small'];
+					$imageMedium      = $image['sizes']['dgwltd-medium'];
+					$imageAlt         = esc_attr( $image['alt'] );
+					$imageWidth       = esc_attr( $image['width'] );
+					$imageHeight      = esc_attr( $image['height'] );
+					$imageSmallWidth  = esc_attr( $image['sizes']['dgwltd-small-width'] );
+					$imageSmallHeight = esc_attr( $image['sizes']['dgwltd-small-height'] );
+					// For Low quality image placeholders (LQIP)
+					$type   = pathinfo( $imageTiny, PATHINFO_EXTENSION );
+					$data   = file_get_contents( $imageTiny );
+					$base64 = 'data:image/' . $type . ';base64,' . base64_encode( $data );
+					?>
+				<figure class="dgwltd-cta__image transform">
+					<picture class="frame">
+						<source media="(min-width: 769px)" srcset="<?php echo ( $imageMedium ? $imageMedium : $imageSmall ); ?>">
+						<img src="<?php echo $imageSmall; ?>" width="<?php echo $imageSmallWidth; ?>" height="<?php echo $imageSmallHeight; ?>" alt="<?php echo ( $imageAlt ? $imageAlt : '' ); ?>" loading="lazy" style="background-image: url(<?php echo $base64; ?>)" />
+					</picture>
+				</figure>
+			<?php endif; ?>    
+		</div>
  </div>

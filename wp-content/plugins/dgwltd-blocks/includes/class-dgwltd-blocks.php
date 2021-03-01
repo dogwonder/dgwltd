@@ -80,7 +80,7 @@ class Dgwltd_Blocks {
 		$this->define_public_hooks();
 		$this->define_acf_hooks();
 		$this->define_block_patterns_hooks();
-		
+
 	}
 
 	/**
@@ -168,7 +168,6 @@ class Dgwltd_Blocks {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		// $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
 	}
 
 	/**

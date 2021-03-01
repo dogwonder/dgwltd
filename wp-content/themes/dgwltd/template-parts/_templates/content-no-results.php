@@ -10,7 +10,7 @@
 ?>
 <article class="no-results not-found">
 	<div class="page-header">
-		<?php if(!empty( $_GET['s'] )) : ?>
+		<?php if ( ! empty( $_GET['s'] ) ) : ?>
 		<h2 class="govuk-heading-m">
 			<?php
 			/* translators: %s: search query. */

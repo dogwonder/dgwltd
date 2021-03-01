@@ -12,7 +12,10 @@ get_header();
 ?>
 	<div id="primary" class="dgwltd-full-container">
 		<div class="dgwltd-main-wrapper">
-		<?php while ( have_posts() ) : the_post(); ?>
+		<?php
+		while ( have_posts() ) :
+			the_post();
+			?>
 		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 		<div class="entry-content">
@@ -20,7 +23,7 @@ get_header();
 		</div><!-- .entry-content -->
 
 		</article><!-- #post-<?php the_ID(); ?> -->
-		<?php  endwhile; // End of the loop.?>
+		<?php endwhile; // End of the loop. ?>
 		
 		</div><!-- .dgwltd-main-wrapper -->		
 	</div><!-- #primary -->

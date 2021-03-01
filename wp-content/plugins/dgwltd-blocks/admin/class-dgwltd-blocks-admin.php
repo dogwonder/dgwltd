@@ -44,13 +44,13 @@ class Dgwltd_Blocks_Admin {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $Dgwltd_Blocks       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string $Dgwltd_Blocks       The name of this plugin.
+	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $Dgwltd_Blocks, $version ) {
 
 		$this->Dgwltd_Blocks = $Dgwltd_Blocks;
-		$this->version = $version;
+		$this->version       = $version;
 
 	}
 
@@ -96,8 +96,7 @@ class Dgwltd_Blocks_Admin {
 		 * class.
 		 */
 
-		//wp_enqueue_script( $this->Dgwltd_Blocks, plugin_dir_url( __FILE__ ) . 'js/admin.js', array( 'jquery' ), $this->version, false );
-
+		// wp_enqueue_script( $this->Dgwltd_Blocks, plugin_dir_url( __FILE__ ) . 'js/admin.js', array( 'jquery' ), $this->version, false );
 	}
 
 }

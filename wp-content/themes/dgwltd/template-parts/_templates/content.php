@@ -8,7 +8,7 @@
  */
 
 ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class('dgwltd-post'); ?> itemscope itemtype="http://schema.org/BlogPosting">
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'dgwltd-post' ); ?> itemscope itemtype="http://schema.org/BlogPosting">
 
 	<div class="entry-header">
 		<?php
@@ -32,7 +32,7 @@
 	</div><!-- .entry-content -->
 
 	<div class="entry-footer">
-	<?php 
+	<?php
 	$categories_list = get_the_category_list( esc_html__( ', ', 'dgwltd' ) );
 	if ( $categories_list ) {
 		/* translators: 1: list of categories. */

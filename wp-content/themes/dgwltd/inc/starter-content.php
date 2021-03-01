@@ -72,10 +72,9 @@ function dgwltd_get_starter_content() {
 			),
 
 			// Assign a menu to the "legal" location.
-			'legal'  => array(
+			'legal'   => array(
 				'name'  => esc_html__( 'Legal menu', 'dgwltd' ),
-				'items' => array(
-				),
+				'items' => array(),
 			),
 		),
 	);

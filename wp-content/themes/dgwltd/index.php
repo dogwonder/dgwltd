@@ -25,18 +25,20 @@ get_header();
 		<lite-vimeo videoid="364402896" videotitle="This is a video title"></lite-vimeo> -->
 
 		<?php
-		if ( have_posts() ) : ?>
+		if ( have_posts() ) :
+			?>
 			<div class="dgwltd-list">
 			<?php
 			/* Start the Loop */
-			while ( have_posts() ) : 
+			while ( have_posts() ) :
 				the_post();
 
-				get_template_part('template-parts/_templates/content-list');
+				get_template_part( 'template-parts/_templates/content-list' );
 
-			endwhile; ?>
+			endwhile;
+			?>
 			</div><!-- .dgwltd-list -->
-			<?php	
+			<?php
 				get_template_part( 'template-parts/_molecules/pagination' );
 			else :
 				get_template_part( 'template-parts/_templates/content', 'none' );

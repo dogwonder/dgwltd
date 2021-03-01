@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Custom template tags for this theme
  *
@@ -15,7 +15,8 @@ if ( ! function_exists( 'dgwltd_posted_on' ) ) :
 			$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time>';
 		}
 
-		$time_string = sprintf( $time_string,
+		$time_string = sprintf(
+			$time_string,
 			esc_attr( get_the_date( DATE_W3C ) ),
 			esc_html( get_the_date() ),
 			esc_attr( get_the_modified_date( DATE_W3C ) ),
@@ -39,7 +40,7 @@ if ( ! function_exists( 'dgwltd_posted_by' ) ) :
 	 * Prints HTML with meta information for the current author.
 	 */
 	function dgwltd_posted_by() {
-		
+
 		$byline = sprintf(
 			/* translators: %s: post author. */
 			esc_html_x( 'By %s', 'post author', 'dgwltd' ),
@@ -133,63 +134,69 @@ if ( ! function_exists( 'dgwltd_post_thumbnail' ) ) :
 
 		<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
 			<?php
-			the_post_thumbnail('medium', array(
-				'alt' => the_title_attribute( array(
-					'echo' => false,
-				) ),
-			) );
+			the_post_thumbnail(
+				'medium',
+				array(
+					'alt' => the_title_attribute(
+						array(
+							'echo' => false,
+						)
+					),
+				)
+			);
 			?>
 		</a>
 
-		<?php
+			<?php
 		endif; // End is_singular().
 	}
 endif;
 
-if (!function_exists('dgwltd_get_excerpt')) :
+if ( ! function_exists( 'dgwltd_get_excerpt' ) ) :
 	// Get an excerpt outside of a loop
-	function dgwltd_get_excerpt($post)
-	{
-		$the_excerpt = (is_numeric($post)) ? get_post_field('post_content', $post) : $post->post_content;
-		//Gets post_content to be used as a basis for the excerpt
-		$the_excerpt = strip_tags(strip_shortcodes($the_excerpt)); //Strips tags and images
+	function dgwltd_get_excerpt( $post ) {
+		$the_excerpt = ( is_numeric( $post ) ) ? get_post_field( 'post_content', $post ) : $post->post_content;
+		// Gets post_content to be used as a basis for the excerpt
+		$the_excerpt = strip_tags( strip_shortcodes( $the_excerpt ) ); // Strips tags and images
 		return $the_excerpt;
 	}
 endif;
 
 
-if (!function_exists('dgwltd_standfirst')) :
+if ( ! function_exists( 'dgwltd_standfirst' ) ) :
 	// Standfirst - limited excerpt
-	function dgwltd_standfirst($limit, $post)
-	{
-		if (!empty($post)) {
-			$post_id = (is_numeric($post)) ? $post : $post->ID;
-		    $standfirst = explode(' ', dgwltd_get_excerpt($post), $limit);
+	function dgwltd_standfirst( $limit, $post ) {
+		if ( ! empty( $post ) ) {
+			$post_id    = ( is_numeric( $post ) ) ? $post : $post->ID;
+			$standfirst = explode( ' ', dgwltd_get_excerpt( $post ), $limit );
 
-			if (count($standfirst) >= $limit) {
-				array_pop($standfirst);
-				$standfirst = implode(" ", $standfirst) . '...';
+			if ( count( $standfirst ) >= $limit ) {
+				array_pop( $standfirst );
+				$standfirst = implode( ' ', $standfirst ) . '...';
 			} else {
-				$standfirst = implode(" ", $standfirst);
+				$standfirst = implode( ' ', $standfirst );
 			}
-			$standfirst = preg_replace('`\[[^\]]*\]`', '', $standfirst);
+			$standfirst = preg_replace( '`\[[^\]]*\]`', '', $standfirst );
 		} else {
-			$standfirst = "";
+			$standfirst = '';
 		}
 		return $standfirst;
 	}
 endif;
 
-//Remove taxonomy from title
-add_filter( 'get_the_archive_title', function ($title) {    
-    if ( is_category() ) {    
-            $title = single_cat_title( '', false );    
-        } elseif ( is_tag() ) {    
-            $title = single_tag_title( '', false );    
-        } elseif ( is_author() ) {    
-            $title = '<span class="vcard">' . get_the_author() . '</span>' ;    
-        } elseif ( is_tax() ) { //for custom post types
-            $title = sprintf( __( '%1$s', 'dgwltd' ), single_term_title( '', false ) );
-        }    
-    return $title;    
-});
+// Remove taxonomy from title
+add_filter(
+	'get_the_archive_title',
+	function ( $title ) {
+		if ( is_category() ) {
+			$title = single_cat_title( '', false );
+		} elseif ( is_tag() ) {
+			$title = single_tag_title( '', false );
+		} elseif ( is_author() ) {
+			$title = '<span class="vcard">' . get_the_author() . '</span>';
+		} elseif ( is_tax() ) { // for custom post types
+			$title = sprintf( __( '%1$s', 'dgwltd' ), single_term_title( '', false ) );
+		}
+		return $title;
+	}
+);

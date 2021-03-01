@@ -30,7 +30,7 @@ class Dgwltd_Blocks_Public {
 	 * @var      string    $Dgwltd_Blocks    The ID of this plugin.
 	 */
 	private $Dgwltd_Blocks;
-	
+
 
 	/**
 	 * The version of this plugin.
@@ -45,13 +45,13 @@ class Dgwltd_Blocks_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $Dgwltd_Blocks       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string $Dgwltd_Blocks       The name of the plugin.
+	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $Dgwltd_Blocks, $version ) {
 
 		$this->Dgwltd_Blocks = $Dgwltd_Blocks;
-		$this->version = $version;
+		$this->version       = $version;
 
 	}
 
@@ -75,7 +75,6 @@ class Dgwltd_Blocks_Public {
 		 */
 
 		// wp_enqueue_style( $this->Dgwltd_Blocks, plugin_dir_url( __FILE__ ) . 'css/theme.css', array(), $this->version, 'all' );
-
 	}
 
 	/**
@@ -101,67 +100,68 @@ class Dgwltd_Blocks_Public {
 
 	}
 
-	public static function dgwltd_parse_video_uri( $url ) {	
-		
-		// Parse the url 
+	public static function dgwltd_parse_video_uri( $url ) {
+
+		// Parse the url
 		$parse = parse_url( $url );
-		
+
 		// Set blank variables
 		$video_type = '';
-		$video_id = '';
-		
+		$video_id   = '';
+
 		// Url is http://youtu.be/xxxx
 		if ( isset( $parse['host'] ) && $parse['host'] == 'youtu.be' ) {
-		
+
 			$video_type = 'youtube';
-			$video_id = ltrim( $parse['path'],'/' );	
-			
+			$video_id   = ltrim( $parse['path'], '/' );
+
 		}
-		
-		// Url is http://www.youtube.com/watch?v=xxxx 
+
+		// Url is http://www.youtube.com/watch?v=xxxx
 		// or http://www.youtube.com/watch?feature=player_embedded&v=xxx
 		// or http://www.youtube.com/embed/xxxx
 		if ( isset( $parse['host'] ) && ( $parse['host'] == 'youtube.com' ) || isset( $parse['host'] ) && ( $parse['host'] == 'www.youtube.com' ) ) {
-		
+
 			$video_type = 'youtube';
-			
-			parse_str( $parse['query'], $output  );
-	
+
+			parse_str( $parse['query'], $output );
+
 			// print_r($output);
-			
-			$video_id = $output['v'];	
-			
-			if ( !empty( $feature ) )
+
+			$video_id = $output['v'];
+
+			if ( ! empty( $feature ) ) {
 				$video_id = end( explode( 'v=', $parse['query'] ) );
-				
-			if ( strpos( $parse['path'], 'embed' ) == 1 )
+			}
+
+			if ( strpos( $parse['path'], 'embed' ) == 1 ) {
 				$video_id = end( explode( '/', $parse['path'] ) );
-			
+			}
 		}
-		
+
 		// Url is http://www.vimeo.com
 		if ( isset( $parse['host'] ) && ( $parse['host'] == 'vimeo.com' ) || isset( $parse['host'] ) && ( $parse['host'] == 'www.vimeo.com' ) ) {
-		
+
 			$video_type = 'vimeo';
-			
-			$video_id = ltrim( $parse['path'],'/' );	
-						
+
+			$video_id = ltrim( $parse['path'], '/' );
+
 		}
-	
+
 		// If recognised type return video array
-		if ( !empty( $video_type ) ) {
-		
+		if ( ! empty( $video_type ) ) {
+
 			$video_array = array(
 				'type' => $video_type,
-				'id' => $video_id
+				'id'   => $video_id,
 			);
-		
+
 			return $video_array;
-			
+
 		} else {
-		
+
 			return false;
-			
+
 		}
 	}
 

@@ -34,19 +34,21 @@ if ( ! function_exists( 'dgwltd_setup' ) ) :
 		 */
 		add_theme_support( 'post-thumbnails' );
 
-		//Image sizes;
-		add_image_size('dgwltd-tiny', 16, 0, false); //For Low quality image placeholders (LQIP)
-		add_image_size('dgwltd-small', 320, 0, false);
-		add_image_size('dgwltd-medium', 640, 0, false);
-		add_image_size('dgwltd-large', 1536, 0, false );
-		add_image_size('dgwltd-social-image', 1200, 630);	
+		// Image sizes;
+		add_image_size( 'dgwltd-tiny', 16, 0, false ); // For Low quality image placeholders (LQIP)
+		add_image_size( 'dgwltd-small', 320, 0, false );
+		add_image_size( 'dgwltd-medium', 640, 0, false );
+		add_image_size( 'dgwltd-large', 1536, 0, false );
+		add_image_size( 'dgwltd-social-image', 1200, 630 );
 
 		// This theme uses wp_nav_menu() in one location.
-		register_nav_menus( array(
-			'primary' => esc_html__( 'Primary', 'dgwltd' ),
-			'footer' => esc_html__('Footer', 'dgwltd'), 
-			'legal' => esc_html__('Legal', 'dgwltd'), 
-		) );
+		register_nav_menus(
+			array(
+				'primary' => esc_html__( 'Primary', 'dgwltd' ),
+				'footer'  => esc_html__( 'Footer', 'dgwltd' ),
+				'legal'   => esc_html__( 'Legal', 'dgwltd' ),
+			)
+		);
 
 		/*
 		 * Switch default core markup for search form, comment form, and comments
@@ -72,10 +74,16 @@ if ( ! function_exists( 'dgwltd_setup' ) ) :
 		add_theme_support( 'align-wide' );
 
 		// Set up the WordPress core custom background feature.
-		add_theme_support( 'custom-background', apply_filters( 'dgwltd_custom_background_args', array(
-			'default-color' => 'ffffff',
-			'default-image' => '',
-		) ) );
+		add_theme_support(
+			'custom-background',
+			apply_filters(
+				'dgwltd_custom_background_args',
+				array(
+					'default-color' => 'ffffff',
+					'default-image' => '',
+				)
+			)
+		);
 
 		// Add theme support for selective refresh for widgets.
 		add_theme_support( 'customize-selective-refresh-widgets' );
@@ -88,7 +96,6 @@ if ( ! function_exists( 'dgwltd_setup' ) ) :
 
 		// Add support for experimental cover block spacing.
 		add_theme_support( 'custom-spacing' );
-
 
 		/**
 		 * Add support for core custom logo.
@@ -109,7 +116,7 @@ if ( ! function_exists( 'dgwltd_setup' ) ) :
 			)
 		);
 
-		//Add editor style
+		// Add editor style
 		add_theme_support( 'editor-styles' );
 		// add_editor_style(get_template_directory_uri() . '/dist/css/editor.css');
 
@@ -122,30 +129,30 @@ if ( ! function_exists( 'dgwltd_setup' ) ) :
 			require get_template_directory() . '/inc/starter-content.php';
 			add_theme_support( 'starter-content', dgwltd_get_starter_content() );
 		}
-		
+
 	}
-	
+
 endif;
 add_action( 'after_setup_theme', 'dgwltd_setup' );
 
 
-//Add Access-Control-Allow-Origin
+// Add Access-Control-Allow-Origin
 // add_action( 'init', 'add_cors_http_header' );
-// function add_cors_http_header() { 
-// 	header("Access-Control-Allow-Origin: *"); 
-// 	header("Access-Control-Allow-Methods: GET"); 
-// 	header("Access-Control-Allow-Headers: origin"); 
+// function add_cors_http_header() {
+// header("Access-Control-Allow-Origin: *");
+// header("Access-Control-Allow-Methods: GET");
+// header("Access-Control-Allow-Headers: origin");
 // }
 
 // add_filter('allowed_http_origins', 'add_cors_http_header');
 // function add_cors_http_header($urls) {
-// 	$urls[] = array( 'https://www.dgw.ltd', 'http://www.dgw.ltd', 'https://dgw.ltd', 'http://dgw.ltd' ) ;
-//     return $urls;
+// $urls[] = array( 'https://www.dgw.ltd', 'http://www.dgw.ltd', 'https://dgw.ltd', 'http://dgw.ltd' ) ;
+// return $urls;
 // }
 
-//Remove admin stuff - e.g. Emojis
-remove_action('wp_head', 'print_emoji_detection_script', 7);
-remove_action('wp_print_styles', 'print_emoji_styles');
+// Remove admin stuff - e.g. Emojis
+remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+remove_action( 'wp_print_styles', 'print_emoji_styles' );
 remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
 remove_action( 'admin_print_styles', 'print_emoji_styles' );
 
@@ -170,15 +177,17 @@ add_action( 'after_setup_theme', 'dgwltd_content_width', 0 );
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
 function dgwltd_widgets_init() {
-	register_sidebar( array(
-		'name'          => esc_html__( 'Sidebar', 'dgwltd' ),
-		'id'            => 'sidebar-1',
-		'description'   => esc_html__( 'Add widgets here.', 'dgwltd' ),
-		'before_widget' => '<section id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</section>',
-		'before_title'  => '<h2 class="widget-title">',
-		'after_title'   => '</h2>',
-	) );
+	register_sidebar(
+		array(
+			'name'          => esc_html__( 'Sidebar', 'dgwltd' ),
+			'id'            => 'sidebar-1',
+			'description'   => esc_html__( 'Add widgets here.', 'dgwltd' ),
+			'before_widget' => '<section id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>',
+		)
+	);
 }
 add_action( 'widgets_init', 'dgwltd_widgets_init' );
 
@@ -187,9 +196,9 @@ add_action( 'widgets_init', 'dgwltd_widgets_init' );
  */
 function dgwltd_scripts() {
 
-	$cache_buster = filemtime(get_template_directory() . '/dist/css/critical.css');
-	if(empty($cache_buster)) {
-		$cache_buster = date('U');
+	$cache_buster = filemtime( get_template_directory() . '/dist/css/critical.css' );
+	if ( empty( $cache_buster ) ) {
+		$cache_buster = date( 'U' );
 	}
 
 	wp_enqueue_style( 'dgwltd-style', get_stylesheet_uri() );
@@ -198,12 +207,12 @@ function dgwltd_scripts() {
 
 	// wp_enqueue_style('dgwltd-print', get_template_directory_uri() . '/dist/css/print.css', false, $cache_buster, 'print');
 
-	// wp_enqueue_script('dgwltd-js', get_template_directory_uri() . '/dist/scripts/app.js', array('jquery'), $cache_buster, false); 
+	// wp_enqueue_script('dgwltd-js', get_template_directory_uri() . '/dist/scripts/app.js', array('jquery'), $cache_buster, false);
 
 	// 3.5.1
-	wp_deregister_script('jquery');
-	wp_register_script('jquery', "//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js", false, null);
-	wp_enqueue_script('jquery');
+	wp_deregister_script( 'jquery' );
+	wp_register_script( 'jquery', '//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js', false, null );
+	wp_enqueue_script( 'jquery' );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -214,7 +223,7 @@ add_action( 'wp_enqueue_scripts', 'dgwltd_scripts' );
 /**
  * Implement the Custom Header feature.
  */
-//require get_template_directory() . '/inc/custom-header.php';
+// require get_template_directory() . '/inc/custom-header.php';
 
 /**
  * Custom template tags for this theme.
