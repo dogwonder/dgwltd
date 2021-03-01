@@ -85,10 +85,8 @@ Thumbs.db
 # "plugins" directory
 # "themes" directory
 wp-content/uploads/*
-wp-content/uploads/PDF_EXTENDED_TEMPLATES/tmp/*
 !wp-content/plugins/
 !wp-content/themes/
-!wp-content/uploads/PDF_EXTENDED_TEMPLATES/
 
 # ADVANCED OPTION (disabled by default)
 # ignore everything in the "plugins" directory,
@@ -101,6 +99,9 @@ wp-content/uploads/PDF_EXTENDED_TEMPLATES/tmp/*
 # except the themes you specify
 #wp-content/themes/*
 #!wp-content/themes/bootstrap-genesis/
+
+# ignore specific plugins
+wp-content/themes/query-monitor/
 
 # ignore specific themes
 wp-content/themes/twentyfifteen/
