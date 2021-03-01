@@ -1,4 +1,4 @@
-const CACHE = "dgwltd-0.157.0";
+const CACHE = "dgwltd-0.158.0";
 
 // This is the service worker with the Cache-first network
 const precacheFiles = [
@@ -97,7 +97,7 @@ self.addEventListener("activate", function(event) {
           })
         );
       }).then(function() {
-        console.log('[ServiceWorker] Claiming clients for version - 0.157.0');
+        console.log('[ServiceWorker] Claiming clients for version - 0.158.0');
         return self.clients.claim();
       })  
     );
