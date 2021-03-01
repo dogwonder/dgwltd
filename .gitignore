@@ -101,7 +101,7 @@ wp-content/uploads/*
 #!wp-content/themes/bootstrap-genesis/
 
 # ignore specific plugins
-wp-content/themes/query-monitor/
+wp-content/plugins/query-monitor/
 
 # ignore specific themes
 wp-content/themes/twentyfifteen/
