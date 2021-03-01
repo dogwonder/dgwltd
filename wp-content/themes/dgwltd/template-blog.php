@@ -46,7 +46,7 @@ $blog_query = new WP_Query( $post_args );
 
 					<?php
 					// Get pagination
-					$totalPages = $blog_query->max_num_pages;
+					$total_pages = $blog_query->max_num_pages;
 					include locate_template( 'template-parts/_molecules/pagination-query.php' );
 					else :
 						get_template_part( 'template-parts/_templates/content', 'none' );

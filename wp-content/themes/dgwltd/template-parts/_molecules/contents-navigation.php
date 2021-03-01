@@ -1,17 +1,17 @@
 <?php
 // Get current post
-$currentpostID = $post->ID;
+$currentpost_id = $post->ID;
 
 // Post parent ID (which can be 0 if there is no parent);
-$parent = wp_get_post_parent_id( $currentpostID );
+$parent = wp_get_post_parent_id( $currentpost_id );
 
 // Check the page template so we can ignore stray parents
 $page_template = get_page_template_slug( $parent );
 
 if ( $page_template !== 'template-guide.php' ) :
-	$parentID = $post->ID;
+	$parent_id = $post->ID;
 else :
-	$parentID = $parent;
+	$parent_id = $parent;
 endif;
 
 if ( $parent ) :
@@ -19,7 +19,7 @@ if ( $parent ) :
 	// Get all the children of the parent based on menu order
 	$childpages = get_pages(
 		array(
-			'child_of'       => $parentID,
+			'child_of'       => $parent_id,
 			'sort_column'    => 'menu_order',
 			'sort_order'     => 'asc',
 			'posts_per_page' => -1,
@@ -27,8 +27,8 @@ if ( $parent ) :
 	);
 
 	// Get the child page IDs and add the parent to the beginning
-	$childrenIds = wp_list_pluck( $childpages, 'ID' );
-	$ids         = array_merge( array( $parent ), $childrenIds );
+	$children_ids = wp_list_pluck( $childpages, 'ID' );
+	$ids          = array_merge( array( $parent ), $children_ids );
 
 else :
 
@@ -43,8 +43,8 @@ else :
 	);
 
 	// Get the child page IDs
-	$childrenIds = wp_list_pluck( $childpages, 'ID' );
-	$ids         = $childrenIds;
+	$children_ids = wp_list_pluck( $childpages, 'ID' );
+	$ids          = $children_ids;
 
 endif;
 
@@ -60,24 +60,24 @@ if ( is_page() && count( $childpages ) > 0 ) :
 	$pages = get_pages( $args );
 
 	// Include the parent ID
-	$pageIds = wp_list_pluck( $pages, 'ID' );
+	$page_ids = wp_list_pluck( $pages, 'ID' );
 
 	// Get current index
-	$current = array_search( get_the_ID(), $pageIds );
+	$current = array_search( get_the_ID(), $page_ids );
 
 	// Get next and prev IDs for child pages
 	if ( $parent ) :
 		// If the parent is not a guide template that don't link to it
 		if ( $page_template == 'template-guide.php' ) :
-			$prevId = ( isset( $pageIds[ $current - 1 ] ) ) ? $pageIds[ $current - 1 ] : '';
+			$prevId = ( isset( $page_ids[ $current - 1 ] ) ) ? $page_ids[ $current - 1 ] : '';
 		else :
 			$prevId = '';
 		endif;
-		$nextId = ( isset( $pageIds[ $current + 1 ] ) ) ? $pageIds[ $current + 1 ] : '';
+		$nextId = ( isset( $page_ids[ $current + 1 ] ) ) ? $page_ids[ $current + 1 ] : '';
 else :
 	// We dont have a previous as this is a parent
 	$prevId = '';
-	$nextId = ( isset( $pageIds[ $current ] ) ) ? $pageIds[ $current ] : '';
+	$nextId = ( isset( $page_ids[ $current ] ) ) ? $page_ids[ $current ] : '';
 endif;
 ?>
 <nav class="dgwltd-pagination dgwltd-pagination--pages<?php echo ( empty( $prevId ) ? ' dgwltd-pagination--noprev' : '' ); ?><?php echo ( empty( $nextId ) ? ' dgwltd-pagination--nonext' : '' ); ?>" aria-label="Pagination">
@@ -85,7 +85,7 @@ endif;
 
 	<?php if ( ! empty( $prevId ) ) : ?>
 		<li class="dgwltd-pagination__item dgwltd-pagination__item--previous">
-		<a href="<?php echo get_permalink( $prevId ); ?>" class="dgwltd-pagination__link" rel="prev">
+		<a href="<?php echo esc_url( get_permalink( $prevId ) ); ?>" class="dgwltd-pagination__link" rel="prev">
 			<span class="dgwltd-pagination__link-title">
 			<svg class="dgwltd-pagination__link-icon" xmlns="http://www.w3.org/2000/svg" height="13" width="17" viewBox="0 0 17 13">
 			  <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
@@ -97,7 +97,7 @@ endif;
 			<span class="visually-hidden">:</span>
 			<?php if ( $parent ) : ?>
 			<span class="dgwltd-pagination__link-label">
-				<?php echo get_the_title( $prevId ); ?>
+				<?php echo esc_html( get_the_title( $prevId ) ); ?>
 			</span>
 			<?php endif; ?>
 		</a>
@@ -117,7 +117,7 @@ endif;
 			</span>
 			 <span class="visually-hidden">:</span>
 			 <span class="dgwltd-pagination__link-label">
-				<?php echo get_the_title( $nextId ); ?>
+				<?php echo esc_html( get_the_title( $nextId ) ); ?>
 			 </span>
 		</a>
 		</li>

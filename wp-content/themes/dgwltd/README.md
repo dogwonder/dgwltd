@@ -153,7 +153,7 @@ Add AMP native images
 <?php 
 //Is the AMP plugin (https://wordpress.org/plugins/amp/) enabled if so show the AMP image format
 if(function_exists('amp_is_request') && amp_is_request()) : ?>
-<amp-img alt="<?php echo ($imageAlt ?  $imageAlt : ''); ?>"
+<amp-img alt="<?php echo ($image_alt ?  $image_alt : ''); ?>"
         src="<?php echo $imageSmall; ?>"
         width="<?php echo $imageSmallWidth ?>"
         height="<?php echo $imageSmallHeight ?>">

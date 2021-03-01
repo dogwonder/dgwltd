@@ -71,7 +71,7 @@ function dgwltd_the_category_filter( $thelist, $separator = ' ' ) {
 		$cats    = explode( $separator, $thelist );
 		$newlist = array();
 		foreach ( $cats as $cat ) {
-			$catname = trim( strip_tags( $cat ) );
+			$catname = trim( wp_strip_all_tags( $cat ) );
 			if ( ! in_array( $catname, $exclude2 ) ) {
 				$newlist[] = $cat;
 			}

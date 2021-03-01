@@ -198,7 +198,7 @@ function dgwltd_scripts() {
 
 	$cache_buster = filemtime( get_template_directory() . '/dist/css/critical.css' );
 	if ( empty( $cache_buster ) ) {
-		$cache_buster = date( 'U' );
+		$cache_buster = gmdate( 'U' );
 	}
 
 	wp_enqueue_style( 'dgwltd-style', get_stylesheet_uri() );

@@ -8,10 +8,10 @@
 	<div class="cookie-notice__content">
 	<p class="cookie-notice__text">
 		<?php
-		$cookieUrl = '<a href="' . esc_url( home_url( '/cookie-policy/' ) ) . '">' . __( 'our cookie statement', 'dgwltd' ) . '</a>';
+		$cookie_url = '<a href="' . esc_url( home_url( '/cookie-policy/' ) ) . '">' . __( 'our cookie statement', 'dgwltd' ) . '</a>';
 		printf(
 			esc_html__( 'We use cookies to give you the best experience, read %s.', 'dgwltd' ),
-			$cookieUrl
+			$cookie_url
 		);
 		?>
 	</p>

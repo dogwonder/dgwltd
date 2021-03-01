@@ -28,9 +28,9 @@
 				<?php
 				// Display the excerpt is exists
 				if ( has_excerpt( $post->ID ) ) {
-					echo get_the_excerpt( $post->ID );
+					echo esc_html( get_the_excerpt( $post->ID ) );
 				} else {
-					echo dgwltd_standfirst( 80, $post->ID );
+					echo esc_html( dgwltd_standfirst( 80, $post->ID ) );
 				}
 				?>
 			</div><!-- .entry-content -->

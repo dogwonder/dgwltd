@@ -11,12 +11,12 @@
 <?php
 // Hide title via custom field
 if ( class_exists( 'acf' ) ) {
-	$hiddenTitle = get_field( 'hide_title' );
+	$hidden_title = get_field( 'hide_title' );
 }
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-	<?php if ( ! $hiddenTitle ) : ?>
+	<?php if ( ! $hidden_title ) : ?>
 	<div class="entry-header">
 		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 	</div><!-- .entry-header -->

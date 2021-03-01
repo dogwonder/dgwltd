@@ -86,7 +86,7 @@ if ( ! function_exists( 'dgwltd_entry_footer' ) ) :
 							),
 						)
 					),
-					get_the_title()
+					esc_html( get_the_title() )
 				)
 			);
 			echo '</span>';
@@ -103,7 +103,7 @@ if ( ! function_exists( 'dgwltd_entry_footer' ) ) :
 						),
 					)
 				),
-				get_the_title()
+				esc_html( get_the_title() )
 			),
 			'<p><span class="edit-link">',
 			'</span></p>'
@@ -157,7 +157,7 @@ if ( ! function_exists( 'dgwltd_get_excerpt' ) ) :
 	function dgwltd_get_excerpt( $post ) {
 		$the_excerpt = ( is_numeric( $post ) ) ? get_post_field( 'post_content', $post ) : $post->post_content;
 		// Gets post_content to be used as a basis for the excerpt
-		$the_excerpt = strip_tags( strip_shortcodes( $the_excerpt ) ); // Strips tags and images
+		$the_excerpt = wp_strip_all_tags( strip_shortcodes( $the_excerpt ) ); // Strips tags and images
 		return $the_excerpt;
 	}
 endif;

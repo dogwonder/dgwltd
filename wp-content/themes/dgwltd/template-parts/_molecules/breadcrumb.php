@@ -1,12 +1,12 @@
 <?php
 // Get current post
-$currentpostID = $post->ID;
+$currentpost_id = $post->ID;
 
 // get ancestors of current post
 $ancestors = get_post_ancestors( $post->ID );
 
 // Post parent ID (which can be 0 if there is no parent)
-$parent = wp_get_post_parent_id( $currentpostID );
+$parent = wp_get_post_parent_id( $currentpost_id );
 ?>
 
 <div class="govuk-breadcrumbs">
@@ -23,8 +23,8 @@ $parent = wp_get_post_parent_id( $currentpostID );
 			foreach ( $ancestorPages as $ancestor ) {
 				?>
 			<li class="govuk-breadcrumbs__list-item">
-			<a class="govuk-breadcrumbs__link" href="<?php echo get_permalink( $ancestor ); ?>">
-				<?php echo get_the_title( $ancestor ); ?>
+			<a class="govuk-breadcrumbs__link" href="<?php echo esc_url( get_permalink( $ancestor ) ); ?>">
+				<?php echo esc_html( get_the_title( $ancestor ) ); ?>
 			</a>
 			</li>
 		<?php } ?>
@@ -43,7 +43,7 @@ $parent = wp_get_post_parent_id( $currentpostID );
 			<?php elseif ( is_tag() ) : ?>
 				<?php single_tag_title(); ?>
 			<?php elseif ( is_page() || is_single() ) : ?>
-				<?php echo get_the_title( $post->ID ); ?>
+				<?php echo esc_html( get_the_title( $post->ID ) ); ?>
 			<?php endif; ?>
 			</li>
 		<?php endif; ?>

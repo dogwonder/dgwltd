@@ -18,8 +18,8 @@ $parent = wp_get_post_parent_id( $id );
 $page_template = get_page_template_slug( $parent );
 
 if ( class_exists( 'acf' ) ) {
-	$hiddenTitle     = get_field( 'hide_title' );
-	$overriddenTitle = get_field( 'overide_title', $post->ID );
+	$hidden_title     = get_field( 'hide_title' );
+	$overridden_title = get_field( 'overide_title', $post->ID );
 }
 ?>
 <div id="primary" class="govuk-width-container">
@@ -40,14 +40,14 @@ if ( class_exists( 'acf' ) ) {
 				if ( ! $parent ) :
 					?>
 				<div class="entry-header">
-					<h1 class="entry-title<?php echo ( $hiddenTitle ? ' visually-hidden' : '' ); ?>"><?php the_title(); ?></h1>
+					<h1 class="entry-title<?php echo ( $hidden_title ? ' visually-hidden' : '' ); ?>"><?php the_title(); ?></h1>
 				</div><!-- .entry-header -->
 				<?php else : ?>
 				<div class="entry-header">
-					<?php if ( $page_template == 'template-guide.php' ) : ?>
-					<h1 class="entry-title<?php echo ( $hiddenTitle ? ' visually-hidden' : '' ); ?>"><?php echo get_the_title( $parent ); ?></h1>
+					<?php if ( $page_template === 'template-guide.php' ) : ?>
+					<h1 class="entry-title<?php echo ( $hidden_title ? ' visually-hidden' : '' ); ?>"><?php echo esc_html( get_the_title( $parent ) ); ?></h1>
 					<?php else : ?>
-					<h1 class="entry-title<?php echo ( $hiddenTitle ? ' visually-hidden' : '' ); ?>"><?php echo get_the_title( $post->ID ); ?></h1>
+					<h1 class="entry-title<?php echo ( $hidden_title ? ' visually-hidden' : '' ); ?>"><?php echo esc_html( get_the_title( $post->ID ) ); ?></h1>
 					<?php endif; ?>
 				</div><!-- .entry-header -->
 				<?php endif; ?>
@@ -59,12 +59,12 @@ if ( class_exists( 'acf' ) ) {
 				<div class="entry-content">
 					<?php
 					// If this is the parent page (and an extra check for template type) then display the current page title (or custom title)
-					if ( $parent && $page_template == 'template-guide.php' ) :
+					if ( $parent && $page_template === 'template-guide.php' ) :
 						?>
-						<?php if ( ! empty( $overriddenTitle ) ) : ?>
-						<h2 class="govuk-heading-l<?php echo ( $hiddenTitle ? ' visually-hidden' : '' ); ?>"><?php echo $overriddenTitle; ?></h1>
+						<?php if ( ! empty( $overridden_title ) ) : ?>
+						<h2 class="govuk-heading-l<?php echo ( $hidden_title ? ' visually-hidden' : '' ); ?>"><?php echo $overridden_title; ?></h1>
 						<?php else : ?>
-						<h2 class="govuk-heading-l<?php echo ( $hiddenTitle ? ' visually-hidden' : '' ); ?>"><?php echo get_the_title( $post->ID ); ?></h1>
+						<h2 class="govuk-heading-l<?php echo ( $hidden_title ? ' visually-hidden' : '' ); ?>"><?php echo get_the_title( $post->ID ); ?></h1>
 						<?php endif; ?>
 					<?php endif; ?>
 					<?php the_content(); ?>

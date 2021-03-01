@@ -1,9 +1,9 @@
 <?php
 // Get current post
-$currentpostID = $post->ID;
+$currentpost_id = $post->ID;
 
 // Post parent ID (which can be 0 if there is no parent)
-$parent = wp_get_post_parent_id( $currentpostID );
+$parent = wp_get_post_parent_id( $currentpost_id );
 
 // Check the page template so we can ignore stray parents
 $page_template = get_page_template_slug( $parent );
@@ -11,14 +11,14 @@ $page_template = get_page_template_slug( $parent );
 // If the parent page is NOT a guide template then we want the current ID // Title
 if ( $page_template !== 'template-guide.php' ) :
 
-	$parentID  = $post->ID;
-	$pageTitle = get_the_title( $post->ID );
+	$parent_id = $post->ID;
+	$pageTitle = esc_html( get_the_title( $post->ID ) );
 
 else :
 
 	// Parent ID is the parent's ID
-	$parentID  = $parent;
-	$pageTitle = get_the_title( $parent );
+	$parent_id = $parent;
+	$pageTitle = esc_html( get_the_title( $parent ) );
 
 endif;
 
@@ -27,7 +27,7 @@ if ( $parent ) :
 
 	$childpages = get_pages(
 		array(
-			'child_of'       => $parentID,
+			'child_of'       => $parent_id,
 			'sort_column'    => 'menu_order',
 			'sort_order'     => 'asc',
 			'posts_per_page' => -1,
@@ -35,8 +35,8 @@ if ( $parent ) :
 	);
 
 	// Get the child page IDs
-	$childrenIds = wp_list_pluck( $childpages, 'ID' );
-	$ids         = $childrenIds;
+	$children_ids = wp_list_pluck( $childpages, 'ID' );
+	$ids          = $children_ids;
 
 	// Otherwise get the children on the current page
 else :
@@ -51,12 +51,12 @@ else :
 	);
 
 	// Get the child page IDs
-	$childrenIds = wp_list_pluck( $childpages, 'ID' );
-	$ids         = $childrenIds;
+	$children_ids = wp_list_pluck( $childpages, 'ID' );
+	$ids          = $children_ids;
 
 endif;
 
-if ( $childrenIds ) : ?>
+if ( $children_ids ) : ?>
 
 	<aside class="dgwltd-navigation-container" role="complementary">
 	<nav class="dgwltd-contents-list dgwltd-contents-list--pages" aria-label="Pages in this section" role="navigation">
@@ -64,21 +64,21 @@ if ( $childrenIds ) : ?>
 		<ol class="dgwltd-contents-list__list">
 
 			<?php // First get the parent title if it exists and if parent remove link ?>
-			<li class="page_item<?php echo ( $parentID == 0 || $parentID == $post->ID ? ' current_page_item' : '' ); ?>"<?php echo ( $post->ID == $currentpostID ? ' aria-current="page"' : '' ); ?>>
+			<li class="page_item<?php echo ( $parent_id === 0 || $parent_id === $post->ID ? ' current_page_item' : '' ); ?>"<?php echo ( $post->ID === $currentpost_id ? ' aria-current="page"' : '' ); ?>>
 										   <?php
-											if ( $parentID == $currentpostID ) :
+											if ( $parent_id === $currentpost_id ) :
 												?>
 												<?php echo $pageTitle; ?>
 												<?php
 else :
 	?>
-				<a href="<?php echo get_permalink( $parent ); ?>"><?php echo $pageTitle; ?></a><?php endif; ?></li>
+				<a href="<?php echo esc_url( get_permalink( $parent ) ); ?>"><?php echo $pageTitle; ?></a><?php endif; ?></li>
 
 			<?php
 			// Now get all the children of the parent // current page
 			$child_args = array(
 				'post_type'      => 'page',
-				'post__in'       => $childrenIds,
+				'post__in'       => $children_ids,
 				'orderby'        => 'menu_order',
 				'order'          => 'ASC',
 				'posts_per_page' => -1,
@@ -92,10 +92,10 @@ else :
 				while ( $childpages_query->have_posts() ) :
 					$childpages_query->the_post();
 					?>
-					<?php // $current = array_search( $post->ID, $childrenIds ); ?>
+					<?php // $current = array_search( $post->ID, $children_ids ); ?>
 					<?php // echo $current ?>
-					<?php $childTitle = get_the_title( $post->ID ); ?>
-				<li class="page_item<?php echo ( $post->ID == $currentpostID ? ' current_page_item' : '' ); ?>"<?php echo ( $post->ID == $currentpostID ? ' aria-current="page"' : '' ); ?>><a href="<?php echo get_permalink(); ?>"><?php echo $childTitle; ?></a></li>
+					<?php $childTitle = esc_html( get_the_title( $post->ID ) ); ?>
+				<li class="page_item<?php echo ( $post->ID === $currentpost_id ? ' current_page_item' : '' ); ?>"<?php echo ( $post->ID === $currentpost_id ? ' aria-current="page"' : '' ); ?>><a href="<?php echo esc_url( get_permalink() ); ?>"><?php echo $childTitle; ?></a></li>
 			<?php endwhile; ?>
 				<?php wp_reset_postdata(); ?>
 			<?php endif; ?>

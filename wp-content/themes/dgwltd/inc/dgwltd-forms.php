@@ -37,7 +37,7 @@ add_filter(
 add_filter(
 	'gform_field_content',
 	function ( $field_content, $field ) {
-		if ( $field->type == 'email' ) {
+		if ( $field->type === 'email' ) {
 			return str_replace( 'type=', "autocomplete='email' type=", $field_content );
 		}
 		return $field_content;
@@ -50,7 +50,7 @@ add_filter(
 add_filter(
 	'gform_field_content',
 	function ( $field_content, $field ) {
-		if ( $field->type == 'tel' ) {
+		if ( $field->type === 'tel' ) {
 			return str_replace( 'type=', "autocomplete='tel' type=", $field_content );
 		}
 		return $field_content;

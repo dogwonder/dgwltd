@@ -1,7 +1,7 @@
 <?php
-// $paged & $totalPages placed in origin template
-$prevUrl = get_previous_posts_page_link();
-$nextUrl = get_next_posts_page_link();
+// $paged & $total_pages placed in origin template
+$prev_url = get_previous_posts_page_link();
+$next_url = get_next_posts_page_link();
 ?>
 <nav class="dgwltd-pagination" aria-label="Pagination">
 <ul class="dgwltd-pagination__list">
@@ -10,7 +10,7 @@ $nextUrl = get_next_posts_page_link();
 	if ( $paged != '1' ) :
 		?>
 	<li class="dgwltd-pagination__item dgwltd-pagination__item--previous">
-		<a href="<?php echo $prevUrl; ?>" class="dgwltd-pagination__link" rel="prev">
+		<a href="<?php echo $prev_url; ?>" class="dgwltd-pagination__link" rel="prev">
 			<span class="dgwltd-pagination__link-title">
 			<svg class="dgwltd-pagination__link-icon" xmlns="http://www.w3.org/2000/svg" height="13" width="17" viewBox="0 0 17 13">
 			  <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
@@ -20,16 +20,16 @@ $nextUrl = get_next_posts_page_link();
 			</span>
 			</span>
 			<span class="visually-hidden">:</span>
-			<span class="dgwltd-pagination__link-label"><?php echo $paged - 1; ?> of <?php echo $totalPages; ?></span>
+			<span class="dgwltd-pagination__link-label"><?php echo $paged - 1; ?> of <?php echo $total_pages; ?></span>
 		</a>
 	</li>
 	<?php endif; ?>
 	<?php
 	// If current page is not the same as the total number of pages
-	if ( $paged != $totalPages ) :
+	if ( $paged != $total_pages ) :
 		?>
 	<li class="dgwltd-pagination__item dgwltd-pagination__item--next">
-		<a href="<?php echo $nextUrl; ?>" class="dgwltd-pagination__link" rel="next">
+		<a href="<?php echo $next_url; ?>" class="dgwltd-pagination__link" rel="next">
 			<span class="dgwltd-pagination__link-title">
 			<svg class="dgwltd-pagination__link-icon" xmlns="http://www.w3.org/2000/svg" height="13" width="17" viewBox="0 0 17 13">
 			  <path d="m10.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
@@ -39,7 +39,7 @@ $nextUrl = get_next_posts_page_link();
 			</span>
 			</span>
 			<span class="visually-hidden">:</span>
-			<span class="dgwltd-pagination__link-label"><?php echo $paged + 1; ?> of <?php echo $totalPages; ?></span>
+			<span class="dgwltd-pagination__link-label"><?php echo $paged + 1; ?> of <?php echo $total_pages; ?></span>
 		</a>
 	</li>
 	<?php endif; ?>
