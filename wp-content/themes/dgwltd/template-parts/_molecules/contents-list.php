@@ -64,16 +64,9 @@ if ( $children_ids ) : ?>
 		<ol class="dgwltd-contents-list__list">
 
 			<?php // First get the parent title if it exists and if parent remove link ?>
-			<li class="page_item<?php echo ( $parent_id === 0 || $parent_id === $post->ID ? ' current_page_item' : '' ); ?>"<?php echo ( $post->ID === $currentpost_id ? ' aria-current="page"' : '' ); ?>>
-										   <?php
-											if ( $parent_id === $currentpost_id ) :
-												?>
-												<?php echo $page_title; ?>
-												<?php
-else :
-	?>
-				<a href="<?php echo esc_url( get_permalink( $parent ) ); ?>"><?php echo $page_title; ?></a><?php endif; ?></li>
-
+			<li class="page_item<?php echo ( $parent_id === 0 || $parent_id === $post->ID ? ' current_page_item' : '' ); ?>"<?php echo ( $post->ID === $currentpost_id ? ' aria-current="page"' : '' ); ?>><?php if ( $parent_id === $currentpost_id ) : 
+			echo $page_title; 
+			else : ?><a href="<?php echo esc_url( get_permalink( $parent ) ); ?>"><?php echo $page_title; ?></a><?php endif; ?></li>
 			<?php
 			// Now get all the children of the parent // current page
 			$child_args = array(
