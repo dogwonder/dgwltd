@@ -1,4 +1,4 @@
-<form class="site-search__form" method="get" action="<?php echo home_url( '/' ); ?>" role="search">
+<form class="site-search__form" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" role="search">
 	<label for="search" class="visually-hidden"><?php esc_html_e( 'Search', 'dgwltd' ); ?></label>
 	<input class="govuk-input" type="search" name="s" value="<?php the_search_query(); ?>" placeholder="Search" />
 	<button class="govuk-button" type="submit">

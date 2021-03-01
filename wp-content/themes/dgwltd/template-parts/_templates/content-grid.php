@@ -10,7 +10,7 @@
 ?>
 <?php
 if ( class_exists( 'acf' ) ) {
-	$title = get_field( 'title' );
+	$grid_title = esc_html( get_field( 'title' ) );
 }
 ?>
 <div class="dgwltd-grid__item">
@@ -36,8 +36,8 @@ if ( class_exists( 'acf' ) ) {
 		</a>
 		<div class="dgwltd-bio__deets">
 			<h2 class="dgwltd-bio__name"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-			<?php if ( ! empty( $title ) ) : ?>
-			<h3 class="dgwltd-bio__title"><?php echo $title; ?></h3>
+			<?php if ( ! empty( $grid_title ) ) : ?>
+			<h3 class="dgwltd-bio__title"><?php echo $grid_title; ?></h3>
 			<?php endif; ?>
 		</div><!-- .deets-->
 	</div><!-- .bio-->

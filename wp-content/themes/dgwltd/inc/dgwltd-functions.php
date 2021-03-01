@@ -86,7 +86,7 @@ add_filter( 'the_category', 'dgwltd_the_category_filter', 10, 2 );
 
 if ( ! function_exists( 'dgwltd_env' ) ) :
 	function dgwltd_env( $env ) {
-		$site_url = site_url();
+		$site_url = esc_url( site_url() );
 		switch ( $env ) {
 			case 'dev':
 				if ( strpos( $site_url, 'localhost:3000' ) !== false ) {

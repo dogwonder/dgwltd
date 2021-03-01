@@ -19,8 +19,8 @@ $parent = wp_get_post_parent_id( $currentpost_id );
 		<?php if ( is_page() && $parent > 0 ) : ?>
 			<?php
 			// Get all ancestors and loop through them in reverse order
-			$ancestorPages = array_reverse( $ancestors );
-			foreach ( $ancestorPages as $ancestor ) {
+			$ancestor_pages = array_reverse( $ancestors );
+			foreach ( $ancestor_pages as $ancestor ) {
 				?>
 			<li class="govuk-breadcrumbs__list-item">
 			<a class="govuk-breadcrumbs__link" href="<?php echo esc_url( get_permalink( $ancestor ) ); ?>">

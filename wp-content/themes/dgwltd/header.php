@@ -16,7 +16,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title><?php bloginfo( 'name' ); ?> &ndash; <?php is_front_page() ? bloginfo( 'description' ) : wp_title( '' ); ?></title>
 <link rel="preconnect" href="https://plausible.io">
-<link rel="preconnect" href="<?php echo site_url(); ?>" crossorigin>
+<link rel="preconnect" href="<?php echo esc_url( site_url() ); ?>" crossorigin>
 <link rel="profile" href="https://gmpg.org/xfn/11">
 <?php wp_head(); ?>
 <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/dist/css/vendor.css" />
@@ -26,13 +26,13 @@
 <script async defer data-domain="dgw.ltd" src="https://plausible.io/js/plausible.js"></script>
 <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/favicon-128x128.png" type="image/x-icon">
 <link rel="apple-touch-icon" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/favicon-128x128.png">
-<meta name="apple-mobile-web-app-title" content="<?php echo get_bloginfo( 'name' ); ?>" />
+<meta name="apple-mobile-web-app-title" content="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" />
 <meta name="theme-color" content="#75e6ef">
 <link rel="manifest" href="<?php echo get_template_directory_uri(); ?>/dist/images/fav/manifest.json">
 <?php
 // SEO plugin check
 if ( ! is_plugin_active( 'wordpress-seo/wp-seo.php' ) || ! is_plugin_active( 'wordpress-seo-premium/wp-seo-premium.php' ) ) :
-	$site_description           = get_bloginfo( 'description', 'display' );
+	$site_description           = esc_attr( get_bloginfo( 'description', 'display' ) );
 	$dgwltd_meta['title']       = 'DGW.ltd - ' . $post->post_title ?? '';
 	$dgwltd_meta['description'] = strip_shortcodes( wp_trim_words( get_post_field( 'post_content', $post ), 20 ) );
 	$dgwltd_meta['description'] = rtrim( str_replace( '&hellip;', '', $dgwltd_meta['description'] ), '' );

@@ -18,7 +18,7 @@ get_header();
 	<div id="primary" class="govuk-width-container">
 		<div class="govuk-main-wrapper">
 
-		<h1 class="dgwltd-heading-xl"><?php echo get_bloginfo( 'name' ); ?></h1>
+		<h1 class="dgwltd-heading-xl"><?php echo esc_attr( get_bloginfo( 'name' ) ); ?></h1>
 
 		<!-- Use the element. You may use it before the lite-yt-embed JS is executed. -->
 		<!-- <lite-youtube videoid="ogfYd705cRs" playlabel="Play: Keynote (Google I/O '18)"></lite-youtube>

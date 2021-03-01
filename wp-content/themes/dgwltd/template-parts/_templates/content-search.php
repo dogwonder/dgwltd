@@ -12,11 +12,9 @@
 
 	<div class="entry-header">
 			<?php the_title( '<h2 class="entry-title dgwltd-list__title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' ); ?>
-			<?php if ( $post_type === 'post' ) { ?>
 			<div class="entry-meta dgwltd-list__meta">
 				<?php dgwltd_posted_on(); ?>
 			</div><!-- .entry-meta -->
-			<?php } ?>
 	</div><!-- .entry-header -->
 	
 	<div class="dgwltd-list__wrapper">        

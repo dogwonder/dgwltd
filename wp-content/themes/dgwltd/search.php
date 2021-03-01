@@ -26,7 +26,7 @@ get_header();
 				
 				<h2 class="govuk-heading-l">
 				<?php
-				printf( esc_html__( '%1$s for %2$s', 'dgwltd' ), $wp_query->found_posts . ( $wp_query->found_posts == 1 ? ' result' : ' results' ), get_search_query() );
+				printf( esc_html__( '%1$s for %2$s', 'dgwltd' ), $wp_query->found_posts . ( $wp_query->found_posts === 1 ? ' result' : ' results' ), get_search_query() );
 				')';
 				?>
 				</h2>

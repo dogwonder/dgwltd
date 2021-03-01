@@ -18,8 +18,8 @@ $parent = wp_get_post_parent_id( $id );
 $page_template = get_page_template_slug( $parent );
 
 if ( class_exists( 'acf' ) ) {
-	$hidden_title     = get_field( 'hide_title' );
-	$overridden_title = get_field( 'overide_title', $post->ID );
+	$hidden_title     = esc_html( get_field( 'hide_title' ) );
+	$overridden_title = esc_html( get_field( 'overide_title', $post->ID ) );
 }
 ?>
 <div id="primary" class="govuk-width-container">

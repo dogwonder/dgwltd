@@ -211,7 +211,7 @@ function dgwltd_scripts() {
 
 	// 3.5.1
 	wp_deregister_script( 'jquery' );
-	wp_register_script( 'jquery', '//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js', false, null );
+	wp_register_script( 'jquery', '//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js', array(), null, false );
 	wp_enqueue_script( 'jquery' );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {

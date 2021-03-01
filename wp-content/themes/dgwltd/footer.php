@@ -59,7 +59,7 @@
 if ( has_blocks( $post->post_content ) ) {
 	$blocks = parse_blocks( $post->post_content );
 	foreach ( $blocks as $index => $block ) {
-		if ( $index == 0 && 'core/gallery' === $block['blockName'] ) {
+		if ( $index === 0 && 'core/gallery' === $block['blockName'] ) {
 			?>
 			<?php include locate_template( 'template-parts/_organisms/pswp.php' ); ?>
 <script src="<?php echo get_template_directory_uri(); ?>/dist/scripts/photoswipe.min.js"></script> 

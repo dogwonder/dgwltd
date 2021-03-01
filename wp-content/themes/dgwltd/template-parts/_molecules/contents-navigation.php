@@ -51,16 +51,16 @@ endif;
 if ( is_page() && count( $childpages ) > 0 ) :
 
 	// Now get all the pages
-	$args  = array(
+	$args        = array(
 		'include'        => $ids,
 		'sort_column'    => 'menu_order',
 		'sort_order'     => 'asc',
 		'posts_per_page' => -1,
 	);
-	$pages = get_pages( $args );
+	$guide_pages = get_pages( $args );
 
 	// Include the parent ID
-	$page_ids = wp_list_pluck( $pages, 'ID' );
+	$page_ids = wp_list_pluck( $guide_pages, 'ID' );
 
 	// Get current index
 	$current = array_search( get_the_ID(), $page_ids );
@@ -68,56 +68,56 @@ if ( is_page() && count( $childpages ) > 0 ) :
 	// Get next and prev IDs for child pages
 	if ( $parent ) :
 		// If the parent is not a guide template that don't link to it
-		if ( $page_template == 'template-guide.php' ) :
-			$prevId = ( isset( $page_ids[ $current - 1 ] ) ) ? $page_ids[ $current - 1 ] : '';
+		if ( $page_template === 'template-guide.php' ) :
+			$prev_id = ( isset( $page_ids[ $current - 1 ] ) ) ? $page_ids[ $current - 1 ] : '';
 		else :
-			$prevId = '';
+			$prev_id = '';
 		endif;
-		$nextId = ( isset( $page_ids[ $current + 1 ] ) ) ? $page_ids[ $current + 1 ] : '';
+		$next_id = ( isset( $page_ids[ $current + 1 ] ) ) ? $page_ids[ $current + 1 ] : '';
 else :
 	// We dont have a previous as this is a parent
-	$prevId = '';
-	$nextId = ( isset( $page_ids[ $current ] ) ) ? $page_ids[ $current ] : '';
+	$prev_id = '';
+	$next_id = ( isset( $page_ids[ $current ] ) ) ? $page_ids[ $current ] : '';
 endif;
 ?>
-<nav class="dgwltd-pagination dgwltd-pagination--pages<?php echo ( empty( $prevId ) ? ' dgwltd-pagination--noprev' : '' ); ?><?php echo ( empty( $nextId ) ? ' dgwltd-pagination--nonext' : '' ); ?>" aria-label="Pagination">
+<nav class="dgwltd-pagination dgwltd-pagination--pages<?php echo ( empty( $prev_id ) ? ' dgwltd-pagination--noprev' : '' ); ?><?php echo ( empty( $next_id ) ? ' dgwltd-pagination--nonext' : '' ); ?>" aria-label="Pagination">
 	<ul class="dgwltd-pagination__list">
 
-	<?php if ( ! empty( $prevId ) ) : ?>
+	<?php if ( ! empty( $prev_id ) ) : ?>
 		<li class="dgwltd-pagination__item dgwltd-pagination__item--previous">
-		<a href="<?php echo esc_url( get_permalink( $prevId ) ); ?>" class="dgwltd-pagination__link" rel="prev">
+		<a href="<?php echo esc_url( get_permalink( $prev_id ) ); ?>" class="dgwltd-pagination__link" rel="prev">
 			<span class="dgwltd-pagination__link-title">
 			<svg class="dgwltd-pagination__link-icon" xmlns="http://www.w3.org/2000/svg" height="13" width="17" viewBox="0 0 17 13">
 			  <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
 			</svg>
 			<span class="dgwltd-pagination__link-text">
-			<?php esc_html_e( 'Previous page', 'rnid' ); ?>
+			<?php esc_html_e( 'Previous page', 'dgwltd' ); ?>
 			</span>
 			</span>
 			<span class="visually-hidden">:</span>
 			<?php if ( $parent ) : ?>
 			<span class="dgwltd-pagination__link-label">
-				<?php echo esc_html( get_the_title( $prevId ) ); ?>
+				<?php echo esc_html( get_the_title( $prev_id ) ); ?>
 			</span>
 			<?php endif; ?>
 		</a>
 		</li>
 	<?php endif; ?>
    
-	<?php if ( ! empty( $nextId ) ) : ?>
+	<?php if ( ! empty( $next_id ) ) : ?>
 		<li class="dgwltd-pagination__item dgwltd-pagination__item--next" rel="next">
-		<a href="<?php echo get_permalink( $nextId ); ?>" class="dgwltd-pagination__link">
+		<a href="<?php echo esc_url( get_permalink( $next_id ) ); ?>" class="dgwltd-pagination__link">
 			<span class="dgwltd-pagination__link-title">
 			<svg class="dgwltd-pagination__link-icon" xmlns="http://www.w3.org/2000/svg" height="13" width="17" viewBox="0 0 17 13">
 			  <path d="m10.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
 			</svg>
 			<span class="dgwltd-pagination__link-text">
-			<?php esc_html_e( 'Next page', 'rnid' ); ?>
+			<?php esc_html_e( 'Next page', 'dgwltd' ); ?>
 			</span>
 			</span>
 			 <span class="visually-hidden">:</span>
 			 <span class="dgwltd-pagination__link-label">
-				<?php echo esc_html( get_the_title( $nextId ) ); ?>
+				<?php echo esc_html( get_the_title( $next_id ) ); ?>
 			 </span>
 		</a>
 		</li>

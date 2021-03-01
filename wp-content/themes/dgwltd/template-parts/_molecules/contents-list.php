@@ -11,14 +11,14 @@ $page_template = get_page_template_slug( $parent );
 // If the parent page is NOT a guide template then we want the current ID // Title
 if ( $page_template !== 'template-guide.php' ) :
 
-	$parent_id = $post->ID;
-	$pageTitle = esc_html( get_the_title( $post->ID ) );
+	$parent_id  = $post->ID;
+	$page_title = esc_html( get_the_title( $post->ID ) );
 
 else :
 
 	// Parent ID is the parent's ID
-	$parent_id = $parent;
-	$pageTitle = esc_html( get_the_title( $parent ) );
+	$parent_id  = $parent;
+	$page_title = esc_html( get_the_title( $parent ) );
 
 endif;
 
@@ -68,11 +68,11 @@ if ( $children_ids ) : ?>
 										   <?php
 											if ( $parent_id === $currentpost_id ) :
 												?>
-												<?php echo $pageTitle; ?>
+												<?php echo $page_title; ?>
 												<?php
 else :
 	?>
-				<a href="<?php echo esc_url( get_permalink( $parent ) ); ?>"><?php echo $pageTitle; ?></a><?php endif; ?></li>
+				<a href="<?php echo esc_url( get_permalink( $parent ) ); ?>"><?php echo $page_title; ?></a><?php endif; ?></li>
 
 			<?php
 			// Now get all the children of the parent // current page
@@ -94,8 +94,8 @@ else :
 					?>
 					<?php // $current = array_search( $post->ID, $children_ids ); ?>
 					<?php // echo $current ?>
-					<?php $childTitle = esc_html( get_the_title( $post->ID ) ); ?>
-				<li class="page_item<?php echo ( $post->ID === $currentpost_id ? ' current_page_item' : '' ); ?>"<?php echo ( $post->ID === $currentpost_id ? ' aria-current="page"' : '' ); ?>><a href="<?php echo esc_url( get_permalink() ); ?>"><?php echo $childTitle; ?></a></li>
+					<?php $child_title = esc_html( get_the_title( $post->ID ) ); ?>
+				<li class="page_item<?php echo ( $post->ID === $currentpost_id ? ' current_page_item' : '' ); ?>"<?php echo ( $post->ID === $currentpost_id ? ' aria-current="page"' : '' ); ?>><a href="<?php echo esc_url( get_permalink() ); ?>"><?php echo $child_title; ?></a></li>
 			<?php endwhile; ?>
 				<?php wp_reset_postdata(); ?>
 			<?php endif; ?>

@@ -15,7 +15,6 @@ $image_alt         = get_post_meta( get_post_thumbnail_id( $card->ID ), '_wp_att
 $image_placeholder = get_template_directory_uri() . '/dist/images/placeholder.png';
 
 $dgwltd_tags = get_the_terms( $card->ID, 'category' );
-$post_type   = get_post_type( $card->ID );
 
 // print_r($pdTags);
 if ( ! empty( $dgwltd_tags ) ) {

@@ -7,7 +7,7 @@ $next_url = get_next_posts_page_link();
 <ul class="dgwltd-pagination__list">
 	<?php
 	// If current page is not the first one
-	if ( $paged != '1' ) :
+	if ( $paged !== '1' ) :
 		?>
 	<li class="dgwltd-pagination__item dgwltd-pagination__item--previous">
 		<a href="<?php echo $prev_url; ?>" class="dgwltd-pagination__link" rel="prev">
