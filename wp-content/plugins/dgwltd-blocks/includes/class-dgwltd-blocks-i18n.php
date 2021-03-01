@@ -24,7 +24,7 @@
  * @subpackage Dgwltd_Blocks/includes
  * @author     Rich Holman <dogwonder@gmail.com>
  */
-class Dgwltd_Blocks_i18n {
+class Dgwltd_Blocks_I18n {
 
 
 	/**

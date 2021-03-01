@@ -17,13 +17,13 @@ if ( ! empty( $block['className'] ) ) {
 	$class_name .= ' ' . $block['className'];
 }
 // Random ID
-$rand = substr( md5( microtime() ), rand( 0, 26 ), 5 );
+$rand = substr( md5( microtime() ), wp_rand( 0, 26 ), 5 );
 
 // Block Fields
-$block_type      = get_field( 'block_type' ) ? : '';
-$image           = get_field( 'background_image' ) ? : '';
+$block_type      = get_field( 'block_type' ) ?: '';
+$image           = get_field( 'background_image' ) ?: '';
 $video           = get_field( 'video', false, false );
-$vertical_height = get_field( 'vertical_height' ) ? : '';
+$vertical_height = get_field( 'vertical_height' ) ?: '';
 
 // Classes
 $block_image   = $image ? 'has-image ' : '';
@@ -64,7 +64,6 @@ $block_template = array(
 				$image_height      = esc_attr( $image['height'] );
 				$image_small_width  = esc_attr( $image['sizes']['dgwltd-small-width'] );
 				$image_small_height = esc_attr( $image['sizes']['dgwltd-small-height'] );
-				// For Low quality image placeholders (LQIP)
 				// For Low quality image placeholders (LQIP)
 				$type   = pathinfo( $image_tiny, PATHINFO_EXTENSION );
 				$data   = file_get_contents( $image_tiny );

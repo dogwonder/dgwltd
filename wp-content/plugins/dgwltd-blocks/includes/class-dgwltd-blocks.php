@@ -89,7 +89,7 @@ class Dgwltd_Blocks {
 	 * Include the following files that make up the plugin:
 	 *
 	 * - Dgwltd_Blocks_Loader. Orchestrates the hooks of the plugin.
-	 * - Dgwltd_Blocks_i18n. Defines internationalization functionality.
+	 * - Dgwltd_Blocks_I18n. Defines internationalization functionality.
 	 * - Dgwltd_Blocks_Admin. Defines all hooks for the admin area.
 	 * - Dgwltd_Blocks_Public. Defines all hooks for the public side of the site.
 	 *
@@ -141,7 +141,7 @@ class Dgwltd_Blocks {
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Dgwltd_Blocks_i18n class in order to set the domain and to register the hook
+	 * Uses the Dgwltd_Blocks_I18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -149,7 +149,7 @@ class Dgwltd_Blocks {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Dgwltd_Blocks_i18n();
+		$plugin_i18n = new Dgwltd_Blocks_I18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 

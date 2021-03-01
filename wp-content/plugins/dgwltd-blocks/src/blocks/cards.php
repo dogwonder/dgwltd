@@ -20,19 +20,19 @@ if ( ! empty( $block['className'] ) ) {
 }
 
 // Content & Layout
-$cards        = get_field( 'cards' ) ? : '';
-$cards_manual = get_field( 'cards_manual' ) ? : '';
-$cards_type   = get_field( 'cards_type' ) ? : '';
+$cards        = get_field( 'cards' ) ?: '';
+$cards_manual = get_field( 'cards_manual' ) ?: '';
+$cards_type   = get_field( 'cards_type' ) ?: '';
 
 // Block options
-$heading_type = get_field( 'heading_type' ) ? : '';
-$reversed     = get_field( 'reversed' ) ? : '';
-$inverse      = get_field( 'inverse' ) ? : '';
+$heading_type = get_field( 'heading_type' ) ?: '';
+$reversed     = get_field( 'reversed' ) ?: '';
+$inverse      = get_field( 'inverse' ) ?: '';
 
 // Count the cards
-if ( $cards_type == 'relationship' && ! empty( $cards ) ) :
+if ( $cards_type === 'relationship' && ! empty( $cards ) ) :
 	$cards_count = count( $cards ) ? 'dgwltd-cards-' . count( $cards ) : '0';
-elseif ( $cards_type == 'manual' && ! empty( $cards_manual ) ) :
+elseif ( $cards_type === 'manual' && ! empty( $cards_manual ) ) :
 	$cards_count = count( $cards_manual ) ? 'dgwltd-cards-' . count( $cards_manual ) : '0';
 else :
 	$cards_count = '0';
@@ -68,7 +68,7 @@ $block_template = array(
 
 	<div class="dgwltd-block--cards_inner">
   
-	<?php if ( $cards_type == 'relationship' ) : ?>
+	<?php if ( $cards_type === 'relationship' ) : ?>
 		<?php
 		if ( $cards ) :
 			?>
@@ -80,7 +80,7 @@ $block_template = array(
 			<?php wp_reset_postdata(); // IMPORTANT - reset the $post object so the rest of the page works correctly ?>
 		<?php endif; ?>
 
-	<?php elseif ( $cards_type == 'manual' ) : ?>
+	<?php elseif ( $cards_type === 'manual' ) : ?>
 		<?php
 		if ( ! empty( $cards_manual ) ) :
 			// check if the repeater field has rows of data

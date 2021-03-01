@@ -23,7 +23,7 @@ if ( ! empty( $block['className'] ) ) {
 $block_classes = array( $class_name );
 
 // Block fields
-$accordion_sections = get_field( 'accordion_sections' ) ? : '';
+$accordion_sections = get_field( 'accordion_sections' ) ?: '';
 ?>
 <div id="<?php echo esc_attr( $block_id ); ?>" class="<?php echo esc_attr( implode( ' ', $block_classes ) ); ?>">
 		
@@ -35,8 +35,8 @@ $accordion_sections = get_field( 'accordion_sections' ) ? : '';
 			?>
 			<?php // print_r($accordion_sections); ?>
 			<?php
-			$accordion_section_heading = esc_html( get_sub_field( 'heading' ) ) ? : '';
-			$accordion_section_content = esc_html( get_sub_field( 'content' ) ) ? : '';
+			$accordion_section_heading = esc_html( get_sub_field( 'heading' ) ) ?: '';
+			$accordion_section_content = esc_html( get_sub_field( 'content' ) ) ?: '';
 			?>
 	  <div class="govuk-accordion__section">
 		<div class="govuk-accordion__section-header">

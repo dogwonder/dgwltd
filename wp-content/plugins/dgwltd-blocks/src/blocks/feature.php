@@ -16,13 +16,11 @@ $class_name = 'dgwltd-block dgwltd-block--feature';
 if ( ! empty( $block['className'] ) ) {
 	$class_name .= ' ' . $block['className'];
 }
-// Random ID
-$rand = substr( md5( microtime() ), rand( 0, 26 ), 5 );
 
 // Block Fields
-$image    = get_field( 'background_image' ) ? : '';
-$overlay  = get_field( 'overlay' ) ? : '';
-$parallax = get_field( 'parallax' ) ? : '';
+$image    = get_field( 'background_image' ) ?: '';
+$overlay  = get_field( 'overlay' ) ?: '';
+$parallax = get_field( 'parallax' ) ?: '';
 
 // Classes
 $block_image    = $image ? 'has-image ' : '';

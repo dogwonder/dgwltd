@@ -18,7 +18,7 @@ if ( ! empty( $block['className'] ) ) {
 	$class_name .= ' ' . $block['className'];
 }
 
-$embed = get_field( 'embed', false, false ) ? : '';
+$embed = get_field( 'embed', false, false ) ?: '';
 $v     = dgwltd_blocks_Public::dgwltd_parse_video_uri( $embed );
 $vid   = $v['id'];
 // Classes

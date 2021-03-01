@@ -18,7 +18,7 @@ $class_name = 'dgwltd-block dgwltd-block--related';
 if ( ! empty( $block['className'] ) ) {
 	$class_name .= ' ' . $block['className'];
 }
-$related_pages = get_field( 'related' ) ? : '';
+$related_pages = get_field( 'related' ) ?: '';
 ?>
 <div id="<?php echo esc_attr( $block_id ); ?>" class="<?php echo esc_attr( $class_name ); ?>">
 	<?php if ( $related_pages ) : ?>
