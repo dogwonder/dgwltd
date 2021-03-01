@@ -58,7 +58,7 @@ $block_template = array(
 				<?php
 				$image_tiny        = $image['sizes']['dgwltd-tiny'];
 				$image_small       = $image['sizes']['dgwltd-medium'];
-				$imageLarge       = $image['sizes']['dgwltd-large'];
+				$image_large       = $image['sizes']['dgwltd-large'];
 				$image_alt         = esc_attr( $image['alt'] );
 				$image_width       = esc_attr( $image['width'] );
 				$image_height      = esc_attr( $image['height'] );
@@ -71,11 +71,11 @@ $block_template = array(
 				$base64 = 'data:image/' . $type . ';base64,' . base64_encode( $data );
 				?>
 				<link rel="preload" href="<?php echo $image_small; ?>" as="image" media="(max-width: 39.6875em)">
-				<link rel="preload" href="<?php echo $imageLarge; ?>" as="image" media="(min-width: 40.0625em)">
+				<link rel="preload" href="<?php echo $image_large; ?>" as="image" media="(min-width: 40.0625em)">
 				<div class="block__background">
 					<figure>
 					<picture>
-						<source media="(min-width: 64em)" srcset="<?php echo $imageLarge; ?>">
+						<source media="(min-width: 64em)" srcset="<?php echo $image_large; ?>">
 						<img src="<?php echo $image_small; ?>" alt="" loading="lazy" width="<?php echo $image_small_width; ?>" height="<?php echo $image_small_height; ?>" style="background-image: url(<?php echo $base64; ?>)" />
 					</picture>
 					</figure>
@@ -89,7 +89,7 @@ $block_template = array(
 
 					<InnerBlocks allowedBlocks="<?php echo esc_attr( wp_json_encode( $allowed_blocks ) ); ?>" template="<?php echo esc_attr( wp_json_encode( $block_template ) ); ?>" />
 
-					<?php if ( ! empty( $video ) && $block_type == 'video' ) : ?>
+					<?php if ( ! empty( $video ) && $block_type === 'video' ) : ?>
 						<div class="dgwltd-hero__play">
 							<a class="dgwltd-button popup-trigger"  data-popup-trigger="videoModal<?php echo $rand; ?>">
 								<?php esc_html_e( 'Watch', 'dgwltd' ); ?>            
@@ -102,7 +102,7 @@ $block_template = array(
 				</div>
 			</div>
 
-			<?php if ( ! empty( $video ) && $block_type == 'video' ) : ?>
+			<?php if ( ! empty( $video ) && $block_type === 'video' ) : ?>
 				<?php
 					// echo $video;
 					$parse = parse_url( $video );
@@ -157,7 +157,7 @@ $block_template = array(
 
 		<?php endif; ?>
 
- <?php if ( ! empty( $video ) && $block_type == 'video' ) : ?>
+ <?php if ( ! empty( $video ) && $block_type === 'video' ) : ?>
 
  <div 
   class="popup-modal shadow" 

@@ -56,7 +56,7 @@ $content = get_field( 'content' ) ? : '';
 					<?php echo $summary_list_text; ?>
 		</dt>
 		<?php endif; ?>
-				<?php if ( $summary_list_details_type == 'html' ) : ?>
+				<?php if ( $summary_list_details_type === 'html' ) : ?>
 					<?php if ( ! empty( $summary_list_details_html ) ) : ?>
 			<dd class="govuk-summary-list__value">
 						<?php echo $summary_list_details_html; ?>

@@ -35,7 +35,7 @@ class Dgwltd_Blocks_Patterns {
 
 		register_block_pattern_category(
 			'blocks',
-			array( 'label' => _x( 'DGW.ltd', 'Block pattern category', 'dgwltd-block-patterns' ) )
+			array( 'label' => _x( 'DGW.ltd', 'Block pattern category', 'dgwltd-blocks' ) )
 		);
 	}
 
@@ -49,9 +49,9 @@ class Dgwltd_Blocks_Patterns {
 		}
 
 		// Supporters block.
-		$patterns['dgwltd-block-patterns/supporters'] = array(
-			'title'       => __( 'Supporters', 'dgwltd-block-patterns' ),
-			'description' => __( 'A group of images and links to list supporters.', 'dgwltd-block-patterns' ),
+		$patterns['dgwltd-blocks/supporters'] = array(
+			'title'       => __( 'Supporters', 'dgwltd-blocks' ),
+			'description' => __( 'A group of images and links to list supporters.', 'dgwltd-blocks' ),
 			'content'     => '
 					<!-- wp:group {"style":{"color":{"background":"#fafafa"}}} -->
 						<div class="wp-block-group has-background" style="background-color:#fafafa"><div class="wp-block-group__inner-container">
@@ -142,9 +142,9 @@ class Dgwltd_Blocks_Patterns {
 		);
 
 		// FAQ block.
-		$patterns['dgwltd-block-patterns/faq'] = array(
-			'title'       => __( 'FAQ', 'dgwltd-block-patterns' ),
-			'description' => __( 'Columns for commonly asked questions.', 'dgwltd-block-patterns' ),
+		$patterns['dgwltd-blocks/faq'] = array(
+			'title'       => __( 'FAQ', 'dgwltd-blocks' ),
+			'description' => __( 'Columns for commonly asked questions.', 'dgwltd-blocks' ),
 			'content'     => '
 					<!-- wp:group -->
 					<div class="wp-block-group"><div class="wp-block-group__inner-container">
@@ -165,9 +165,9 @@ class Dgwltd_Blocks_Patterns {
 			'categories'  => array( 'blocks' ),
 		);
 
-		$patterns['dgwltd-block-patterns/columns-dark'] = array(
-			'title'       => __( 'Columns - dark', 'dgwltd-block-patterns' ),
-			'description' => __( 'Columns for content with a dark background colour', 'dgwltd-block-patterns' ),
+		$patterns['dgwltd-blocks/columns-dark'] = array(
+			'title'       => __( 'Columns - dark', 'dgwltd-blocks' ),
+			'description' => __( 'Columns for content with a dark background colour', 'dgwltd-blocks' ),
 			'content'     => '
 					<!-- wp:group {"style":{"color":{"background":"#00466e","text":"#000000"}}} -->
 					<div class="wp-block-group has-text-color has-background dgwltd-block-group dgwltd-block-group--dark" style="background-color:#00466e;color:#000000"><div class="wp-block-group__inner-container">
@@ -226,9 +226,9 @@ class Dgwltd_Blocks_Patterns {
 			'categories'  => array( 'blocks' ),
 		);
 
-		$patterns['dgwltd-block-patterns/columns-light'] = array(
-			'title'       => __( 'Columns - light', 'dgwltd-block-patterns' ),
-			'description' => __( 'Columns for content with a light background colour', 'dgwltd-block-patterns' ),
+		$patterns['dgwltd-blocks/columns-light'] = array(
+			'title'       => __( 'Columns - light', 'dgwltd-blocks' ),
+			'description' => __( 'Columns for content with a light background colour', 'dgwltd-blocks' ),
 			'content'     => '
 					<!-- wp:group {"style":{"color":{"background":"#fafafa","text":"#000000"}}} -->
 					<div class="wp-block-group has-text-color has-background dgwltd-block-group dgwltd-block-group--light" style="background-color:#fafafa;color:#000000"><div class="wp-block-group__inner-container">
@@ -287,9 +287,9 @@ class Dgwltd_Blocks_Patterns {
 			'categories'  => array( 'blocks' ),
 		);
 
-		$patterns['dgwltd-block-patterns/team'] = array(
-			'title'       => __( 'Meet the team', 'dgwltd-block-patterns' ),
-			'description' => __( 'A grid of team members', 'dgwltd-block-patterns' ),
+		$patterns['dgwltd-blocks/team'] = array(
+			'title'       => __( 'Meet the team', 'dgwltd-blocks' ),
+			'description' => __( 'A grid of team members', 'dgwltd-blocks' ),
 			'content'     => '
 					<!-- wp:group -->
 					<div class="wp-block-group dgwltd-block-team"><div class="wp-block-group__inner-container">

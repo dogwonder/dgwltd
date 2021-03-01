@@ -20,7 +20,7 @@ if ( ! empty( $block['className'] ) ) {
 }
 $image              = get_field( 'image' ) ? : '';
 $image_medium        = $image['sizes']['dgwltd-medium'];
-$imageLarge         = $image['sizes']['dgwltd-large'];
+$image_large         = $image['sizes']['dgwltd-large'];
 $image_alt           = esc_attr( $image['alt'] ) ? : '';
 $x                  = get_field( 'x' ) ? : '1';
 $y                  = get_field( 'y' ) ? : '1';
@@ -41,7 +41,7 @@ $block_classes      = array( $class_name, $block_aspect_ratio, $block_full_width
 	  <?php if ( $image ) : ?>
 		<figure class="dgwltd-block__image">
 		  <picture class="frame">
-			<source media="(min-width: 769px)" srcset="<?php echo ( $imageLarge ? $imageLarge : $image_medium ); ?>">
+			<source media="(min-width: 769px)" srcset="<?php echo ( $image_large ? $image_large : $image_medium ); ?>">
 			<img src="<?php echo $image_medium; ?>" alt="<?php echo ( $image_alt ? $image_alt : '' ); ?>" loading="lazy" />
 		  </picture>
 		</figure>

@@ -67,8 +67,8 @@ class Dgwltd_Blocks {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'Dgwltd_Blocks_VERSION' ) ) {
-			$this->version = Dgwltd_Blocks_VERSION;
+		if ( defined( 'DGWLTD_BLOCKS_VERSION' ) ) {
+			$this->version = DGWLTD_BLOCKS_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}

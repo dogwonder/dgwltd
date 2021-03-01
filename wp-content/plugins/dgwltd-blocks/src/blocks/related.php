@@ -26,7 +26,7 @@ $related_pages = get_field( 'related' ) ? : '';
 		<h2 class="govuk-heading-m"><?php esc_html_e( 'Related', 'dgwltd' ); ?></h2>
 		<ul class="dgwltd-list">
 			<?php foreach ( $related_pages as $related ) : ?>
-			<li><a class="govuk-link" href="<?php echo get_permalink( $related->ID ); ?>"><?php echo get_the_title( $related->ID ); ?></a></li>
+			<li><a class="govuk-link" href="<?php echo esc_url( get_permalink( $related->ID ) ); ?>"><?php echo esc_html( get_the_title( $related->ID ) ); ?></a></li>
 			<?php endforeach; ?>
 		</ul>
 	</div>

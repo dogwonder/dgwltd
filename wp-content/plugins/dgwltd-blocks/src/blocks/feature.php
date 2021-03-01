@@ -68,7 +68,7 @@ $block_template = array(
 				<?php
 				$image_tiny        = $image['sizes']['dgwltd-tiny'];
 				$image_small       = $image['sizes']['dgwltd-medium'];
-				$imageLarge       = $image['sizes']['dgwltd-large'];
+				$image_large       = $image['sizes']['dgwltd-large'];
 				$image_alt         = esc_attr( $image['alt'] );
 				$image_width       = esc_attr( $image['width'] );
 				$image_height      = esc_attr( $image['height'] );
@@ -89,7 +89,7 @@ $block_template = array(
 					}
 					@media only screen and (min-width: 641px) {
 						#<?php echo $block_id; ?>.dgwltd-block--feature {
-							background-image:url('<?php echo $imageLarge; ?>');
+							background-image:url('<?php echo $image_large; ?>');
 						}
 					}
 					<?php if ( $block_overlay ) : ?>
@@ -130,7 +130,7 @@ $block_template = array(
 					<div class="block__background">
 						<figure>
 						<picture>
-							<source media="(min-width: 900px)" srcset="<?php echo $imageLarge; ?>">
+							<source media="(min-width: 900px)" srcset="<?php echo $image_large; ?>">
 							<img src="<?php echo $image_small; ?>" width="<?php echo $image_small_width; ?>" height="<?php echo $image_small_height; ?>" alt="" loading="lazy" style="background-image: url(<?php echo $base64; ?>)" />
 						</picture>
 						</figure>
