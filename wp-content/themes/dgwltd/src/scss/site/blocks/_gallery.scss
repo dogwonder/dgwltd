@@ -28,9 +28,7 @@
     }
 }
 
-// To use PhotoSwipe gallery class = .dgwltd-gallery && link to media file in settings
-// .pswp__zoom-wrap {
-//     @extend %frame;
-//     --x: 4 !important;
-//     --y: 3 !important;
-// }
+//Fix for aspect ratio differences between iphone and x100s
+.pswp__img {
+    width: auto !important;
+}
