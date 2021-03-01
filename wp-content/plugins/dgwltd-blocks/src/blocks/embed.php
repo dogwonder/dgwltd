@@ -8,23 +8,23 @@
  * @param   (int|string) $post_id The post ID this block is saved to.
  */
 
-$id = 'block-' . $block['id'];
+$block_id = 'block-' . $block['id'];
 if ( ! empty( $block['anchor'] ) ) {
-	$id = $block['anchor'];
+	$block_id = $block['anchor'];
 }
 // Create class attribute allowing for custom "className"
-$className = 'dgwltd-block dgwltd-block--embed';
+$class_name = 'dgwltd-block dgwltd-block--embed';
 if ( ! empty( $block['className'] ) ) {
-	$className .= ' ' . $block['className'];
+	$class_name .= ' ' . $block['className'];
 }
 
 $embed = get_field( 'embed', false, false ) ? : '';
-$v     = Dgwltd_Blocks_Public::dgwltd_parse_video_uri( $embed );
+$v     = dgwltd_blocks_Public::dgwltd_parse_video_uri( $embed );
 $vid   = $v['id'];
 // Classes
-$block_classes = array( $className );
+$block_classes = array( $class_name );
 ?>
- <div id="<?php echo $id; ?>" class="<?php echo esc_attr( implode( ' ', $block_classes ) ); ?>">
+ <div id="<?php echo $block_id; ?>" class="<?php echo esc_attr( implode( ' ', $block_classes ) ); ?>">
 	<div class="dgwltd-embed__inner">
 			<div class="dgwltd-embed__content">
 				<?php if ( $v['type'] == 'youtube' ) : ?>

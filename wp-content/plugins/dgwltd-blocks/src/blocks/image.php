@@ -9,40 +9,40 @@
  */
 
 // Create id attribute allowing for custom "anchor" value.
-$id = 'block-' . $block['id'];
+$block_id = 'block-' . $block['id'];
 if ( ! empty( $block['anchor'] ) ) {
-	$id = $block['anchor'];
+	$block_id = $block['anchor'];
 }
 // Create class attribute allowing for custom "className"
-$className = 'dgwltd-block dgwltd-block--image';
+$class_name = 'dgwltd-block dgwltd-block--image';
 if ( ! empty( $block['className'] ) ) {
-	$className .= ' ' . $block['className'];
+	$class_name .= ' ' . $block['className'];
 }
 $image              = get_field( 'image' ) ? : '';
-$imageMedium        = $image['sizes']['dgwltd-medium'];
+$image_medium        = $image['sizes']['dgwltd-medium'];
 $imageLarge         = $image['sizes']['dgwltd-large'];
-$imageAlt           = esc_attr( $image['alt'] ) ? : '';
+$image_alt           = esc_attr( $image['alt'] ) ? : '';
 $x                  = get_field( 'x' ) ? : '1';
 $y                  = get_field( 'y' ) ? : '1';
 $full_width         = get_field( 'full_width' ) ? : '';
 $block_full_width   = $full_width ? 'full-width ' : '';
 $block_aspect_ratio = 'aspect-' . $x . '_' . $y ? : '';
-$block_classes      = array( $className, $block_aspect_ratio, $block_full_width );
+$block_classes      = array( $class_name, $block_aspect_ratio, $block_full_width );
 ?>
 <?php if ( $block_aspect_ratio ) : ?>
   <style>
-	#<?php echo $id; ?> .frame {
+	#<?php echo $block_id; ?> .frame {
 		--x: <?php echo $x; ?>;
 		--y: <?php echo $y; ?>;
 	}
   </style>
 <?php endif; ?>
-<div id="<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( implode( ' ', $block_classes ) ); ?>">
+<div id="<?php echo esc_attr( $block_id ); ?>" class="<?php echo esc_attr( implode( ' ', $block_classes ) ); ?>">
 	  <?php if ( $image ) : ?>
 		<figure class="dgwltd-block__image">
 		  <picture class="frame">
-			<source media="(min-width: 769px)" srcset="<?php echo ( $imageLarge ? $imageLarge : $imageMedium ); ?>">
-			<img src="<?php echo $imageMedium; ?>" alt="<?php echo ( $imageAlt ? $imageAlt : '' ); ?>" loading="lazy" />
+			<source media="(min-width: 769px)" srcset="<?php echo ( $imageLarge ? $imageLarge : $image_medium ); ?>">
+			<img src="<?php echo $image_medium; ?>" alt="<?php echo ( $image_alt ? $image_alt : '' ); ?>" loading="lazy" />
 		  </picture>
 		</figure>
 		<?php endif; ?>

@@ -9,14 +9,14 @@
  */
 
  // Create id attribute allowing for custom "anchor" value.
-$id = 'block-' . $block['id'];
+$block_id = 'block-' . $block['id'];
 if ( ! empty( $block['anchor'] ) ) {
-	$id = $block['anchor'];
+	$block_id = $block['anchor'];
 }
 // Create class attribute allowing for custom "className"
-$className = 'dgwltd-block dgwltd-block--cards';
+$class_name = 'dgwltd-block dgwltd-block--cards';
 if ( ! empty( $block['className'] ) ) {
-	$className .= ' ' . $block['className'];
+	$class_name .= ' ' . $block['className'];
 }
 
 // Content & Layout
@@ -31,18 +31,18 @@ $inverse      = get_field( 'inverse' ) ? : '';
 
 // Count the cards
 if ( $cards_type == 'relationship' && ! empty( $cards ) ) :
-	$cardsCount = count( $cards ) ? 'dgwltd-cards-' . count( $cards ) : '0';
+	$cards_count = count( $cards ) ? 'dgwltd-cards-' . count( $cards ) : '0';
 elseif ( $cards_type == 'manual' && ! empty( $cards_manual ) ) :
-	$cardsCount = count( $cards_manual ) ? 'dgwltd-cards-' . count( $cards_manual ) : '0';
+	$cards_count = count( $cards_manual ) ? 'dgwltd-cards-' . count( $cards_manual ) : '0';
 else :
-	$cardsCount = '0';
+	$cards_count = '0';
 endif;
 
 // Classes
-$block_classes = array( $className, $cardsCount );
+$block_classes = array( $class_name, $cards_count );
 
 // Card index
-$cardIndex = 0;
+$card_index = 0;
 
 // JSX Innerblocks - https://www.billerickson.net/innerblocks-with-acf-blocks/
 $allowed_blocks = array( 'core/heading', 'core/paragraph' );
@@ -62,7 +62,7 @@ $block_template = array(
 	),
 );
 ?>
-<div id="<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( implode( ' ', $block_classes ) ); ?>">
+<div id="<?php echo esc_attr( $block_id ); ?>" class="<?php echo esc_attr( implode( ' ', $block_classes ) ); ?>">
 
 	<InnerBlocks allowedBlocks="<?php echo esc_attr( wp_json_encode( $allowed_blocks ) ); ?>" template="<?php echo esc_attr( wp_json_encode( $block_template ) ); ?>" />
 
@@ -74,7 +74,7 @@ $block_template = array(
 			?>
 			<?php foreach ( $cards as $card ) : ?>
 				<?php // print_r($card) ?>
-				<?php $cardIndex++; ?>
+				<?php $card_index++; ?>
 				<?php include locate_template( 'template-parts/_organisms/card-id.php' ); ?>
 	<?php endforeach; ?>
 			<?php wp_reset_postdata(); // IMPORTANT - reset the $post object so the rest of the page works correctly ?>
@@ -89,7 +89,7 @@ $block_template = array(
 				while ( have_rows( 'cards_manual' ) ) :
 					the_row();
 					?>
-					<?php $cardIndex++; ?>
+					<?php $card_index++; ?>
 					<?php include locate_template( 'template-parts/_organisms/card-manual.php' ); ?>
 					<?php
 				endwhile;

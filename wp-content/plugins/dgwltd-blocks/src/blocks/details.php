@@ -9,19 +9,19 @@
  */
 
 // Create id attribute allowing for custom "anchor" value.
-$id = 'block-' . $block['id'];
+$block_id = 'block-' . $block['id'];
 if ( ! empty( $block['anchor'] ) ) {
-	$id = $block['anchor'];
+	$block_id = $block['anchor'];
 }
 // Create class attribute allowing for custom "className"
-$className = 'dgwltd-block dgwltd-block--details';
+$class_name = 'dgwltd-block dgwltd-block--details';
 if ( ! empty( $block['className'] ) ) {
-	$className .= ' ' . $block['className'];
+	$class_name .= ' ' . $block['className'];
 }
-$summary = get_field( 'summary' ) ? : '';
-$details = get_field( 'details' ) ? : '';
+$summary = esc_html( get_field( 'summary' ) ) ? : '';
+$details = esc_html( get_field( 'details' ) ) ? : '';
 ?>
-<div id="<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $className ); ?>">
+<div id="<?php echo esc_attr( $block_id ); ?>" class="<?php echo esc_attr( $class_name ); ?>">
   <details class="govuk-details" data-module="govuk-details">
 	<summary class="govuk-details__summary">
 	<?php if ( ! empty( $summary ) ) : ?>

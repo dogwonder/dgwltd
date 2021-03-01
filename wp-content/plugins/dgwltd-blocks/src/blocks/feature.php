@@ -7,14 +7,14 @@
  * @param   bool $is_preview True during AJAX preview.
  * @param   (int|string) $post_id The post ID this block is saved to.
  */
-$id = 'block-' . $block['id'];
+$block_id = 'block-' . $block['id'];
 if ( ! empty( $block['anchor'] ) ) {
-	$id = $block['anchor'];
+	$block_id = $block['anchor'];
 }
 // Create class attribute allowing for custom "className"
-$className = 'dgwltd-block dgwltd-block--feature';
+$class_name = 'dgwltd-block dgwltd-block--feature';
 if ( ! empty( $block['className'] ) ) {
-	$className .= ' ' . $block['className'];
+	$class_name .= ' ' . $block['className'];
 }
 // Random ID
 $rand = substr( md5( microtime() ), rand( 0, 26 ), 5 );
@@ -28,7 +28,7 @@ $parallax = get_field( 'parallax' ) ? : '';
 $block_image    = $image ? 'has-image ' : '';
 $block_overlay  = $overlay ? 'has-overlay ' : '';
 $block_parallax = $parallax ? 'is-parallax ' : '';
-$block_classes  = array( $className, $block_image, $block_overlay, $block_parallax );
+$block_classes  = array( $class_name, $block_image, $block_overlay, $block_parallax );
 
 /*
 NEEDS PARALAX
@@ -61,39 +61,39 @@ $block_template = array(
 );
 ?>
 
- <div id="<?php echo $id; ?>" class="<?php echo esc_attr( implode( ' ', $block_classes ) ); ?>">
+ <div id="<?php echo $block_id; ?>" class="<?php echo esc_attr( implode( ' ', $block_classes ) ); ?>">
 
 			<?php if ( ! empty( $image ) ) : ?>    
 				<?php // print_r($image) ?>
 				<?php
-				$imageTiny        = $image['sizes']['dgwltd-tiny'];
-				$imageSmall       = $image['sizes']['dgwltd-medium'];
+				$image_tiny        = $image['sizes']['dgwltd-tiny'];
+				$image_small       = $image['sizes']['dgwltd-medium'];
 				$imageLarge       = $image['sizes']['dgwltd-large'];
-				$imageAlt         = esc_attr( $image['alt'] );
-				$imageWidth       = esc_attr( $image['width'] );
-				$imageHeight      = esc_attr( $image['height'] );
-				$imageSmallWidth  = esc_attr( $image['sizes']['dgwltd-medium-width'] );
-				$imageSmallHeight = esc_attr( $image['sizes']['dgwltd-medium-height'] );
+				$image_alt         = esc_attr( $image['alt'] );
+				$image_width       = esc_attr( $image['width'] );
+				$image_height      = esc_attr( $image['height'] );
+				$image_small_width  = esc_attr( $image['sizes']['dgwltd-medium-width'] );
+				$image_small_height = esc_attr( $image['sizes']['dgwltd-medium-height'] );
 				// For Low quality image placeholders (LQIP)
-				$type   = pathinfo( $imageTiny, PATHINFO_EXTENSION );
-				$data   = file_get_contents( $imageTiny );
+				$type   = pathinfo( $image_tiny, PATHINFO_EXTENSION );
+				$data   = file_get_contents( $image_tiny );
 				$base64 = 'data:image/' . $type . ';base64,' . base64_encode( $data );
 				?>
 				<?php if ( $block_parallax ) : ?>
 				<style>
-					#<?php echo $id; ?>.dgwltd-block--feature {
-						background: url('<?php echo $imageSmall; ?>') no-repeat fixed;
+					#<?php echo $block_id; ?>.dgwltd-block--feature {
+						background: url('<?php echo $image_small; ?>') no-repeat fixed;
 						background-size: cover;
 						background-position: center center;
 						width: 100%;
 					}
 					@media only screen and (min-width: 641px) {
-						#<?php echo $id; ?>.dgwltd-block--feature {
+						#<?php echo $block_id; ?>.dgwltd-block--feature {
 							background-image:url('<?php echo $imageLarge; ?>');
 						}
 					}
 					<?php if ( $block_overlay ) : ?>
-					#<?php echo $id; ?>.dgwltd-block--feature:before {
+					#<?php echo $block_id; ?>.dgwltd-block--feature:before {
 						display: block;
 						z-index: 2;
 						content: '';
@@ -110,7 +110,7 @@ $block_template = array(
 				<?php else : ?>
 					<?php if ( $block_overlay ) : ?>
 						<style>
-						#<?php echo $id; ?>.dgwltd-block--feature:before {
+						#<?php echo $block_id; ?>.dgwltd-block--feature:before {
 							display: block;
 							z-index: 2;
 							content: '';
@@ -122,7 +122,7 @@ $block_template = array(
 							background-color: <?php echo $overlay; ?>;
 							opacity:0.8;
 						}
-						#<?php echo $id; ?>.dgwltd-block--feature .block__background img {
+						#<?php echo $block_id; ?>.dgwltd-block--feature .block__background img {
 							filter: grayscale(100%) contrast(200%);
 						}
 						</style>
@@ -131,7 +131,7 @@ $block_template = array(
 						<figure>
 						<picture>
 							<source media="(min-width: 900px)" srcset="<?php echo $imageLarge; ?>">
-							<img src="<?php echo $imageSmall; ?>" width="<?php echo $imageSmallWidth; ?>" height="<?php echo $imageSmallHeight; ?>" alt="" loading="lazy" style="background-image: url(<?php echo $base64; ?>)" />
+							<img src="<?php echo $image_small; ?>" width="<?php echo $image_small_width; ?>" height="<?php echo $image_small_height; ?>" alt="" loading="lazy" style="background-image: url(<?php echo $base64; ?>)" />
 						</picture>
 						</figure>
 					</div>
