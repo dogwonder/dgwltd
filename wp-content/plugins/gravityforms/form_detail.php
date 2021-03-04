@@ -219,7 +219,7 @@ class GFFormDetail {
 				<div class="gf-pagebreak-first gf-pagebreak"><?php esc_html_e( 'START PAGING', 'gravityforms' ) ?></div>
 			</div>
 
-			<div class="gform_wrapper gform_editor <?php echo GFCommon::is_legacy_markup_enabled( $form_id ) ? 'gform_legacy_markup' : ''; ?>">
+			<div class="gform_wrapper gform_editor <?php echo GFCommon::is_legacy_markup_enabled( $form_id ) ? 'gform_legacy_markup' : 'gravity-theme'; ?>">
 
 				<ul id="gform_fields" class="<?php echo GFCommon::get_ul_classes( $form ) ?>">
 
@@ -2353,43 +2353,6 @@ class GFFormDetail {
 							?>
 						</ul>
 
-						<div class="conditional_logic_wrapper">
-							<?php
-							do_action( 'gform_field_advanced_settings', 500, $form_id );
-							?>
-							<div class="conditional_logic_field_setting field_setting">
-								<input type="checkbox" id="field_conditional_logic" onclick="SetFieldProperty('conditionalLogic', this.checked ? new ConditionalLogic() : null); ToggleConditionalLogic( false, 'field' );" onkeypress="SetFieldProperty('conditionalLogic', this.checked ? new ConditionalLogic() : null); ToggleConditionalLogic( false, 'field' );"/>
-								<label for="field_conditional_logic" class="inline"><?php esc_html_e( 'Enable Conditional Logic', 'gravityforms' ) ?><?php gform_tooltip( 'form_field_conditional_logic' ); ?></label>
-								<br/>
-								<div id="field_conditional_logic_container" style="display:none; padding-top:10px;">
-									<!-- content dynamically created from js.php -->
-								</div>
-							</div>
-
-							<?php
-							do_action( 'gform_field_advanced_settings', 525, $form_id );
-							?>
-							<div class="conditional_logic_page_setting field_setting">
-								<input type="checkbox" id="page_conditional_logic" onclick="SetFieldProperty('conditionalLogic', this.checked ? new ConditionalLogic() : null); ToggleConditionalLogic( false, 'page' );" onkeypress="SetFieldProperty('conditionalLogic', this.checked ? new ConditionalLogic() : null); ToggleConditionalLogic( false, 'page' );"/>
-								<label for="page_conditional_logic" class="inline"><?php esc_html_e( 'Enable Page Conditional Logic', 'gravityforms' ) ?><?php gform_tooltip( 'form_page_conditional_logic' ); ?></label>
-								<br/>
-								<div id="page_conditional_logic_container" style="display:none; padding-top:10px;">
-									<!-- content dynamically created from js.php -->
-								</div>
-							</div>
-
-							<?php
-							do_action( 'gform_field_advanced_settings', 550, $form_id );
-							?>
-							<div class="conditional_logic_nextbutton_setting field_setting">
-								<input type="checkbox" id="next_button_conditional_logic" onclick="SetNextButtonConditionalLogic(this.checked); ToggleConditionalLogic( false, 'next_button' );" onkeypress="SetNextButtonConditionalLogic(this.checked); ToggleConditionalLogic( false, 'next_button' );"/>
-								<label for="next_button_conditional_logic" class="inline"><?php esc_html_e( 'Enable Next Button Conditional Logic', 'gravityforms' ) ?><?php gform_tooltip( 'form_nextbutton_conditional_logic' ); ?></label>
-								<br/>
-								<div id="next_button_conditional_logic_container" style="display:none; padding-top:10px;">
-									<!-- content dynamically created from js.php -->
-								</div>
-							</div>
-						</div>
 						<?php
 						/**
 						 * Filters custom setting tabs.
@@ -2427,7 +2390,43 @@ class GFFormDetail {
 						<?php
 						}
 						?>
+						<div class="conditional_logic_wrapper">
+							<?php
+							do_action( 'gform_field_advanced_settings', 500, $form_id );
+							?>
+							<div class="conditional_logic_field_setting field_setting">
+								<input type="checkbox" id="field_conditional_logic" onclick="SetFieldProperty('conditionalLogic', this.checked ? new ConditionalLogic() : null); ToggleConditionalLogic( false, 'field' );" onkeypress="SetFieldProperty('conditionalLogic', this.checked ? new ConditionalLogic() : null); ToggleConditionalLogic( false, 'field' );"/>
+								<label for="field_conditional_logic" class="inline"><?php esc_html_e( 'Enable Conditional Logic', 'gravityforms' ) ?><?php gform_tooltip( 'form_field_conditional_logic' ); ?></label>
+								<br/>
+								<div id="field_conditional_logic_container" style="display:none; padding-top:10px;">
+									<!-- content dynamically created from js.php -->
+								</div>
+							</div>
 
+							<?php
+							do_action( 'gform_field_advanced_settings', 525, $form_id );
+							?>
+							<div class="conditional_logic_page_setting field_setting">
+								<input type="checkbox" id="page_conditional_logic" onclick="SetFieldProperty('conditionalLogic', this.checked ? new ConditionalLogic() : null); ToggleConditionalLogic( false, 'page' );" onkeypress="SetFieldProperty('conditionalLogic', this.checked ? new ConditionalLogic() : null); ToggleConditionalLogic( false, 'page' );"/>
+								<label for="page_conditional_logic" class="inline"><?php esc_html_e( 'Enable Page Conditional Logic', 'gravityforms' ) ?><?php gform_tooltip( 'form_page_conditional_logic' ); ?></label>
+								<br/>
+								<div id="page_conditional_logic_container" style="display:none; padding-top:10px;">
+									<!-- content dynamically created from js.php -->
+								</div>
+							</div>
+
+							<?php
+							do_action( 'gform_field_advanced_settings', 550, $form_id );
+							?>
+							<div class="conditional_logic_nextbutton_setting field_setting">
+								<input type="checkbox" id="next_button_conditional_logic" onclick="SetNextButtonConditionalLogic(this.checked); ToggleConditionalLogic( false, 'next_button' );" onkeypress="SetNextButtonConditionalLogic(this.checked); ToggleConditionalLogic( false, 'next_button' );"/>
+								<label for="next_button_conditional_logic" class="inline"><?php esc_html_e( 'Enable Next Button Conditional Logic', 'gravityforms' ) ?><?php gform_tooltip( 'form_nextbutton_conditional_logic' ); ?></label>
+								<br/>
+								<div id="next_button_conditional_logic_container" style="display:none; padding-top:10px;">
+									<!-- content dynamically created from js.php -->
+								</div>
+							</div>
+						</div>
 					</div>
 					<div class="conditional_logic_flyout_container" id="conditional_logic_flyout_container"></div>
 					<div class="conditional_logic_flyout_container" id="conditional_logic_next_button_flyout_container"></div>

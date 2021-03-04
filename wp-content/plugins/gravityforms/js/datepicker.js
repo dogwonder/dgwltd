@@ -167,6 +167,9 @@
 
 	$( document ).ready( initDatepickers );
 
+	// Make all and single init functions public for add ons.
+	// Naming is done in the 2.4 backwards compatible way.
 	window.gformInitDatepicker = initDatepickers;
+	window.gformInitSingleDatepicker = initSingleDatepicker;
 
 })(jQuery, gform, gform_i18n);

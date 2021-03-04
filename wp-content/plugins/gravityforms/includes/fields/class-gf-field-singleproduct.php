@@ -123,7 +123,26 @@ class GF_Field_SingleProduct extends GF_Field {
 		$wrapper_open  = $is_legacy_markup ? '' : "<div id='ginput_product_price_{$form_id}_{$this->id}' class='ginput_product_price_wrapper'>";
 		$wrapper_close = $is_legacy_markup ? '' : '</div>';
 
-		return "<div class='ginput_container ginput_container_singleproduct'>
+		if ( $has_quantity ) {
+			return "<div class='ginput_container ginput_container_singleproduct'>
+					<input type='hidden' name='input_{$id}.1' value='{$product_name}' class='gform_hidden' />
+					$wrapper_open
+						<label for='ginput_price_{$form_id}_{$this->id}_2' class='ginput_product_price_label'>" . gf_apply_filters( array( 'gform_product_price', $form_id, $this->id ), esc_html__( 'Price', 'gravityforms' ), $form_id ) . ":</label>
+						<input readonly name='input_{$id}.2' class='ginput_product_price' id='ginput_base_price_{$form_id}_{$this->id}' value='" . esc_attr( $price ) . "' />
+					$wrapper_close
+					{$quantity_field}
+				</div>";
+		} else if ( $this->disableQuantity ) {
+			return "<div class='ginput_container ginput_container_singleproduct'>
+					<input type='hidden' name='input_{$id}.1' value='{$product_name}' class='gform_hidden' />
+					$wrapper_open
+						<span class='ginput_product_price_label'>" . gf_apply_filters( array( 'gform_product_price', $form_id, $this->id ), esc_html__( 'Price', 'gravityforms' ), $form_id ) . ":</span>
+						<input readonly class='ginput_product_price gform-text-input-reset' name='input_{$id}.2' id='ginput_base_price_{$form_id}_{$this->id}' class='gform_hidden' value='" . esc_attr( $price ) . "'/>
+					$wrapper_close
+					{$quantity_field}
+				</div>";
+		} else {
+			return "<div class='ginput_container ginput_container_singleproduct'>
 					<input type='hidden' name='input_{$id}.1' value='{$product_name}' class='gform_hidden' />
 					$wrapper_open
 						<span class='ginput_product_price_label'>" . gf_apply_filters( array( 'gform_product_price', $form_id, $this->id ), esc_html__( 'Price', 'gravityforms' ), $form_id ) . ":</span>
@@ -132,6 +151,7 @@ class GF_Field_SingleProduct extends GF_Field {
 					<input type='hidden' name='input_{$id}.2' id='ginput_base_price_{$form_id}_{$this->id}' class='gform_hidden' value='" . esc_attr( $price ) . "'/>
 					{$quantity_field}
 				</div>";
+		}
 	}
 
 	/**

@@ -288,7 +288,7 @@ class Base implements ArrayAccess {
 			'gaddon_no_output_field_properties',
 			array(
 				'default_value', 'label', 'toggle_label', 'choices', 'feedback_callback', 'checked', 'checkbox_label', 'value', 'type',
-				'validation_callback', 'required', 'hidden', 'tooltip', 'dependency', 'messages', 'name', 'args',
+				'validation_callback', 'hidden', 'tooltip', 'dependency', 'messages', 'name', 'args',
 				'exclude_field_types', 'field_type', 'after_input', 'input_type', 'icon', 'save_callback',
 				'enable_custom_value', 'enable_custom_key', 'merge_tags', 'key_field', 'value_field', 'callback', 'labels',
 				'input_types', 'settings', 'inputs', 'fields', 'no_choices', 'enhanced_ui', 'description'
@@ -296,8 +296,10 @@ class Base implements ArrayAccess {
 		);
 
 		// Merge field properties with default attributes.
-		$atts       = wp_parse_args( $this, $default_atts );
+		$atts             = wp_parse_args( $this, $default_atts );
 		$atts['id'] = rgempty( 'id', $atts ) ? rgar( $atts, 'name' ) : rgar( $atts, 'id' );
+		$atts['id'] = str_replace( '[]', null, $atts['id'] );
+		$atts['required'] = ( $atts['required'] === true ) ? 'required' : null;
 
 		// Remove disabled property.
 		if ( isset( $atts['disabled'] ) && $atts['disabled'] === false ) {

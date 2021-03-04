@@ -125,7 +125,7 @@ class Date_Time extends Base {
 		// Insert jQuery Datepicker script.
 		$html .= sprintf(
 			"<script type='text/javascript'>
-				jQuery( document ).on( 'ready', function() {
+				jQuery( function() {
 					jQuery( 'input[name=\"%s_%s\"]' ).datepicker(
 						{
 							showOn: 'both',

@@ -43,4 +43,4 @@ gform.addFilter( 'gform_datepicker_options_pre_init', function( optionsObj, form
 			return ! this.suppressDatePicker;
 		}
 	}
-} );
+}, -10 );

@@ -947,8 +947,10 @@ class GFFormDisplay {
 			}
 
 			$form_css_class = esc_attr( rgar( $form, 'cssClass' ) );
-			if( GFCommon::is_legacy_markup_enabled( $form ) ) {
+			if ( GFCommon::is_legacy_markup_enabled( $form ) ) {
 				$form_css_class .= ' gform_legacy_markup';
+			} else {
+				$wrapper_css_class .= ' gravity-theme';
 			}
 
 			//Hiding entire form if conditional logic is on to prevent 'hidden' fields from blinking. Form will be set to visible in the conditional_logic.php after the rules have been applied.
@@ -989,9 +991,6 @@ class GFFormDisplay {
 				$form_string .= self::get_validation_errors_markup( $form, $submitted_values, $show_summary );
 			}
 
-			$action = esc_url( $action );
-			$form_string .= gf_apply_filters( array( 'gform_form_tag', $form_id ), "<form method='post' enctype='multipart/form-data' {$target} id='gform_{$form_id}' {$form_css_class} action='{$action}'>", $form );
-
 			if ( $display_title || $display_description ) {
 				$gform_title_open  = GFCommon::is_legacy_markup_enabled( $form ) ? '<h3 class="gform_title">' : '<h2 class="gform_title">';
 				$gform_title_close = GFCommon::is_legacy_markup_enabled( $form ) ? '</h3>' : '</h2>';
@@ -1028,6 +1027,13 @@ class GFFormDisplay {
 				$form_string .= '
                         </div>';
 			}
+
+			$novalidate = GFFormsModel::is_html5_enabled() ? 'novalidate' : '';
+
+			$action = esc_url( $action );
+			$form_string .= gf_apply_filters( array( 'gform_form_tag', $form_id ), "<form method='post' enctype='multipart/form-data' {$target} id='gform_{$form_id}' {$form_css_class} action='{$action}' $novalidate>", $form );
+
+
 
 			// If Save and Continue token was provided but expired/invalid, display error message.
 			if ( isset( $_GET['gf_token'] ) && ! is_array( $incomplete_submission_info ) ) {
@@ -2346,7 +2352,7 @@ class GFFormDisplay {
 
 			} else {
 
-				$assets[] = new GF_Style_Asset( 'gform_base' );
+				$assets[] = new GF_Style_Asset( 'gform_basic' );
 
 				/**
 				 * Allows users to disable the main theme.css file from being loaded on the Front End.
@@ -3459,7 +3465,7 @@ class GFFormDisplay {
 		$is_entry_detail = GFCommon::is_entry_detail();
 		$is_admin = $is_form_editor || $is_entry_detail;
 
-		$custom_class = $is_admin ? '' : esc_attr( $field->cssClass );
+		$custom_class = $is_admin ? '' : esc_attr( self::convert_legacy_class( $form, $field->cssClass ) );
 
 		$form_id = (int) rgar( $form, 'id' );
 
@@ -3497,7 +3503,7 @@ class GFFormDisplay {
 				$tag          = GFCommon::is_legacy_markup_enabled( $form ) ? 'ul' : 'div';
 				$html         = "</{$tag}>
                     </div>
-                    <div class='gform_page_footer'>
+                    <div class='gform_page_footer {$form['labelPlacement']}'>
                         {$previous_button} {$next_button} {$save_button}
                     </div>
                 </div>
@@ -4302,7 +4308,7 @@ class GFFormDisplay {
 		if ( gf_upgrade()->get_submissions_block() ) {
 			$validation_message_markup = "<h2 class='gf_submission_limit_message'>" . esc_html__( 'Your form was not submitted. Please try again in a few minutes.', 'gravityforms' ) . '</h2>';
 		} else {
-			$validation_message_markup = "<h2 class='gform_submission_error{$hide_summary_class}'><span class='gform-icon gform-icon--circle-error'></span>" . esc_html__( 'There was a problem with your submission.', 'gravityforms' ) . ' ' . esc_html__( 'Please review the fields below.', 'gravityforms' ) . '</h2>';
+			$validation_message_markup = "<h2 class='gform_submission_error{$hide_summary_class}'><span class='gform-icon gform-icon--close'></span>" . esc_html__( 'There was a problem with your submission.', 'gravityforms' ) . ' ' . esc_html__( 'Please review the fields below.', 'gravityforms' ) . '</h2>';
 			// Generate validation errors summary if required.
 			if ( $show_summary ) {
 				$errors = self::get_validation_errors( $form, $values );
@@ -4376,6 +4382,46 @@ class GFFormDisplay {
 		*/
 		return gf_apply_filters( array( 'gform_form_validation_errors', $form['id'] ), $errors, $form );
 
+	}
+
+	/**
+	 * Convert legacy ready class to the new equivalent.
+	 *
+	 * @since 2.5
+	 *
+	 * @param array  $form    The current form object.
+	 * @param string $classes The class or classes to convert.
+	 *
+	 * @return string|void
+	 */
+	public static function convert_legacy_class( $form, $classes ) {
+		if ( GFCommon::is_legacy_markup_enabled( $form ) ) {
+			return $classes;
+		}
+
+		$upgraded_classes = array(
+			'gf_left_half'      => 'gfield--width-half',
+			'gf_right_half'     => 'gfield--width-half',
+			'gf_left_third'     => 'gfield--width-third',
+			'gf_middle_third'   => 'gfield--width-third',
+			'gf_right_third'    => 'gfield--width-third',
+			'gf_first_quarter'   => 'gfield--width-quarter',
+			'gf_second_quarter' => 'gfield--width-quarter',
+			'gf_third_quarter'  => 'gfield--width-quarter',
+			'gf_fourth_quarter' => 'gfield--width-quarter',
+		);
+
+		$class_list = explode( ' ', $classes );
+
+		foreach ( $class_list as $class ) {
+			if ( array_key_exists( $class, $upgraded_classes ) ) {
+				$class_list[] = $upgraded_classes[ $class ];
+			}
+		}
+
+		$classes = implode( ' ', array_unique( $class_list ) );
+
+		return $classes;
 	}
 
 }

@@ -85,6 +85,18 @@ class GF_Field_Date extends GF_Field {
 			$value = null;
 		}
 
+		if ( is_array( $value ) && $this->isRequired ) {
+			$required_inputs = array( 0, 1, 2 );
+
+			$message = $this->complex_validation_message( $value, $required_inputs );
+
+			if ( $message ) {
+				$this->failed_validation  = true;
+				$message_intro            = empty( $this->errorMessage ) ? __( 'This field is required.', 'gravityforms' ) : $this->errorMessage;
+				$this->validation_message = $message_intro . ' ' . $message;
+			}
+		}
+
 		if ( ! empty( $value ) ) {
 			$format = empty( $this->dateFormat ) ? 'mdy' : $this->dateFormat;
 			$date   = GFCommon::parse_date( $value, $format );
@@ -121,19 +133,47 @@ class GF_Field_Date extends GF_Field {
 		}
 	}
 
+	/**
+	 * Create a validation message for a required field with multiple inputs.
+	 *
+	 * The validation message will specify which inputs need to be filled out.
+	 *
+	 * @since 2.5
+	 *
+	 * @param array $value            The value entered by the user.
+	 * @param array $required_inputs  The required inputs to validate.
+	 *
+	 * @return string|void
+	 */
+	public function complex_validation_message( $value, $required_inputs ) {
+		$error_inputs = array();
+
+		foreach ( $required_inputs as $input ) {
+			if ( '' == $value[ $input ] ) {
+				$input_id       = $input + 1;
+				$custom_label   = $this->get_input_property( $input_id, 'customLabel' );
+				$label          = $custom_label ? $custom_label : $this->get_input_property( $input_id, 'label' );
+				$error_inputs[] = $label;
+			}
+		}
+
+		if ( ! empty( $error_inputs ) ) {
+			$field_list = implode( ', ', $error_inputs );
+			// Translators: comma-separated list of the labels of missing fields.
+			$message = sprintf( __( 'This field is required. Please complete the following fields: %s.', 'gravityforms' ), $field_list );
+			return $message;
+		}
+
+		return false;
+	}
+
 	public function is_value_submission_empty( $form_id ) {
 		$value = rgpost( 'input_' . $this->id );
 		if ( is_array( $value ) ) {
-			// Date field and date drop-downs
-			foreach ( $value as $input ) {
-				if ( strlen( trim( $input ) ) <= 0 ) {
-					return true;
-				}
-			}
-
-			return false;
+ 			// Date field and date drop-downs
+			// If some but not all inputs are empty, return false so that this field's validation method will be triggered.
+			return empty( array_filter( $value ) );
 		} else {
-
 			// Date picker
 			return strlen( trim( $value ) ) <= 0;
 		}
@@ -180,8 +220,8 @@ class GF_Field_Date extends GF_Field {
 			$picker_value = esc_attr( $value );
 		}
 
-		$format           = empty( $this->dateFormat ) ? 'mdy' : esc_attr( $this->dateFormat );
-		$date_info        = GFCommon::parse_date( $value, $format );
+		$format                 = empty( $this->dateFormat ) ? 'mdy' : esc_attr( $this->dateFormat );
+		$date_info              = GFCommon::parse_date( $value, $format );
 
 		$day_value   = esc_attr( rgget( 'day', $date_info ) );
 		$month_value = esc_attr( rgget( 'month', $date_info ) );
@@ -194,11 +234,7 @@ class GF_Field_Date extends GF_Field {
 		$id       = intval( $this->id );
 		$field_id = $is_entry_detail || $is_form_editor || $form_id == 0 ? "input_$id" : 'input_' . $form_id . "_$id";
 
-		$size          = $this->size;
 		$disabled_text = $is_form_editor ? "disabled='disabled'" : '';
-		$class_suffix  = $is_entry_detail ? '_admin' : '';
-		$class         = $size . $class_suffix;
-		$class         = esc_attr( $class );
 
 		$form_sub_label_placement  = rgar( $form, 'subLabelPlacement' );
 		$field_sub_label_placement = $this->subLabelPlacement;
@@ -303,7 +339,7 @@ class GF_Field_Date extends GF_Field {
 			$day_dropdown   = "<div class='gfield_date_dropdown_day ginput_date_dropdown ginput_container ginput_container_date' id='gfield_dropdown_date_day' style='display:$dropdown_display'>" . $this->get_day_dropdown( '', "{$field_id}_2", rgar( $date_info, 'day' ), '', $disabled_text, $day_placeholder_value ) . '</div>';
 			$year_dropdown  = "<div class='gfield_date_dropdown_year ginput_date_dropdown ginput_container ginput_container_date' id='gfield_dropdown_date_year' style='display:$dropdown_display'>" . $this->get_year_dropdown( '', "{$field_id}_3", rgar( $date_info, 'year' ), '', $disabled_text, $year_placeholder_value, $form ) . '</div>';
 
-			$field_string = "<div class='ginput_container ginput_container_date' id='gfield_input_datepicker' style='display:$datepicker_display'><input name='ginput_datepicker' type='text' {$date_picker_placeholder} {$disabled_text} value='{$picker_value}'/><img src='" . GFCommon::get_base_url() . "/images/calendar.png' id='gfield_input_datepicker_icon' style='display:$icon_display'/></div>";
+			$field_string = "<div class='ginput_container ginput_container_date' id='gfield_input_datepicker' style='display:$datepicker_display'><input name='ginput_datepicker' type='text' {$date_picker_placeholder} {$disabled_text} value='{$picker_value}'/><img src='" . GFCommon::get_base_url() . "/images/datepicker/datepicker.svg' id='gfield_input_datepicker_icon' style='display:$icon_display'/></div>";
 
 			switch ( $field_position ) {
 				case 'dmy' :
@@ -518,14 +554,13 @@ class GF_Field_Date extends GF_Field {
 				$icon_url     = empty( $this->calendarIconUrl ) ? GFCommon::get_base_url() . '/images/datepicker/datepicker.svg' : $this->calendarIconUrl;
 				$icon_url     = esc_url( $icon_url );
 				$tabindex     = $this->get_tabindex();
-				$class        = esc_attr( $class );
 
 				$required_attribute     = $this->isRequired ? 'aria-required="true"' : '';
 				$invalid_attribute      = $this->failed_validation ? 'aria-invalid="true"' : 'aria-invalid="false"';
 				$describedby_attribute  = $this->get_aria_describedby( array( "{$field_id}_date_format'" ) );
 
 				return "<div class='ginput_container ginput_container_date'>
-                            <input name='input_{$id}' id='{$field_id}' type='text' value='{$picker_value}' class='datepicker {$class} {$format} {$icon_class}' {$tabindex} {$disabled_text} {$date_picker_placeholder} {$describedby_attribute} {$invalid_attribute} {$required_attribute}/>
+                            <input name='input_{$id}' id='{$field_id}' type='text' value='{$picker_value}' class='datepicker {$format} {$icon_class}' {$tabindex} {$disabled_text} {$date_picker_placeholder} {$describedby_attribute} {$invalid_attribute} {$required_attribute}/>
                             <span id='{$field_id}_date_format' class='screen-reader-text'>{$date_format_sr_text}</span>
                         </div>
                         <input type='hidden' id='gforms_calendar_icon_$field_id' class='gform_hidden' value='$icon_url'/>";
@@ -723,7 +758,7 @@ class GF_Field_Date extends GF_Field {
 			$placeholder = esc_html__( 'Day', 'gravityforms' );
 		}
 
-		return $this->get_number_dropdown( $name, $id, $selected_value, $tabindex, $disabled_text, $placeholder, 1, 31, $aria_attributes = '' );
+		return $this->get_number_dropdown( $name, $id, $selected_value, $tabindex, $disabled_text, $placeholder, 1, 31, $aria_attributes );
 	}
 
 	/**

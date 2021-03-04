@@ -6,6 +6,29 @@ if ( ! class_exists( 'GFForms' ) ) {
 
 class GFEntryList {
 
+	/**
+	 * Catch a restore attempt before page load so we can redirect safely.
+	 *
+	 * @since 2.5
+	 *
+	 * return void
+	 */
+	public static function redirect_on_restore() {
+		if ( ! rgget( 'restore' ) ) {
+			return;
+		}
+
+		$form_id = RGForms::get( 'id' );
+		// Verify nonce.
+		check_admin_referer( 'gf_restore_entry' );
+
+		// Restore entry.
+		GFFormsModel::update_entry_property( rgget( 'restore' ), 'status', 'active' );
+		$admin_url = admin_url( 'admin.php?page=gf_entries&view=entries&id=' . absint( $form_id ) . '&restored=' . absint( rgget( 'restore' ) ) );
+		wp_safe_redirect( $admin_url );
+		exit();
+	}
+
 	public static function all_entries_page() {
 
 		if ( ! GFCommon::ensure_wp_version() ) {
@@ -14,19 +37,6 @@ class GFEntryList {
 
 		$forms   = RGFormsModel::get_forms( null, 'title' );
 		$form_id = RGForms::get( 'id' );
-
-		// Restore entry.
-		if ( rgget( 'restore' ) ) {
-
-			// Verify nonce.
-			check_admin_referer( 'gf_restore_entry' );
-
-			// Restore entry.
-			GFFormsModel::update_entry_property( rgget( 'restore' ), 'status', 'active' );
-			$admin_url = admin_url( 'admin.php?page=gf_entries&view=entries&id=' . absint( $form_id ) . '&restored=' . absint( rgget( 'restore' ) ) );
-			wp_safe_redirect( $admin_url );
-			exit();
-		}
 
 		// Display restored entry message.
 		if ( rgget( 'restored' ) ) {

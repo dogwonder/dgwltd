@@ -1596,6 +1596,8 @@ abstract class GFAddOn {
 			)
 		);
 
+		$section_fields = $this->prepare_settings_fields( $section['fields'] );
+
 		$classes = array( 'gaddon-section' );
 
 		if ( $is_first ) {
@@ -1629,7 +1631,7 @@ abstract class GFAddOn {
 			<table class="form-table gforms_form_settings">
 
 				<?php
-				foreach ( $section['fields'] as $field ) {
+				foreach ( $section_fields as $field ) {
 
 					if ( ! $this->setting_dependency_met( rgar( $field, 'dependency' ) ) )
 						continue;
@@ -3078,13 +3080,37 @@ abstract class GFAddOn {
 	/***
 	 * Renders the save button for settings pages
 	 *
+	 * @deprecated 2.5 Use \Gravity_Forms\Gravity_Forms\Settings\Fields\Button to add a Save button.
+	 *
 	 * @param array $field - Field array containing the configuration options of this field
 	 * @param bool  $echo  = true - true to echo the output to the screen, false to simply return the contents as a string
 	 *
 	 * @return string The HTML
 	 */
 	public function settings_save( $field, $echo = true ) {
-		return null;
+
+		_deprecated_function( __METHOD__, '2.5', 'the \Gravity_Forms\Gravity_Forms\Settings\Fields\Button class to add a save button to your form' );
+
+		$field['type']  = 'submit';
+		$field['name']  = 'gform-settings-save';
+		$field['class'] = 'button-primary gfbutton';
+
+		if ( ! rgar( $field, 'value' ) ) {
+			$field['value'] = esc_html__( 'Update Settings', 'gravityforms' );
+		}
+
+		$attributes = $this->get_field_attributes( $field );
+
+		$html = '<input
+			type="' . esc_attr( $field['type'] ) . '"
+			name="' . esc_attr( $field['name'] ) . '"
+			value="' . esc_attr( $field['value'] ) . '" ' . implode( ' ', $attributes ) . ' />';
+
+		if ( $echo ) {
+			echo $html;
+		}
+
+		return $html;
 	}
 
 	/**

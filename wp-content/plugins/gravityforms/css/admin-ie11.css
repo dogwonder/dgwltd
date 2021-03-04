@@ -1,8 +1,8 @@
 /*
 ----------------------------------------------------------------
 
-ie11.css
-Gravity Forms IE11 Styles
+admin-ie11.css
+Gravity Forms Admin IE11 Styles
 http: //www.gravityforms.com
 
 Gravity Forms is a Rocketgenius project
@@ -69,8 +69,11 @@ AND ANY CHANGES MADE HERE WILL BE OVERWRITTEN.
         top: 15px;
     }
 }
+
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) and (max-width:1200px) {
     .gform-settings-panel__addon-uninstall .gform-settings-panel__content {
         -ms-grid-columns: 1fr 2fr 1fr;
     }
 }
+
+/*# sourceMappingURL=admin-ie11.css.map */

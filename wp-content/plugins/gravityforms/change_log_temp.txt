@@ -1,3 +1,38 @@
+### 2.5-rc-1
+- Added the 'novalidate' attribute to the form container to block default HTML5 validation. This allows Gravity Forms to provide an accessible validation message.
+- Added required attribute to required inputs to improve accessibility.
+- Added Gravity Forms header to the installation wizard and add-on browser.
+- Added accessible descriptions to fieldsets by making descriptions announced on the fieldset's first input.
+- Added accessible error messages to fieldsets by making error message specify which inputs are empty.
+- Added back the gform_settings_key_field filter to allow modifying the License Key Settings field. This was removed in 2.5-beta-1.
+- Updated the validation message for invalid email addresses with more specific instructions to comply with accessibility guidelines.
+- Updated honeypot field to use "new-password" instead of "off" as value for autocomplete field.
+- Updated the styling of e-mail services displayed on the form settings notifications page when a service uses the new Gravity Forms icon set.
+- Updated the date field to display date format as the placeholder.
+- Updated the HTML Field's "Disable Default Margins" setting to only display when form labels are set to left-or-right-aligned.
+- Fixed a display issue with the focus states for buttons on the edit entry page.
+- Fixed display of form settings input styles to match those found in the form editor.
+- Fixed various display issues with the date and time fields.
+- Fixed position of the buttons in the form footer.
+- Fixed some accessibility issues with tooltips in the settings.
+- Fixed the System Status page on narrow screens.
+- Fixed an issue that causes an empty Error Message Container to appear on File Upload Fields.
+- Fixed an issue with radio and checkbox fields that causes long labels to be misaligned with the inputs.
+- Fixed an issue with Form Entries that causes the "undo" button for trashed entries to throw an error when clicked.
+- Fixed an issue that causes new Notifications to be incorrectly marked as Inactive.
+- Fixed an issue that allows Newly-Created Confirmations to disable Conditional Logic.
+- Fixed an issue that caused newly-created Notifications and Confirmations to disappear when their edit page is refreshed.
+- Fixed an issue with notification conditional logic where rules were not getting cleared out when conditional logic was disabled.
+- Fixed the output of the Shipping and Total fields to be more accessible to screen readers.
+- Fixed an issue that causes Javascript errors in WordPress 5.5+.
+- AF: Deprecated and fixed the settings_save method in the Add-On Framework.
+- API: Updated gform_add_meta(), gform_update_meta(), and gform_delete_meta() to return the value of the database query.
+- API: Added gformReInitTinymceInstance and made gformInitTinymce public.
+- API: Added an 'id' attribute to the hidden input for Generic Map fields.
+- API: Fixed an issue where gformInitSingleDatepicker is no longer public for external JavaScript.
+- API: Fixed the display of multiselect settings fields using the enhanced UI.
+- API: Fixed an issue that causes issues rendering for certain custom fields on the Form Settings page.
+
 ### 2.5-beta-3.1
 - Added the [gform_disable_form_theme_css](https://docs.gravityforms.com/gform_disable_form_theme_css/) filter to allow users to keep the Form Theme CSS file from being enqueued.
 - Added a display mode screen option to set the container width on the entries list.
@@ -33,11 +68,17 @@
 - Fixed an issue with resizing fields in the editor in RTL.
 - Fixed some display problems with the time field.
 - Fixed an issue that causes errors on the Form Settings page if an invalid Form ID is provided.
+- Updated PostCSS structure.
 - Updated the field icons in the form editor.
 - Updated the form editor conditional logic UI to hide the conditions when the setting is disabled.
+- Fixed a bug that causes errors on the Form Settings page if an invalid Form ID is provided.
+- Fixed field settings classes not being properly separated in the form editor.
+- Added a new filter to allow users to keep the Form Theme CSS file from being enqueued.
+- Added active and focus states to the Status Indicator toggle to improve keyboard accessibility.
 - AF: Added support for Gravity Forms font icons.
 - API: Fixed field settings classes not being properly separated in the form editor.
 - API: Updated get_forms method to accept optional parameters to order returned forms.
+
 
 ### 2.5-beta-3
 - Added tweaks to the form editor to improve design, performance and usability.

@@ -170,6 +170,8 @@ function handleStatus() {
 
 function InitializeFieldSettings(){
 
+	gform.addFilter( 'gform_editor_field_settings', 'hideDefaultMarginOnTopLabelAlignment' );
+
     jQuery('#field_max_file_size').on('input propertychange', function(){
         var $this = jQuery(this),
             inputValue = parseInt($this.val());
@@ -496,6 +498,32 @@ function InitializeFieldSettings(){
 	jQuery('#field_delete_icon_url').on('input propertychange', function(){
 		SetFieldProperty('deleteIconUrl', this.value);
 	});
+}
+
+/**
+ * Filters out the Hide Default Margins option when labels are top-aligned.
+ *
+ * @since 2.5
+ *
+ * @param {array} settings The settings for this field.
+ * @param {array} field    The current field.
+ *
+ * @return {array}
+ */
+function hideDefaultMarginOnTopLabelAlignment( settings, field ) {
+	if ( form[ 'labelPlacement' ] !== 'top_label' ) {
+		return settings;
+	}
+
+	// Labels are top-aligned; remove the disable margins setting so it doesn't display.
+	for ( var key in settings ) {
+		if ( settings[ key ] === '.disable_margins_setting' ) {
+			settings.splice( key, 1 );
+			break;
+		}
+	}
+
+	return settings;
 }
 
 function InitializeForm(form){

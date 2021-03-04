@@ -7862,11 +7862,14 @@ function gform_get_meta_values_for_entries( $entry_ids, $meta_keys ) {
  * Data will be serialized. Don't forget to sanitize user input.
  *
  * @since Unknown
+ * @since 2.5 Return the result of the query.
  *
  * @param int      $entry_id   The ID of the entry to be updated.
  * @param string   $meta_key   The key for the meta data to be stored.
  * @param mixed    $meta_value The data to be stored for the entry.
  * @param int|null $form_id    The form ID of the entry (optional, saves extra query if passed when creating the metadata).
+ *
+ * @return int|false           Returns the number of affected rows, or false if the operation fails.
  */
 function gform_update_meta( $entry_id, $meta_key, $meta_value, $form_id = null ) {
 	global $wpdb, $_gform_lead_meta;
@@ -7893,7 +7896,7 @@ function gform_update_meta( $entry_id, $meta_key, $meta_value, $form_id = null )
 	$serialized_meta_value  = maybe_serialize( $meta_value );
 	$meta_exists = gform_get_meta( $entry_id, $meta_key ) !== false;
 	if ( $meta_exists ) {
-		$wpdb->update( $table_name, array( 'meta_value' => $serialized_meta_value ), array( 'entry_id' => $entry_id, 'meta_key' => $meta_key ), array( '%s' ), array( '%d', '%s' ) );
+		$result = $wpdb->update( $table_name, array( 'meta_value' => $serialized_meta_value ), array( 'entry_id' => $entry_id, 'meta_key' => $meta_key ), array( '%s' ), array( '%d', '%s' ) );
 	} else {
 
 		if ( empty( $form_id ) ) {
@@ -7903,14 +7906,18 @@ function gform_update_meta( $entry_id, $meta_key, $meta_value, $form_id = null )
 			$form_id = intval( $form_id );
 		}
 
-		$wpdb->insert( $table_name, array( 'form_id' => $form_id, 'entry_id' => $entry_id, 'meta_key' => $meta_key, 'meta_value' => $serialized_meta_value ), array( '%d', '%d', '%s', '%s' ) );
+		$result = $wpdb->insert( $table_name, array( 'form_id' => $form_id, 'entry_id' => $entry_id, 'meta_key' => $meta_key, 'meta_value' => $serialized_meta_value ), array( '%d', '%d', '%s', '%s' ) );
 	}
 
-	//updates cache
-	$cache_key = get_current_blog_id() . '_' . $entry_id . '_' . $meta_key;
-	if ( array_key_exists( $cache_key, $_gform_lead_meta ) ) {
-		$_gform_lead_meta[ $cache_key ] = $meta_value;
+	if ( $result !== false ) {
+		//updates cache
+		$cache_key = get_current_blog_id() . '_' . $entry_id . '_' . $meta_key;
+		if ( array_key_exists( $cache_key, $_gform_lead_meta ) ) {
+			$_gform_lead_meta[ $cache_key ] = $meta_value;
+		}
 	}
+
+	return $result;
 }
 
 /**
@@ -7919,11 +7926,14 @@ function gform_update_meta( $entry_id, $meta_key, $meta_value, $form_id = null )
  * Data will be serialized; Don't forget to sanitize user input.
  *
  * @since Unknown
+ * @since 2.5 Return the result of the query.
  *
  * @param int      $entry_id   The ID of the entry where metadata is to be added.
  * @param string   $meta_key   The key for the meta data to be stored.
  * @param mixed    $meta_value The data to be stored for the entry.
  * @param int|null $form_id    The form ID of the entry (optional, saves extra query if passed when creating the metadata).
+ *
+ * @return int|false           Returns the number of affected rows, or false if the operation fails.
  */
 function gform_add_meta( $entry_id, $meta_key, $meta_value, $form_id = null ) {
 	global $wpdb, $_gform_lead_meta;
@@ -7955,19 +7965,26 @@ function gform_add_meta( $entry_id, $meta_key, $meta_value, $form_id = null ) {
 		$form_id = intval( $form_id );
 	}
 
-	$wpdb->insert( $table_name, array( 'form_id' => $form_id, 'entry_id' => $entry_id, 'meta_key' => $meta_key, 'meta_value' => $serialized_meta_value ), array( '%d', '%d', '%s', '%s' ) );
+	$result = $wpdb->insert( $table_name, array( 'form_id' => $form_id, 'entry_id' => $entry_id, 'meta_key' => $meta_key, 'meta_value' => $serialized_meta_value ), array( '%d', '%d', '%s', '%s' ) );
 
-	$cache_key                      = get_current_blog_id() . '_' . $entry_id . '_' . $meta_key;
-	$_gform_lead_meta[ $cache_key ] = $meta_value;
+	if ( $result !== false ) {
+		$cache_key                      = get_current_blog_id() . '_' . $entry_id . '_' . $meta_key;
+		$_gform_lead_meta[ $cache_key ] = $meta_value;
+	}
+
+	return $result;
 }
 
 /**
  * Delete metadata associated with an entry.
  *
  * @since Unknown
+ * @since 2.5 Return the result of the query.
  *
  * @param int    $entry_id The ID of the entry to be deleted.
  * @param string $meta_key The key for the meta data to be deleted.
+ *
+ * @return int|bool       Returns true or the number of rows affected, or false if the operation fails.
  */
 function gform_delete_meta( $entry_id, $meta_key = '' ) {
 	global $wpdb, $_gform_lead_meta;
@@ -7984,8 +8001,12 @@ function gform_delete_meta( $entry_id, $meta_key = '' ) {
 	$table_name  = RGFormsModel::get_entry_meta_table_name();
 	$meta_filter = empty( $meta_key ) ? '' : $wpdb->prepare( 'AND meta_key=%s', $meta_key );
 
-	$wpdb->query( $wpdb->prepare( "DELETE FROM {$table_name} WHERE entry_id=%d {$meta_filter}", $entry_id ) );
+	$result = $wpdb->query( $wpdb->prepare( "DELETE FROM {$table_name} WHERE entry_id=%d {$meta_filter}", $entry_id ) );
 
-	//clears cache.
-	$_gform_lead_meta = array();
+	if ( $result !== false ) {
+		//clears cache.
+		$_gform_lead_meta = array();
+	}
+
+	return $result;
 }

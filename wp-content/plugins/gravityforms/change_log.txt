@@ -1,8 +1,12 @@
+### 2.4.22.5
+- Added the [gform_shortcode_builder_forms](https://docs.gravityforms.com/gform_shortcode_builder_forms/) and [gform_block_form_forms](https://docs.gravityforms.com/gform_block_form_forms/) filters enabling the forms available for embedding to be overridden.
+
 ### 2.4.22.4
 - Fixed an issue where the form editor block was generating notices in the JavaScript console.
 - Fixed an issue with sorting forms in PHP 8.
 - Fixed issue with auto-updates and PHP 8.
 - AF: Added a new method that allows add-ons to fix authentication issues.
+- API: Made the $args argument optional in `GF_Results_Cache::calculate()`;
 
 ### 2.4.22.3
 - Updated the [gform_file_upload_markup](https://docs.gravityforms.com/gform_file_upload_markup/) JS filter to include response as the sixth parameter.

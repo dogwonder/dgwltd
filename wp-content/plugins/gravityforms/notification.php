@@ -10,6 +10,8 @@ class_exists( 'GFForms' ) || die();
  */
 Class GFNotification {
 
+	use Redirects_On_Save;
+
 	/**
 	 * Defines the fields that support notifications.
 	 *
@@ -610,7 +612,9 @@ Class GFNotification {
 					$notification['disableAutoformat'] = (bool) rgar( $values, 'disableAutoformat' );
 					$notification['enableAttachments'] = (bool) rgar( $values, 'enableAttachments' );
 
-					$notification['conditionalLogic'] = GFFormsModel::sanitize_conditional_logic( rgar( $values, 'notification_conditional_logic_object' ) );
+					// Set the conditional logic object, and clear it if conditional logic is disabled
+					$conditionalLogicObject = rgar( $values, 'notification_conditional_logic_object' );
+					$notification['conditionalLogic'] = rgar( $values, 'notification_conditional_logic' ) && is_array( $conditionalLogicObject ) ? GFFormsModel::sanitize_conditional_logic( $conditionalLogicObject ) : null;
 
 					if ( isset( $values['routing'] ) && ! empty( $values['routing'] ) ) {
 						$routing_logic           = array( 'rules' => $values['routing'] );
@@ -638,6 +642,7 @@ Class GFNotification {
 					$form['notifications'][ $notification_id ] = $notification;
 					RGFormsModel::save_form_notifications( $form['id'], $form['notifications'] );
 
+					self::$_saved_item_id = $notification_id;
 				},
 				'before_fields' => function() use ( &$form, $form_id, &$notification, $notification_id ) {
 					?>
@@ -683,7 +688,7 @@ Class GFNotification {
 						var current_notification = <?php echo GFCommon::json_encode( $notification ) ?>;
 						var entry_meta = <?php echo GFCommon::json_encode( $entry_meta ) ?>;
 
-						jQuery( document ).on( 'ready', function() {
+						jQuery( function() {
 							ToggleConditionalLogic( true, 'notification' );
 						} );
 
@@ -705,9 +710,14 @@ Class GFNotification {
 		// Define settings fields.
 		self::get_settings_renderer()->set_fields( self::settings_fields( $notification, $form ) );
 
+		if ( self::is_save_redirect( 'nid' ) ) {
+			self::get_settings_renderer()->set_save_message_after_redirect();
+		}
+
 		// Process save callback.
 		if ( self::get_settings_renderer()->is_save_postback() ) {
 			self::get_settings_renderer()->process_postback();
+			self::redirect_after_valid_save( 'nid' );
 		}
 
 	}
@@ -1421,7 +1431,9 @@ class GFNotificationTable extends WP_List_Table {
 			return;
 		}
 
-		if ( rgar( $item, 'isActive' ) ) {
+		$active = rgar( $item, 'isActive' ) !== false;
+
+		if ( $active ) {
 			$class = 'gform-status--active';
 			$text  = esc_html__( 'Active', 'gravityforms' );
 		} else {

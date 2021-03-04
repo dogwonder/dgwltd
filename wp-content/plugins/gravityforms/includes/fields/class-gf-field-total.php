@@ -51,7 +51,7 @@ class GF_Field_Total extends GF_Field {
 
 		// aria-atomic and aria-live need to be added to make the change of the total announced.
 		$atts['aria-atomic'] = 'true';
-		$atts['aria-live']   = 'assertive';
+		$atts['aria-live']   = 'polite';
 
 		return parent::get_field_container( $atts, $form );
 
@@ -71,8 +71,7 @@ class GF_Field_Total extends GF_Field {
 					</div>";
 		} else {
 			return "<div class='ginput_container ginput_container_total'>
-						<span class='ginput_total ginput_total_{$form_id}'>" . GFCommon::to_money( '0' ) . "</span>
-						<input type='hidden' name='input_{$id}' id='{$field_id}' class='gform_hidden'/>
+						<input readonly name='input_{$id}' id='{$field_id}' value='" . GFCommon::to_money( '0' ) . "' class='gform-text-input-reset ginput_total ginput_total_{$form_id}' />
 					</div>";
 		}
 

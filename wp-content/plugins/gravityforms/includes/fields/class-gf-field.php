@@ -585,6 +585,59 @@ class GF_Field extends stdClass implements ArrayAccess {
 	}
 
 	/**
+	 * Create a validation message for a required field with multiple inputs.
+	 *
+	 * The validation message will specify which inputs need to be filled out.
+	 *
+	 * @since 2.5
+	 *
+	 * @param array $value            The value entered by the user.
+	 * @param array $required_inputs  The required inputs to validate.
+	 *
+	 * @return string|void
+	 */
+	public function complex_validation_message( $value, $required_inputs ) {
+		$error_inputs = array();
+
+		foreach ( $required_inputs as $input ) {
+			if ( '' == rgar( $value, $this->id . '.' . $input )  && ! $this->get_input_property( $input, 'isHidden' ) ) {
+				$custom_label   = $this->get_input_property( $input, 'customLabel' );
+				$label          = $custom_label ? $custom_label : $this->get_input_property( $input, 'label' );
+				$error_inputs[] = $label;
+			}
+		}
+
+		if ( ! empty( $error_inputs ) ) {
+			$field_list = implode( ', ', $error_inputs );
+			// Translators: comma-separated list of the labels of missing fields.
+			$message = sprintf( __( 'Please complete the following fields: %s.', 'gravityforms' ), $field_list );
+			return $message;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Gets a property value from an input.
+	 *
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @used-by GF_Field_Name::validate()
+	 * @uses    GFFormsModel::get_input()
+	 *
+	 * @param int    $input_id      The input ID to obtain the property from.
+	 * @param string $property_name The property name to search for.
+	 *
+	 * @return null|string The property value if found. Otherwise, null.
+	 */
+	public function get_input_property( $input_id, $property_name ) {
+		$input = GFFormsModel::get_input( $this, $this->id . '.' . (string) $input_id );
+
+		return rgar( $input, $property_name );
+	}
+
+	/**
 	 * Retrieve the field value on submission.
 	 *
 	 * @param array     $field_values             The dynamic population parameter names with their corresponding values to be populated.
@@ -1272,6 +1325,31 @@ class GF_Field extends stdClass implements ArrayAccess {
 
 		// The value is used as an HTML attribute, escape it.
 		return esc_attr( $field_id );
+	}
+
+	/**
+	 * Set the aria-describedby attribute for an input if it is the first input in a fieldset
+	 *
+	 * Since 2.5
+	 *
+	 * @param array  $input    The current input.
+	 * @param string $field_id The ID of the field we're working with.
+	 * @param int    $form_id  The ID of the form object.
+	 *
+	 * @return string The aria-describedby text or a blank string.
+	 */
+	public function maybe_add_aria_describedby( $input, $field_id, $form_id ) {
+		$form                  = GFAPI::get_form( $form_id );
+		$first_input_for_field = self::get_first_input_id( GFAPI::get_form( $form_id ) );
+		$field_id_as_array     = explode( '_', $field_id );
+		$first_input_as_array  = explode( '_', $first_input_for_field );
+		$subelement_id         =  end( $field_id_as_array ) . '.' . end( $first_input_as_array  );
+
+		if ( $input['id'] === $subelement_id ) {
+			return $this->get_aria_describedby();
+		}
+
+		return '';
 	}
 
 	/**

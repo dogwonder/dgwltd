@@ -13,6 +13,8 @@ use Gravity_Forms\Gravity_Forms\Settings\Settings;
  */
 class GF_Confirmation {
 
+	use Redirects_On_Save;
+
 	/**
 	 * Regular expression for determining if string contains unsafe merge tags.
 	 *
@@ -605,8 +607,7 @@ class GF_Confirmation {
 					$form['confirmations'][ $confirmation['id'] ] = $confirmation;
 					$result                                       = GFFormsModel::save_form_confirmations( $form['id'], $form['confirmations'] );
 
-					// @todo Add success/error message based on result.
-
+					self::$_saved_item_id = $confirmation_id;
 				},
 				'before_fields'  => function() use ( &$confirmation, $confirmation_id, $form ) {
 
@@ -652,14 +653,14 @@ class GF_Confirmation {
 							return mergeTags;
 						}
 
-						jQuery( document ).on( 'ready', function() {
+						jQuery( function() {
 							if ( confirmation.event === 'form_saved' || confirmation.event === 'form_save_email_sent'  ) {
 								jQuery( '#type1, #type2' ).attr( 'disabled', true );
 							}
 						} );
 
 						<?php if ( ! rgar( $confirmation, 'isDefault' ) ) : ?>
-						jQuery( document ).on( 'ready', function() {
+						jQuery( function() {
 							ToggleConditionalLogic( true, 'confirmation' );
 						} );
 						<?php endif; ?>
@@ -678,9 +679,14 @@ class GF_Confirmation {
 
 		self::set_settings_renderer( $renderer );
 
+		if ( self::is_save_redirect( 'cid' ) ) {
+			self::get_settings_renderer()->set_save_message_after_redirect();
+		}
+
 		// Process save callback.
 		if ( self::get_settings_renderer()->is_save_postback() ) {
 			self::get_settings_renderer()->process_postback();
+			self::redirect_after_valid_save( 'cid' );
 		}
 
 	}
@@ -1053,7 +1059,9 @@ class GFConfirmationTable extends WP_List_Table {
 			return;
 		}
 
-		if ( rgar( $item, 'isActive' ) ) {
+		$active = rgar( $item, 'isActive' ) !== false;
+
+		if ( $active ) {
 			$class = 'gform-status--active';
 			$text  = esc_html__( 'Active', 'gravityforms' );
 		} else {

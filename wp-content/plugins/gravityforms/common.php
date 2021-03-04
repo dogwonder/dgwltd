@@ -3724,7 +3724,7 @@ Content-Type: text/html;
 		switch ( $type ) {
 
 			case 'honeypot':
-				$autocomplete = RGFormsModel::is_html5_enabled() ? "autocomplete='off'" : '';
+				$autocomplete = RGFormsModel::is_html5_enabled() ? "autocomplete='new-password'" : '';
 
 				return "<div class='ginput_container'><input name='input_{$id}' id='{$field_id}' type='text' value='' {$autocomplete}/></div>";
 				break;
@@ -5549,21 +5549,7 @@ Content-Type: text/html;
 		require_once self::get_base_path() . '/form_display.php';
 
 		// Script has already been output; bail to avoid duplicating it.
-		if ( GFFormDisplay::$hooks_js_printed ) {
-			return false;
-		}
-
-		// We're on a GF-specific admin page - always output.
-		if ( is_admin() && GFForms::is_gravity_page() ) {
-			return true;
-		}
-
-		//  see GFCommon:check_for_gf_widgets()
-		if ( GFFormDisplay::$sidebar_has_widget ) {
-			return true;
-		}
-
-		return wp_script_is( 'gform_gravityforms', 'enqueued' );
+		return ! GFFormDisplay::$hooks_js_printed;
 	}
 
 	/**
@@ -5731,12 +5717,23 @@ Content-Type: text/html;
 			return;
 		}
 
-		$min              = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || isset( $_GET['gform_debug'] ) ? '' : '.min';
-		$hooks_javascript = file_get_contents( GFCommon::get_base_path() . '/js/gforms_hooks' . $min . '.js' );
+		$hooks_javascript                = self::get_hooks_javascript_code();
+		GFFormDisplay::$hooks_js_printed = true;
 
 		echo '<script type="text/javascript">' . $hooks_javascript . '</script>';
+	}
 
-		GFFormDisplay::$hooks_js_printed = true;
+	/**
+	 * Get the Javascript code from the gforms_hooks file and return it.
+	 *
+	 * @since 2.5
+	 *
+	 * @return false|string
+	 */
+	public static function get_hooks_javascript_code() {
+		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || isset( $_GET['gform_debug'] ) ? '' : '.min';
+
+		return file_get_contents( GFCommon::get_base_path() . '/js/gforms_hooks' . $min . '.js' );
 	}
 
 	/**
@@ -6804,7 +6801,7 @@ Content-Type: text/html;
 
 		$markup = sprintf( '<ul><li>%s</li></ul>', implode( '</li><li>', $markup ) );
 
-		return sprintf( '<h6>%s</h6> %s<br><br>%s', __( 'Visibility', 'gravityforms' ), __( 'Select the visibility for this field.', 'gravityforms' ), $markup );
+		return sprintf( '<strong>%s</strong> %s<br><br>%s', __( 'Visibility', 'gravityforms' ), __( 'Select the visibility for this field.', 'gravityforms' ), $markup );
 	}
 
 	/**

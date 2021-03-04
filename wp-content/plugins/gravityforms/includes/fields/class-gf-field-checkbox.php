@@ -218,7 +218,6 @@ class GF_Field_Checkbox extends GF_Field {
 		$id            = $this->id;
 		$field_id      = $is_entry_detail || $is_form_editor || $form_id == 0 ? "input_$id" : 'input_' . $form_id . "_$id";
 		$disabled_text = $is_form_editor ? 'disabled="disabled"' : '';
-    
 		$tag           = GFCommon::is_legacy_markup_enabled( $form_id ) ? 'ul' : 'div';
 
 		return sprintf(
@@ -700,7 +699,7 @@ class GF_Field_Checkbox extends GF_Field {
 				 */
 				$select_label = gf_apply_filters( array( 'gform_checkbox_select_all_label', $this->formId, $this->id ), esc_html__( 'Select All', 'gravityforms' ), $this );
 				$select_label = esc_html( $select_label );
-				
+
 				/**
 				 * Modify the "Deselect All" checkbox label.
 				 *
@@ -729,7 +728,7 @@ class GF_Field_Checkbox extends GF_Field {
 
 				// Prepare choice markup.
 				$choice_markup = "<{$tag} class='gchoice gchoice_select_all'>
-						<input type='checkbox' id='{$id}' {$tabindex} {$disabled_text} onclick='gformToggleCheckboxes( this )' onkeypress='gformToggleCheckboxes( this )'{$checked} />
+						<input class='gfield-choice-input' type='checkbox' id='{$id}' {$tabindex} {$disabled_text} onclick='gformToggleCheckboxes( this )' onkeypress='gformToggleCheckboxes( this )'{$checked} />
 						<label for='{$id}' id='label_" . $this->id . "_select_all' data-label-select='{$select_label}' data-label-deselect='{$deselect_label}'>{$toggle_label}</label>
 					</{$tag}>";
 
@@ -749,6 +748,9 @@ class GF_Field_Checkbox extends GF_Field {
 
 			// Loop through field choices.
 			foreach ( $this->choices as $choice ) {
+
+				// Get aria-describedby if this is the first choice
+				$aria_describedby = $choice_number === 1 ? $this->get_aria_describedby() : '';
 
 				// Hack to skip numbers ending in 0, so that 5.1 doesn't conflict with 5.10.
 				if ( $choice_number % 10 == 0 ) {
@@ -784,7 +786,7 @@ class GF_Field_Checkbox extends GF_Field {
 
 				$choice_value  = esc_attr( $choice_value );
 				$choice_markup = "<{$tag} class='gchoice gchoice_{$id}'>
-								<input name='input_{$input_id}' type='checkbox'  value='{$choice_value}' {$checked} id='choice_{$id}' {$tabindex} {$disabled_text} />
+								<input class='gfield-choice-input' name='input_{$input_id}' type='checkbox'  value='{$choice_value}' {$checked} id='choice_{$id}' {$tabindex} {$disabled_text} {$aria_describedby}/>
 								<label for='choice_{$id}' id='label_{$id}'>{$choice['text']}</label>
 							</{$tag}>";
 
@@ -862,7 +864,7 @@ class GF_Field_Checkbox extends GF_Field {
 					return $entry[ $input_id ];
 
 				} else {
-	
+
 					if ( $this->enableChoiceValue || $this->enablePrice ) {
 
 						foreach ( $this->choices as $choice ) {
@@ -1014,7 +1016,7 @@ class GF_Field_Checkbox extends GF_Field {
 		$value             = wp_kses_no_null( $value, array( 'slash_zero' => 'keep' ) );
 		$value             = wp_kses_hook( $value, 'post', $allowed_protocols );
 		$value             = wp_kses_split( $value, 'post', $allowed_protocols );
-		
+
 		return $value;
 
 	}

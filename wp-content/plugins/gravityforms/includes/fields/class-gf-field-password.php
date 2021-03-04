@@ -91,9 +91,9 @@ class GF_Field_Password extends GF_Field {
 			$this->failed_validation  = true;
 			$this->validation_message = esc_html__( 'Your passwords do not match.', 'gravityforms' );
 		} elseif ( $this->passwordStrengthEnabled && ! empty( $this->minPasswordStrength ) && ! empty( $password ) ) {
-			
+
 			$strength = rgpost('input_' . $this->id . '_strength' );
-			
+
 			if ( empty( $strength ) ) {
 				$strength = $this->get_password_strength( $password );
 			}
@@ -105,7 +105,7 @@ class GF_Field_Password extends GF_Field {
 			}
 		}
 	}
-	
+
 	/**
 	 * Calculate the password score using PHP when not passed by JS.
 	 *
@@ -214,7 +214,7 @@ class GF_Field_Password extends GF_Field {
 
 		$confirm_password_label = rgar( $confirm_password_field_input, 'customLabel' ) != '' ? $confirm_password_field_input['customLabel'] : esc_html__( 'Confirm Password', 'gravityforms' );
 		$confirm_password_label = gf_apply_filters( array( 'gform_password_confirm', $form_id ), $confirm_password_label, $form_id );
-	
+
 		$required_attribute    = $this->isRequired ? 'aria-required="true"' : '';
 		$invalid_attribute     = $this->failed_validation ? 'aria-invalid="true"' : 'aria-invalid="false"';
 
@@ -224,6 +224,8 @@ class GF_Field_Password extends GF_Field {
 		$visibility_toggle_style = ! $this->passwordVisibilityEnabled ? " style='display:none;'" : '';
 		$enter_password_toggle   = $this->passwordVisibilityEnabled || $is_admin ? "<button type='button' class='gform_show_password' onclick='javascript:gformToggleShowPassword(\"{$field_id}\");' label='" . esc_attr__( 'Show Password', 'gravityforms' ) . "' data-label-show='" . esc_attr__( 'Show Password', 'gravityforms' ) . "' data-label-hide='" . esc_attr__( 'Hide Password', 'gravityforms' ) . "'{$visibility_toggle_style}><span class='dashicons dashicons-hidden' aria-hidden='true'></span></button>" : "";
 		$confirm_password_toggle = $this->passwordVisibilityEnabled || $is_admin ? "<button type='button' class='gform_show_password' onclick='javascript:gformToggleShowPassword(\"{$field_id}_2\");' label='" . esc_attr__( 'Show Password', 'gravityforms' ) . "' data-label-show='" . esc_attr__( 'Show Password', 'gravityforms' ) . "' data-label-hide='" . esc_attr__( 'Hide Password', 'gravityforms' ) . "'{$visibility_toggle_style}><span class='dashicons dashicons-hidden' aria-hidden='true'></span></button>" : "";
+
+		$aria_describedby = $this->get_aria_describedby();
 
 		if ( $is_form_editor ) {
 			$confirm_style = $this->is_confirm_input_enabled() ? '' : "style='display:none;'";
@@ -274,7 +276,7 @@ class GF_Field_Password extends GF_Field {
 						<span id='{$field_id}_1_container' class='ginput_left'>
 							<label for='{$field_id}' {$sub_label_class_attribute}>{$enter_password_label}</label>
 							<span class='password_input_container'>
-							<input type='password' name='input_{$id}' id='{$field_id}' {$onkeyup} {$onchange} value='{$password_value}' {$first_tabindex} {$enter_password_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$disabled_text}/>
+							<input type='password' name='input_{$id}' id='{$field_id}' {$onkeyup} {$onchange} value='{$password_value}' {$first_tabindex} {$enter_password_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$disabled_text} {$aria_describedby}/>
 							{$enter_password_toggle}
 							</span>
 						</span>
@@ -291,7 +293,7 @@ class GF_Field_Password extends GF_Field {
 				return "<div class='ginput_complex$class_suffix ginput_container ginput_container_password' id='{$field_id}_container'>
 						<span id='{$field_id}_1_container' class='ginput_left'>
 							<span class='password_input_container'>
-							<input type='password' name='input_{$id}' id='{$field_id}' {$onkeyup} {$onchange} value='{$password_value}' {$first_tabindex} {$enter_password_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$disabled_text}/>
+							<input type='password' name='input_{$id}' id='{$field_id}' {$onkeyup} {$onchange} value='{$password_value}' {$first_tabindex} {$enter_password_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$disabled_text} {$aria_describedby}/>
 							{$enter_password_toggle}
 							</span>
 							<label for='{$field_id}' {$sub_label_class_attribute}>{$enter_password_label}</label>

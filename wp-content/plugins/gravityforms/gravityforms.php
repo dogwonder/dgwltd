@@ -3,7 +3,7 @@
 Plugin Name: Gravity Forms
 Plugin URI: https://gravityforms.com
 Description: Easily create web forms and manage form entries within the WordPress admin.
-Version: 2.5-beta-3.1
+Version: 2.5-rc-1
 Author: Gravity Forms
 Author URI: https://gravityforms.com
 License: GPL-2.0+
@@ -157,6 +157,8 @@ require_once( plugin_dir_path( __FILE__ ) . 'includes/query/class-gf-query.php' 
 require_once( plugin_dir_path( __FILE__ ) . 'includes/assets/class-gf-asset.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'includes/assets/class-gf-script-asset.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'includes/assets/class-gf-style-asset.php' );
+require_once( plugin_dir_path( __FILE__ ) . '/includes/trait-redirects-on-save.php' );
+
 
 // Load Logging if Logging Add-On is not active.
 if ( ! GFCommon::is_logging_plugin_active() ) {
@@ -220,7 +222,7 @@ class GFForms {
 	 *
 	 * @var string $version The version number.
 	 */
-	public static $version = '2.5-beta-3.1';
+	public static $version = '2.5-rc-1';
 
 	/**
 	 * Handles background upgrade tasks.
@@ -304,10 +306,6 @@ class GFForms {
 		add_action( 'admin_head', array( 'GFForms', 'load_admin_bar_styles' ) );
 		add_action( 'wp_head', array( 'GFForms', 'load_admin_bar_styles' ) );
 		add_action( 'dynamic_sidebar_before', array( 'GFCommon', 'check_for_gf_widgets' ), 10 );
-		add_action( 'admin_enqueue_scripts', array( 'GFCommon', 'output_hooks_javascript' ), -10 );
-		add_action( 'gform_preview_header', array( 'GFCommon', 'output_hooks_javascript' ) );
-		add_action( 'wp_head', array( 'GFCommon', 'output_hooks_javascript' ) );
-		add_action( 'gform_pre_print_scripts', array( 'GFCommon', 'output_hooks_javascript' ) );
 		add_action( 'gform_enqueue_scripts', array( 'GFCommon', 'localize_gf_legacy_multi' ), 9999 );
 
 		if ( self::get_page() === 'form_editor' ) {
@@ -533,6 +531,9 @@ class GFForms {
 			// Adding the modal
 			add_action( 'admin_print_footer_scripts', array( 'GFForms', 'add_mce_popup' ) );
 		}
+
+		// Add a special classname to the body element when admin.css is loaded
+		add_filter( 'admin_body_class', array( 'GFForms', 'add_admin_body_class' ), 99, 1 );
 	}
 
 	/**
@@ -1628,6 +1629,7 @@ class GFForms {
 	 * @return void
 	 */
 	public static function create_menu() {
+		require_once( dirname(__FILE__ ) . '/entry_list.php' );
 
 		$has_full_access = current_user_can( 'gform_full_access' );
 		$min_cap         = GFCommon::current_user_can_which( GFCommon::all_caps() );
@@ -1666,6 +1668,7 @@ class GFForms {
 		) );
 
 		add_action( 'load-' . $entries_hook_suffix, array( 'GFForms', 'load_screen_options' ) );
+		add_action( 'load-' . $entries_hook_suffix, array( 'GFEntryList', 'redirect_on_restore' ) );
 
 		if ( is_array( $addon_menus ) ) {
 			foreach ( $addon_menus as $addon_menu ) {
@@ -2603,14 +2606,15 @@ class GFForms {
 		wp_register_script( 'gform_preview', $base_url . "/js/preview{$min}.js", array( 'jquery' ), $version, false );
 		wp_register_script( 'gform_auto_updates', $base_url . "/js/auto_update{$min}.js", array( 'jquery' ), $version, true );
 
-		wp_register_style( 'gform_ie11', $base_url . "/css/ie11{$min}.css", null, $version );
-		wp_register_style( 'gform_admin', $base_url . "/css/admin{$min}.css", array( 'gform_ie11' ), $version );
+		wp_register_style( 'gform_admin_ie11', $base_url . "/css/admin-ie11{$min}.css", null, $version );
+		wp_register_style( 'gform_admin', $base_url . "/css/admin{$min}.css", array( 'gform_admin_ie11' ), $version );
 		wp_register_style( 'gform_chosen', $base_url . "/legacy/css/chosen{$min}.css", array(), $version );
 		wp_register_style( 'gform_shortcode_ui', $base_url . "/css/shortcode-ui{$min}.css", array(), $version );
 		wp_register_style( 'gform_font_awesome', $base_url . "/css/font-awesome{$min}.css", null, $version );
 		wp_register_style( 'gform_dashicons', $base_url . "/css/dashicons{$min}.css", array(), $version );
 		wp_register_style( 'gform_settings', $base_url . "/includes/settings/css/settings{$min}.css", array(), $version );
 		wp_register_style( 'gform_editor', $base_url . "/css/editor{$min}.css", array(), $version );
+		wp_register_style( 'gform_admin_theme', $base_url . "/css/admin-theme{$min}.css", array(), $version );
 
 		wp_register_style( 'gforms_reset_css', $base_url . "/legacy/css/formreset{$min}.css", null, $version );
 		wp_register_style( 'gforms_datepicker_css', $base_url . "/legacy/css/datepicker{$min}.css", null, $version );
@@ -2619,9 +2623,19 @@ class GFForms {
 		wp_register_style( 'gforms_browsers_css', $base_url . "/legacy/css/browsers{$min}.css", null, $version );
 		wp_register_style( 'gforms_rtl_css', $base_url . "/legacy/css/rtl{$min}.css", null, $version );
 
-		wp_register_style( 'gform_base', $base_url . "/css/base{$min}.css", null, $version );
-		wp_register_style( 'gform_theme', $base_url . "/css/theme{$min}.css", null, $version );
+		wp_register_style( 'gform_theme_ie11', $base_url . "/css/theme-ie11{$min}.css", null, $version );
+		wp_register_style( 'gform_basic', $base_url . "/css/basic{$min}.css", null, $version );
+		wp_register_style( 'gform_theme', $base_url . "/css/theme{$min}.css", array( 'gform_theme_ie11' ), $version );
 
+		if ( function_exists( 'wp_add_inline_script' ) ) {
+			$hooks_code = GFCommon::get_hooks_javascript_code();
+			wp_add_inline_script( 'gform_gravityforms', $hooks_code, 'before' );
+		} else {
+			add_action( 'gform_preview_header', array( 'GFCommon', 'output_hooks_javascript' ) );
+			add_action( 'wp_head', array( 'GFCommon', 'output_hooks_javascript' ) );
+			add_action( 'admin_head', array( 'GFCommon', 'output_hooks_javascript' ) );
+			add_action( 'gform_pre_print_scripts', array( 'GFCommon', 'output_hooks_javascript' ) );
+		}
 	}
 
 	/**
@@ -3021,7 +3035,7 @@ class GFForms {
 	 * @uses   GFFormDetail::forms_page()
 	 */
 	public static function forms_page( $form_id ) {
-		wp_print_styles( array( 'jquery-ui-styles', 'gform_admin', 'gform_settings', 'gform_editor' ) );
+		wp_print_styles( array( 'jquery-ui-styles', 'gform_admin', 'gform_settings', 'gform_editor', 'gform_admin_theme' ) );
 		require_once( GFCommon::get_base_path() . '/form_detail.php' );
 		GFFormDetail::forms_page( $form_id );
 	}
@@ -3238,11 +3252,13 @@ class GFForms {
 	 */
 	public static function addons_page() {
 
+		GFCommon::gf_header();
+
 		if ( self::maybe_display_wizard() ) {
 			return;
 		};
 
-		wp_print_styles( array( 'thickbox' ) );
+		wp_print_styles( array( 'thickbox', 'gform_settings' ) );
 
 		$plugins           = get_plugins();
 		$installed_plugins = array();
@@ -4607,6 +4623,22 @@ class GFForms {
 	}
 
 	/**
+	 * Add a special body class when within the wp-admin area.
+	 *
+	 * @since 2.5
+	 *
+	 * @param string $body_classes The current body classes.
+	 *
+	 * @return string
+	 */
+	public static function add_admin_body_class( $body_classes ) {
+		$classes = explode( ' ', $body_classes );
+		$classes = array_merge( $classes, array( 'gform-admin' ) );
+
+		return implode( ' ', $classes );
+	}
+
+	/**
 	 * Displays the top toolbar within Gravity Forms pages.
 	 *
 	 * @since  Unknown
@@ -5271,7 +5303,8 @@ class GFForms {
 			return $no_update_message;
 		}
 
-		if ( rgar( $plugin_data, 'auto-update-forced' ) ) {
+		$background_updates = get_option( 'gform_enable_background_updates' );
+		if ( $background_updates ) {
 			// auto-updates are enabled, so clicking on this will disable them.
 			$message = esc_html__( 'Disable auto-updates', 'gravityforms' );
 			$action  = 'disable';
@@ -5549,6 +5582,15 @@ class GFForms {
 		foreach ( $forms as $form ) {
 			$forms_options[ absint( $form->id ) ] = $form->title;
 		}
+
+		/**
+		 * Modify the list of available forms displayed in the shortcode builder.
+		 *
+		 * @since 2.4.23
+		 *
+		 * @param array $forms_options A collection of active forms on site.
+		 */
+		$forms_options = apply_filters( 'gform_shortcode_builder_forms', $forms_options );
 
 		$default_attrs = array(
 			array(

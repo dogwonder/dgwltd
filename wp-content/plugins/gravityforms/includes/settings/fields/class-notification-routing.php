@@ -126,11 +126,8 @@ class Notification_Routing extends Base {
 
 			// Prepare add button.
 			$add_button = sprintf(
-				'<button class="gform-settings-field__notification-routing-button gform-settings-field__notification-routing-button--add" onclick="SetRouting(%2$d); InsertRouting(%3$d);">
+				'<button class="gform-settings-field__notification-routing-button gform-settings-field__notification-routing-button--add gform-st-icon gform-st-icon--circle-plus" onclick="SetRouting(%2$d); InsertRouting(%3$d);">
 					<span class="screen-reader-text">%1$s</span>
-					<svg width="12" height="12" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path fill-rule="evenodd" clip-rule="evenodd" d="M6 0c-.5523 0-1 .4477-1 1v4H1c-.5523 0-1 .4477-1 1s.4477 1 1 1h4v4c0 .5523.4477 1 1 1s1-.4477 1-1V7h4c.5523 0 1-.4477 1-1s-.4477-1-1-1H7V1c0-.5523-.4477-1-1-1z" fill="#3E7DA6"/>
-					</svg>
 				</button>',
 				esc_attr__( 'Add Another Rule', 'gravityforms' ),
 				$i,
@@ -146,11 +143,8 @@ class Notification_Routing extends Base {
 					GFCommon::get_base_url()
 				);
 				$delete_button = sprintf(
-					'<button class="gform-settings-field__notification-routing-button gform-settings-field__notification-routing-button--delete" onclick="DeleteRouting(%2$d);">
+					'<button class="gform-settings-field__notification-routing-button gform-settings-field__notification-routing-button--delete gform-st-icon gform-st-icon--circle-minus" onclick="DeleteRouting(%2$d);">
 						<span class="screen-reader-text">%1$s</span>
-						<svg width="12" height="2" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M0 1c0-.5523.4477-1 1-1h10c.5523 0 1 .4477 1 1s-.4477 1-1 1H1c-.5523 0-1-.4477-1-1z" fill="#3E7DA6"/>
-						</svg>
 					</button>',
 					esc_attr__( 'Remove This Rule', 'gravityforms' ),
 					$i
@@ -227,7 +221,7 @@ class Notification_Routing extends Base {
 					var endsWithSelected = routings[ i ].operator == 'ends_with' ? "selected='selected'" : '';
 					var email = routings[ i ][ "email" ] ? routings[ i ][ "email" ] : '';
 
-					str += "<div style='width:99%'>" + <?php echo json_encode( esc_html__( 'Send to', 'gravityforms' ) ); ?> + " <input type='text' id='routing_email_" + i + "' value='" + email + "' class='gfield_routing_email' />";
+					str += "<div>" + <?php echo json_encode( esc_html__( 'Send to', 'gravityforms' ) ); ?> + " <input type='text' id='routing_email_" + i + "' value='" + email + "' class='gfield_routing_email' />";
 					str += " " + <?php echo json_encode( esc_html__( 'if', 'gravityforms' ) ); ?> + " " + GetRoutingFields( i, routings[ i ].fieldId ) + "&nbsp;";
 					str += "<select id='routing_operator_" + i + "' onchange='SetRouting(" + i + ");' class='gform_routing_operator'>";
 					str += "<option value='is' " + isSelected + ">" + <?php echo json_encode( esc_html__( 'is', 'gravityforms' ) ); ?> + "</option>";
@@ -240,15 +234,13 @@ class Notification_Routing extends Base {
 					str += "</select>&nbsp;";
 					str += GetRoutingValues( i, routings[ i ].fieldId, routings[ i ].value ) + "&nbsp;";
 
-					str += "<button class='gform-settings-field__notification-routing-button gform-settings-field__notification-routing-button--add' onclick='InsertRouting(" + ( i + 1 ) + ");'>";
+					str += "<button class='gform-settings-field__notification-routing-button gform-settings-field__notification-routing-button--add gform-st-icon gform-st-icon--circle-plus' onclick='InsertRouting(" + ( i + 1 ) + ");'>";
 					str += "<span class='screen-reader-text'><?php esc_attr_e( 'Add Another Rule', 'gravityforms' ); ?></span>";
-					str += '<svg width="12" height="12" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M6 0c-.5523 0-1 .4477-1 1v4H1c-.5523 0-1 .4477-1 1s.4477 1 1 1h4v4c0 .5523.4477 1 1 1s1-.4477 1-1V7h4c.5523 0 1-.4477 1-1s-.4477-1-1-1H7V1c0-.5523-.4477-1-1-1z" fill="#3E7DA6"/></svg>';
 					str += "</button>";
 
 					if ( routings.length > 1 ) {
-						str += "<button class='gform-settings-field__notification-routing-button gform-settings-field__notification-routing-button--delete' onclick='DeleteRouting(" + ( i ) + ");'>";
+						str += "<button class='gform-settings-field__notification-routing-button gform-settings-field__notification-routing-button--delete gform-st-icon gform-st-icon--circle-minus' onclick='DeleteRouting(" + ( i ) + ");'>";
 						str += "<span class='screen-reader-text'><?php esc_attr_e( 'Remove This Rule', 'gravityforms' ); ?></span>";
-						str += '<svg width="12" height="2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 1c0-.5523.4477-1 1-1h10c.5523 0 1 .4477 1 1s-.4477 1-1 1H1c-.5523 0-1-.4477-1-1z" fill="#3E7DA6"/></svg>';
 						str += "</button>";
 					}
 

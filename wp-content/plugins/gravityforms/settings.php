@@ -392,11 +392,14 @@ class GFSettings {
 				'description' => esc_html__( 'A valid license key is required for access to automatic plugin upgrades and product support.', 'gravityforms' ),
 				'fields'      => array(
 					array(
-						'name'              => 'license_key',
-						'label'             => esc_html__( 'Paste Your License Key Here', 'gravityforms' ),
-						'type'              => 'text',
-						'input_type'        => 'password',
-						'after_input'       => function () {
+						'name'                => 'license_key',
+						'label'               => esc_html__( 'Paste Your License Key Here', 'gravityforms' ),
+						'type'                => 'text',
+						'input_type'          => 'password',
+						'callback'            => array( 'GFSettings', 'license_key_render_callback' ),
+						'class'               => 'gform-admin-input',
+						'validation_callback' => array( 'GFSettings', 'license_key_validation_callback' ),
+						'after_input'         => function () {
 							$version_info = GFCommon::get_version_info( false );
 							$license_key  = GFCommon::get_key();
 
@@ -540,6 +543,43 @@ class GFSettings {
 	}
 
 	/**
+	 * Render the License Key Field as a callback.
+	 *
+	 * Callback is used so that the gform_settings_key_field filter can be retained.
+	 *
+	 * @since 2.5
+	 *
+	 * @param object $field The Field Object for the rendered input.
+	 *
+	 * @return string
+	 */
+	public static function license_key_render_callback( $field ) {
+		$html = apply_filters( 'gform_settings_key_field', $field->markup() );
+
+		return $html;
+	}
+
+	/**
+	 * Custom validation callback for the License Key Field.
+	 *
+	 * Callback is used so that we can skip validation if the License Key field is null.
+	 *
+	 * @since 2.5
+	 *
+	 * @param object $field The Field Object for the rendered input.
+	 * @param mixed  $value The current posted field value.
+	 *
+	 * @return void
+	 */
+	public static function license_key_validation_callback( $field, $value ) {
+		if ( is_null( $value ) ) {
+			return;
+		}
+
+		$field->do_validation( $value );
+	}
+
+	/**
 	 * Initialize Plugin Settings fields renderer.
 	 *
 	 * @since 2.5
@@ -573,7 +613,10 @@ class GFSettings {
 				'save_callback'     => function( $values ) {
 
 					// License key.
-					GFFormsModel::save_key( rgar( $values, 'license_key' ) );
+					if ( isset( $_POST['_gform_setting_license_key'] ) ) {
+						GFFormsModel::save_key( rgar( $values, 'license_key' ) );
+					}
+
 					GFCommon::cache_remote_message();
 
 					// Disable CSS.

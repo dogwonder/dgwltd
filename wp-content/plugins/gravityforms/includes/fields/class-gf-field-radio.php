@@ -174,6 +174,31 @@ class GF_Field_Radio extends GF_Field {
 	}
 
 	/**
+	* Determine if we should add the aria description to a radio input.
+	*
+	* @since 2.5
+	*
+	* @param string $checked      The checked attribute or a blank string.
+	* @param int    $choice_id    The choice number.
+	*
+	* @return string
+	*/
+	public function add_aria_description( $checked, $choice_id ) {
+
+		// Determine if any choices are pre-selected.
+		foreach ( $this['choices'] as $choice ) {
+			$is_any_selected = rgar( $choice, 'isSelected' );
+			if ( $is_any_selected ) {
+				break;
+			}
+		}
+
+		// Return true if any choices are pre-selected, or if no choices are pre-selected and this is the first choice.
+		return ( ! $is_any_selected && $choice_id === 1 ) || $checked;
+
+	}
+
+	/**
 	 * Returns the choice HTML.
 	 *
 	 * @since 2.4.17
@@ -212,8 +237,10 @@ class GF_Field_Radio extends GF_Field {
 			$checked = GFFormsModel::choice_value_match( $this, $choice, $value ) ? "checked='checked'" : '';
 		}
 
-		$tabindex    = $this->get_tabindex();
-		$label       = sprintf( "<label for='choice_%s' id='label_%s'>%s</label>", $id, $id, $choice['text'] );
+		$aria_describedby = $this->add_aria_description( $checked, $choice_id ) ? $this->get_aria_describedby() : '';
+
+		$tabindex = $this->get_tabindex();
+		$label    = sprintf( "<label for='choice_%s' id='label_%s'>%s</label>", $id, $id, $choice['text'] );
 
 		// Handle 'other' choice.
 		if ( $this->enableOtherChoice && rgar( $choice, 'isOtherChoice' ) ) {
@@ -237,10 +264,10 @@ class GF_Field_Radio extends GF_Field {
 
 		$choice_markup = sprintf( "
 			<div class='gchoice gchoice_$id'>
-					<input name='input_%d' type='radio' value='%s' %s id='choice_%s' onchange='gformToggleRadioOther( this )' $tabindex %s />
+					<input class='gfield-choice-input' name='input_%d' type='radio' value='%s' %s id='choice_%s' onchange='gformToggleRadioOther( this )' %s $tabindex %s />
 					%s
 			</div>",
-			$this->id, esc_attr( $field_value ), $checked, $id, $disabled_text, $label
+			$this->id, esc_attr( $field_value ), $checked, $id, $aria_describedby, $disabled_text, $label
 		);
 
 		/**

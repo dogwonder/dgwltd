@@ -95,12 +95,14 @@ class Select extends Base {
 
 		} else {
 
+			$attributes = $this->get_attributes();
+
 			$select_input = sprintf(
 				'<select name="%s_%s" %s %s>%s</select>%s',
 				esc_attr( $this->settings->get_input_name_prefix() ),
 				esc_attr( $this->name ),
 				$this->get_describer() ? sprintf( 'aria-describedby="%s"', $this->get_describer() ) : '',
-				implode( ' ', $this->get_attributes() ),
+				implode( ' ', $attributes ),
 				self::get_options( $choices, $this->get_value() ),
 				rgobj( $this, 'after_select' )
 			);
@@ -108,15 +110,17 @@ class Select extends Base {
 			// Display enhanced select UI.
 			if ( $this->enhanced_ui ) {
 
+				$input_id = preg_replace( "/id='(.*)'/m", '${1}', $attributes['id'] );
+
 				// Wrap select input.
 				$html .= sprintf( '<span class="gform-settings-field__select--enhanced">%s</span>', $select_input );
 
 				$html .= '<script type="text/javascript">
 					jQuery( document ).ready( function () {
-						jQuery( "#' . esc_attr( $this->name ) . '" ).select2( {
+						jQuery( "#' . esc_attr( $input_id ) . '" ).select2( {
 							minimumResultsForSearch: Infinity,
 							dropdownCssClass: "gform-settings-field__select-enhanced-container",
-							dropdownParent: jQuery( "#' . esc_attr( $this->name ) . '" ).parent(),
+							dropdownParent: jQuery( "#' . esc_attr( $input_id ) . '" ).parent(),
 						} );
 					} );
 				</script>';

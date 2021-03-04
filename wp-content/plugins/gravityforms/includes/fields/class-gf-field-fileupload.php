@@ -252,9 +252,7 @@ class GF_Field_FileUpload extends GF_Field {
 									</div>";
 
 			$upload .= $rules_messages ? "<span class='gform_fileupload_rules' id='{$rules_messages_id}'>{$rules_messages}</span>" : '';
-			$upload .= "<div class='validation_message gfield_validation_message'>
-							<ul id='{$messages_id}'></ul> <!-- Leave <ul> empty to support CSS :empty selector. -->
-						</div>";
+			$upload .= "<ul class='validation_message validation_message--hidden-on-empty gfield_validation_message gform-ul-reset' id='{$messages_id}'></ul> <!-- Leave <ul> empty to support CSS :empty selector. -->";
 
 
 			if ( $is_entry_detail ) {
@@ -273,7 +271,7 @@ class GF_Field_FileUpload extends GF_Field {
 
 
 			$upload .= $rules_messages ? "<span class='gform_fileupload_rules' id='{$rules_messages_id}'>{$rules_messages}</span>" : '';
-			$upload .= "<div class='validation_message' id='{$live_validation_message_id}'></div>";
+			$upload .= "<div class='validation_message validation_message--hidden-on-empty' id='{$live_validation_message_id}'></div>";
 
 		}
 

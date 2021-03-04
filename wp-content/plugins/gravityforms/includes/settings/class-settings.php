@@ -612,7 +612,7 @@ class Settings {
 
 		?>
 
-		<form id="gform-settings" class="gform_settings_form" action="" method="post" enctype="multipart/form-data">
+		<form id="gform-settings" class="gform_settings_form" action="" method="post" enctype="multipart/form-data" novalidate>
 			<?php
 
 				if ( ! empty( $this->before_fields ) && is_callable( $this->before_fields ) ) {
@@ -886,7 +886,7 @@ class Settings {
 		// Display field label.
 		if ( rgobj( $field, 'label' ) ) {
 			printf(
-				'<label class="gform-settings-label" for="%s">%s%s %s</label>',
+				'<div class="gform-settings-field__header"><label class="gform-settings-label" for="%s">%s%s</label>%s</div>',
 				esc_attr( $field->name ),
 				rgobj( $field, 'label' ),
 				$field->required ? '<span class="required">(' . __( 'Required', 'gravityforms' ) . ')</span>' : '',
@@ -1454,6 +1454,15 @@ class Settings {
 
 		}
 
+	}
+
+	/**
+	 * Set the save success message after a save redirect.
+	 *
+	 * @since 2.5
+	 */
+	public function set_save_message_after_redirect() {
+		$this->postback_message = $this->get_save_success_message();
 	}
 
 	/**

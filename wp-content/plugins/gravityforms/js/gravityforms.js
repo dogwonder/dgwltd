@@ -31,6 +31,35 @@ function gformBindFormatPricingFields(){
     });
 }
 
+//----------------------------------------
+//------ UTIL FUNCTIONS ------------------
+//----------------------------------------
+
+// Namespace utils to our main gform namespace that hooks and other methods live in.
+var gform = window.gform || {};
+
+// Tack in a util namespace if not already set.
+gform.util = gform.util || {};
+
+// Create a console messaging utility namespace, mainly made to simplify constant checking for its presence.
+gform.util.console = {
+    error: function( message ) {
+        if( window.console ) {
+            console.error( message );
+        }
+    },
+    info: function( message ) {
+        if( window.console ) {
+            console.info( message );
+        }
+    },
+    log: function( message ) {
+        if( window.console ) {
+            console.log( message );
+        }
+    },
+};
+
 //------------------------------------------------
 //---------- CURRENCY ----------------------------
 //------------------------------------------------
@@ -344,7 +373,7 @@ function gformCalculateTotalPrice(formId){
         price += shipping;
     }
 
-    //gform_product_total filter. Allows uers to perform custom price calculation
+		//gform_product_total filter. Allows uers to perform custom price calculation
     if(window["gform_product_total"])
         price = window["gform_product_total"](formId, price);
 
@@ -355,25 +384,25 @@ function gformCalculateTotalPrice(formId){
     var totalElement = jQuery(".ginput_total_" + formId);
     if( totalElement.length > 0 ) {
 
-        var currentTotal = totalElement.next().val(),
+        var currentTotal = totalElement.val(),
             formattedTotal = gformFormatMoney(price, true);
 
         if (currentTotal != price) {
-            totalElement.next().val(price).change();
+            totalElement.val(price).change();
         }
 
         if (formattedTotal != totalElement.first().text()) {
-            totalElement.html(formattedTotal);
+            totalElement.val(formattedTotal);
         }
 
     }
 }
 
 function gformGetShippingPrice(formId){
-    var shippingField = jQuery(".gfield_shipping_" + formId + " input[type=\"hidden\"], .gfield_shipping_" + formId + " select, .gfield_shipping_" + formId + " input:checked");
+    var shippingField = jQuery(".gfield_shipping_" + formId + " input[readonly], .gfield_shipping_" + formId + " select, .gfield_shipping_" + formId + " input:checked");
     var shipping = 0;
     if(shippingField.length == 1 && !gformIsHidden(shippingField)){
-        if(shippingField.attr("type") && shippingField.attr("type").toLowerCase() == "hidden")
+        if(shippingField.attr("readonly"))
             shipping = shippingField.val();
         else
             shipping = gformGetPrice(shippingField.val());
@@ -676,7 +705,7 @@ function gformInitPriceFields(){
         var productIds = gformGetProductIds("gfield_price", this);
         gformRegisterPriceField(productIds);
 
-       jQuery( this ).on( 'change', 'input[type="text"], input[type="number"], select', function() {
+       jQuery( this ).on( 'input change', 'input[type="text"], input[type="number"], select', function() {
 
            var productIds = gformGetProductIds("gfield_price", this);
            if(productIds.formId == 0)
@@ -1891,7 +1920,7 @@ function gformValidateFileSize( field, max_file_size ) {
     } else {
 
 		// Reset validation message.
-		validation_element.text( '' );
+		validation_element.remove();
 
 	}
 
@@ -2285,6 +2314,45 @@ function gformAddSpinner(formId, spinnerUrl) {
 		$spinnerTarget.after('<img id="gform_ajax_spinner_' + formId + '"  class="gform_ajax_spinner" src="' + spinnerUrl + '" alt="" />');
 	}
 
+}
+
+//----------------------------------------
+//------ TINYMCE FUNCTIONS ---------------
+//----------------------------------------
+
+/**
+ * @function gformReInitTinymceInstance
+ * @description Reinitializes a tinymce instance bound to a gform field if found.
+ *
+ * @since 2.5
+ *
+ * @param formId {int} Required. The form id.
+ * @param fieldId {int} Required. The field id.
+ */
+
+function gformReInitTinymceInstance( formId, fieldId ) {
+    // check for required arguments
+    if ( ! formId || ! fieldId ) {
+        gform.util.console.error( 'gformReInitTinymceInstance requires a form and field id.' );
+        return;
+    }
+    // make sure we have tinymce
+    var tinymce = window.tinymce;
+    if ( ! tinymce ) {
+        gform.util.console.error( 'gformReInitTinymceInstance requires tinymce to be available.' );
+        return;
+    }
+    // get the editor instance by form and field id and bail if not found
+    var editor = tinymce.get( 'input_' + formId + '_' + fieldId );
+    if ( ! editor ) {
+        gform.util.console.error( 'gformReInitTinymceInstance did not find an instance for input_' + formId + '_' + fieldId + '.' );
+        return;
+    }
+    // get the settings, destroy the instance and reinitialize
+    var settings = jQuery.extend( {}, editor.settings );
+    editor.remove();
+    tinymce.init( settings );
+    gform.util.console.log( 'gformReInitTinymceInstance reinitialized TinyMCE on input_' + formId + '_' + fieldId + '.' );
 }
 
 //----------------------------------------

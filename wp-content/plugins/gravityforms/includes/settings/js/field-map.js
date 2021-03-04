@@ -86,6 +86,87 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./js/src/components/Tooltips.js":
+/*!***************************************!*\
+  !*** ./js/src/components/Tooltips.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+/**
+ * WordPress dependencies
+ */
+var _wp$element = wp.element,
+    Component = _wp$element.Component,
+    Fragment = _wp$element.Fragment;
+var __ = wp.i18n.__;
+
+var Tooltip = /*#__PURE__*/function (_Component) {
+  _inherits(Tooltip, _Component);
+
+  var _super = _createSuper(Tooltip);
+
+  function Tooltip() {
+    _classCallCheck(this, Tooltip);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(Tooltip, [{
+    key: "render",
+    value: function render() {
+      if (this.props.tooltip) {
+        return /*#__PURE__*/React.createElement("button", {
+          type: "button",
+          className: "gf_tooltip tooltip",
+          "aria-label": this.props.tooltip
+        }, /*#__PURE__*/React.createElement("i", {
+          className: "gform-icon gform-icon--question-mark",
+          "aria-hidden": "true"
+        }));
+      } else {
+        return null;
+      }
+    }
+  }]);
+
+  return Tooltip;
+}(Component);
+
+exports["default"] = Tooltip;
+
+/***/ }),
+
 /***/ "./js/src/field-map/index.js":
 /*!***********************************!*\
   !*** ./js/src/field-map/index.js ***!
@@ -466,6 +547,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _Tooltips = _interopRequireDefault(__webpack_require__(/*! ../components/Tooltips */ "./js/src/components/Tooltips.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -514,6 +599,19 @@ var Mapping = /*#__PURE__*/function (_Component) {
   }
 
   _createClass(Mapping, [{
+    key: "renderRequiredSpan",
+    value: function renderRequiredSpan() {
+      var choice = this.props.choice;
+
+      if (choice.required) {
+        return /*#__PURE__*/React.createElement("span", {
+          className: "required"
+        }, "*");
+      } else {
+        return null;
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this$props = this.props,
@@ -566,9 +664,9 @@ var Mapping = /*#__PURE__*/function (_Component) {
           placeholder = keyField.placeholder; // If currently selected choice is required or we are displaying all keys, display label.
 
       if (choice.required || display_all) {
-        return /*#__PURE__*/React.createElement("label", null, choice.label, " ", choice.required ? /*#__PURE__*/React.createElement("span", {
-          className: "required"
-        }, "*") : null);
+        return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("label", null, choice.label, " ", this.renderRequiredSpan(), " "), /*#__PURE__*/React.createElement(_Tooltips["default"], {
+          tooltip: choice.tooltip
+        }));
       } // If selected choice is custom key, display input.
 
 
@@ -700,11 +798,13 @@ var Mapping = /*#__PURE__*/function (_Component) {
     key: "getValueInput",
     value: function getValueInput() {
       var _this$props4 = this.props,
+          choice = _this$props4.choice,
           index = _this$props4.index,
           isInvalid = _this$props4.isInvalid,
           mapping = _this$props4.mapping,
           updateMapping = _this$props4.updateMapping,
-          valueField = _this$props4.valueField; // If selected value is custom value, display input.
+          valueField = _this$props4.valueField;
+      var required = choice.required; // If selected value is custom value, display input.
 
       if (mapping.value === 'gf_custom') {
         return /*#__PURE__*/React.createElement("span", {
@@ -740,7 +840,8 @@ var Mapping = /*#__PURE__*/function (_Component) {
             value: e.target.value
           }), index);
         },
-        className: isInvalid ? 'gform-settings-generic-map__value--invalid' : ''
+        className: isInvalid ? 'gform-settings-generic-map__value--invalid' : '',
+        required: required
       }, this.getValueOptions().map(function (opt) {
         if (opt.choices && opt.choices.length > 0) {
           return /*#__PURE__*/React.createElement("optgroup", {

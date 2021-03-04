@@ -909,30 +909,54 @@ class GF_Form_List_Table extends WP_List_Table {
 	}
 
 	public static function compare_view_count_asc( $a, $b ) {
-	    return $a->view_count <=> $b->view_count;
+		if ( $a->view_count === $b->view_count ) {
+			return 0;
+		} else {
+			return $a->view_count > $b->view_count ? 1 : -1;
+		}
 	}
 
 	public static function compare_view_count_desc( $a, $b ) {
-	    return $b->view_count <=> $a->view_count;
+		if ( $a->view_count === $b->view_count ) {
+			return 0;
+		} else {
+			return $b->view_count > $a->view_count ? 1 : -1;
+		}
 	}
 
 	public static function compare_entry_count_asc( $a, $b ) {
-	    return $a->entry_count <=> $b->entry_count;
+		if ( $a->entry_count === $b->entry_count ) {
+			return 0;
+		} else {
+			return $a->entry_count > $b->entry_count ? 1 : -1;
+		}
 	}
 
 	public static function compare_entry_count_desc( $a, $b ) {
-	    return $b->entry_count <=> $a->entry_count;
+		if ( $a->entry_count === $b->entry_count ) {
+			return 0;
+		} else {
+			return $b->entry_count > $a->entry_count ? 1 : -1;
+		}
 	}
 
 	public static function compare_conversion_asc( $a, $b ) {
 		$a_conversion = $a->view_count > 0 ? $a->entry_count / $a->view_count : 0;
 		$b_conversion = $b->view_count > 0 ? $b->entry_count / $b->view_count : 0;
-	    return $a_conversion <=> $b_conversion;
+		if ( $a_conversion === $b_conversion ) {
+			return 0;
+		} else {
+			return $a_conversion > $b_conversion ? 1 : -1;
+		}
 	}
 
 	public static function compare_conversion_desc( $a, $b ) {
 	    $a_conversion = $a->view_count > 0 ? $a->entry_count / $a->view_count : 0;
 		$b_conversion = $b->view_count > 0 ? $b->entry_count / $b->view_count : 0;
-	    return $b_conversion <=> $a_conversion;
+		if ( $a_conversion === $b_conversion ) {
+			return 0;
+		} else {
+			return $b_conversion > $a_conversion ? 1 : -1;
+		}
 	}
 }

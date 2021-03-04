@@ -214,7 +214,7 @@ class Generic_Map extends Base {
 		$html = $this->get_description();
 
 		$html .= sprintf(
-			'<span class="%1$s"><input type="hidden" name="%2$s" value=\'%3$s\' />
+			'<span class="%1$s"><input type="hidden" name="%2$s" id="%2$s" value=\'%3$s\' />
 				<div id="%4$s" class="gform-settings-field-map__container"></div>%5$s</span>
 				<script type="text/javascript">initializeFieldMap( \'%4$s\', %6$s );</script></span>',
 			esc_attr( $this->get_container_classes() ),

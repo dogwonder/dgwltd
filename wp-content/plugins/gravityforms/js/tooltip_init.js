@@ -19,8 +19,9 @@ function gform_initialize_tooltips() {
 			at: offset,
 		},
 		tooltipClass: 'arrow-bottom',
-		content:      function () {
-			return jQuery( this ).prop( 'title' );
+		items: '[aria-label]',
+		content: function () {
+			return jQuery( this ).attr( 'aria-label' );
 		},
 		open:         function ( event, ui ) {
 			if ( typeof ( event.originalEvent ) === 'undefined' ) {
