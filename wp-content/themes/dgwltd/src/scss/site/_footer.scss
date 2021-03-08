@@ -8,6 +8,7 @@
   text-align: center;
   font-family: var(--sans);
   margin-top: var(--gap-40);
+  content-visibility: auto; //We only place this here as otherwise we might affect screenreaders. 
 
   ul li,
   p {

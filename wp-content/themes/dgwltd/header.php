@@ -74,7 +74,7 @@ if ( ! is_plugin_active( 'wordpress-seo/wp-seo.php' ) || ! is_plugin_active( 'wo
 	<header id="masthead" class="dgwltd-masthead" enabled="false">
 		<?php
 		// Optional - if you need a cookie notice - also needs JS cookienotice() and cookies.scss
-		// get_template_part('template-parts/_organisms/cookie-notice');
+		//get_template_part('template-parts/_organisms/cookie-notice');
 		?>
 
 		<div id="skiplink-container">

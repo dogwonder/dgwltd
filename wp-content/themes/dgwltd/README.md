@@ -38,14 +38,13 @@ $govuk-font-family-gds-transport: "Helvetica Neue", Helvetica, Arial, sans-serif
 
 - [Photoswipe](Photoswipe) integration for galleries
 - [Youtube](https://github.com/paulirish/lite-youtube-embed) and [Vimeo](https://github.com/slightlyoff/lite-vimeo) lite plugins (render the video as a screenshot until a user interacts with the video to save bandwidth)
-- [js.cookie](https://github.com/js-cookie/js-cookie) (disabled) for cookie integration but the [example website](https://dgw.ltd) uses plausible analytics (see `header.php`) so we don't need to display a cookie banner. 
 
 
 ## Analytics
 
 I am using [Plausible.io](https://plausible.io/simple-web-analytics) a simple privacy focused analyics service, as such I don't need to set a cookie banner. 
 
-Obviously you would want to add you'r own analytics so replace `<script async defer data-domain="dgw.ltd" src="https://plausible.io/js/plausible.js"></script>` from `header.php`
+Obviously you would want to add your own analytics so replace `<script async defer data-domain="dgw.ltd" src="https://plausible.io/js/plausible.js"></script>` from `header.php`
 
 Note: if you do use Plausible you can [exclude it](https://plausible.io/docs/excluding) recording your own visits by pasting this into the developer console `localStorage.plausible_ignore=true`
 
@@ -111,11 +110,23 @@ Blog / posts list template
 
 Search results template
 
+### Cookies template
+
+`template-cookies.php`
+
+Cookie settings template. If the optional cookies functionality is turned on this will allow users to save their cookie settings. 
+
+header.php - uncomment `get_template_part('template-parts/_organisms/cookie-notice');`
+app.js - uncomment `cookieSet(), cookieSettingsPage(), cookieSettingsUpdate()`
+
+You can then use the PHP function `dgwltd_cookie_var()` to test for functional and analytics cookies. 
+
 ## Gallery
 
 Add the Additional CSS class(es) `.dgwltd-gallery` to the block 'Gallery' make a Wordpress gallery block into a modal one (and make sure link to settings are Media file)
 
 Based on PhotoSwipe [Javascript gallery](https://photoswipe.com) 
+
 
 
 ## AMP Support

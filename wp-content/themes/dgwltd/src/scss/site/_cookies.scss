@@ -1,62 +1,26 @@
-.cookie-notice {
-  display: none;
-  background-color: var(--primary);
-  border: 0;
-  @include mq($from: desktop) {
-    padding: 6px;
-  }
-  text-align: center;
-  p {
-    margin: 0;
-    @include rhythm(14, 25);
-  }
-  a {
-    color: var(--text-color);
-  }
-
-  .cookie-notice__content {
-    max-width: var(--containerWidth);
-    margin:0 auto;
-    display: flex;
-    flex-direction: column;
-    padding: var(--gap-10);
-    @include mq($from: desktop) {
-      flex-direction: row;
-      padding: 0;
-    }
-  }
-  .cookie-notice__buttons
-  .dgwltd-button {
-    vertical-align: top;
-    line-height: 1;
-    font-weight: normal;
-    display: inline-block;
-    background-color: transparent;
-    -webkit-appearance: none;
-    padding: 4px 8px;
-    margin: 10px 5px 5px;
-    width:auto;
-    border:0;
-    background-color: var(--primary);
-    color:var(--text-color);
-    border: 2px solid var(--text-color);
-    font-size: 14px;
-    padding: 2px 8px;
-    @include mq($from: desktop) {
-      font-size: 12px;
-      margin: 2px 0 0 5px;
-    }
-    text-decoration: none;
-    box-shadow: none;
-    &:focus,
-    &:hover {
-      background-color: var(--text-color);
-      color: white;
-      cursor: pointer;
-    }
+.govuk-cookie-banner {
+  button {
+      border: 2px solid var(--button-background);
+      background-color: var(--button-background);
+      &:focus, &:hover {
+        border-color: var(--button-hover);
+        background-color: var(--button-hover);
+      }
   }
 }
 
-.cookie-notice.open {
-  display: flex;
+//JS not enabled hidebuttons
+.no-js {
+   .govuk-button-group {
+     display:none;
+    }
+}
+
+.js-enabled {
+  .govuk-cookie-banner {
+    display: none;
+    &.open {
+      display: block;
+    }
+  }
 }

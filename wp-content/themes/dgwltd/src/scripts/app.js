@@ -1,9 +1,20 @@
 //Import ES6 dependencies - per ES6 imports, we can omit the `.js` at the end.
-//import Cookies from '../vendor/js.cookie'; // Cookie functionality - optional
 
 ;(function () {
 
     'use strict';
+
+    /**
+     * Get the value of a cookie
+     * Source: https://gist.github.com/wpsmith/6cf23551dd140fb72ae7
+     * @param  {String} name  The name of the cookie
+     * @return {String}       The cookie value
+     */
+    var getCookie = function (name) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length == 2) return parts.pop().split(";").shift();
+    };
 
     /*!
     * Get the contrasting color for any hex color
@@ -53,33 +64,134 @@
     //Cookies
     const cookieSet = ()=>{
 
-        //ES6 for depenencies
-        // window.Cookies = require('js-cookie');
-        
         // Cookie vars
-        var cookieNotice = document.getElementById('cookieNotice');
-        var cookieButton = document.getElementById('cookieButton');
+        let cookieNotice = document.getElementById('cookieNotice');
+        let cookieButtons = document.querySelectorAll('#cookieNotice button');
+        let cookieAccept = document.getElementById('cookieAccept');
 
         //If JS enabled then show the notice - falls back to noscipt if not present
         cookieNotice.classList.add('open');
 
-        // Set a cookie
-        if (!cookieButton) return;
+        //If no buttons bail
+        if (!cookieButtons) return;
 
-        cookieButton.addEventListener('click', function (event) {
-            //requires js.cookie.js
-            // Cookies.set('dgwltd_cookie_notice_accept', 'accepted', { expires: 365, path: '/', domain: 'actiononhearingloss.org.uk' });
-            Cookies.set('dgwltd_cookie_notice_accept', 'accepted', { expires: 365, path: '/' });
-            cookieNotice.classList.remove('open');
+        //Get timestamp of one year into the future
+        var date = new Date();
+        date.setTime(date.getTime() + 365 * 24 * 60 * 60 * 1000);
 
-        }, false);
+        // Set the cookies
+        cookieButtons.forEach(button => {
+            button.addEventListener('click', event => {
+                document.cookie = 'dgwltd_cookies_preferences=true; expires=' + date.toUTCString() + '; path=/';    
+                cookieNotice.classList.remove('open');
+            })
+        })
+
+        //If user accepts additional cookies let's set that as true
+        cookieAccept.addEventListener('click', event => {
+            let currentConsentCookieVars = { "essential": true, "functional": true, "analytics": true };
+            document.cookie = 'dgwltd_cookies_policy=' + JSON.stringify(currentConsentCookieVars) + '; expires=' + date.toUTCString() + '; path=/';    
+        })
 
         //Remove notice if cookie is set
-        if(cookieNotice && Cookies.get('dgwltd_cookie_notice_accept') === 'accepted') {
+        if(cookieNotice && getCookie('dgwltd_cookies_preferences')) {
             cookieNotice.classList.remove('open');
         }
 
-    }
+    };
+
+    const cookieSettingsPage = ()=>{
+
+        //Set the default settings
+        let currentConsentCookie = getCookie('dgwltd_cookies_policy');
+        let currentConsentCookieVars = { "essential": true, "functional": false, "analytics": false };
+
+        //Get timestamp of one year into the future
+        var date = new Date();
+        date.setTime(date.getTime() + 365 * 24 * 60 * 60 * 1000);
+
+        //Set the cookie if not defined
+        if (currentConsentCookie === undefined) {
+            document.cookie = 'dgwltd_cookies_policy=' + JSON.stringify(currentConsentCookieVars) + '; expires=' + date.toUTCString() + '; path=/';
+        };
+
+        //Get the cookie settings
+        let currentConsentCookieJSON = JSON.parse(currentConsentCookie); 
+
+        //Check for the form
+        let cookieForm = document.getElementById('cookies_form');
+
+        //If no form bail
+        if (!cookieForm) return;
+
+        // We don't need the essential value as this cannot be changed by the user
+        delete currentConsentCookieJSON.essential
+            
+        for (var cookieType in currentConsentCookieJSON) {
+            var radioButton
+
+            // console.log(cookieType + ' is ' + currentConsentCookieJSON[cookieType]);
+    
+            if (currentConsentCookieJSON[cookieType]) {
+            radioButton = document.querySelector('input[name=cookies-' + cookieType + '][value=yes]')
+            } else {
+            radioButton = document.querySelector('input[name=cookies-' + cookieType + '][value=no]')
+            }
+    
+            radioButton.checked = true
+        }
+
+    };
+
+    const cookieSettingsUpdate = ()=>{
+
+        //Get timestamp of one year into the future
+        var date = new Date();
+        date.setTime(date.getTime() + 365 * 24 * 60 * 60 * 1000);
+
+        //If the form is submitted
+        document.addEventListener('submit', function (event) {
+
+            //Let's make sure we are on the right form
+            if (!event.target.matches('#cookies_form')) return;
+
+            event.preventDefault();
+
+            let formInputs = event.target.getElementsByTagName('input')
+            let options = {"essential": true}
+
+            // console.log(formInputs);
+
+            for (var i = 0; i < formInputs.length; i++) {
+                var input = formInputs[i]
+                if (input.checked) {
+
+                    var name = input.name.replace('cookies-', '')
+                    var value = input.value === 'yes'
+
+                    options[name] = value
+                }
+            }
+
+            // console.log(options);
+            document.cookie = 'dgwltd_cookies_preferences=true; expires=' + date.toUTCString() + '; path=/';
+            document.cookie = 'dgwltd_cookies_policy=' + JSON.stringify(options) + '; expires=' + date.toUTCString() + '; path=/';
+
+            //Show confirmation message
+            let confirmationMessage = document.querySelector('.govuk-notification-banner')
+            // hide the message if already visible so assistive tech is triggered when it appears
+            confirmationMessage.style.display = 'none'
+            //Scroll to top of the page
+            document.body.scrollTop = document.documentElement.scrollTop = 0
+            //Show the message
+            confirmationMessage.style.display = 'block'
+
+
+        
+        }, false);
+
+
+    };
 
 
     //Vanilla nav toggle button
@@ -214,8 +326,10 @@
 
     //Init
     document.addEventListener("DOMContentLoaded", function() {
-        // cookieSet(); // Optional
         // blockContrast('.has-background');
+        // cookieSet(); // Optional
+        // cookieSettingsPage(); // Optional
+        // cookieSettingsUpdate(); // Optional
         toggleNav('#nav-toggle', '#site-navigation', '#masthead');
         cardClick('.dgwltd-card');
      });

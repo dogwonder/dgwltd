@@ -100,6 +100,33 @@ if ( ! function_exists( 'dgwltd_env' ) ) :
 	}
 endif;
 
+if ( ! function_exists( 'dgwltd_cookie_var' ) ) :
+	function dgwltd_cookie_var($env) {
+
+		//First of all does the cookie exist?
+		if(!isset($_COOKIE['dgwltd_cookies_policy'])) return;
+
+		$cookie = $_COOKIE["dgwltd_cookies_policy"];
+		$cookie = stripslashes($cookie);
+		$cookie_vars = json_decode($cookie, true);
+		switch ($env) {
+		case 'functional':
+			if($cookie_vars[functional]) {
+				return true;
+			}
+		break;
+		case 'analytics':
+			if($cookie_vars[analytics]) {
+				return true;
+			}
+		break;
+		default:
+			'essential';
+		break;
+		}
+	}
+endif;
+
 
 // Callable for usort. Sorts the array based on the 'distance' array value - using spaceship operator <=> PHP 7+
 if ( ! function_exists( 'dgwltd_sort_dates' ) ) :
