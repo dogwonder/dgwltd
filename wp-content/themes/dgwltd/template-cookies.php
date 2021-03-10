@@ -39,7 +39,7 @@ get_header();
 			
 			<div class="govuk-grid-row">
 				<div class="govuk-grid-column-two-thirds">
-					<h2 class="govuk-heading-l"><?php esc_html_e( 'Success', 'dgwltd' ); ?>Change your cookie settings</h2>
+					<h2 class="govuk-heading-l"><?php esc_html_e( 'Change your cookie settings', 'dgwltd' ); ?></h2>
 					<form action="<?php echo get_permalink(); ?>" method="post" novalidate id="cookies_form">
 
 					<div class="govuk-form-group">
