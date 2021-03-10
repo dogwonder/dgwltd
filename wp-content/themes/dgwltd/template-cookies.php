@@ -27,42 +27,37 @@ get_header();
 			<div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner" style="display: none;">
 			<div class="govuk-notification-banner__header">
 				<h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-				Success
+				<?php esc_html_e( 'Success', 'dgwltd' ); ?>
 				</h2>
 			</div>
 			<div class="govuk-notification-banner__content">
 				<p class="govuk-notification-banner__heading">
-				You’ve set your cookie preferences.
+				<?php esc_html_e( 'You’ve set your cookie preferences.', 'dgwltd' ); ?>
 				</p>
 			</div>
 			</div>
-
-			<?php 
-			// if(dgwltd_cookie_var('functional')) { echo 'functional'; }
-			// if(dgwltd_cookie_var('analytics')) { echo 'analytics'; }
-			?>
 			
 			<div class="govuk-grid-row">
 				<div class="govuk-grid-column-two-thirds">
-					<h2 class="govuk-heading-l">Change your cookie settings</h2>
+					<h2 class="govuk-heading-l"><?php esc_html_e( 'Success', 'dgwltd' ); ?>Change your cookie settings</h2>
 					<form action="<?php echo get_permalink(); ?>" method="post" novalidate id="cookies_form">
 
 					<div class="govuk-form-group">
 						<fieldset class="govuk-fieldset">
 						<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-							Do you want to accept functional cookies?
+							<?php esc_html_e( 'Do you want to accept functional cookies?', 'dgwltd' ); ?>
 						</legend>
 						<div class="govuk-radios">
 							<div class="govuk-radios__item">
 							<input class="govuk-radios__input" id="functional-cookies" name="cookies-functional" type="radio" value="yes">
 							<label class="govuk-label govuk-radios__label" for="functional-cookies">
-								Yes
+								<?php esc_html_e( 'Yes', 'dgwltd' ); ?>
 							</label>
 							</div>
 							<div class="govuk-radios__item">
 							<input class="govuk-radios__input" id="functional-cookies-2" name="cookies-functional" type="radio" value="no" checked>
 							<label class="govuk-label govuk-radios__label" for="functional-cookies-2">
-								No
+								<?php esc_html_e( 'No', 'dgwltd' ); ?>
 							</label>
 							</div>
 						</div>
@@ -73,19 +68,42 @@ get_header();
 					<div class="govuk-form-group">
 						<fieldset class="govuk-fieldset">
 						<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-							Do you want to accept analytics cookies?
+							<?php esc_html_e( 'Do you want to accept performance cookies?', 'dgwltd' ); ?>
 						</legend>
 						<div class="govuk-radios">
 							<div class="govuk-radios__item">
-							<input class="govuk-radios__input" id="analytics-cookies" name="cookies-analytics" type="radio" value="yes">
-							<label class="govuk-label govuk-radios__label" for="analytics-cookies">
-								Yes
+							<input class="govuk-radios__input" id="performance-cookies" name="cookies-performance" type="radio" value="yes">
+							<label class="govuk-label govuk-radios__label" for="performance-cookies">
+								<?php esc_html_e( 'Yes', 'dgwltd' ); ?>
 							</label>
 							</div>
 							<div class="govuk-radios__item">
-							<input class="govuk-radios__input" id="analytics-cookies-2" name="cookies-analytics" type="radio" value="no" checked>
-							<label class="govuk-label govuk-radios__label" for="analytics-cookies-2">
-								No
+							<input class="govuk-radios__input" id="performance-cookies-2" name="cookies-performance" type="radio" value="no" checked>
+							<label class="govuk-label govuk-radios__label" for="performance-cookies-2">
+								<?php esc_html_e( 'No', 'dgwltd' ); ?>
+							</label>
+							</div>
+						</div>
+
+						</fieldset>
+					</div>
+
+					<div class="govuk-form-group">
+						<fieldset class="govuk-fieldset">
+						<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+							<?php esc_html_e( 'Do you want to accept advertising cookies?', 'dgwltd' ); ?>
+						</legend>
+						<div class="govuk-radios">
+							<div class="govuk-radios__item">
+							<input class="govuk-radios__input" id="advertising-cookies" name="cookies-advertising" type="radio" value="yes">
+							<label class="govuk-label govuk-radios__label" for="advertising-cookies">
+								<?php esc_html_e( 'Yes', 'dgwltd' ); ?>
+							</label>
+							</div>
+							<div class="govuk-radios__item">
+							<input class="govuk-radios__input" id="advertising-cookies-2" name="cookies-advertising" type="radio" value="no" checked>
+							<label class="govuk-label govuk-radios__label" for="advertising-cookies-2">
+								<?php esc_html_e( 'No', 'dgwltd' ); ?>
 							</label>
 							</div>
 						</div>
@@ -94,7 +112,7 @@ get_header();
 					</div>
 
 					<button class="govuk-button" data-module="govuk-button">
-						Save cookie settings
+						<?php esc_html_e( 'Save cookie settings', 'dgwltd' ); ?>
 					</button>
 					</form>
 				</div>
@@ -104,8 +122,5 @@ get_header();
 			</div>
 		</div>       
 		<?php endwhile; // End of the loop. ?>
-
-
-
 <?php
 get_footer();

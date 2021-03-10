@@ -62,12 +62,14 @@
     }
 
     //Cookies
-    const cookieSet = ()=>{
+    const cookieBanner = ()=>{
 
         // Cookie vars
         let cookieNotice = document.getElementById('cookieNotice');
         let cookieButtons = document.querySelectorAll('#cookieNotice button');
         let cookieAccept = document.getElementById('cookieAccept');
+
+        if (!cookieNotice) return;
 
         //If JS enabled then show the notice - falls back to noscipt if not present
         cookieNotice.classList.add('open');
@@ -82,19 +84,19 @@
         // Set the cookies
         cookieButtons.forEach(button => {
             button.addEventListener('click', event => {
-                document.cookie = 'dgwltd_cookies_preferences=true; expires=' + date.toUTCString() + '; path=/';    
+                document.cookie = 'dgwltd_cookies_preferences_set=true; expires=' + date.toUTCString() + '; path=/';    
                 cookieNotice.classList.remove('open');
             })
         })
 
         //If user accepts additional cookies let's set that as true
         cookieAccept.addEventListener('click', event => {
-            let currentConsentCookieVars = { "essential": true, "functional": true, "analytics": true };
+            let currentConsentCookieVars = { "essential": true, "functional": true, "performance": true, "advertising": true };
             document.cookie = 'dgwltd_cookies_policy=' + JSON.stringify(currentConsentCookieVars) + '; expires=' + date.toUTCString() + '; path=/';    
         })
 
         //Remove notice if cookie is set
-        if(cookieNotice && getCookie('dgwltd_cookies_preferences')) {
+        if(cookieNotice && getCookie('dgwltd_cookies_preferences_set')) {
             cookieNotice.classList.remove('open');
         }
 
@@ -102,30 +104,22 @@
 
     const cookieSettingsPage = ()=>{
 
-        //Set the default settings
+        //Get the default settings, this should already have been set in cookie.js
         let currentConsentCookie = getCookie('dgwltd_cookies_policy');
-        let currentConsentCookieVars = { "essential": true, "functional": false, "analytics": false };
 
-        //Get timestamp of one year into the future
-        var date = new Date();
-        date.setTime(date.getTime() + 365 * 24 * 60 * 60 * 1000);
-
-        //Set the cookie if not defined
-        if (currentConsentCookie === undefined) {
-            document.cookie = 'dgwltd_cookies_policy=' + JSON.stringify(currentConsentCookieVars) + '; expires=' + date.toUTCString() + '; path=/';
-        };
+        if(!currentConsentCookie) return;
 
         //Get the cookie settings
         let currentConsentCookieJSON = JSON.parse(currentConsentCookie); 
 
+        // We don't need the essential value as this cannot be changed by the user
+        delete currentConsentCookieJSON.essential
+        
         //Check for the form
         let cookieForm = document.getElementById('cookies_form');
 
         //If no form bail
         if (!cookieForm) return;
-
-        // We don't need the essential value as this cannot be changed by the user
-        delete currentConsentCookieJSON.essential
             
         for (var cookieType in currentConsentCookieJSON) {
             var radioButton
@@ -139,6 +133,59 @@
             }
     
             radioButton.checked = true
+        }
+
+    };
+
+    const cookieScriptsEnable = ()=>{
+        
+        // JavaScript Type Re-Writing
+        // https://help.termly.io/support/solutions/articles/60000666992-blocking-javascript-third-party-cookies-manually
+        // <script type="text/plain" data-categories="performance" src="xxxxxxxxx.js"></script>
+	    // <script type="text/plain" data-categories="functional" src="xxxxxxxxx.js"></script>	
+        // <iframe width="560" height="315" data-src="https://www.youtube.com/embed/xxxxxxxxx" data-categories="advertising" frameborder="0" allowfullscreen></iframe>
+
+        //Get the cookie settings
+        let currentConsentCookie = getCookie('dgwltd_cookies_policy');
+        if(!currentConsentCookie) return;
+
+        let currentConsentCookieJSON = JSON.parse(currentConsentCookie); 
+        //remove essential 
+        delete currentConsentCookieJSON.essential
+
+        //Get all the scripts
+        let scripts = document.querySelectorAll('script[data-categories]');
+        let iframes = document.querySelectorAll('iframe[data-categories]');
+        // console.log(scripts);
+
+        //JavaScript Type Re-Writing
+        for (var cookieType in currentConsentCookieJSON) {
+            
+            // console.log(cookieType);
+
+            Array.prototype.forEach.call(scripts, function(script) {
+                let category = script.dataset.categories;
+                //If true
+                if (currentConsentCookieJSON[cookieType]) {
+                    if(category === cookieType) {
+                        //Set the MIME type
+                        script.setAttribute('type', 'text/javascript'); 
+                    }
+                }
+            })
+
+            Array.prototype.forEach.call(iframes, function(iframe) {
+                let category = iframe.dataset.categories;
+                //If true
+                if (currentConsentCookieJSON[cookieType]) {
+                    if(category === cookieType) {
+                        //Set the src of the iframe
+                        iframe.src = iframe.dataset.src;
+                        //Remove the data-src for styling purposes
+                        iframe.removeAttribute('data-src');
+                    }
+                }
+            })
         }
 
     };
@@ -174,7 +221,7 @@
             }
 
             // console.log(options);
-            document.cookie = 'dgwltd_cookies_preferences=true; expires=' + date.toUTCString() + '; path=/';
+            document.cookie = 'dgwltd_cookies_preferences_set=true; expires=' + date.toUTCString() + '; path=/';
             document.cookie = 'dgwltd_cookies_policy=' + JSON.stringify(options) + '; expires=' + date.toUTCString() + '; path=/';
 
             //Show confirmation message
@@ -327,9 +374,10 @@
     //Init
     document.addEventListener("DOMContentLoaded", function() {
         // blockContrast('.has-background');
-        // cookieSet(); // Optional
-        // cookieSettingsPage(); // Optional
-        // cookieSettingsUpdate(); // Optional
+        cookieBanner(); // Optional
+        cookieSettingsPage(); // Optional
+        cookieSettingsUpdate(); // Optional
+        cookieScriptsEnable(); // Optional
         toggleNav('#nav-toggle', '#site-navigation', '#masthead');
         cardClick('.dgwltd-card');
      });

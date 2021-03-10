@@ -15,6 +15,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title><?php bloginfo( 'name' ); ?> &ndash; <?php is_front_page() ? bloginfo( 'description' ) : wp_title( '' ); ?></title>
+<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/dist/scripts/cookies.js"></script>
 <link rel="preconnect" href="https://plausible.io">
 <link rel="preconnect" href="<?php echo esc_url( site_url() ); ?>" crossorigin>
 <link rel="profile" href="https://gmpg.org/xfn/11">
@@ -74,7 +75,7 @@ if ( ! is_plugin_active( 'wordpress-seo/wp-seo.php' ) || ! is_plugin_active( 'wo
 	<header id="masthead" class="dgwltd-masthead" enabled="false">
 		<?php
 		// Optional - if you need a cookie notice - also needs JS cookienotice() and cookies.scss
-		//get_template_part('template-parts/_organisms/cookie-notice');
+		get_template_part('template-parts/_organisms/cookie-notice');
 		?>
 
 		<div id="skiplink-container">
@@ -113,3 +114,4 @@ if ( ! is_plugin_active( 'wordpress-seo/wp-seo.php' ) || ! is_plugin_active( 'wo
 	</header><!-- #masthead -->
 	
 	<main id="content" class="dgwltd-container">
+

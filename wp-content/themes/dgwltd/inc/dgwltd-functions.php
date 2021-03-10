@@ -100,6 +100,9 @@ if ( ! function_exists( 'dgwltd_env' ) ) :
 	}
 endif;
 
+//Check cookie state
+// if(dgwltd_cookie_var('functional')) { echo 'functional'; }
+// if(dgwltd_cookie_var('analytics')) { echo 'analytics'; }
 if ( ! function_exists( 'dgwltd_cookie_var' ) ) :
 	function dgwltd_cookie_var($env) {
 

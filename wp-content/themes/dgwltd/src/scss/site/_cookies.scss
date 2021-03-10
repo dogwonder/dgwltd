@@ -24,3 +24,8 @@
     }
   }
 }
+
+//If cookies not accepted hide the iframe
+iframe[data-src] {
+  height:0;
+}

@@ -10,7 +10,8 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 const scripts = () => {
     return src([
-      './src/scripts/app.js'
+      './src/scripts/app.js', 
+      './src/scripts/cookies.js'
     ])
     //ES6 see https://nshki.com/es6-in-gulp-projects/
     .pipe(rollup({ plugins: [babel(), resolve(), commonjs()] }, 'umd'))
