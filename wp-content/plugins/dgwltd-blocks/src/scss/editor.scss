@@ -1,3 +1,5 @@
+//Wordpress color palette https://codepen.io/ryelle/full/WNGVEjw
+
 //Button
 .dgwltd-button {
     display: inline-block;
@@ -24,8 +26,8 @@
   [data-type='acf/dgwltd-cards'] {
     max-width:100%;
     width: clamp(16rem, 90vw, 52rem);
-    background-color: #f4f5f7;
-    border: 1px solid #e5e7eb;
+    background-color: #f0f0f1;
+    border: 1px solid #dcdcde;
     box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
     .wp-block {
       max-width: 100%;
@@ -150,7 +152,7 @@
     
     &[data-theme='dark'] {
       .dgwltd-cta__inner {
-        background-color: #32373c;
+        background-color: #3c434a;
       }
       .dgwltd-cta__content {
         h1, h2, h3, p, .govuk-body {
