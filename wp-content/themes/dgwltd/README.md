@@ -122,9 +122,9 @@ An initial cookie is set to save the users preferences where only stricly necess
 
 See `app.js` and the function `cookieScriptsEnable()` for more instructions on how to manually block third-party cookies
 
-header.php - uncomment `get_template_part('template-parts/_organisms/cookie-notice');` 
 header.php - uncomment `<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/dist/scripts/cookies.js"></script>`
-app.js - uncomment `cookieSet(), cookieSettingsPage(), cookieSettingsUpdate()` 
+header.php - uncomment `get_template_part('template-parts/_organisms/cookie-notice');` 
+app.js - uncomment `cookieBanner(), cookieSettingsPage(), cookieSettingsUpdate(), cookieSettingsUpdate(), cookieScriptsEnable()` 
 
 You can then use the PHP function `dgwltd_cookie_var()` to test for functional and analytics cookies. 
 

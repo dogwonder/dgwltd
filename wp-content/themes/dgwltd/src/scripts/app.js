@@ -374,10 +374,10 @@
     //Init
     document.addEventListener("DOMContentLoaded", function() {
         // blockContrast('.has-background');
-        cookieBanner(); // Optional
-        cookieSettingsPage(); // Optional
-        cookieSettingsUpdate(); // Optional
-        cookieScriptsEnable(); // Optional
+        //cookieBanner(); // Optional
+        //cookieSettingsPage(); // Optional
+        //cookieSettingsUpdate(); // Optional
+        //cookieScriptsEnable(); // Optional
         toggleNav('#nav-toggle', '#site-navigation', '#masthead');
         cardClick('.dgwltd-card');
      });
