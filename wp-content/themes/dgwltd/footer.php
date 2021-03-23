@@ -62,9 +62,9 @@ if ( has_blocks( $post->post_content ) ) {
 		if ( $index === 0 && 'core/gallery' === $block['blockName'] ) {
 			?>
 			<?php include locate_template( 'template-parts/_organisms/pswp.php' ); ?>
-<script src="<?php echo get_template_directory_uri(); ?>/dist/scripts/photoswipe.min.js"></script> 
-<script src="<?php echo get_template_directory_uri(); ?>/dist/scripts/photoswipe-ui-default.min.js"></script> 
-<script src="<?php echo get_template_directory_uri(); ?>/dist/scripts/gallery.js"></script>    
+			<script src="<?php echo get_template_directory_uri(); ?>/dist/scripts/photoswipe.min.js"></script> 
+			<script src="<?php echo get_template_directory_uri(); ?>/dist/scripts/photoswipe-ui-default.min.js"></script> 
+			<script src="<?php echo get_template_directory_uri(); ?>/dist/scripts/gallery.js"></script>    
 			<?php
 		}
 	}
