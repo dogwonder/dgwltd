@@ -108,7 +108,8 @@ h2 ~ .dgwltd-block--cards_inner {
     @extend %dgwltd-heading-s;
     display: inline-block;
     width: 100%;
-    text-decoration: underline;
+    margin: 0 0 var(--gap-10);
+    text-decoration: none;
     color: var(--highlight);
     > a {
       color:inherit;
@@ -117,8 +118,6 @@ h2 ~ .dgwltd-block--cards_inner {
         color:var(--hover);
       }
     }
-    margin: 0 0 var(--gap-10);
-    text-decoration: none;
   }
 
   .dgwltd-card__description {
@@ -143,10 +142,6 @@ h2 ~ .dgwltd-block--cards_inner {
         @extend %dgwltd-body-s;
       }
     }
-  }
-
-  .dgwltd-card__description {
-
   }
 
   //Reversed

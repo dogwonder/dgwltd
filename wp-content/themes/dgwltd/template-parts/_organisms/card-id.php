@@ -29,7 +29,7 @@ if ( ! empty( $dgwltd_tags ) ) {
 <div class="dgwltd-card<?php echo ( has_post_thumbnail( $card->ID ) ? ' has-image' : '' ); ?> card-<?php echo $card_index; ?>" data-url="<?php echo esc_url( get_permalink( $card->ID ) ); ?>" data-theme="<?php echo ( $inverse ? 'light' : 'dark' ); ?>"<?php echo ( $reversed ? ' data-state="reversed"' : '' ); ?>> 
 	<div class="dgwltd-card__inner">
 	
-		<?php if ( $has_image ) : ?>
+		<?php if ( ! empty( $image ) ) : ?>
 		<figure class="dgwltd-card__image">
 		  <picture class="frame">
 			<?php if ( has_post_thumbnail( $card->ID ) ) { ?>
