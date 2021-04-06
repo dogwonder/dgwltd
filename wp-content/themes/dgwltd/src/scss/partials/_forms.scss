@@ -43,11 +43,19 @@ select {
   line-height: 40px;
   border: 2px solid var(--border);
   border-radius: 0;
-  font-size: 1rem;
+  padding: 0 0.2em;
+  font: inherit; //Inherit font family, size, and line height
+  letter-spacing: inherit;
+  word-spacing: inherit;
   margin: 0;
   padding: var(--gap-5);
   -moz-appearance: menulist;
   -webkit-appearance: menulist;
+  appearance: menulist;
+  &:focus {
+    outline: 0.15em solid var(--focus);
+    box-shadow: 0 0 0.2em var(--focus);
+  }
 }
 
 textarea {
