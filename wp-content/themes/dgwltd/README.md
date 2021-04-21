@@ -40,14 +40,22 @@ $govuk-font-family-gds-transport: "Helvetica Neue", Helvetica, Arial, sans-serif
 - [Youtube](https://github.com/paulirish/lite-youtube-embed) and [Vimeo](https://github.com/slightlyoff/lite-vimeo) lite plugins (render the video as a screenshot until a user interacts with the video to save bandwidth)
 
 
+## Performance
+
+The site has been prepared for optimal performance with an overall lighthouse [score of 96](https://googlechrome.github.io/lighthouse/scorecalc/#FCP=2197.7309999999998&SI=2197.7309999999998&LCP=2449.9184999999998&TTI=2572.7309999999998&TBT=21&CLS=0&FCI=&FMP=&device=mobile&version=6.5.0) for the [style guide page](https://dgw.ltd/style-guide/)
+
+See more perf scores here. 
+
+- [Performance dashboard](https://perf.dgw.ltd/dgwltd/)
+
+
 ## Analytics
 
 I am using [Plausible.io](https://plausible.io/simple-web-analytics) a simple privacy focused analyics service, as such I don't need to set a cookie banner. 
 
-Obviously you would want to add your own analytics so replace `<script async defer data-domain="dgw.ltd" src="https://plausible.io/js/plausible.js"></script>` from `header.php`
+Obviously you would want to add your own analytics so replace `<script async defer data-domain="dgw.ltd" src="https://analytics.dgw.ltd/js/index.js"></script>` from `header.php`
 
 Note: if you do use Plausible you can [exclude it](https://plausible.io/docs/excluding) recording your own visits by pasting this into the developer console `localStorage.plausible_ignore=true`
-
 
 
 ## Custom blocks (optional)
