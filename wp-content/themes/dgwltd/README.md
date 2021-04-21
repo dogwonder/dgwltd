@@ -79,7 +79,7 @@ These are saved in `wp-plugins\dgwltd-blocks\src\acf-json`
 
 ## Custom block patterns
 
-Included in the plugin *dgwltd: Blocks* alkonhside the custom blocks this allows for pre-made collections of blocks, accessible under the 'DGW.ltd' in patterns dropdown
+Included in the plugin *dgwltd: Blocks* alongside the custom blocks this allows for pre-made collections of blocks, accessible under the 'DGW.ltd' in patterns dropdown
 
 - Supporters
 - FAQs
