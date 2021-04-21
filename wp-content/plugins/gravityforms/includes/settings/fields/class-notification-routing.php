@@ -391,14 +391,35 @@ class Notification_Routing extends Base {
 				jQuery( '#routing' ).val( JSON.stringify( current_notification.routing ) );
 			}
 
-			function SetRouting(ruleIndex) {
-				if (!current_notification.routing && ruleIndex == 0)
-					current_notification.routing = [new ConditionalRule()];
+			/**
+			 * Set the route array and the hidden field that holds the route JSON.
+			 *
+			 * @since unknown
+			 * @since 2.5 Updated to keep the hidden field and the routing array in sync.
+			 *
+			 * @param {int} ruleIndex The index of the rule being edited.
+			 */
+			function SetRouting( ruleIndex ) {
 
-				current_notification.routing[ruleIndex]["email"] = jQuery("#routing_email_" + ruleIndex).val();
-				current_notification.routing[ruleIndex]["fieldId"] = jQuery("#routing_field_id_" + ruleIndex).val();
-				current_notification.routing[ruleIndex]["operator"] = jQuery("#routing_operator_" + ruleIndex).val();
-				current_notification.routing[ruleIndex]["value"] = jQuery("#routing_value_" + ruleIndex).val();
+				// Get the current value of the hidden field and set it to a new conditional rule if it is an empty array.
+				$currentHiddenValue = JSON.parse( jQuery( '#routing' ).val() );
+				if ( $currentHiddenValue[0].length === 0 ) {
+					$currentHiddenValue[0] = new ConditionalRule();
+					jQuery( '#routing' ).val( JSON.stringify( $currentHiddenValue ) );
+				};
+
+				// Set the routing array for the current notification based on the hidden field value, so it populates even if validation fails.
+				current_notification.routing = $currentHiddenValue;
+
+				// If the current routing index doesn't exist after failed validation, create a blank conditional rule so we can update the values.
+				if ( !current_notification.routing[ruleIndex] ) {
+					current_notification.routing.splice( current_notification.routing.length, 0, new ConditionalRule() );
+				}
+
+				current_notification.routing[ruleIndex]["email"] = jQuery( "#routing_email_" + ruleIndex ).val();
+				current_notification.routing[ruleIndex]["fieldId"] = jQuery( "#routing_field_id_" + ruleIndex ).val();
+				current_notification.routing[ruleIndex]["operator"] = jQuery( "#routing_operator_" + ruleIndex ).val();
+				current_notification.routing[ruleIndex]["value"] = jQuery( "#routing_value_" + ruleIndex ).val();
 
 				jQuery( '#routing' ).val( JSON.stringify( current_notification.routing ) );
 			}

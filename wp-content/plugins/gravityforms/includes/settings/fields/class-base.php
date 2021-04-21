@@ -424,12 +424,12 @@ class Base implements ArrayAccess {
 	public function get_container_classes() {
 
 		// Prepare feedback.
-		$error      = $this->get_error();
-		$is_invalid = ! empty( $error );
-		$value      = $this->get_value();
+		$error             = $this->get_error();
+		$is_invalid        = ! empty( $error );
+		$value             = $this->get_value();
+		$is_feedback_valid = null;
 
 		// Prepare container classes.
-
 		$feedback_callback = ( $this->type == 'text' ) ? rgar( $this, 'feedback_callback' ) : null;
 		if ( is_callable( $feedback_callback ) ) {
 			$is_feedback_valid = call_user_func_array( $feedback_callback, array( $value, $this ) );
@@ -437,12 +437,12 @@ class Base implements ArrayAccess {
 
 		$container_classes = array( 'gform-settings-input__container' );
 
-		if ( isset( $is_feedback_valid ) ) {
-			if ( $is_feedback_valid === true ) {
-				$container_classes[] = 'gform-settings-input__container--feedback-success';
-			} else {
-				$container_classes[] = 'gform-settings-input__container--feedback-error';
-			}
+		if ( is_bool( $is_feedback_valid ) ) {
+			$container_classes[] = $is_feedback_valid ? 'gform-settings-input__container--feedback-success' : 'gform-settings-input__container--feedback-error';
+		}
+
+		if ( is_string( $is_feedback_valid ) ) {
+			$container_classes[] = sprintf( 'gform-settings-input__container--feedback-%s', $is_feedback_valid );
 		}
 
 		if ( $is_invalid ) { $container_classes[] = 'gform-settings-input__container--invalid'; }

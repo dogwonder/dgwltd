@@ -87,7 +87,7 @@ class GFSelectColumns {
 				}
 
 				.field_hover {
-					border: 1px dashed #2175A9 !important;
+					background: #F6F9FC;
 				}
 
 				.placeholder {
@@ -103,19 +103,12 @@ class GFSelectColumns {
 				}
 
 				.gcolumn_container_left, .gcolumn_container_right {
-					width: 250px;
+					width: 47%;
 				}
 
 				.gform_select_column_heading {
 					padding-bottom: 7px;
 					font-size: 1.125rem;
-				}
-
-				.column-arrow-mid {
-					height: 100%;
-					display: flex;
-					align-items: center;
-					justify-content: center;
 				}
 
 				div.panel-buttons {
@@ -222,10 +215,6 @@ class GFSelectColumns {
 				}
 				?>
 				</ul>
-			</div>
-
-			<div class="column-arrow-mid">
-				<svg width="47" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><g filter="url(#filter0_d)"><path fill-rule="evenodd" clip-rule="evenodd" d="M36 17a8 8 0 100-16 8 8 0 000 16z" fill="#fff"/><path d="M36 17.5a8.5 8.5 0 100-17 8.5 8.5 0 000 17z" stroke="#9092B2"/></g><path fill-rule="evenodd" clip-rule="evenodd" d="M36.606 11.52a.5.5 0 010-.707l1.48-1.48H32.5a.5.5 0 110-1h5.586l-1.48-1.48a.5.5 0 11.707-.707L40 8.833l-2.687 2.687a.5.5 0 01-.707 0z" fill="#3E7DA6"/><g filter="url(#filter1_d)"><path fill-rule="evenodd" clip-rule="evenodd" d="M11 17a8 8 0 100-16 8 8 0 000 16z" fill="#fff"/><path d="M11 17.5a8.5 8.5 0 100-17 8.5 8.5 0 000 17z" stroke="#9092B2"/></g><path fill-rule="evenodd" clip-rule="evenodd" d="M10.394 6.146a.5.5 0 010 .707l-1.48 1.48H14.5a.5.5 0 110 1H8.914l1.48 1.48a.5.5 0 11-.707.707L7 8.833l2.687-2.687a.5.5 0 01.707 0z" fill="#3E7DA6"/><defs><filter id="filter0_d" x="25" y="0" width="22" height="22" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/><feOffset dy="2"/><feGaussianBlur stdDeviation="1"/><feColorMatrix values="0 0 0 0 0.227451 0 0 0 0 0.227451 0 0 0 0 0.341176 0 0 0 0.0596411 0"/><feBlend in2="BackgroundImageFix" result="effect1_dropShadow"/><feBlend in="SourceGraphic" in2="effect1_dropShadow" result="shape"/></filter><filter id="filter1_d" x="0" y="0" width="22" height="22" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/><feOffset dy="2"/><feGaussianBlur stdDeviation="1"/><feColorMatrix values="0 0 0 0 0.227451 0 0 0 0 0.227451 0 0 0 0 0.341176 0 0 0 0.0596411 0"/><feBlend in2="BackgroundImageFix" result="effect1_dropShadow"/><feBlend in="SourceGraphic" in2="effect1_dropShadow" result="shape"/></filter></defs></svg>
 			</div>
 
 			<div class="gcolumn_container_right" id="available_column">

@@ -94,7 +94,6 @@ class GF_API_Keys_Table extends WP_List_Table {
 		echo '<div style="padding:10px;">' . sprintf( esc_html__( 'You don\'t have any API keys. Let\'s go %1$screate one%2$s!', 'gravityforms' ), '<a href="javascript:editKey( 0 );">', '</a>' ) . '</div>';
 	}
 
-
 	/**
 	 * Display the table
 	 *

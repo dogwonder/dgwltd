@@ -484,7 +484,9 @@ var FieldMap = /*#__PURE__*/function (_Component) {
           keyField = _this$props.keyField,
           invalidChoices = _this$props.invalidChoices,
           limit = _this$props.limit,
-          valueField = _this$props.valueField;
+          valueField = _this$props.valueField,
+          input = _this$props.input,
+          inputType = _this$props.inputType;
       var mapping = this.getMapping();
       var keyCount = this.countKeyFieldChoices();
       return /*#__PURE__*/React.createElement("table", {
@@ -517,7 +519,9 @@ var FieldMap = /*#__PURE__*/function (_Component) {
           addMapping: _this2.addMapping,
           deleteMapping: _this2.deleteMapping,
           updateMapping: _this2.updateMapping,
-          index: index
+          index: index,
+          inputId: input,
+          inputType: inputType
         });
       })));
     }
@@ -602,10 +606,12 @@ var Mapping = /*#__PURE__*/function (_Component) {
     key: "renderRequiredSpan",
     value: function renderRequiredSpan() {
       var choice = this.props.choice;
+      var fieldId = this.getKeyInputId();
 
       if (choice.required) {
         return /*#__PURE__*/React.createElement("span", {
-          className: "required"
+          className: "required",
+          id: fieldId
         }, "*");
       } else {
         return null;
@@ -641,6 +647,42 @@ var Mapping = /*#__PURE__*/function (_Component) {
       }))), /*#__PURE__*/React.createElement("td", {
         className: "gform-settings-generic-map__column gform-settings-generic-map__column--buttons"
       }, this.getAddButton(), this.getDeleteButton()));
+    }
+  }, {
+    key: "getValueInputId",
+    value: function getValueInputId() {
+      var _this$props2 = this.props,
+          inputId = _this$props2.inputId,
+          inputType = _this$props2.inputType,
+          index = _this$props2.index,
+          mapping = _this$props2.mapping;
+
+      switch (inputType) {
+        case 'generic_map':
+        case 'dynamic_field_map':
+          return "".concat(inputId, "_custom_value_").concat(index);
+
+        default:
+          return "".concat(inputId, "_").concat(mapping.key);
+      }
+    }
+  }, {
+    key: "getKeyInputId",
+    value: function getKeyInputId() {
+      var _this$props3 = this.props,
+          inputId = _this$props3.inputId,
+          inputType = _this$props3.inputType,
+          index = _this$props3.index,
+          mapping = _this$props3.mapping;
+
+      switch (inputType) {
+        case 'generic_map':
+        case 'dynamic_field_map':
+          return "".concat(inputId, "_custom_key_").concat(index);
+
+        default:
+          return "".concat(inputId, "_").concat(mapping.key, "_key");
+      }
     } // # KEY COLUMN ----------------------------------------------------------------------------------------------------
 
     /**
@@ -653,15 +695,16 @@ var Mapping = /*#__PURE__*/function (_Component) {
   }, {
     key: "getKeyInput",
     value: function getKeyInput(mapIndex) {
-      var _this$props2 = this.props,
-          choice = _this$props2.choice,
-          keyField = _this$props2.keyField,
-          index = _this$props2.index,
-          mapping = _this$props2.mapping,
-          updateMapping = _this$props2.updateMapping;
+      var _this$props4 = this.props,
+          choice = _this$props4.choice,
+          keyField = _this$props4.keyField,
+          index = _this$props4.index,
+          mapping = _this$props4.mapping,
+          updateMapping = _this$props4.updateMapping;
       var choices = keyField.choices,
           display_all = keyField.display_all,
-          placeholder = keyField.placeholder; // If currently selected choice is required or we are displaying all keys, display label.
+          placeholder = keyField.placeholder;
+      var fieldId = this.getKeyInputId(); // If currently selected choice is required or we are displaying all keys, display label.
 
       if (choice.required || display_all) {
         return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("label", null, choice.label, " ", this.renderRequiredSpan(), " "), /*#__PURE__*/React.createElement(_Tooltips["default"], {
@@ -674,6 +717,7 @@ var Mapping = /*#__PURE__*/function (_Component) {
         return /*#__PURE__*/React.createElement("span", {
           className: "gform-settings-generic-map__custom"
         }, /*#__PURE__*/React.createElement("input", {
+          id: fieldId,
           type: "text",
           value: mapping.custom_key,
           placeholder: placeholder,
@@ -697,6 +741,7 @@ var Mapping = /*#__PURE__*/function (_Component) {
       }
 
       return /*#__PURE__*/React.createElement("select", {
+        id: fieldId,
         value: mapping.key,
         onChange: function onChange(e) {
           return updateMapping(_objectSpread(_objectSpread({}, mapping), {}, {
@@ -724,10 +769,10 @@ var Mapping = /*#__PURE__*/function (_Component) {
       var choices = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       var addPlaceholder = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
       var addCustomKey = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
-      var _this$props3 = this.props,
-          keyField = _this$props3.keyField,
-          mappedChoices = _this$props3.mappedChoices,
-          mapping = _this$props3.mapping;
+      var _this$props5 = this.props,
+          keyField = _this$props5.keyField,
+          mappedChoices = _this$props5.mappedChoices,
+          mapping = _this$props5.mapping;
       var allow_custom = keyField.allow_custom,
           allow_duplicates = keyField.allow_duplicates;
 
@@ -797,19 +842,21 @@ var Mapping = /*#__PURE__*/function (_Component) {
   }, {
     key: "getValueInput",
     value: function getValueInput() {
-      var _this$props4 = this.props,
-          choice = _this$props4.choice,
-          index = _this$props4.index,
-          isInvalid = _this$props4.isInvalid,
-          mapping = _this$props4.mapping,
-          updateMapping = _this$props4.updateMapping,
-          valueField = _this$props4.valueField;
-      var required = choice.required; // If selected value is custom value, display input.
+      var _this$props6 = this.props,
+          choice = _this$props6.choice,
+          index = _this$props6.index,
+          isInvalid = _this$props6.isInvalid,
+          mapping = _this$props6.mapping,
+          updateMapping = _this$props6.updateMapping,
+          valueField = _this$props6.valueField;
+      var required = choice.required;
+      var fieldId = this.getValueInputId(); // If selected value is custom value, display input.
 
       if (mapping.value === 'gf_custom') {
         return /*#__PURE__*/React.createElement("span", {
           className: "gform-settings-generic-map__custom"
         }, /*#__PURE__*/React.createElement("input", {
+          id: fieldId,
           type: "text",
           value: mapping.custom_value,
           placeholder: valueField.placeholder,
@@ -833,6 +880,7 @@ var Mapping = /*#__PURE__*/function (_Component) {
       }
 
       return /*#__PURE__*/React.createElement("select", {
+        id: fieldId,
         disabled: mapping.key === '' || !mapping.key,
         value: mapping.value,
         onChange: function onChange(e) {
@@ -870,9 +918,9 @@ var Mapping = /*#__PURE__*/function (_Component) {
   }, {
     key: "getValueOptions",
     value: function getValueOptions() {
-      var _this$props5 = this.props,
-          choice = _this$props5.choice,
-          valueField = _this$props5.valueField;
+      var _this$props7 = this.props,
+          choice = _this$props7.choice,
+          valueField = _this$props7.valueField;
       var allow_custom = valueField.allow_custom;
       var choices = choice.choices || valueField.choices;
       var values = choices.map(function (c) {
@@ -899,10 +947,10 @@ var Mapping = /*#__PURE__*/function (_Component) {
   }, {
     key: "getAddButton",
     value: function getAddButton() {
-      var _this$props6 = this.props,
-          canAdd = _this$props6.canAdd,
-          addMapping = _this$props6.addMapping,
-          index = _this$props6.index; // If mapping cannot be added, do not show button.
+      var _this$props8 = this.props,
+          canAdd = _this$props8.canAdd,
+          addMapping = _this$props8.addMapping,
+          index = _this$props8.index; // If mapping cannot be added, do not show button.
 
       if (!canAdd) {
         return null;
@@ -927,17 +975,17 @@ var Mapping = /*#__PURE__*/function (_Component) {
   }, {
     key: "getDeleteButton",
     value: function getDeleteButton() {
-      var _this$props7 = this.props,
-          canDelete = _this$props7.canDelete,
-          deleteMapping = _this$props7.deleteMapping,
-          index = _this$props7.index; // If mapping cannot be deleted, do not show button.
+      var _this$props9 = this.props,
+          canDelete = _this$props9.canDelete,
+          deleteMapping = _this$props9.deleteMapping,
+          index = _this$props9.index; // If mapping cannot be deleted, do not show button.
 
       if (!canDelete) {
         return null;
       }
 
       return /*#__PURE__*/React.createElement("button", {
-        className: "gform-settings-generic-map__button gform-settings-generic-map__button--delete",
+        className: "delete_field_choice gform-st-icon gform-st-icon--circle-minus gform-settings-generic-map__button gform-settings-generic-map__button--delete",
         onClick: function onClick(e) {
           e.preventDefault();
           deleteMapping(index);

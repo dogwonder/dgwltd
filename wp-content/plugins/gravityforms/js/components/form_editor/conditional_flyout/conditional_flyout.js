@@ -7,45 +7,13 @@ var FOCUSED_BEFORE_DIALOG   = null;
 var FOCUSED_BEFORE_RENDER = null;
 
 /**
- * Get a parent based on selector plus passed in child element
- *
- * @param el
- * @param selector
- * @returns {null|*}
- */
-
-function getClosest( el, selector ) {
-	var matchesFn;
-	var parent;
-
-	[ 'matches', 'webkitMatchesSelector', 'mozMatchesSelector', 'msMatchesSelector', 'oMatchesSelector' ].some( function( fn ) {
-		if ( typeof document.body[ fn ] === 'function' ) {
-			matchesFn = fn;
-			return true;
-		}
-		return false;
-	} );
-
-	while ( el ) {
-		parent = el.parentElement;
-		if ( parent && parent[ matchesFn ]( selector ) ) {
-			return parent;
-		}
-
-		el = parent;
-	}
-
-	return null;
-}
-
-/**
  * Set the focus to the first focusable child of the given element
  *
  * @param {Element} node The element to focus within.
  * @param {Event} event Passed event from some handlers
  */
 function setFocusToFirstItem( node, event ) {
-	if ( event && event.target && ! getClosest( event.target, '#' + node.id ) ) {
+	if ( event && event.target && ! gform.tools.getClosest( event.target, '#' + node.id ) ) {
 		return;
 	}
 	var focusableChildren = getFocusableChildren( node );
@@ -94,43 +62,6 @@ function trapTabKey( node, event ) {
 }
 
 /**
- * Highly efficient function to convert a nodelist into a standard array. Allows you to run Array.forEach
- *
- * @param {Element|NodeList} elements Elements to convert
- *
- * @returns {Array} Of converted elements
- */
-function convertElements( elements ) {
-	var converted = [];
-	var i         = elements.length;
-	for ( i; i--; converted.unshift( elements[ i ] ) ) ; // eslint-disable-line
-
-	return converted;
-}
-
-/**
- * Should be used at all times for getting nodes throughout our app. Please use the data-js attribute whenever possible
- *
- * @param {string}  selector The selector string to search for. If arg 4 is false (default) then we search for [data-js="selector"]
- * @param {bool}    convert  Convert the NodeList to an array? Then we can Array.forEach directly. Uses convertElements from above
- * @param {Element} node     Parent node to search from. Defaults to document
- * @param {bool}    custom   Is this a custom selector where we don't want to use the data-js attribute?
- *
- * @returns {NodeList}
- */
-function getNodes( selector, convert, node, custom ) {
-	if ( !node ) {
-		node = document;
-	}
-	var selectorString = custom ? selector : '[data-js="' + selector + '"]';
-	var nodes          = node.querySelectorAll( selectorString );
-	if ( convert ) {
-		nodes = convertElements( nodes );
-	}
-	return nodes;
-}
-
-/**
  * Query the DOM for nodes matching the given selector, scoped to context (or
  * the whole document)
  *
@@ -140,7 +71,7 @@ function getNodes( selector, convert, node, custom ) {
  * @return {Array<Element>}
  */
 function $$( selector, context ) {
-	return convertElements( (context || document).querySelectorAll( selector ) );
+	return gform.tools.convertElements( (context || document).querySelectorAll( selector ) );
 }
 
 /**
@@ -784,6 +715,11 @@ GFConditionalLogic.prototype.getStateForField = function( fieldId ) {
 
 	if ( !logic || !logic.actionType ) {
 		return this.getDefaultState();
+	}
+
+	// pre 2.5 forms dont have the enabled key in this object. If we have logic but no key, lets enable the ui
+	if ( !( 'enabled' in logic ) ) {
+		logic.enabled = true;
 	}
 
 	return logic;

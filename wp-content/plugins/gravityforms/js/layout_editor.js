@@ -194,7 +194,7 @@
 	// Handle duplicating a field.
 	gform.addAction( 'gform_field_duplicated', function ( form, field, $field, sourceFieldId ) {
 
-		var $source = $( '#field_' + sourceFieldId );
+		var $source      = $( '#field_' + sourceFieldId );
 		var $sourceGroup = getGroup( getGroupId( $source ) );
 
 		// Add duplicated fields *after* the last field in its group so that it will always appear on a new row.
@@ -218,6 +218,17 @@
 	} );
 
 	gform.addAction( 'gform_after_get_field_markup', function( form, field, index ) {
+		removeFieldPlaceholder();
+	} );
+
+	gform.addAction( 'gform_before_field_duplicated', function( sourcefieldId ) {
+		var $source = $( '#field_' + sourcefieldId );
+		var $index  = $container.children().index( $source );
+
+		addFieldPlaceholder( null, $index + 1 );
+	} );
+
+	gform.addAction( 'gform_field_duplicated', function() {
 		removeFieldPlaceholder();
 	} );
 
@@ -318,7 +329,13 @@
 						// Firefox has trouble positioning the dragged element when it still has it's grid-column property set.
 						.setGridColumnSpan( null );
 
-					handleDrag( event, ui, ui.position.top, ui.position.left );
+					if ( ! gform.tools.isRtl() ) {
+						helperLeft = ui.position.left;
+					} else {
+						helperLeft = ui.position.left + ( ui.helper.outerWidth() );
+					}
+
+					handleDrag( event, ui, ui.position.top, helperLeft );
 				},
 				stop: function( event, ui ) {
 					$container.removeClass( 'dragging' );
@@ -507,7 +524,7 @@
 		}
 
 		// Check if field is dragged *above* all other fields.
-		if( helperTop < 0 ) {
+		if ( helperTop < 0 ) {
 			$indicator()
 				.css( {
 					top: -30,
@@ -540,7 +557,7 @@
 		$elements()
 			.not( ui.helper )
 			.not( this )
-			.each( function () {
+			.each( function() {
 
 				var $target = $( this ),
 					sibPos = $target.position(),
@@ -565,8 +582,13 @@
 
 				var where = whichArea( helperLeft, helperTop, sibArea, $target.outerWidth(), $target.outerHeight() ),
 					targetGroupId = getGroupId( $target ),
-					$targetGroup = getGroup( targetGroupId, false ),
-					isGroupMaxed = $targetGroup.length >= ( columnCount / min );
+					$targetGroup = getGroup( targetGroupId, false );
+
+				var isGroupMaxed = $targetGroup.length >= ( columnCount / min );
+
+				if ( getGroupId( $target ) === getGroupId( ui.helper ) ) {
+					isGroupMaxed = false;
+				}
 
 				var available = isSpaceAvailable( ui, $target );
 
@@ -716,10 +738,15 @@
 	 * @returns {boolean}
 	 */
 	function isInEditorArea( x, y ) {
-		var editorOffset = $editorContainer.offset(),
-			containerOffset = $container.offset(),
-			offsetTop = containerOffset.top - editorOffset.top,
-			offsetLeft = containerOffset.left - editorOffset.left,
+
+		if ( ! gform.tools.isRtl() ) {
+			var editorOffsetLeft = $editorContainer.offset().left;
+		} else {
+			var editorOffsetLeft = $container.offset().left;
+		}
+		var containerOffset = $container.offset(),
+			offsetTop = containerOffset.top - $editorContainer.offset().top,
+			offsetLeft = containerOffset.left - editorOffsetLeft,
 			buttonWidth = $button.outerWidth() || null,
 			editorArea = {
 				top: -offsetTop + buttonWidth,
@@ -738,10 +765,15 @@
 	 * @param {jQuery} $target The element over which the dragged element was last positioned.
 	 */
 	function isSpaceAvailable( ui, $target ) {
-		var targetSpan, splitSpan, $targetGroup, groupId, $spacer;
+		var targetSpan, splitSpan, $targetGroup, groupId, $spacer, helperGroupId;
 
 		groupId = getGroupId( $target );
+		helperGroupId = getGroupId( ui.helper );
 		$targetGroup = getGroup( groupId );
+
+		if ( groupId === helperGroupId ) {
+			return true;
+		}
 
 		// Figure out if we're dropping a field onto a spacer or next to a spacer.
 		if ( isSpacer( $target ) ) {
@@ -783,8 +815,14 @@
 			return;
 		}
 
-		var targetSpan, splitSpan, $targetGroup, $resizeGroup, groupId, sourceGroupId,
-			movingIntoTargetGroup, $spacer;
+		var targetSpan,
+			splitSpan,
+			$targetGroup,
+			$resizeGroup,
+			groupId,
+			sourceGroupId,
+			movingIntoTargetGroup,
+			$spacer;
 
 		sourceGroupId = getGroupId( $elem );
 		groupId = getGroupId( $target );
@@ -811,7 +849,9 @@
 			$target = $targetGroup.last();
 		}
 
-		if ( where == 'top' || where == 'left' ) {
+		var direction = gform.tools.isRtl() ? 'right' : 'left';
+
+		if ( where == 'top' || where == direction ) {
 			$elem.insertBefore( $target );
 		} else {
 			$elem.insertAfter( $target );

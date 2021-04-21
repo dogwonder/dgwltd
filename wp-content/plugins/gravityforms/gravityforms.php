@@ -3,7 +3,9 @@
 Plugin Name: Gravity Forms
 Plugin URI: https://gravityforms.com
 Description: Easily create web forms and manage form entries within the WordPress admin.
-Version: 2.5-rc-1
+Version: 2.5-rc-3
+Requires at least: 4.0
+Requires PHP: 5.6
 Author: Gravity Forms
 Author URI: https://gravityforms.com
 License: GPL-2.0+
@@ -65,9 +67,6 @@ if ( ! defined( 'RG_CURRENT_PAGE' ) ) {
 	 *
 	 * @since   Unknown
 	 *
-	 * @used-by GFForms::init()
-	 * @used-by GFCommon::ensure_wp_version()
-	 *
 	 * @var string RG_CURRENT_PAGE The current page.
 	 */
 	define( 'RG_CURRENT_PAGE', basename( $_SERVER['PHP_SELF'] ) );
@@ -78,10 +77,6 @@ if ( ! defined( 'IS_ADMIN' ) ) {
 	 * Checks if an admin page is being viewed.
 	 *
 	 * @since   Unknown
-	 *
-	 * @used-by GFForms::init()
-	 * @used-by GFFormsModel::get_default_value()
-	 * @used-by GFFormsModel::get_label()
 	 *
 	 * @var boolean IS_ADMIN True if admin page. False otherwise.
 	 */
@@ -96,8 +91,6 @@ if ( ! defined( 'IS_ADMIN' ) ) {
  * @since      Unknown
  * @deprecated 2.1.3.6
  *
- * @uses GFForms::get()
- *
  * @var string|boolean RG_CURRENT_VIEW The view if available.  False otherwise.
  */
 define( 'RG_CURRENT_VIEW', GFForms::get( 'view' ) );
@@ -107,22 +100,14 @@ define( 'RG_CURRENT_VIEW', GFForms::get( 'view' ) );
  *
  * @since   Unknown
  *
- * @used-by GFCommon::ensure_wp_version()
- * @used-by GF_SUPPORTED_WP_VERSION
- * @used-by GFSettings::gravityforms_settings_page()
- *
  * @var string GF_MIN_WP_VERSION Minimum version number.
  */
-define( 'GF_MIN_WP_VERSION', '3.7' );
+define( 'GF_MIN_WP_VERSION', '4.0' );
 
 /**
  * Checks if the current WordPress version is supported.
  *
  * @since   Unknown
- *
- * @used-by GFForms::init()
- * @used-by GFCommon::ensure_wp_version()
- * @uses    GF_MIN_WP_VERSION
  *
  * @var boolean GF_SUPPORTED_VERSION True if supported.  False otherwise.
  */
@@ -133,7 +118,7 @@ define( 'GF_SUPPORTED_WP_VERSION', version_compare( get_bloginfo( 'version' ), G
  *
  * @var string GF_MIN_WP_VERSION_SUPPORT_TERMS The version number
  */
-define( 'GF_MIN_WP_VERSION_SUPPORT_TERMS', '5.5' );
+define( 'GF_MIN_WP_VERSION_SUPPORT_TERMS', '5.6' );
 
 
 if ( ! defined( 'GRAVITY_MANAGER_URL' ) ) {
@@ -159,7 +144,6 @@ require_once( plugin_dir_path( __FILE__ ) . 'includes/assets/class-gf-script-ass
 require_once( plugin_dir_path( __FILE__ ) . 'includes/assets/class-gf-style-asset.php' );
 require_once( plugin_dir_path( __FILE__ ) . '/includes/trait-redirects-on-save.php' );
 
-
 // Load Logging if Logging Add-On is not active.
 if ( ! GFCommon::is_logging_plugin_active() ) {
 	require_once( plugin_dir_path( __FILE__ ) . 'includes/logging/logging.php' );
@@ -184,7 +168,7 @@ add_action( 'update_option_WPLANG', array( 'GFForms', 'update_translations' ), 1
 add_action( 'wp_ajax_update_auto_update_setting', array( 'GFForms', 'update_auto_update_setting' ) );
 add_filter( 'upgrader_pre_install', array( 'GFForms', 'validate_upgrade' ), 10, 2 );
 add_filter( 'tiny_mce_before_init', array( 'GFForms', 'modify_tiny_mce_4' ), 20 );
-add_filter( 'user_has_cap', array( 'RGForms', 'user_has_cap' ), 10, 3 );
+add_filter( 'user_has_cap', array( 'RGForms', 'user_has_cap' ), 10, 4 );
 add_filter( 'query', array( 'GFForms', 'filter_query' ) );
 add_filter( 'plugin_auto_update_setting_html', array( 'GFForms', 'auto_update_message' ), 10, 3 );
 add_filter( 'plugin_auto_update_debug_string', array( 'GFForms', 'auto_update_debug_message' ), 10, 4 );
@@ -218,11 +202,10 @@ class GFForms {
 	 * Defines this version of Gravity Forms.
 	 *
 	 * @since  Unknown
-	 * @access public
 	 *
 	 * @var string $version The version number.
 	 */
-	public static $version = '2.5-rc-1';
+	public static $version = '2.5-rc-3';
 
 	/**
 	 * Handles background upgrade tasks.
@@ -992,7 +975,8 @@ class GFForms {
 				'buttons',
 				'wp-pointer',
 				'gform_chosen',
-				'gform_editor'
+				'gform_editor',
+				'gform_admin_theme'
 			),
 			'gf_edit_forms_settings' => array(
 				'thickbox',
@@ -1358,24 +1342,28 @@ class GFForms {
 	public static function install_addon_translations( $upgrader_object, $hook_extra ) {
 		if ( 'install' == $hook_extra['action'] && 'plugin' == $hook_extra['type'] ) {
 			// This runs when any plugin is downloaded, but before the plugin is active, so call the API to check if the plugin that was just downloaded is an official add-on.
-			$addons_list = GFCache::get( 'addons_list' );
 
-			if ( ! $addons_list ) {
+			if ( ! GFCache::get( 'addons_list' ) ) {
 				// To avoid calling the API every time a plugin is installed, store the list of add-ons as a transient.
 				$addons_api  = GFCommon::post_to_manager( 'api.php', 'op=get_plugins', array() );
-				$addons_list = maybe_unserialize( $addons_api['body'] );
-				GFCache::set( 'addons_list', $addons_list, true, WEEK_IN_SECONDS );
+				if ( is_array( $addons_api ) ) {
+					GFCache::set( 'addons_list', maybe_unserialize( $addons_api['body'] ), true, WEEK_IN_SECONDS );
+				}
 			}
 
-			$addons_slugs = wp_list_pluck( $addons_list, 'name' );
-			$slug         = $upgrader_object->result['destination_name'];
-			if ( in_array( $slug, $addons_slugs ) ) {
-				GFCommon::log_debug( 'Call TranslationsPress, download translation for ' . $slug );
-				if ( ! class_exists( 'Gravity_Forms\Gravity_Forms\TranslationsPress_Updater' ) ) {
-					require_once( plugin_dir_path( __FILE__ ) . '/includes/class-translationspress-updater.php' );
+			$addons_list = ( GFCache::get( 'addons_list' ) );
+
+			if ( $addons_list ) {
+				$addons_slugs = wp_list_pluck( $addons_list, 'name' );
+				$slug         = isset( $upgrader_object->result['destination_name'] ) ? $upgrader_object->result['destination_name'] : array();
+				if ( in_array( $slug, $addons_slugs ) ) {
+					GFCommon::log_debug( 'Call TranslationsPress, download translation for ' . $slug );
+					if ( ! class_exists( 'Gravity_Forms\Gravity_Forms\TranslationsPress_Updater' ) ) {
+						require_once( plugin_dir_path( __FILE__ ) . '/includes/class-translationspress-updater.php' );
+					}
+					$t15s_addons_updater = new Gravity_Forms\Gravity_Forms\TranslationsPress_Updater( $slug, '' );
+					$t15s_addons_updater::download_package( $slug );
 				}
-				$t15s_addons_updater = new Gravity_Forms\Gravity_Forms\TranslationsPress_Updater( $slug, '' );
-				$t15s_addons_updater::download_package( $slug );
 			}
 		}
 	}
@@ -1389,25 +1377,31 @@ class GFForms {
 	 * @since  Unknown
 	 * @access public
 	 *
-	 * @param array $all_caps All capabilities.
-	 * @param array $cap      Required capability.  Stored in the [0] key.
-	 * @param array $args     Not used.
+	 * @param array   $all_caps All capabilities.
+	 * @param array   $cap      Required capability.  Stored in the [0] key.
+	 * @param array   $args     Not used.
+	 * @param WP_User $user     The relevant user.
 	 *
 	 * @return array $all_caps All capabilities.
 	 */
-	public static function user_has_cap( $all_caps, $cap, $args ) {
+	public static function user_has_cap( $all_caps, $cap, $args, $user = null ) {
 		$gf_caps    = GFCommon::all_caps();
 		$capability = rgar( $cap, 0 );
 		if ( $capability != 'gform_full_access' ) {
 			return $all_caps;
 		}
 
+		// Default to current user when $user parameter is not passed.
+		if ( false === $user instanceof WP_User ) {
+			$user = wp_get_current_user();
+		}
+
 		if ( ! self::has_members_plugin() ) {
 			//give full access to administrators if the members plugin is not installed
-			if ( current_user_can( 'administrator' ) || ( is_multisite() && is_super_admin() ) ) {
+			if ( user_can( $user, 'administrator' ) || ( is_multisite() && is_super_admin( $user->ID ) ) ) {
 				$all_caps['gform_full_access'] = true;
 			}
-		} elseif ( current_user_can( 'administrator' ) || ( is_multisite() && is_super_admin() ) ) {
+		} elseif ( user_can( $user, 'administrator' ) || ( is_multisite() && is_super_admin( $user->ID ) ) ) {
 
 			//checking if user has any GF permission.
 			$has_gf_cap = false;
@@ -2541,6 +2535,7 @@ class GFForms {
 
 		wp_register_script( 'gform_chosen', $base_url . "/js/chosen.jquery.min.js", array( 'jquery' ), $version );
 		wp_register_script( 'gform_selectwoo', $base_url . "/js/vendor/selectWoo.full.js", array( 'jquery' ), $version );
+		wp_register_script( 'gform_simplebar', $base_url . "/js/vendor/simplebar.js", array( 'jquery' ), $version );
 		wp_register_script( 'gform_promises_polyfill', 'https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js', array(), $version );
 		wp_register_script( 'gform_conditional_logic', $base_url . "/js/conditional_logic{$min}.js", array(
 			'jquery',
@@ -2605,9 +2600,14 @@ class GFForms {
 		wp_register_script( 'gform_system_report_clipboard', $base_url . '/includes/system-status/js/clipboard.min.js', array( 'jquery' ), $version, true );
 		wp_register_script( 'gform_preview', $base_url . "/js/preview{$min}.js", array( 'jquery' ), $version, false );
 		wp_register_script( 'gform_auto_updates', $base_url . "/js/auto_update{$min}.js", array( 'jquery' ), $version, true );
+		wp_register_script( 'gform_plugin_settings', $base_url . "/js/plugin_settings{$min}.js", array(
+			'jquery',
+			'gform_gravityforms',
+		), $version );
 
 		wp_register_style( 'gform_admin_ie11', $base_url . "/css/admin-ie11{$min}.css", null, $version );
-		wp_register_style( 'gform_admin', $base_url . "/css/admin{$min}.css", array( 'gform_admin_ie11' ), $version );
+		wp_register_style( 'gform_admin_icons', $base_url . "/css/admin-icons{$min}.css", array( 'gform_admin_ie11' ), $version );
+		wp_register_style( 'gform_admin', $base_url . "/css/admin{$min}.css", array( 'gform_admin_icons' ), $version );
 		wp_register_style( 'gform_chosen', $base_url . "/legacy/css/chosen{$min}.css", array(), $version );
 		wp_register_style( 'gform_shortcode_ui', $base_url . "/css/shortcode-ui{$min}.css", array(), $version );
 		wp_register_style( 'gform_font_awesome', $base_url . "/css/font-awesome{$min}.css", null, $version );
@@ -2678,6 +2678,12 @@ class GFForms {
 				);
 				break;
 
+			case 'settings':
+				$scripts = array(
+					'gform_plugin_settings',
+				);
+				break;
+
 			case 'form_editor':
 				$thickbox = 'thickbox';
 				$scripts  = array(
@@ -2705,6 +2711,7 @@ class GFForms {
 
 			case 'entry_detail':
 				$scripts = array(
+					'gform_gravityforms',
 					'gform_json',
 					'sack',
 					'postbox',
@@ -4335,10 +4342,12 @@ class GFForms {
 	/**
 	 * Displays the form switcher dropdown.
 	 *
+	 * @param string $title The form title
+	 *
 	 * @since  Unknown
 	 * @access public
 	 */
-	public static function form_switcher() {
+	public static function form_switcher( $title = '' ) {
 
 		/**
 		 * Get forms to be displayed in Form Switcher dropdown.
@@ -4359,28 +4368,70 @@ class GFForms {
 			}
 		}
 
-		// Enqueuing Chosen script and styling.
-		wp_enqueue_script( 'gform_selectwoo' );
+		// Enqueuing simplebar
+		wp_enqueue_script( 'gform_simplebar' );
+
+		$simplebar_rtl = is_rtl() ? ' data-simplebar-direction="rtl"' : '';
 
 		?>
 
-		<a href="#" onclick="GF_SetupSwitcher(); event.stopPropagation();" id='form_switcher_arrow' class='form_switcher_arrow'>
-			<svg width="12" height="8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 4.586L10.293.293a1 1 0 111.414 1.414L6 7.414.293 1.707A1 1 0 011.707.293L6 4.586z" fill="#242748"/></svg>
-		</a>
-
-		<div id="form_switcher_container">
-			<select data-placeholder="<?php esc_attr_e( 'Switch Form', 'gravityforms' ) ?>" name="form_switcher" id="form_switcher" onchange="GF_SwitchForm(jQuery(this).val());">
-				<option></option>
-				<?php
-					$selected_form_id = empty( $_GET['id'] ) ? '' : $_GET['id'];
-					foreach ( $all_forms as $form_info ) {
-						printf( '<option value="%d"%s>%s</option>', absint( $form_info->id ), selected( $form_info->id, $selected_form_id ), esc_html( $form_info->title) );
-					}
-				?>
-			</select>
-		</div>
+		<article class="gform-dropdown" data-js="gform-form-switcher">
+			<span
+				class="gform-visually-hidden"
+				id="gform-form-switcher-label"
+			><?php esc_attr_e( 'Select a different form', 'gravityforms' ) ?></span>
+			<button
+				aria-expanded="false"
+				aria-haspopup="listbox"
+				aria-labelledby="gform-form-switcher-label gform-form-switcher-control"
+				class="gform-dropdown__control"
+				data-js="gform-dropdown-control"
+				id="gform-form-switcher-control"
+			>
+				<span class="gform-dropdown__control-text" data-js="gform-dropdown-control-text"><?php echo esc_html( $title ); ?></span>
+				<i class="gform-spinner gform-dropdown__spinner"></i>
+				<i class="gform-icon gform-icon--chevron gform-dropdown__chevron"></i>
+			</button>
+			<div
+				aria-labelledby="gform-form-switcher-label"
+				class="gform-dropdown__container"
+				role="listbox"
+				tabindex="-1"
+			>
+				<div class="gform-dropdown__search">
+					<label for="gform-form-switcher-search" class="gform-visually-hidden"><?php esc_attr_e( 'Search forms', 'gravityforms' ) ?></label>
+					<input
+						id="gform-form-switcher-search"
+						type="text" class="gform-input gform-dropdown__search-input"
+						placeholder="<?php esc_attr_e( 'Search for form', 'gravityforms' ) ?>"
+						data-js="gform-dropdown-search"
+					/>
+					<i class="gform-icon gform-icon--search gform-dropdown__search-icon"></i>
+				</div>
+				<div class="gform-dropdown__list-container" data-simplebar<?php echo $simplebar_rtl; ?>>
+					<ul class="gform-dropdown__list">
+					<?php
+						foreach ( $all_forms as $form_info ) {
+							printf(
+								'
+								<li class="gform-dropdown__item">
+									<button class="gform-dropdown__trigger" data-js="gform-dropdown-trigger" data-value="%d">
+										%s
+									</button>
+								</li>
+								',
+								absint( $form_info->id ),
+								esc_html( $form_info->title)
+							);
+						}
+					?>
+					</ul>
+				</div>
+			</div>
+		</article>
 
 		<script type="text/javascript">
+
 			function GF_ReplaceQuery(key, newValue) {
 				var new_query = "";
 				var query = document.location.search.substring(1);
@@ -4467,44 +4518,12 @@ class GFForms {
 				FieldClick(jQuery('#gform_heading')[0]);
 			}
 
-			function GF_SetupSwitcher() {
-
-				var $select  = jQuery( '#form_switcher' ),
-					$toolbar = jQuery( '.gform-form-toolbar__form-title' );
-
-				$select
-					.selectWoo( {
-						containerCssClass: 'boom',
-						dropdownCssClass: 'gform-form-switcher__container',
-						dropdownCss: {
-							top: ( $toolbar.offset().top + $toolbar.height() ) + 'px',
-							left: ( $toolbar.offset().left ) + 'px',
-						}
-					} )
-					.on( 'select2:open', function( e ) {
-						var $container = jQuery( '.gform-form-switcher__container' );
-						$container.hide();
-						setTimeout( function() {
-							$container.show( { 'start':function() { jQuery( this ).css( 'transform','scale( 1 )' ) },'duration':0 } );
-						}, 5 );
-						$container.find( '.select2-search__field' ).prop( 'placeholder', '<?php esc_attr_e( 'Search', 'gravityforms' ); ?>' );
-					} )
-					.on( 'select2:closing', function( e ) {
-						e.preventDefault();
-						setTimeout( function() {
-							jQuery( '.gform-form-switcher__container' ).css( 'transform','scale( .95 )' ).delay( 100 ).hide( 0 );
-						}, 0 );
-					} )
-					.selectWoo( 'open' );
-
-				// Add our custom class to identify (and style) our Select2's. You'd think there would be an easier way...
-				jQuery.each( $select.data( 'select2' ), function ( index, $elem ) {
-					if( $elem instanceof jQuery ) {
-						$elem.addClass( 'gform-select2' );
-					}
-				} );
-
-			}
+			gform.instances.formSwitcher = new gform.components.dropdown( {
+				onItemSelect: GF_SwitchForm,
+				reveal: 'hover',
+				selector: 'gform-form-switcher',
+				showSpinner: true,
+			} );
 
 			jQuery(document).ready(function () {
 				if (document.location.search.indexOf("display_settings") > 0)
@@ -4662,8 +4681,7 @@ class GFForms {
 			<div class="gform-form-toolbar__container">
 
 				<div class="gform-form-toolbar__form-title">
-					<span title="<?php echo esc_attr( $form['title'] ); ?>"><?php echo esc_html( $form['title'] ); ?></span>
-					<?php self::form_switcher(); ?>
+					<?php self::form_switcher( $form['title'] ); ?>
 				</div>
 
 				<ul id="gform-form-toolbar__menu" class="gform-form-toolbar__menu">
@@ -6259,14 +6277,14 @@ class RGForms extends GFForms {
  *
  * Should be used to insert a Gravity Form from code.
  *
- * @param string     $id                  The form ID
- * @param bool       $display_title       If the form title should be displayed in the form. Defaults to true.
- * @param bool       $display_description If the form description should be displayed in the form. Defaults to true.
- * @param bool       $display_inactive    If the form should be displayed if marked as inactive. Defaults to false.
- * @param array|null $field_values        Default field values. Defaults to null.
- * @param bool       $ajax                If submission should be processed via AJAX. Defaults to false.
- * @param int        $tabindex            Starting tabindex. Defaults to 0.
- * @param bool       $echo                If the field should be echoed.  Defaults to true.
+ * @param string $id The form ID
+ * @param bool $display_title If the form title should be displayed in the form. Defaults to true.
+ * @param bool $display_description If the form description should be displayed in the form. Defaults to true.
+ * @param bool $display_inactive If the form should be displayed if marked as inactive. Defaults to false.
+ * @param array|null $field_values Default field values. Defaults to null.
+ * @param bool $ajax If submission should be processed via AJAX. Defaults to false.
+ * @param int $tabindex Starting tabindex. Defaults to 0.
+ * @param bool $echo If the field should be echoed.  Defaults to true.
  *
  * @return string|void
  */
@@ -6294,7 +6312,7 @@ function gf_upgrade() {
  * @uses GFForms::enqueue_form_scripts()
  *
  * @param string $form_id The form ID.
- * @param bool   $is_ajax If the form is submitted via AJAX.  Defaults to false.
+ * @param bool $is_ajax If the form is submitted via AJAX.  Defaults to false.
  */
 function gravity_form_enqueue_scripts( $form_id, $is_ajax = false ) {
 	GFForms::enqueue_form_scripts( $form_id, $is_ajax );
@@ -6304,8 +6322,8 @@ if ( ! function_exists( 'rgget' ) ) {
 	/**
 	 * Helper function for getting values from query strings or arrays
 	 *
-	 * @param string $name  The key
-	 * @param array  $array The array to search through.  If null, checks query strings.  Defaults to null.
+	 * @param string $name The key
+	 * @param array $array The array to search through.  If null, checks query strings.  Defaults to null.
 	 *
 	 * @return string The value.  If none found, empty string.
 	 */
@@ -6330,8 +6348,8 @@ if ( ! function_exists( 'rgpost' ) ) {
 	/**
 	 * Helper function to obtain POST values.
 	 *
-	 * @param string $name            The key
-	 * @param bool   $do_stripslashes Optional. Performs stripslashes_deep.  Defaults to true.
+	 * @param string $name The key
+	 * @param bool $do_stripslashes Optional. Performs stripslashes_deep.  Defaults to true.
 	 *
 	 * @return string The value.  If none found, empty string.
 	 */
@@ -6353,8 +6371,8 @@ if ( ! function_exists( 'rgar' ) ) {
 	 * @since  Unknown
 	 * @access public
 	 *
-	 * @param array  $array   Array from which the property's value should be retrieved.
-	 * @param string $prop    Name of the property to be retrieved.
+	 * @param array $array Array from which the property's value should be retrieved.
+	 * @param string $prop Name of the property to be retrieved.
 	 * @param string $default Optional. Value that should be returned if the property is not set or empty. Defaults to null.
 	 *
 	 * @return null|string|mixed The value
@@ -6382,8 +6400,8 @@ if ( ! function_exists( 'rgars' ) ) {
 	 * @since  Unknown
 	 * @access public
 	 *
-	 * @param array  $array   The array to search in.
-	 * @param string $name    The name of the property to find.
+	 * @param array $array The array to search in.
+	 * @param string $name The name of the property to find.
 	 * @param string $default Optional. Value that should be returned if the property is not set or empty. Defaults to null.
 	 *
 	 * @return null|string|mixed The value
@@ -6411,8 +6429,8 @@ if ( ! function_exists( 'rgempty' ) ) {
 	 * @since  Unknown
 	 * @access public
 	 *
-	 * @param string $name  The property name to check.
-	 * @param array  $array Optional. An array to check through.  Otherwise, checks for POST variables.
+	 * @param string $name The property name to check.
+	 * @param array $array Optional. An array to check through.  Otherwise, checks for POST variables.
 	 *
 	 * @return bool True if empty.  False otherwise.
 	 */
@@ -6455,7 +6473,7 @@ if ( ! function_exists( 'rgobj' ) ) {
 	 * @since  Unknown
 	 * @access public
 	 *
-	 * @param object $obj  The object to check
+	 * @param object $obj The object to check
 	 * @param string $name The property name to check for
 	 *
 	 * @return string The property value
@@ -6475,9 +6493,9 @@ if ( ! function_exists( 'rgexplode' ) ) {
 	 * @since  Unknown
 	 * @access public
 	 *
-	 * @param string $sep    The delimiter between values
+	 * @param string $sep The delimiter between values
 	 * @param string $string The string to convert
-	 * @param int    $count  The expected number of items in the resulting array
+	 * @param int $count The expected number of items in the resulting array
 	 *
 	 * @return array $ary The exploded array
 	 */
@@ -6502,7 +6520,7 @@ if ( ! function_exists( 'gf_apply_filters' ) ) {
 	 * @access public
 	 *
 	 * @param string|array $filter The name of the filter.
-	 * @param mixed  $value  The value to filter.
+	 * @param mixed $value The value to filter.
 	 *
 	 * @return mixed The filtered value.
 	 */
@@ -6531,8 +6549,8 @@ if ( ! function_exists( 'gf_apply_filters' ) ) {
 		// Apply modified versions of filter
 		foreach ( $modifiers as $modifier ) {
 			$modifier = rgblank( $modifier ) ? '' : sprintf( '_%s', $modifier );
-			$filter .= $modifier;
-			$value = apply_filters( $filter, $value, $args[0], $args[1], $args[2], $args[3], $args[4], $args[5], $args[6], $args[7], $args[8], $args[9] );
+			$filter   .= $modifier;
+			$value    = apply_filters( $filter, $value, $args[0], $args[1], $args[2], $args[3], $args[4], $args[5], $args[6], $args[7], $args[8], $args[9] );
 		}
 
 		return $value;
@@ -6575,7 +6593,7 @@ if ( ! function_exists( 'gf_do_action' ) ) {
 		// Apply modified versions of filter
 		foreach ( $modifiers as $modifier ) {
 			$modifier = rgblank( $modifier ) ? '' : sprintf( '_%s', $modifier );
-			$action .= $modifier;
+			$action   .= $modifier;
 			do_action( $action, $args[0], $args[1], $args[2], $args[3], $args[4], $args[5], $args[6], $args[7], $args[8], $args[9] );
 		}
 	}
@@ -6587,7 +6605,7 @@ if ( ! function_exists( 'gf_has_filters' ) ) {
 	 *
 	 * @since 2.4.18
 	 *
-	 * @param array         $filter            An array containing the filter tag and modifiers.
+	 * @param array $filter An array containing the filter tag and modifiers.
 	 * @param bool|callable $function_to_check The optional callback to check for.
 	 *
 	 * @return bool
@@ -6617,7 +6635,7 @@ if ( ! function_exists( 'gf_has_filter' ) ) {
 	 *
 	 * @since 2.4.18
 	 *
-	 * @param array         $filter            An array containing the filter tag and modifiers.
+	 * @param array $filter An array containing the filter tag and modifiers.
 	 * @param bool|callable $function_to_check The optional callback to check for.
 	 *
 	 * @return bool
@@ -6633,7 +6651,7 @@ if ( ! function_exists( 'gf_has_action' ) ) {
 	 *
 	 * @since 2.4.18
 	 *
-	 * @param array         $action            An array containing the action tag and modifiers.
+	 * @param array $action An array containing the action tag and modifiers.
 	 * @param bool|callable $function_to_check The optional callback to check for.
 	 *
 	 * @return bool

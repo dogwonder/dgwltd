@@ -287,6 +287,7 @@ html[dir="rtl"] .mt-gaddon-editor {
 
 .wp-list-table.feed-list-sortable .feed-sort-handle {
 	cursor: move;
+	font-size: 1.25rem;
 	width: 2.2em;
 }
 

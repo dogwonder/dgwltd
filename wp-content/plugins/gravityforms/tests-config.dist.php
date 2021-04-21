@@ -1,2 +1,0 @@
-<?php
-define( 'DB_NAME', '{ADD YOUR FUNCTIONAL TEST DATABASE HERE}' );

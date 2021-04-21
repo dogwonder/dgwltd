@@ -192,12 +192,6 @@ class Select_Custom extends Base {
 			return;
 		}
 
-		// If field is required custom value is not a URL, set field error.
-		if ( $this->required && $select_value === 'gf_custom' && ! GFCommon::is_valid_url( $custom_value ) ) {
-			$this->inputs['custom']->set_error( __( 'This must be a valid URL.', 'gravityforms' ) );
-			return;
-		}
-
 		// If a custom choice was not selected, validate selected choice.
 		if ( $select_value === 'gf_custom' ) {
 

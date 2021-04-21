@@ -14,23 +14,8 @@ gform.addFilter( 'gform_datepicker_options_pre_init', function( optionsObj, form
 	var $ = window.jQuery;
 	var isPreview = $( '#preview_form_container' ).length > 0;
 	var isRTL = window.getComputedStyle( $element[ 0 ], null ).getPropertyValue( 'direction' ) === 'rtl';
-
-	return {
-		yearRange: '-100:+20',
-		showOn: 'focus',
-		dateFormat: 'mm/dd/yy',
-		changeMonth: true,
-		changeYear: true,
+	var overrides = {
 		showOtherMonths: false,
-		suppressDatePicker: false,
-		onClose: function() {
-			$element.focus();
-			var self = this;
-			this.suppressDatePicker = true;
-			setTimeout( function() {
-				self.suppressDatePicker = false;
-			}, 200 );
-		},
 		beforeShow: function( input, inst ) {
 			inst.dpDiv[0].classList.remove( 'gform-theme-datepicker' );
 			inst.dpDiv[0].classList.add( 'gform-legacy-datepicker' );
@@ -42,5 +27,7 @@ gform.addFilter( 'gform_datepicker_options_pre_init', function( optionsObj, form
 			}
 			return ! this.suppressDatePicker;
 		}
-	}
+	};
+
+	return Object.assign( optionsObj, overrides );
 }, -10 );

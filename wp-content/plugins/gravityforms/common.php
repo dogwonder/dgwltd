@@ -2891,6 +2891,15 @@ Content-Type: text/html;
 		return $key_info ? $key_info : array();
 	}
 
+	/**
+	 * Get the license and plugins information.
+	 *
+	 * @since unknown
+	 *
+	 * @param bool $cache If we should use the cached data.
+	 *
+	 * @return array|null
+	 */
 	public static function get_version_info( $cache = true ) {
 
 		$version_info = get_option( 'gform_version_info' );
@@ -2950,7 +2959,7 @@ Content-Type: text/html;
 	public static function get_remote_request_params() {
 		global $wpdb;
 
-		return sprintf( 'of=GravityForms&key=%s&v=%s&wp=%s&php=%s&mysql=%s&version=2', urlencode( self::get_key() ), urlencode( self::$version ), urlencode( get_bloginfo( 'version' ) ), urlencode( phpversion() ), urlencode( $wpdb->db_version() ) );
+		return sprintf( 'of=GravityForms&key=%s&v=%s&wp=%s&php=%s&mysql=%s&version=2', urlencode( self::get_key() ), urlencode( self::$version ), urlencode( get_bloginfo( 'version' ) ), urlencode( phpversion() ), urlencode( GFCommon::get_db_version() ) );
 	}
 
 	public static function get_remote_post_params() {
@@ -3005,7 +3014,7 @@ Content-Type: text/html;
 			'v'       => self::$version,
 			'wp'      => get_bloginfo( 'version' ),
 			'php'     => phpversion(),
-			'mysql'   => $wpdb->db_version(),
+			'mysql'   => GFCommon::get_db_version(),
 			'version' => '2',
 			'plugins' => $plugins,
 			'tn'      => $theme_name,
@@ -3429,7 +3438,9 @@ Content-Type: text/html;
 	 *
 	 * @return mixed
 	 */
-	public static function get_radio_choices( $field, $value = '', $disabled_text ) {
+	public static function get_radio_choices( $field, $value, $disabled_text ) {
+		$value = ( is_string( $value ) ) ? $value : '';
+
 		_deprecated_function( 'get_radio_choices', '1.9', 'GF_Field_Checkbox::get_radio_choices' );
 
 		return $field->get_radio_choices( $value, $disabled_text );
@@ -3688,7 +3699,8 @@ Content-Type: text/html;
 			$post_id   = rgar( $lead, 'post_id' );
 			$post_link = '';
 			if ( is_numeric( $post_id ) && self::is_post_field( $field ) ) {
-				$post_link = "<div>You can <a href='post.php?action=edit&post=$post_id'>edit this post</a> from the post page.</div>";
+				// Translators: link to the "Edit Post" page for this post.
+				$post_link = '<div>' . sprintf( __( 'You can <a href="%s">edit this post</a> from the post page.', 'gravityforms' ), 'post.php?action=edit&post=' . $post_id ) . '</div>';
 			}
 		}
 
@@ -3822,7 +3834,7 @@ Content-Type: text/html;
 			),
 			'form_id'      => 0,
 			'label'        => __( 'Preview', 'gravityforms' ),
-			'link_class'   => 'button preview-form',
+			'link_class'   => 'button preview-form gform-button gform-button--white',
 			'menu_class'   => 'gf_form_toolbar_preview',
 			'priority'     => 700,
 			'target'       => '_blank',
@@ -3882,7 +3894,7 @@ Content-Type: text/html;
 		/**
 		 * A filter to allow you to modify the form preview link.
 		 *
-		 * @since unknown
+		 * @since 2.5
 		 *
 		 * @param string $preview_link The Form preview link HTML.
 		 */
@@ -5168,6 +5180,7 @@ Content-Type: text/html;
 		$gf_vars['selectFormat']            = esc_html__( 'Select a format', 'gravityforms' );
 		$gf_vars['column']                  = esc_html__( 'Column', 'gravityforms' );
 		$gf_vars['editToViewAll']           = esc_html__( '5 of %d items shown. Edit field to view all', 'gravityforms' );
+		$gf_vars['selectAll']               = esc_html__( 'Select All', 'gravityforms' );
 		$gf_vars['enterValue']              = esc_html__( 'Enter a value', 'gravityforms' );
 		$gf_vars['formTitle']               = esc_html__( 'Untitled Form', 'gravityforms' );
 		$gf_vars['formDescription']         = esc_html__( 'We would love to hear from you! Please fill out this form and we will get in touch with you shortly.', 'gravityforms' );
@@ -5187,6 +5200,7 @@ Content-Type: text/html;
 		$gf_vars['configure']               = esc_html__( 'Configure', 'gravityform' );
 		$gf_vars['conditional_logic_text']  = esc_html__( 'Conditional Logic', 'gravityforms' );
 		$gf_vars['conditional_logic_desc']  = esc_html__( 'Conditional logic allows you to change what the user sees depending on the fields they select.', 'gravityforms' );
+		$gf_vars['conditional_logic_a11y']  = esc_html__( 'Adding conditional logic to the form submit button could cause usabilty problems for some users and negatively impact the accessibility of your form.', 'gravityforms' );
 		$gf_vars['page']                    = esc_html__( 'Page', 'gravityforms' );
 		$gf_vars['next_button']             = esc_html__( 'Next Button', 'gravityforms' );
 		$gf_vars['all']                     = esc_html( _x( 'All', 'Conditional Logic', 'gravityforms' ) );
@@ -7111,6 +7125,55 @@ Content-Type: text/html;
 		return implode( '', $pieces );
 	}
 
+	/**
+	 * Check a field group for nested fields and return the key.
+	 *
+	 * @since 2.4.24
+	 *
+	 * @param array $group Field array.
+	 *
+	 * @return string
+	 */
+	public static function get_nested_key( $group ) {
+		$nested_key = rgar( $group, 'sections' ) ? 'sections' : 'fields';
+
+		if ( ( ! rgar( $group, $nested_key ) || empty( $group[ $nested_key ] ) ) && rgar( $group, 'inputs' ) ) {
+			$nested_key = 'inputs';
+		}
+
+		return $nested_key;
+	}
+
+	/**
+	 * Return the version of MySQL or MariaDB currently in use.
+	 *
+	 * @since 2.5
+	 *
+	 * @return string
+	 */
+	public static function get_db_version() {
+		global $wpdb;
+
+		$ver = $wpdb->get_var( 'SELECT version();' );
+
+		return preg_replace( '/[^0-9.].*/', '', $ver );
+	}
+
+	/**
+	 * Return current database management system
+	 *
+	 * @since 2.5
+	 *
+	 * @return string either MySQL or MariaDB
+	 */
+	public static function get_dbms_type() {
+		global $wpdb;
+
+		$ver = $wpdb->get_var( 'SELECT version();' );
+
+		return strpos( strtolower( $ver ), 'mariadb' ) ? 'MariaDB' : 'MySQL';
+
+	}
 }
 
 class GFCategoryWalker extends Walker {

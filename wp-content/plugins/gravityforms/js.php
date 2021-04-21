@@ -1331,31 +1331,31 @@ if ( ! class_exists( 'GFForms' ) ) {
 			}
 
 			var elementNames = {
-				labelClass: 'field-choice-label field-choice-label--' + inputType,
-				choiceTypeInput: 'gfield_choice_' + type + ' field-choice-type field-choice-type--' + type,
+				labelClass: 'field-choice-label field-choice-label--' + inputType + ' gform-choice__selected-label',
+				choiceTypeInput: 'gfield_choice_' + type + ' field-choice-type field-choice-type--' + type + ' gform-choice__selected gform-choice__selected--' + type,
 				textInput: inputType + '_choice_text_' + i,
 				valueInput: inputType + '_choice_value_' + i,
 				priceInput: inputType + '_choice_price_' + i,
 			}
 
-			str += "<li class='field-choice-row' data-input_type='" + inputType + "' data-index='" + i + "'>";
-			str += '<i class="field-choice-handle" focusable="true"></i>';
+			str += "<li class='field-choice-row gform-choice' data-input_type='" + inputType + "' data-index='" + i + "'>";
+			str += '<i class="field-choice-handle gform-choice__handle gform-icon gform-icon--drag" focusable="true"></i>';
 			str += "<input type='" + type + "' class='" + elementNames.choiceTypeInput + "' name='choice_selected' id='" + inputType + "_choice_selected_" + i + "' " + checked
 					+ " onclick=\"SetFieldChoice('" + inputType + "', " + i + ");\" onkeypress=\"SetFieldChoice('" + inputType + "', " + i + ");\" /> ";
-			str += "<label class='" + elementNames.labelClass + "' for='" + inputType + "_choice_selected_" + i + "'></label>";
-			str += "<input type='text' id='" + elementNames.textInput + "' value=\"" + text.replace(/"/g, "&quot;") + "\" class='field-choice-input field-choice-text field-choice-text--" + inputType + "' />";
-			str += "<input type='text' id='" + elementNames.valueInput + "' value=\"" + value.replace(/"/g, "&quot;") + "\" class='field-choice-input field-choice-value field-choice-value--" + inputType + "' />";
-			str += "<input type='text' id='" + elementNames.priceInput + "' value=\"" + price.replace(/"/g, "&quot;") + "\" class='field-choice-input field-choice-price field-choice-price--" + inputType + "' />";
+			str += "<label class='" + elementNames.labelClass + "' for='" + inputType + "_choice_selected_" + i + "'><i class='gform-choice__selected-icon gform-icon gform-icon--check' /></i></label>";
+			str += "<input type='text' id='" + elementNames.textInput + "' value=\"" + text.replace(/"/g, "&quot;") + "\" class='field-choice-input field-choice-text field-choice-text--" + inputType + " gform-choice__input gform-choice__input--label gform-input gform-input--text' />";
+			str += "<input type='text' id='" + elementNames.valueInput + "' value=\"" + value.replace(/"/g, "&quot;") + "\" class='field-choice-input field-choice-value field-choice-value--" + inputType + " gform-choice__input gform-choice__input--value gform-input gform-input--text' />";
+			str += "<input type='text' id='" + elementNames.priceInput + "' value=\"" + price.replace(/"/g, "&quot;") + "\" class='field-choice-input field-choice-price field-choice-price--" + inputType + " gform-choice__input gform-choice__input--price gform-input gform-input--text' />";
 
 			if (window["gform_append_field_choice_option_" + field.type])
 				str += window["gform_append_field_choice_option_" + field.type](field, i);
 
 			str += gform.applyFilters('gform_append_field_choice_option', '', field, i);
 
-			str += "<button class='field-choice-button field-choice-button--insert gf_insert_field_choice' onclick=\"InsertFieldChoice(" + (i + 1) + ");\" aria-label='<?php esc_attr_e( 'Add choice', 'gravityforms' ); ?>'></button>";
+			str += "<button class='field-choice-button field-choice-button--insert gf_insert_field_choice gform-choice__button gform-choice__button--add gform-st-icon gform-st-icon--circle-plus' onclick=\"InsertFieldChoice(" + (i + 1) + ");\" aria-label='<?php esc_attr_e( 'Add choice', 'gravityforms' ); ?>'></button>";
 
 			if (field.choices.length > 1) {
-				str += "<button class='field-choice-button field-choice-button--delete gf_delete_field_choice' onclick=\"DeleteFieldChoice(" + i + ");\" aria-label='<?php esc_attr_e( 'Delete choice', 'gravityforms' ); ?>'></button>";
+				str += "<button class='field-choice-button field-choice-button--delete gf_delete_field_choice gform-choice__button gform-choice__button--add gform-st-icon gform-st-icon--circle-minus' onclick=\"DeleteFieldChoice(" + i + ");\" aria-label='<?php esc_attr_e( 'Delete choice', 'gravityforms' ); ?>'></button>";
 			}
 
 			str += "</li>";
@@ -1473,9 +1473,8 @@ if ( ! class_exists( 'GFForms' ) ) {
 			fieldSetting = 'label_setting';
 		}
 
-		var warningDiv = '<div class="accessibility_warning field_setting">' +
-			'<svg aria-hidden="true" role="img" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.75 6.99c-.14-.55-.69-.87-1.24-.75-2.38.53-5.03.76-7.51.76-2.48 0-5.13-.23-7.51-.76-.55-.12-1.1.2-1.24.75-.14.56.2 1.13.75 1.26 1.61.36 3.35.61 5 .75v12c0 .55.45 1 1 1s1-.45 1-1v-5h2v5c0 .55.45 1 1 1s1-.45 1-1V9c1.65-.14 3.39-.39 4.99-.75.56-.13.9-.7.76-1.26zM12 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z" fill="#242748"/></svg>' +
-			'<p>' + message + '</p></div>';
+		var warningDiv = '<div class="gform-accessibility-warning field_setting">' +
+			'<span class="gform-icon gform-icon--accessibility"></span><p>' + message + '</p></div>';
 
 		var fieldSetting = jQuery( '.' + fieldSetting );
 		if ( position === 'above' ) {

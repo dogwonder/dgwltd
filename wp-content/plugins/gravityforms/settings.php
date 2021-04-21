@@ -1,6 +1,7 @@
 <?php
 
 use Gravity_Forms\Gravity_Forms\Settings\Settings;
+use \Gravity_Forms\Gravity_Forms\License;
 
 class_exists( 'GFForms' ) || die();
 
@@ -449,11 +450,12 @@ class GFSettings {
 				'class'  => 'gform-settings-panel--half',
 				'fields' => array(
 					array(
-						'name'        => 'currency',
-						'description' => esc_html__( 'Select the default currency for your forms. This is used for product fields, credit card fields and others.', 'gravityforms' ),
-						'type'        => 'select',
-						'choices'     => $currency_options,
-						'enhanced_ui' => true,
+						'name'         => 'currency',
+						'description'  => esc_html__( 'Select the default currency for your forms. This is used for product fields, credit card fields and others.', 'gravityforms' ),
+						'type'         => 'select',
+						'choices'      => $currency_options,
+						'enhanced_ui'  => true,
+						'after_select' => self::currency_message_callback(),
 					),
 				),
 			),
@@ -540,6 +542,37 @@ class GFSettings {
 			),
 		);
 
+	}
+
+	/**
+	* Callback to output any additional markup after the currency select markup.
+	*
+	* @since 2.5
+	*
+	* @return false|string
+	*/
+	public static function currency_message_callback() {
+		// Start output buffer to capture any echoed output.
+		ob_start();
+
+		/**
+		* Allows third-party code to add a message after the Currency setting markup.
+		*
+		* @since Unknown
+		* @since 2.5 - Moved to currency message callback.
+		*
+		* @param string The default message.
+		*/
+		do_action( 'gform_currency_setting_message', '' );
+
+		$output = ob_get_clean();
+
+		// Message was echoed, return it.
+		if ( ! empty( $output ) ) {
+			return $output;
+		}
+
+		return '';
 	}
 
 	/**

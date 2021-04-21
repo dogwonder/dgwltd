@@ -86,41 +86,7 @@
  *
  * ----------------------------------------------------------------------------- */
 
-/* Base */
-
-/*
-* Styles for full, medium, and small field sizes.
-*
-* Used in the basic.css front-end stylesheet and layout-editor.css.
-*/
-
-.gform_wrapper.gravity-theme .gfield textarea {
-			width: 100%;
-		}
-
-.gform_wrapper.gravity-theme .gfield textarea.small {
-				height: 96px;
-			}
-
-.gform_wrapper.gravity-theme .gfield textarea.medium {
-				height: 192px;
-			}
-
-.gform_wrapper.gravity-theme .gfield textarea.large {
-				height: 288px;
-			}
-
-.gform_wrapper.gravity-theme .gfield input.small, .gform_wrapper.gravity-theme .gfield select.small {
-				width: calc(25% - 16px * 3 / 4);
-			}
-
-.gform_wrapper.gravity-theme .gfield input.medium, .gform_wrapper.gravity-theme .gfield select.medium {
-				width: calc(50% - 16px / 2); /* default margin between complex fields is 1rem */
-			}
-
-.gform_wrapper.gravity-theme .gfield input.large, .gform_wrapper.gravity-theme .gfield select.large {
-				width: 100%;
-			}
+/* Gravity Theme */
 
 /*
 * Styles for labels and legends, including making legends look like labels.
@@ -139,22 +105,6 @@
 .gform_wrapper.gravity-theme .ginput_complex label, .gform_wrapper.gravity-theme .gform_fileupload_rules, .gform_wrapper.gravity-theme .gfield_header_item {
 		font-size: 15px;
 		padding-top: 5px;
-	}
-
-.gform_wrapper.gravity-theme fieldset, .gform_wrapper.gravity-theme legend {
-		background: none;
-	}
-
-.gform_wrapper.gravity-theme fieldset {
-		border: none;
-		display: block;
-		margin: 0;
-		padding: 0;
-	}
-
-.gform_wrapper.gravity-theme legend {
-		margin-left: 0;
-		margin-right: 0;
 	}
 
 .gform_wrapper.gravity-theme.left_label fieldset.gfield, .gform_wrapper.gravity-theme.left_label fieldset.gfield, .gform_wrapper.gravity-theme.right_label fieldset.gfield, .gform_wrapper.gravity-theme.right_label fieldset.gfield {
@@ -190,281 +140,10 @@
 	}
 
 /*
-* Form grid layout
+* Theme css for the validation messages.
 *
-* Used in the basic.css front-end stylesheet and editor.css.
+* Used in the theme.css front-end stylesheet.
 */
-
-.gform_wrapper.gravity-theme * {
-		box-sizing: border-box;
-	}
-
-.gform_wrapper.gravity-theme .gform_fields {
-		width: 100%;
-		display: -ms-grid;
-		display: grid;
-		-ms-grid-columns: (1fr)[12];
-		grid-template-columns: repeat( 12, 1fr );
-		grid-template-rows: repeat( auto-fill, auto );
-		grid-column-gap: 32px;
-		grid-row-gap: 16px;
-	}
-
-.gform_wrapper.gravity-theme .gfield {
-		grid-column: 1 / -1;
-	}
-
-.gform_wrapper.gravity-theme .gfield.gfield--width-full {
-		-ms-grid-column-span: 12;
-		grid-column: span 12;
-	}
-
-.gform_wrapper.gravity-theme .gfield.gfield--width-eleven-twelfths {
-		-ms-grid-column-span: 11;
-		grid-column: span 11;
-	}
-
-.gform_wrapper.gravity-theme .gfield.gfield--width-five-sixths {
-		-ms-grid-column-span: 10;
-		grid-column: span 10;
-	}
-
-.gform_wrapper.gravity-theme .gfield.gfield--width-three-quarter {
-		-ms-grid-column-span: 9;
-		grid-column: span 9;
-	}
-
-.gform_wrapper.gravity-theme .gfield.gfield.gfield--width-two-thirds {
-		-ms-grid-column-span: 8;
-		grid-column: span 8;
-	}
-
-.gform_wrapper.gravity-theme .gfield.gfield--width-seven-twelfths {
-		-ms-grid-column-span: 7;
-		grid-column: span 7;
-	}
-
-.gform_wrapper.gravity-theme .gfield.gfield--width-half {
-		-ms-grid-column-span: 6;
-		grid-column: span 6;
-	}
-
-.gform_wrapper.gravity-theme .gfield.gfield--width-five-twelfths {
-		-ms-grid-column-span: 5;
-		grid-column: span 5;
-	}
-
-.gform_wrapper.gravity-theme .gfield.gfield--width-third {
-		-ms-grid-column-span: 4;
-		grid-column: span 4;
-	}
-
-.gform_wrapper.gravity-theme .gfield.gfield--width-quarter {
-		-ms-grid-column-span: 3;
-		grid-column: span 3;
-	}
-
-@media (max-width: 840px) {
-
-		.gform_wrapper.gravity-theme .gfield:not(.gfield--width-full) {
-			grid-column: 1 / -1;
-		}
-
-	}
-
-/*
-* Left and right label alignment
-*
-* Used in the basic.css front-end stylesheet.
-*/
-
-.gform_wrapper.gravity-theme .left_label .gfield:not(.gsection):not(.gfield_html):not(fieldset), .gform_wrapper.gravity-theme .right_label .gfield:not(.gsection):not(.gfield_html):not(fieldset) {
-		display: flex;
-		width: 100%;
-		flex-wrap: wrap;
-		justify-content: flex-end;
-	}
-
-.gform_wrapper.gravity-theme .left_label .gfield_label, .gform_wrapper.gravity-theme .right_label .gfield_label {
-		width: 30%;
-		margin: 0;
-		padding: 0;
-	}
-
-.gform_wrapper.gravity-theme .left_label .ginput_complex .ginput_container, .gform_wrapper.gravity-theme .right_label .ginput_complex .ginput_container {
-		width: auto;
-	}
-
-.gform_wrapper.gravity-theme .left_label div.gfield > div:not(.ui-resizable-handle):not(.gfield-admin-icons), .gform_wrapper.gravity-theme .right_label div.gfield > div:not(.ui-resizable-handle):not(.gfield-admin-icons) {
-		width: 70%;
-	}
-
-.gform_wrapper.gravity-theme .left_label fieldset .ginput_container, .gform_wrapper.gravity-theme .right_label fieldset .ginput_container {
-		width: 100%;
-	}
-
-.gform_wrapper.gravity-theme .left_label fieldset.gfield, .gform_wrapper.gravity-theme .right_label fieldset.gfield {
-		position: relative;
-	}
-
-.gform_wrapper.gravity-theme .right_label .gfield_label {
-		text-align: right;
-		padding-right: 1em;
-	}
-
-.gform_wrapper.gravity-theme .left_label.gform_fields, .gform_wrapper.gravity-theme .right_label.gform_fields {
-		position: relative;
-	}
-
-.gform_wrapper.gravity-theme .gform_fields.left_label legend.gfield_label, .gform_wrapper.gravity-theme .gform_fields.right_label legend.gfield_label {
-		position: absolute;
-		left: 0;
-		width: 30%;
-	}
-
-.gform_wrapper.gravity-theme .left_label fieldset.gfield, .gform_wrapper.gravity-theme .right_label fieldset.gfield {
-		padding-left: 30%;
-	}
-
-.gform_wrapper.gravity-theme .right_label fieldset.gfield {
-		position: relative;
-	}
-
-.gform_wrapper.gravity-theme .right_label legend.gfield_label {
-		padding-right: 1em;
-	}
-
-.gform_wrapper.gravity-theme .left_label .gfield_html_formatted, .gform_wrapper.gravity-theme .right_label .gfield_html_formatted {
-		margin-left: 30%;
-	}
-
-.rtl .gform_wrapper.gravity-theme .left_label legend.gfield_label, .rtl .gform_wrapper.gravity-theme .right_label legend.gfield_label {
-		position: absolute;
-		text-align: left;
-		margin-left: 1em;
-		right: 0;
-		width: 30%;
-	}
-
-.rtl .gform_wrapper.gravity-theme .left_label legend.gfield_label {
-		width: 30%;
-	}
-
-.rtl .gform_wrapper.gravity-theme .left_label .gfield_label {
-		text-align: left !important;
-	}
-
-.rtl .gform_wrapper.gravity-theme .left_label fieldset.gfield, .rtl .gform_wrapper.gravity-theme .right_label fieldset.gfield {
-		padding-right: 30%;
-		margin-left: 0;
-	}
-
-.rtl .gform_wrapper.gravity-theme .left_label .gfield_label {
-		text-align: left;
-		padding-left: 1em;
-	}
-
-.rtl .gform_wrapper.gravity-theme .right_label legend.gfield_label, .rtl .gform_wrapper.gravity-theme .right_label .gfield_label {
-		text-align: right;
-		padding: 0;
-	}
-
-.rtl .gform_wrapper.gravity-theme .right_label label.gfield_label {
-		padding-right: 0;
-	}
-
-.rtl .gform_wrapper.gravity-theme .left_label .gfield_html_formatted, .rtl .gform_wrapper.gravity-theme .right_label .gfield_html_formatted {
-		margin-left: 0;
-		margin-right: 30%;
-	}
-
-/*
-* RTL styles for complex fields.
-*
-* Used in the basic.css front-end stylesheet.
-*/
-
-html[dir="rtl"] code, html[dir="rtl"] input[type="url"], html[dir="rtl"] input[type="email"], html[dir="rtl"] input[type="tel"] {
-		direction: rtl;
-	}
-
-html[dir="rtl"] .gform_wrapper.gravity-theme .gfield_label {
-
-			direction: rtl;
-
-		}
-
-html[dir="rtl"] .gform_wrapper.gravity-theme .gfield_required {
-
-			margin-left: 0;
-			margin-right: 4px;
-
-		}
-
-html[dir="rtl"] ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-		text-align: right;
-	}
-
-html[dir="rtl"] ::-moz-placeholder { /* Firefox 19+ */
-		text-align: right;
-	}
-
-html[dir="rtl"] :-ms-input-placeholder { /* IE 10+ */
-		text-align: right;
-	}
-
-html[dir="rtl"] :-moz-placeholder { /* Firefox 18- */
-		text-align: right;
-	}
-
-html[dir="rtl"] .gform_wrapper.gravity-theme fieldset {
-		display: block;
-	}
-
-html[dir="rtl"] .gform_wrapper.gravity-theme .gfield_header_item + .gfield_header_item:not(:last-child), html[dir="rtl"] .gform_wrapper.gravity-theme .gfield_list_group_item + .gfield_list_group_item {
-		margin-left: 0;
-		margin-right: 16px;
-	}
-
-html[dir="rtl"] .gform_wrapper.gravity-theme .ginput_complex:not(.ginput_container_address) span:not([style*="display:none"]):not(.ginput_full) ~ span:not(.ginput_full), html[dir="rtl"] .gform_wrapper.gravity-theme .ginput_complex:not(.ginput_container_address) fieldset:not([style*="display:none"]):not(.ginput_full) ~ span:not(.ginput_full) {
-		padding-left: 0;
-		padding-right: 16px;
-	}
-
-@media (min-width:641px) {
-
-		html[dir="rtl"] .gform_wrapper.gravity-theme .ginput_complex:not(.ginput_container_address) span:not([style*="display:none"]):not(.ginput_full) ~ span:not(.ginput_full) {
-			padding-left: 0;
-			padding-right: 16px;
-		}
-
-		html[dir="rtl"] .gform_wrapper.gravity-theme .ginput_container_address.has_street2:not(.has_street) span:not(.ginput_full):nth-of-type(2n), html[dir="rtl"] .gform_wrapper.gravity-theme .ginput_container_address.has_street:not(.has_street2) span:not(.ginput_full):nth-of-type(2n), html[dir="rtl"] .gform_wrapper.gravity-theme .ginput_container_address:not(.has_street):not(.has_street2) span:not(.ginput_full):nth-of-type(2n+1), html[dir="rtl"] .gform_wrapper.gravity-theme .ginput_container_address.has_street.has_street2 span:not(.ginput_full):nth-of-type(2n+1) {
-			padding-right: 0;
-			padding-left: 16px;
-		}
-
-		html[dir="rtl"] .gform_wrapper.gravity-theme .gform_show_password {
-			right: unset;
-			left: 8px;
-		}
-	}
-
-/*
-* Style the character counter in TinyMCE.
-*
-* Used in basic.css.
-*/
-
-.gform_wrapper.gravity-theme .ginput_counter {
-		color: #767676;
-		font-size: 0.8em;
-	}
-
-.gform_wrapper.gravity-theme .ginput_counter_tinymce {
-		border-top: 1px solid #eee;
-		padding: 2px 10px;
-		font-size: 12px;
-	}
 
 .gform_wrapper .gform_validation_errors {
 	background: #FFF9F9;
@@ -479,10 +158,10 @@ html[dir="rtl"] .gform_wrapper.gravity-theme .ginput_complex:not(.ginput_contain
 }
 
 .gform_wrapper .gform_validation_errors > h2 {
+		color: #C02B0A;
 		font-size: 13.2px;
 		font-weight: 500;
 		line-height: 17.6px;
-		color: #C02B0A;
 		margin: 0 0 12px 0;
 	}
 
@@ -492,9 +171,9 @@ html[dir="rtl"] .gform_wrapper.gravity-theme .ginput_complex:not(.ginput_contain
 
 .gform_wrapper .gform_validation_errors > h2 .gform-icon {
 			font-size: 28px;
+			left: 12px;
 			position: absolute;
 			top: 12px;
-			left: 12px;
 		}
 
 .gform_wrapper .gform_validation_errors > h2.hide_summary {
@@ -515,7 +194,7 @@ html[dir="rtl"] .gform_wrapper.gravity-theme .ginput_complex:not(.ginput_contain
 			color: #C02B0A;
 			font-size: 13.2px;
 			list-style-type: disc !important;
-			margin: 0 0 0.s80px 0;
+			margin: 0 0 8px 0;
 		}
 
 .gform_wrapper .gform_validation_errors > ol li:last-of-type {
@@ -525,13 +204,13 @@ html[dir="rtl"] .gform_wrapper.gravity-theme .ginput_complex:not(.ginput_contain
 .gform_wrapper .gfield_required {
 	color: #C02B0A;
 	display: inline-block;
-	padding-left: .125em;
 	font-size: 13.008px;
+	padding-left: .125em;
 }
 
 .gform_wrapper .gfield_required .gfield_required_text, .gform_wrapper .gfield_required .gfield_required_custom {
-		font-weight: 400;
 		font-style: italic;
+		font-weight: 400;
 	}
 
 .gform_wrapper .gform_required_legend .gfield_required {
@@ -539,13 +218,13 @@ html[dir="rtl"] .gform_wrapper.gravity-theme .ginput_complex:not(.ginput_contain
 }
 
 .gform_wrapper .validation_error {
-	padding: 16px;
-	margin-bottom: 32px;
+	border-bottom: 2px solid #C02B0A;
+	border-top: 2px solid #C02B0A;
 	color: #C02B0A;
 	font-size: 1em;
 	font-weight: 700;
-	border-top: 2px solid #C02B0A;
-	border-bottom: 2px solid #C02B0A;
+	margin-bottom: 32px;
+	padding: 16px;
 	text-align: center;
 }
 
@@ -559,10 +238,6 @@ html[dir="rtl"] .gform_wrapper.gravity-theme .ginput_complex:not(.ginput_contain
 	font-size: 14.992px;
 	margin-top: 8px;
 	padding: 12.992px 24px;
-}
-
-.gform_wrapper .validation_message--hidden-on-empty:empty {
-	display: none;
 }
 
 .gform_wrapper .gfield_error [aria-invalid="true"] {
@@ -1162,119 +837,15 @@ html[dir=rtl] .gform_wrapper.gravity-theme button + input, html[dir=rtl] .gform_
 		font-size: 0.8em;
 	}
 
+.gform_wrapper.gravity-theme .gfield .ginput_quantity {
+		width: auto;
+	}
+
 html[dir=rtl] .gform_wrapper.gravity-theme .ginput_container_date img.ui-datepicker-trigger {
 			margin-right: 12.8px;
 			margin-left: 0;
 			order: 1;
 		}
-
-/*
-* List field.
-*
-* Used in the theme.css front-end stylesheet and admin-theme.css.
-*/
-
-.gform_wrapper.gravity-theme .gfield_list_header, .gform_wrapper.gravity-theme .gfield_list_group {
-		display: flex;
-		flex-direction: row;
-		flex-wrap: nowrap;
-		margin-bottom: 8px;
-	}
-
-.gform_wrapper.gravity-theme .gfield_list_group:last-child {
-		margin-bottom: 0;
-	}
-
-.gform_wrapper.gravity-theme .gfield_header_item:last-child, .gform_wrapper.gravity-theme .gfield_list_icons {
-		width: 48px;
-		flex: none;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-.gform_wrapper.gravity-theme .gfield_list_icons button {
-		font-size: 0;
-		background: transparent url('../images/list-add.svg');
-		border: none;
-		width: 16px;
-		height: 16px;
-		opacity: 0.5;
-		padding: 0;
-		transition: opacity .5s ease-out;
-	}
-
-.gform_wrapper.gravity-theme .gfield_list_icons button:hover, .gform_wrapper.gravity-theme .gfield_list_icons button:focus {
-		opacity: 1.0;
-		outline: none;
-	}
-
-.gform_wrapper.gravity-theme .gfield_list_icons button.delete_list_item {
-		margin-left: 5px;
-		background-image: url('../images/list-remove.svg');
-	}
-
-.gform_wrapper.gravity-theme .gfield_header_item {
-		word-break: break-word;
-	}
-
-.gform_wrapper.gravity-theme .gfield_header_item, .gform_wrapper.gravity-theme .gfield_list_group_item {
-		flex-grow: 1;
-		width: 0;
-	}
-
-.gform_wrapper.gravity-theme .gfield_header_item + .gfield_header_item:not(:last-child), .gform_wrapper.gravity-theme .gfield_list_group_item + .gfield_list_group_item {
-		margin-left: 16px;
-	}
-
-.gform_wrapper.gravity-theme .gfield_list_group_item input, .gform_wrapper.gravity-theme .gfield_list_group_item select {
-		width: 100%;
-	}
-
-@media (max-width: 640px) {
-
-		.gform_wrapper.gravity-theme .gfield_list_header {
-			display: none;
-		}
-
-		.gform_wrapper.gravity-theme .gfield_list_group {
-			display: block;
-			border: 1px solid rgba(0, 0, 0, 0.2);
-			padding: 16px;
-			margin-bottom: 16px;
-		}
-
-		.gform_wrapper.gravity-theme .gfield_list_group:last-child {
-			margin-bottom: 0;
-		}
-
-		.gform_wrapper.gravity-theme .gfield_list_group_item:not(:last-child) {
-			margin-bottom: 8px;
-		}
-
-		.gform_wrapper.gravity-theme .gfield_list_group_item:after {
-			content: attr(data-label);
-		}
-
-		.gform_wrapper.gravity-theme .gfield_list_icons {
-			width: auto;
-			background-color: rgba(0, 0, 0, 0.1);
-			margin: 16px -16px -16px;
-			padding: 12px 16px;
-			line-height: 0;
-			text-align: left;
-		}
-
-		.gform_wrapper.gravity-theme .gfield_header_item + .gfield_header_item:not(:last-child), .gform_wrapper.gravity-theme .gfield_list_group_item + .gfield_list_group_item {
-			margin-left: 0;
-		}
-
-	}
-
-html[dir=rtl] .gform_wrapper.gravity-theme .gfield_header_item + .gfield_header_item:not(:last-child), html[dir=rtl] .gform_wrapper.gravity-theme .gfield_list_group_item + .gfield_list_group_item {
-		margin-left: 0;
-		margin-right: 16px;
-	}
 
 /*
 * Progress bar.
@@ -1408,27 +979,77 @@ html[dir=rtl] .gform_wrapper.gravity-theme .gf_progressbar_percentage:not(.perce
 */
 
 .gform_wrapper.gravity-theme .gf_page_steps {
-		border-bottom: 1px dotted #ccc;
+		border-bottom: 1px solid #E5E7EB;
+		margin-bottom: 16px;
 	}
 
 .gform_wrapper.gravity-theme .gf_step {
-		margin: 8px 32px 8px 0;
-		opacity: 0.2;
 		display: inline-block;
-	}
-
-.gform_wrapper.gravity-theme .gf_step_number {
-		font-size: 1.25em;
-		margin-right: 8px;
+		margin: 8px 32px 8px 0;
 	}
 
 .gform_wrapper.gravity-theme .gf_step_number, .gform_wrapper.gravity-theme .gf_step_label {
-		display: inline-block;
+		display: table-cell;
 		vertical-align: middle;
 	}
 
-.gform_wrapper.gravity-theme .gf_step_active {
-		opacity: 1.0;
+.gform_wrapper.gravity-theme .gf_step_number {
+		background: transparent;
+		border-radius: 20px;
+		border: 2px solid #CFD3D9;
+		color: #585E6A;
+		font-size: 14px;
+		font-weight: 500;
+		height: 40px;
+		text-align: center;
+		width: 40px;
+	}
+
+.gform_wrapper.gravity-theme .gf_step_active .gf_step_number {
+		background: #CFD3D9;
+		color: #607382;
+	}
+
+.gform_wrapper.gravity-theme .gf_step_completed .gf_step_number {
+		position: relative;
+	}
+
+.gform_wrapper.gravity-theme .gf_step_completed .gf_step_number:before {
+			background: #607382;
+			border-radius: 20px;
+			border: 2px solid #607382;
+			content: '';
+			display: table-cell;
+			height: 40px;
+			left: -2px;
+			position: absolute;
+			top: -2px;
+			width: 40px;
+		}
+
+.gform_wrapper.gravity-theme .gf_step_completed .gf_step_number:after {
+			align-items: center;
+			color: #fff;
+			content: '\e917';
+			display: flex;
+			font-family: 'gform-icons-theme';
+			font-size: 24px;
+			height: 100%;
+			justify-content: center;
+			left: 0;
+			position: absolute;
+			text-align: center;
+			top: 0;
+			width: 100%;
+			z-index: 5;
+		}
+
+.gform_wrapper.gravity-theme .gf_step_label {
+		color: inherit;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 16px;
+		padding-left: 16px;
 	}
 
 .gform_wrapper.gravity-theme .gf_step_hidden {

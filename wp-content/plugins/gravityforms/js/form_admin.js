@@ -15,7 +15,7 @@ jQuery(document).ready(function($){
 
     gaddon.init();
 
-    HandleUnsavedChanges( '#gform-settings' );
+    gform.adminUtils.handleUnsavedChanges( '#gform-settings' );
 
     $(document).on('change', '.gfield_rule_value_dropdown', function(){
         SetRuleValueDropDown($(this));
@@ -143,6 +143,9 @@ function CreateConditionalLogic(objectType, obj){
     }
 
     var descPieces = {};
+    if( objectType == "form_button" ) {
+        descPieces.a11yWarning = "<div class='gform-accessibility-warning'><span class='gform-icon gform-icon--accessibility'></span>" + gf_vars.conditional_logic_a11y + "</div>";
+    }
     descPieces.actionType = "<select id='" + objectType + "_action_type' onchange='SetConditionalProperty(\"" + objectType + "\", \"actionType\", jQuery(this).val());'><option value='show' " + showSelected + ">" + showText + "</option><option value='hide' " + hideSelected + ">" + hideText + "</option></select>";
     descPieces.objectDescription = objText;
     descPieces.logicType = "<select id='" + objectType + "_logic_type' onchange='SetConditionalProperty(\"" + objectType + "\", \"logicType\", jQuery(this).val());'><option value='all' " + allSelected + ">" + gf_vars.all + "</option><option value='any' " + anySelected + ">" + gf_vars.any + "</option></select>";
@@ -1783,29 +1786,4 @@ function escapeHtml( string ) {
 	return String( string ).replace( /[&<>"'`=\/]/g, function ( s ) {
 		return entityMap[s];
 	} );
-}
-
-/**
- * Handle any unsaved changes to the current settings page.
- *
- * @since 2.4
- *
- * @param {string} elemId The ID of the current element to check for changes.
- */
-function HandleUnsavedChanges( elemId ) {
-	var hasUnsavedChanges = null;
-
-	jQuery( elemId ).find( 'input, select, textarea' ).on( 'change keyup', function() {
-		if ( jQuery( this ).attr( 'onChange' ) === undefined ) {
-			hasUnsavedChanges = true;
-		}
-	} );
-
-	jQuery( elemId ).on( 'submit', function() {
-		hasUnsavedChanges = null;
-	} );
-
-	window.onbeforeunload = function() {
-		return hasUnsavedChanges;
-	};
 }

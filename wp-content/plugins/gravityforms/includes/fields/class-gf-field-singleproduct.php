@@ -108,8 +108,11 @@ class GF_Field_SingleProduct extends GF_Field {
 			if ( ! GFCommon::is_legacy_markup_enabled( $form_id ) ) {
 				$describedby_extra_id = array( "ginput_product_price_{$this->formId}_{$this->id}" );
 			}
+
 			$quantity_aria_describedby = $this->get_aria_describedby( $describedby_extra_id );
-			$quantity_field            .= " <span class='ginput_quantity_label' aria-hidden='true'>" . $product_quantity_sub_label . "</span> <input type='{$qty_input_type}' name='input_{$id}.3' value='{$quantity}' id='input_{$form_id}_{$this->id}_1' class='ginput_quantity' size='10' {$qty_min_attr} {$tabindex} {$disabled_text} {$quantity_aria_describedby} />";
+			$quantity_aria_label       = sprintf( 'aria-label="%s %s"', __( 'Quantity', 'gravityforms' ), $product_name );
+
+			$quantity_field            .= " <span class='ginput_quantity_label' aria-hidden='true'>" . $product_quantity_sub_label . "</span> <input type='{$qty_input_type}' name='input_{$id}.3' value='{$quantity}' id='input_{$form_id}_{$this->id}_1' class='ginput_quantity' size='10' {$qty_min_attr} {$tabindex} {$disabled_text} {$quantity_aria_label} {$quantity_aria_describedby} />";
 		} else {
 			if ( ! is_numeric( $quantity ) ) {
 				$quantity = 1;

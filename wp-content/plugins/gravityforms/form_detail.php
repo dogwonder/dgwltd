@@ -146,8 +146,9 @@ class GFFormDetail {
 
 		<div class="wrap gforms_edit_form <?php echo GFCommon::get_browser_class() ?>">
         <?php
-        $forms = RGFormsModel::get_forms( null, 'title' );
-        $id    = rgempty( 'id', $_GET ) ? count( $forms ) > 0 ? $forms[0]->id : '0' : rgget( 'id' );
+        $forms         = RGFormsModel::get_forms( null, 'title' );
+        $id            = rgempty( 'id', $_GET ) ? count( $forms ) > 0 ? $forms[0]->id : '0' : rgget( 'id' );
+        $browser_icons = array( 'ie', 'opera', 'chrome', 'firefox', 'safari', 'edge' );
         ?>
 
 		<div id="gform-form-toolbar" class="gform-form-toolbar">
@@ -158,9 +159,8 @@ class GFFormDetail {
 				</a>
 			</div>
 
-			<div class="gform-form-toolbar__form-title">
-				<span title="<?php echo esc_attr( $form['title'] ); ?>"><?php echo esc_html( $form['title'] ); ?></span>
-				<?php GFForms::form_switcher(); ?>
+			<div class="gform-form-toolbar__form-title gform-form-toolbar__form-title--form-editor">
+				<?php GFForms::form_switcher( $form['title'] ); ?>
 			</div>
 
 			<ul id="gform-form-toolbar__menu" class="gform-form-toolbar__menu">
@@ -207,9 +207,26 @@ class GFFormDetail {
 			<input type="hidden" value="trash" name="operation" />
 		</form>
 
-		<div id="form_editor_fields_container">
+		<div id="form_editor_ie_notice" class="form_editor_fields_container gform-hide-if-not-ie gform-browser-notice">
+			<div class="gform-browser-notice__inner">
+				<div class="gform-browser-notice__media gform-browser-notice__media--inline">
+					<?php foreach( $browser_icons as $icon_name ) : ?>
+						<img
+							src="<?php echo GFCommon::get_image_url( 'browser-icons/' . $icon_name . '.png' ); ?>"
+							alt="<?php echo $icon_name; ?> <?php _e( 'Browser Icon', 'gravityforms' ); ?>"
+						/>
+					<?php endforeach; ?>
+				</div>
+				<div class="gform-browser-notice__content">
+					<p><?php _e( 'Hmmm, you seem to be using an unsupported browser. To get the most out of the Gravity Forms editing experience you’ll need to switch to a supported browser.', 'gravityforms' ); ?></p>
+				</div>
+			</div>
+		</div>
+
+		<div id="form_editor_fields_container" class="form_editor_fields_container gform-show-if-not-ie">
 		<?php
-		$has_pages = GFCommon::has_pages( $form );
+		$has_pages  = GFCommon::has_pages( $form );
+		$wrapper_el = GFCommon::is_legacy_markup_enabled( $form_id ) ? 'ul' : 'div';
 		?>
       <div id="gform_pagination" data-title="<?php esc_attr_e('Pagination Options', 'gravityforms');?>" data-description="<?php esc_attr_e('Manage pagination options', 'gravityforms');?>" class="selectable" style="display:<?php echo $has_pages ? 'block' : 'none' ?>;">
         <div class="settings_control_container">
@@ -219,9 +236,9 @@ class GFFormDetail {
 				<div class="gf-pagebreak-first gf-pagebreak"><?php esc_html_e( 'START PAGING', 'gravityforms' ) ?></div>
 			</div>
 
-			<div class="gform_wrapper gform_editor <?php echo GFCommon::is_legacy_markup_enabled( $form_id ) ? 'gform_legacy_markup' : 'gravity-theme'; ?>">
+			<div class="gform_wrapper gform_editor gravity-theme<?php echo GFCommon::is_legacy_markup_enabled( $form_id ) ? ' gform_legacy_markup' : ''; ?>">
 
-				<ul id="gform_fields" class="<?php echo GFCommon::get_ul_classes( $form ) ?>">
+				<<?php echo $wrapper_el; ?> id="gform_fields" class="<?php echo GFCommon::get_ul_classes( $form ) ?>">
 
 					<?php
 					if ( is_array( rgar( $form, 'fields' ) ) ) {
@@ -234,7 +251,7 @@ class GFFormDetail {
 						}
 					}
 					?>
-				</ul>
+				</<?php echo $wrapper_el; ?>>
 
 				<div id="no-fields-drop" class="dropzone__target" style="<?php echo empty( $form['fields'] ) ? '' : 'display:none;'; ?>"></div>
 				<div id="no-fields" class="dropzone__placeholder" style="<?php echo empty( $form['fields'] ) ? '' : 'display:none;'; ?>">

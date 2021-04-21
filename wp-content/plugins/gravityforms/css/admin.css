@@ -6,7 +6,7 @@ Gravity Forms Administration Styles
 http: //www.gravityforms.com
 
 Gravity Forms is a Rocketgenius project
-copyright 2008-2017 Rocketgenius Inc.
+copyright 2008-2021 Rocketgenius Inc.
 http: //www.rocketgenius.com
 this may not be re-distrubited without the
 express written permission of the author.
@@ -159,645 +159,6 @@ AND ANY CHANGES MADE HERE WILL BE OVERWRITTEN.
 	font-display: swap;
 }
 
-/* -----------------------------------------------------------------------------
- *
- * Admin Font Icons (via IcoMoon)
- *
- * This file is generated using the `gulp icons` task. Do not edit it directly.
- *
- * ----------------------------------------------------------------------------- */
-
-@font-face {
-	font-family: 'gform-icons-admin';
-	src:
-		url('../fonts/gform-icons-admin.woff2?42gl9z') format('woff2'),
-		url('../fonts/gform-icons-admin.ttf?42gl9z') format('truetype'),
-		url('../fonts/gform-icons-admin.woff?42gl9z') format('woff'),
-		url('../fonts/gform-icons-admin.svg?42gl9z#gform-icons-admin') format('svg');
-	font-weight: normal;
-	font-style: normal;
-	font-display: block;
-}
-
-.gform-icon {
-	/* use !important to prevent issues with browser extensions that change fonts */
-	font-family: 'gform-icons-admin' !important;
-	speak: never;
-	font-style: normal;
-	font-weight: normal;
-	font-feature-settings: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
-
-	/* Better Font Rendering =========== */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-.gform-icon--chained-selects:before {
-	content: "\e91a";
-}
-
-.gform-icon--credit-card:before {
-	content: "\e978";
-}
-
-.gform-icon--design:before {
-	content: "\e979";
-}
-
-.gform-icon--name-2:before {
-	content: "\e97a";
-}
-
-.gform-icon--notifications-active:before {
-	content: "\e97b";
-}
-
-.gform-icon--password:before {
-	content: "\e97c";
-}
-
-.gform-icon--user:before {
-	content: "\e97d";
-}
-
-.gform-icon--format-quote:before {
-	content: "\e900";
-}
-
-.gform-icon--quantity:before {
-	content: "\e901";
-}
-
-.gform-icon--accessibility:before {
-	content: "\e902";
-}
-
-.gform-icon--active-campaign:before {
-	content: "\e903";
-}
-
-.gform-icon--advanced-post-creation:before {
-	content: "\e904";
-}
-
-.gform-icon--agile-crm:before {
-	content: "\e905";
-}
-
-.gform-icon--analytics:before {
-	content: "\e906";
-}
-
-.gform-icon--api:before {
-	content: "\e907";
-}
-
-.gform-icon--authorize-dot-net:before {
-	content: "\e908";
-}
-
-.gform-icon--aweber:before {
-	content: "\e909";
-}
-
-.gform-icon--back:before {
-	content: "\e90a";
-}
-
-.gform-icon--body:before {
-	content: "\e90b";
-}
-
-.gform-icon--breeze:before {
-	content: "\e90c";
-}
-
-.gform-icon--campaign-monitor:before {
-	content: "\e90d";
-}
-
-.gform-icon--capsule:before {
-	content: "\e90e";
-}
-
-.gform-icon--category:before {
-	content: "\e90f";
-}
-
-.gform-icon--check-box:before {
-	content: "\e910";
-}
-
-.gform-icon--chevron:before {
-	content: "\e911";
-}
-
-.gform-icon--clever-reach:before {
-	content: "\e912";
-}
-
-.gform-icon--cog:before {
-	content: "\e913";
-}
-
-.gform-icon--color-pallet:before {
-	content: "\e914";
-}
-
-.gform-icon--consent:before {
-	content: "\e915";
-}
-
-.gform-icon--constant-contact:before {
-	content: "\e916";
-}
-
-.gform-icon--coupon:before {
-	content: "\e917";
-}
-
-.gform-icon--coupon-alt:before {
-	content: "\e918";
-}
-
-.gform-icon--create:before {
-	content: "\e919";
-}
-
-.gform-icon--question-mark:before {
-	content: "\e97e";
-}
-
-.gform-icon--date:before {
-	content: "\e91b";
-}
-
-.gform-icon--delete:before {
-	content: "\e91c";
-}
-
-.gform-icon--dollar:before {
-	content: "\e91d";
-}
-
-.gform-icon--drag-indicator:before {
-	content: "\e91e";
-}
-
-.gform-icon--drag:before {
-	content: "\e91f";
-}
-
-.gform-icon--dropbox:before {
-	content: "\e920";
-}
-
-.gform-icon--dropdown:before {
-	content: "\e921";
-}
-
-.gform-icon--duplicate:before {
-	content: "\e922";
-}
-
-.gform-icon--ellipsis:before {
-	content: "\e923";
-}
-
-.gform-icon--email-octopus:before {
-	content: "\e924";
-}
-
-.gform-icon--embed:before {
-	content: "\e925";
-}
-
-.gform-icon--emma:before {
-	content: "\e926";
-}
-
-.gform-icon--entries:before {
-	content: "\e927";
-}
-
-.gform-icon--excerpt:before {
-	content: "\e928";
-}
-
-.gform-icon--flag:before {
-	content: "\e929";
-}
-
-.gform-icon--flag-alt:before {
-	content: "\e92a";
-}
-
-.gform-icon--for-gravity:before {
-	content: "\e92b";
-}
-
-.gform-icon--format-quote1:before {
-	content: "\e92c";
-}
-
-.gform-icon--freshbooks:before {
-	content: "\e92d";
-}
-
-.gform-icon--get-response:before {
-	content: "\e92e";
-}
-
-.gform-icon--gravity-logo:before {
-	content: "\e92f";
-}
-
-.gform-icon--gravity-pdf:before {
-	content: "\e930";
-}
-
-.gform-icon--help:before {
-	content: "\e931";
-}
-
-.gform-icon--helpscout:before {
-	content: "\e932";
-}
-
-.gform-icon--hidden:before {
-	content: "\e933";
-}
-
-.gform-icon--how-to-reg:before {
-	content: "\e934";
-}
-
-.gform-icon--html-code:before {
-	content: "\e935";
-}
-
-.gform-icon--hubspot:before {
-	content: "\e936";
-}
-
-.gform-icon--icontact:before {
-	content: "\e937";
-}
-
-.gform-icon--info-outline:before {
-	content: "\e938";
-}
-
-.gform-icon--info:before {
-	content: "\e939";
-}
-
-.gform-icon--jetsloth:before {
-	content: "\e93a";
-}
-
-.gform-icon--link:before {
-	content: "\e93b";
-}
-
-.gform-icon--list:before {
-	content: "\e93c";
-}
-
-.gform-icon--mad-mimi:before {
-	content: "\e93d";
-}
-
-.gform-icon--mail:before {
-	content: "\e93e";
-}
-
-.gform-icon--mailchimp:before {
-	content: "\e93f";
-}
-
-.gform-icon--mailgun:before {
-	content: "\e940";
-}
-
-.gform-icon--merge-tag:before {
-	content: "\e941";
-}
-
-.gform-icon--minus:before {
-	content: "\e942";
-}
-
-.gform-icon--misc:before {
-	content: "\e943";
-}
-
-.gform-icon--mollie:before {
-	content: "\e944";
-}
-
-.gform-icon--monetization-on:before {
-	content: "\e945";
-}
-
-.gform-icon--multi-select:before {
-	content: "\e946";
-}
-
-.gform-icon--name:before {
-	content: "\e947";
-}
-
-.gform-icon--numbers-alt:before {
-	content: "\e948";
-}
-
-.gform-icon--numbers:before {
-	content: "\e949";
-}
-
-.gform-icon--st-circle:before {
-	content: "\e94a";
-}
-
-.gform-icon--page:before {
-	content: "\e94b";
-}
-
-.gform-icon--paragraph-text:before {
-	content: "\e94c";
-}
-
-.gform-icon--password1:before {
-	content: "\e94d";
-}
-
-.gform-icon--paypal:before {
-	content: "\e94e";
-}
-
-.gform-icon--phone:before {
-	content: "\e94f";
-}
-
-.gform-icon--place:before {
-	content: "\e950";
-}
-
-.gform-icon--st-plus:before {
-	content: "\e951";
-}
-
-.gform-icon--pointer:before {
-	content: "\e952";
-}
-
-.gform-icon--polls:before {
-	content: "\e953";
-}
-
-.gform-icon--poll-alt:before {
-	content: "\e954";
-}
-
-.gform-icon--poll:before {
-	content: "\e955";
-}
-
-.gform-icon--post-image:before {
-	content: "\e956";
-}
-
-.gform-icon--post-custom-field:before {
-	content: "\e957";
-}
-
-.gform-icon--postmark:before {
-	content: "\e958";
-}
-
-.gform-icon--product:before {
-	content: "\e959";
-}
-
-.gform-icon--question:before {
-	content: "\e95a";
-}
-
-.gform-icon--quiz:before {
-	content: "\e95b";
-}
-
-.gform-icon--radio-button:before {
-	content: "\e95c";
-}
-
-.gform-icon--recaptcha:before {
-	content: "\e95d";
-}
-
-.gform-icon--search:before {
-	content: "\e95e";
-}
-
-.gform-icon--section:before {
-	content: "\e95f";
-}
-
-.gform-icon--sendgrid:before {
-	content: "\e960";
-}
-
-.gform-icon--shipping:before {
-	content: "\e961";
-}
-
-.gform-icon--signature:before {
-	content: "\e962";
-}
-
-.gform-icon--single-line-text:before {
-	content: "\e963";
-}
-
-.gform-icon--slack:before {
-	content: "\e964";
-}
-
-.gform-icon--square:before {
-	content: "\e965";
-}
-
-.gform-icon--stripe:before {
-	content: "\e966";
-}
-
-.gform-icon--style:before {
-	content: "\e967";
-}
-
-.gform-icon--survey:before {
-	content: "\e968";
-}
-
-.gform-icon--tags:before {
-	content: "\e969";
-}
-
-.gform-icon--time:before {
-	content: "\e96a";
-}
-
-.gform-icon--title:before {
-	content: "\e96b";
-}
-
-.gform-icon--total:before {
-	content: "\e96c";
-}
-
-.gform-icon--trello:before {
-	content: "\e96d";
-}
-
-.gform-icon--twilio:before {
-	content: "\e96e";
-}
-
-.gform-icon--upload:before {
-	content: "\e96f";
-}
-
-.gform-icon--verified:before {
-	content: "\e970";
-}
-
-.gform-icon--videopipe:before {
-	content: "\e971";
-}
-
-.gform-icon--vote:before {
-	content: "\e972";
-}
-
-.gform-icon--warning-amber:before {
-	content: "\e973";
-}
-
-.gform-icon--warning:before {
-	content: "\e974";
-}
-
-.gform-icon--webhooks:before {
-	content: "\e975";
-}
-
-.gform-icon--zapier:before {
-	content: "\e976";
-}
-
-.gform-icon--zoho:before {
-	content: "\e977";
-}
-
-/* -----------------------------------------------------------------------------
- *
- * Admin Stacked Font Icons
- *
- * A place to house multi color stacked icons. The base gform-st-icon class is
- * engineered with duotone icons in mind, but more layers may come
- *
- * ----------------------------------------------------------------------------- */
-
-.gform-st-icon {
-	display: inline-block;
-	font-family: 'gform-icons-admin' !important;
-	font-size: 1.125rem;
-	font-style: normal;
-	font-feature-settings: normal;
-	font-variant: normal;
-	font-weight: normal;
-	height: 1.125rem;
-	position: relative;
-	text-transform: none;
-	vertical-align: top;
-	width: 1.125rem;
-}
-
-.gform-st-icon:before, .gform-st-icon:after {
-		align-items: center;
-		box-sizing: border-box;
-		display: flex;
-		height: 100%;
-		justify-content: center;
-		left: 0;
-		position: absolute;
-		speak: none;
-		top: 0;
-		white-space: normal;
-		width: 100%;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-	}
-
-/* -----------------------------------------------------------------------------
- *
- * Duotone +/- icons in circle and focus ring.
- *
- * Commonly used in areas of the admin/theme were rows of choices are added
- * or deleted by the user. Make the element that receives these classes the
- * size you want if it needs to deviate from the default and then simply adjust
- * the font-size of the after element to scale the icon.
- *
- * Designed to be used on a button.
- *
- * ----------------------------------------------------------------------------- */
-
-.gform-st-icon--circle-plus, .gform-st-icon--circle-minus {
-	background: #FFFFFF;
-	border-radius: 50%;
-	border: 0;
-	box-shadow: 0 2px 2px rgba(58, 58, 87, 0.0596411);
-	cursor: pointer;
-	line-height: 1.188rem;
-	outline: none;
-	padding: 0;
-	transition: border-color 200ms ease-in-out, box-shadow 200ms ease-in-out;
-}
-
-.gform-st-icon--circle-plus:before, .gform-st-icon--circle-minus:before {
-		border: 0.0625rem solid #9092B2;
-		content: '';
-		border-radius: 50%;
-		transition: border-color 200ms ease-in-out, box-shadow 200ms ease-in-out;
-	}
-
-.gform-st-icon--circle-plus:after, .gform-st-icon--circle-minus:after {
-		color: #3E7DA6;
-		font-size: 1rem;
-		height: auto;
-	}
-
-.gform-st-icon--circle-plus:hover, .gform-st-icon--circle-plus:focus, .gform-st-icon--circle-minus:hover, .gform-st-icon--circle-minus:focus {
-		box-shadow: 0px 2px 2px rgba(58, 58, 87, 0.0796);
-	}
-
-.gform-st-icon--circle-plus:hover:before, .gform-st-icon--circle-plus:focus:before, .gform-st-icon--circle-minus:hover:before, .gform-st-icon--circle-minus:focus:before {
-			border-color: #3E7DA6;
-			box-shadow: 0 0 0 1px #BED8ED;
-		}
-
-.gform-st-icon--circle-plus:after {
-		content: "\e951";
-	}
-
-.gform-st-icon--circle-minus:after {
-		content: "\e942";
-	}
-
 /*
 * Basic global styles.
 *
@@ -913,6 +274,94 @@ div.wrap {
 	margin-top: 6px;
 }
 
+/*
+* Utility classes to handle styles across various contexts.
+*
+* Used in admin.css.
+*/
+
+/* colors */
+
+.gform-admin .gform-c-warning-text {
+		color: #A16938;
+	}
+
+/* spacing */
+
+.gform-admin .gform-p-16 {
+		padding: 1rem;
+	}
+
+/* a11y */
+
+.gform-admin .gform-visually-hidden {
+        border: 0;
+        clip: rect(0, 0, 0, 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        white-space: nowrap;
+        width: 1px;
+    }
+
+/* IE util classes */
+
+.gform-hide-if-ie {
+    display: inherit;
+}
+
+.gform-show-if-ie {
+    display: none;
+}
+
+.gform-hide-if-not-ie {
+    display: none;
+}
+
+.gform-show-if-not-ie {
+    display: inherit;
+}
+
+.gform-fade-if-not-ie {
+    opacity: 0.4;
+}
+
+.gform-fade-if-not-ie, .gform-fade-if-not-ie * {
+    pointer-events: none;
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+
+    .gform-hide-if-ie {
+        display: none;
+    }
+
+    .gform-show-if-ie {
+        display: inherit;
+    }
+
+    .gform-hide-if-not-ie {
+        display: inherit;
+    }
+
+    .gform-show-if-not-ie {
+        display: none;
+    }
+
+    .gform-fade-if-ie {
+        opacity: 0.4;
+    }
+
+    .gform-fade-if-not-ie {
+        opacity: inherit;
+        cursor: inherit;
+        pointer-events: inherit;
+    }
+
+}
+
 /* Components */
 
 /*
@@ -931,6 +380,21 @@ div.wrap {
 	display: inline-block;
 }
 
+.all-merge-tags a.open-list {
+		background: #FDFDFF no-repeat center url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIiIGhlaWdodD0iMjIiIHZpZXdCb3g9IjAgMCAyMiAyMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik04IDEwSDEwVjEySDhWMTBaTTE0IDEySDEyVjEwSDE0VjEyWiIgZmlsbD0iIzlFQTNBOCIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTE1LjYzNSA1Ljc1SDE0VjQuMjVIMTUuNjM1QzE2LjU2MTUgNC4yNSAxNy4yNTk4IDQuNjc5MTMgMTcuNjkzNCA1LjM0Mjk2QzE4LjEwMTUgNS45Njc2NiAxOC4yNSA2Ljc1NDY3IDE4LjI1IDcuNTAzMDFWOC41NDYwMUMxOC4yNSA5LjYwMDQzIDE4LjkyMzMgMTAuMjAzIDE5LjUgMTAuMjAzTDIwLjI1IDEwLjk1M1YxMC45ODRMMTkuNDk4NyAxMS43MzRDMTguOTE5NyAxMS43MzMgMTguMjUgMTIuMzI3NCAxOC4yNSAxMy4zOFYxNC45ODNDMTguMjUgMTUuNzI2NSAxOC4xMDMzIDE2LjQ1MDQgMTcuNjI2OCAxNi45ODhDMTcuMTMzMyAxNy41NDQ4IDE2LjQyMjYgMTcuNzUyIDE1LjYzNSAxNy43NTJIMTRWMTYuMjUySDE1LjYzNUMxNi4xNzU0IDE2LjI1MiAxNi4zOTcyIDE2LjExMzcgMTYuNTA0MiAxNS45OTNDMTYuNjI4MiAxNS44NTMxIDE2Ljc1IDE1LjU2NzUgMTYuNzUgMTQuOTgzVjEzLjM4QzE2Ljc1IDEyLjQ2MTEgMTcuMTA2OCAxMS41NjQ5IDE3LjcyMTMgMTAuOTY1NkMxNy4xMDYzIDEwLjM2MjYgMTYuNzUgOS40NjI0NyAxNi43NSA4LjU0NjAxVjcuNTAzMDFDMTYuNzUgNi45MjIzNCAxNi42MyA2LjQ1Nzg1IDE2LjQzNzYgNi4xNjMzQzE2LjI3MDcgNS45MDc4NyAxNi4wMzY2IDUuNzUgMTUuNjM1IDUuNzVaIiBmaWxsPSIjOUVBM0E4Ii8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNNi4zNjQ5OSA1Ljc1QzUuNTA1MDQgNS43NSA0Ljc1IDYuNTMyMjUgNC43NSA3LjUwMzAxTDQuNzUgOC41NjcyNUM0Ljc1MDAyIDguODg0MDIgNC43NTAwNCA5LjIzNTA0IDQuNzE0MzcgOS41NjM2OUM0LjY3NzY1IDkuOTAyMDMgNC41OTgxMSAxMC4yNzY4IDQuNDAwNDkgMTAuNjIxMkM0LjMyNzQ1IDEwLjc0ODUgNC4yNDM3OCAxMC44NjMyIDQuMTQ5OTcgMTAuOTY2QzQuMjQzMyAxMS4wNjc4IDQuMzI2NjMgMTEuMTgxNCA0LjM5OTQ3IDExLjMwNzVDNC41OTc4NiAxMS42NTExIDQuNjc3NTcgMTIuMDI1MiA0LjcxNDM0IDEyLjM2MjhDNC43NTAwNCAxMi42OTA1IDQuNzUwMDIgMTMuMDQxIDQuNzUgMTMuMzU3Nkw0Ljc1IDE0Ljk4M0M0Ljc1IDE1LjQzMSA0LjkxNDI3IDE1LjcxNDggNS4xNTE0OCAxNS45MDM1QzUuNDA5NzkgMTYuMTA5IDUuODIxMDMgMTYuMjUxIDYuMzY0OTkgMTYuMjUxSDcuNVYxNy43NTFINi4zNjQ5OUM1LjU4MDk2IDE3Ljc1MSA0LjgwOTcgMTcuNTQ4NSA0LjIxNzUxIDE3LjA3NzNDMy42MDQyMyAxNi41ODkzIDMuMjUgMTUuODY0IDMuMjUgMTQuOTgzVjEzLjM3OUMzLjI1IDEzLjAzNjcgMy4yNDkxNSAxMi43NjM4IDMuMjIzMTYgMTIuNTI1MkMzLjE5NzQzIDEyLjI4ODkgMy4xNTIxNCAxMi4xNDcxIDMuMTAwNTMgMTIuMDU3N0MzLjA0NTQ4IDExLjk2MjQgMi44ODE3MyAxMS43MzMgMiAxMS43MzNMMS4yNSAxMC45ODNWMTAuOTUzTDIgMTAuMjAzQzIuODc4NjkgMTAuMjAzIDMuMDQzMTggOS45NzI3MiAzLjA5OTUxIDkuODc0NTdDMy4xNTE4OSA5Ljc4MzMgMy4xOTczNSA5LjYzOTQyIDMuMjIzMTMgOS40MDE4NUMzLjI0OTE2IDkuMTYxOTYgMy4yNSA4Ljg4ODIzIDMuMjUgOC41NDYwMVY3LjUwMzAxQzMuMjUgNS44MTU3NiA0LjU2ODk0IDQuMjUgNi4zNjQ5OSA0LjI1SDcuNVY1Ljc1SDYuMzY0OTlaIiBmaWxsPSIjOUVBM0E4Ii8+Cjwvc3ZnPg==);
+		border: 1px solid #9092B2;
+		border-radius: 3px;
+		display: block;
+		height: 2.125rem;
+		margin-left: 0;
+		width: 2.125rem;
+		transition: background .2s ease;
+	}
+
+.all-merge-tags a.open-list:hover {
+			background: #FDFDFF no-repeat center url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMiIgaGVpZ2h0PSIyMiIgdmlld0JveD0iMCAwIDIyIDIyIj48dGl0bGU+bWVyZ2UgaWNvbjwvdGl0bGU+PGcgY2xhc3M9Im5jLWljb24td3JhcHBlciIgZmlsbD0iIzNlN2RhNiI+PHBhdGggZmlsbD0iIzNlN2RhNiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNOCAxMGgydjJIOHYtMnptNiAyaC0ydi0yaDJ2MnptMS42MzUtNi4yNUgxNHYtMS41aDEuNjM1Yy45MjYgMCAxLjYyNS40MyAyLjA1OCAxLjA5My40MDkuNjI1LjU1NyAxLjQxMi41NTcgMi4xNnYxLjA0M2MwIDEuMDU0LjY3MyAxLjY1NyAxLjI1IDEuNjU3bC43NS43NXYuMDMxbC0uNzUxLjc1Yy0uNTgtLjAwMS0xLjI0OS41OTMtMS4yNDkgMS42NDZ2MS42MDNjMCAuNzQzLS4xNDcgMS40NjctLjYyMyAyLjAwNS0uNDk0LjU1Ny0xLjIwNC43NjQtMS45OTIuNzY0SDE0di0xLjVoMS42MzVjLjU0IDAgLjc2Mi0uMTM4Ljg3LS4yNTkuMTIzLS4xNC4yNDUtLjQyNS4yNDUtMS4wMVYxMy4zOGMwLS45MTkuMzU3LTEuODE1Ljk3MS0yLjQxNC0uNjE1LS42MDMtLjk3MS0xLjUwNC0uOTcxLTIuNDJWNy41MDNjMC0uNTgtLjEyLTEuMDQ1LS4zMTItMS4zNC0uMTY3LS4yNTUtLjQwMS0uNDEzLS44MDMtLjQxM3ptLTkuMjcgMGMtLjg2IDAtMS42MTUuNzgyLTEuNjE1IDEuNzUzdjEuMDY0YzAgLjMxNyAwIC42NjgtLjAzNi45OTctLjAzNi4zMzgtLjExNi43MTMtLjMxNCAxLjA1N2ExLjk0NiAxLjk0NiAwIDAgMS0uMjUuMzQ1Yy4wOTMuMTAyLjE3Ny4yMTUuMjUuMzQxLjE5OC4zNDQuMjc4LjcxOC4zMTQgMS4wNTYuMDM2LjMyOC4wMzYuNjc4LjAzNi45OTV2MS42MjVjMCAuNDQ4LjE2NC43MzIuNDAxLjkyLjI1OS4yMDYuNjcuMzQ4IDEuMjE0LjM0OEg3LjV2MS41SDYuMzY1Yy0uNzg0IDAtMS41NTUtLjIwMy0yLjE0Ny0uNjc0LS42MTQtLjQ4OC0uOTY4LTEuMjEzLS45NjgtMi4wOTR2LTEuNjA0YzAtLjM0MiAwLS42MTUtLjAyNy0uODU0LS4wMjYtLjIzNi0uMDctLjM3OC0uMTIyLS40NjctLjA1Ni0uMDk2LS4yMi0uMzI1LTEuMTAxLS4zMjVsLS43NS0uNzV2LS4wM2wuNzUtLjc1Yy44NzkgMCAxLjA0My0uMjMgMS4xLS4zMjguMDUyLS4wOTIuMDk3LS4yMzYuMTIzLS40NzMuMDI2LS4yNC4wMjctLjUxNC4wMjctLjg1NlY3LjUwM2MwLTEuNjg3IDEuMzE5LTMuMjUzIDMuMTE1LTMuMjUzSDcuNXYxLjVINi4zNjV6IiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGNsYXNzPSJuYy1pY29uLXdyYXBwZXIiLz48L2c+PC9zdmc+);
+		}
+
 .gform-settings-panel__content .gform-settings-input__container--with-merge-tag textarea {
 	border-top-right-radius: 0;
 	-webkit-border-top-right-radius: 0;
@@ -946,21 +410,6 @@ div.wrap {
 	}
 }
 
-.all-merge-tags a.open-list {
-	background: #FDFDFF no-repeat center url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIiIGhlaWdodD0iMjIiIHZpZXdCb3g9IjAgMCAyMiAyMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik04IDEwSDEwVjEySDhWMTBaTTE0IDEySDEyVjEwSDE0VjEyWiIgZmlsbD0iIzlFQTNBOCIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTE1LjYzNSA1Ljc1SDE0VjQuMjVIMTUuNjM1QzE2LjU2MTUgNC4yNSAxNy4yNTk4IDQuNjc5MTMgMTcuNjkzNCA1LjM0Mjk2QzE4LjEwMTUgNS45Njc2NiAxOC4yNSA2Ljc1NDY3IDE4LjI1IDcuNTAzMDFWOC41NDYwMUMxOC4yNSA5LjYwMDQzIDE4LjkyMzMgMTAuMjAzIDE5LjUgMTAuMjAzTDIwLjI1IDEwLjk1M1YxMC45ODRMMTkuNDk4NyAxMS43MzRDMTguOTE5NyAxMS43MzMgMTguMjUgMTIuMzI3NCAxOC4yNSAxMy4zOFYxNC45ODNDMTguMjUgMTUuNzI2NSAxOC4xMDMzIDE2LjQ1MDQgMTcuNjI2OCAxNi45ODhDMTcuMTMzMyAxNy41NDQ4IDE2LjQyMjYgMTcuNzUyIDE1LjYzNSAxNy43NTJIMTRWMTYuMjUySDE1LjYzNUMxNi4xNzU0IDE2LjI1MiAxNi4zOTcyIDE2LjExMzcgMTYuNTA0MiAxNS45OTNDMTYuNjI4MiAxNS44NTMxIDE2Ljc1IDE1LjU2NzUgMTYuNzUgMTQuOTgzVjEzLjM4QzE2Ljc1IDEyLjQ2MTEgMTcuMTA2OCAxMS41NjQ5IDE3LjcyMTMgMTAuOTY1NkMxNy4xMDYzIDEwLjM2MjYgMTYuNzUgOS40NjI0NyAxNi43NSA4LjU0NjAxVjcuNTAzMDFDMTYuNzUgNi45MjIzNCAxNi42MyA2LjQ1Nzg1IDE2LjQzNzYgNi4xNjMzQzE2LjI3MDcgNS45MDc4NyAxNi4wMzY2IDUuNzUgMTUuNjM1IDUuNzVaIiBmaWxsPSIjOUVBM0E4Ii8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNNi4zNjQ5OSA1Ljc1QzUuNTA1MDQgNS43NSA0Ljc1IDYuNTMyMjUgNC43NSA3LjUwMzAxTDQuNzUgOC41NjcyNUM0Ljc1MDAyIDguODg0MDIgNC43NTAwNCA5LjIzNTA0IDQuNzE0MzcgOS41NjM2OUM0LjY3NzY1IDkuOTAyMDMgNC41OTgxMSAxMC4yNzY4IDQuNDAwNDkgMTAuNjIxMkM0LjMyNzQ1IDEwLjc0ODUgNC4yNDM3OCAxMC44NjMyIDQuMTQ5OTcgMTAuOTY2QzQuMjQzMyAxMS4wNjc4IDQuMzI2NjMgMTEuMTgxNCA0LjM5OTQ3IDExLjMwNzVDNC41OTc4NiAxMS42NTExIDQuNjc3NTcgMTIuMDI1MiA0LjcxNDM0IDEyLjM2MjhDNC43NTAwNCAxMi42OTA1IDQuNzUwMDIgMTMuMDQxIDQuNzUgMTMuMzU3Nkw0Ljc1IDE0Ljk4M0M0Ljc1IDE1LjQzMSA0LjkxNDI3IDE1LjcxNDggNS4xNTE0OCAxNS45MDM1QzUuNDA5NzkgMTYuMTA5IDUuODIxMDMgMTYuMjUxIDYuMzY0OTkgMTYuMjUxSDcuNVYxNy43NTFINi4zNjQ5OUM1LjU4MDk2IDE3Ljc1MSA0LjgwOTcgMTcuNTQ4NSA0LjIxNzUxIDE3LjA3NzNDMy42MDQyMyAxNi41ODkzIDMuMjUgMTUuODY0IDMuMjUgMTQuOTgzVjEzLjM3OUMzLjI1IDEzLjAzNjcgMy4yNDkxNSAxMi43NjM4IDMuMjIzMTYgMTIuNTI1MkMzLjE5NzQzIDEyLjI4ODkgMy4xNTIxNCAxMi4xNDcxIDMuMTAwNTMgMTIuMDU3N0MzLjA0NTQ4IDExLjk2MjQgMi44ODE3MyAxMS43MzMgMiAxMS43MzNMMS4yNSAxMC45ODNWMTAuOTUzTDIgMTAuMjAzQzIuODc4NjkgMTAuMjAzIDMuMDQzMTggOS45NzI3MiAzLjA5OTUxIDkuODc0NTdDMy4xNTE4OSA5Ljc4MzMgMy4xOTczNSA5LjYzOTQyIDMuMjIzMTMgOS40MDE4NUMzLjI0OTE2IDkuMTYxOTYgMy4yNSA4Ljg4ODIzIDMuMjUgOC41NDYwMVY3LjUwMzAxQzMuMjUgNS44MTU3NiA0LjU2ODk0IDQuMjUgNi4zNjQ5OSA0LjI1SDcuNVY1Ljc1SDYuMzY0OTlaIiBmaWxsPSIjOUVBM0E4Ii8+Cjwvc3ZnPg==);
-	border: 1px solid #9092B2;
-	border-radius: 3px;
-	display: block;
-	height: 2.125rem;
-	margin-left: 0;
-	width: 2.125rem;
-	transition: background .2s ease;
-}
-
-.all-merge-tags a.open-list:hover {
-	background: #FDFDFF no-repeat center url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMiIgaGVpZ2h0PSIyMiIgdmlld0JveD0iMCAwIDIyIDIyIj48dGl0bGU+bWVyZ2UgaWNvbjwvdGl0bGU+PGcgY2xhc3M9Im5jLWljb24td3JhcHBlciIgZmlsbD0iIzNlN2RhNiI+PHBhdGggZmlsbD0iIzNlN2RhNiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNOCAxMGgydjJIOHYtMnptNiAyaC0ydi0yaDJ2MnptMS42MzUtNi4yNUgxNHYtMS41aDEuNjM1Yy45MjYgMCAxLjYyNS40MyAyLjA1OCAxLjA5My40MDkuNjI1LjU1NyAxLjQxMi41NTcgMi4xNnYxLjA0M2MwIDEuMDU0LjY3MyAxLjY1NyAxLjI1IDEuNjU3bC43NS43NXYuMDMxbC0uNzUxLjc1Yy0uNTgtLjAwMS0xLjI0OS41OTMtMS4yNDkgMS42NDZ2MS42MDNjMCAuNzQzLS4xNDcgMS40NjctLjYyMyAyLjAwNS0uNDk0LjU1Ny0xLjIwNC43NjQtMS45OTIuNzY0SDE0di0xLjVoMS42MzVjLjU0IDAgLjc2Mi0uMTM4Ljg3LS4yNTkuMTIzLS4xNC4yNDUtLjQyNS4yNDUtMS4wMVYxMy4zOGMwLS45MTkuMzU3LTEuODE1Ljk3MS0yLjQxNC0uNjE1LS42MDMtLjk3MS0xLjUwNC0uOTcxLTIuNDJWNy41MDNjMC0uNTgtLjEyLTEuMDQ1LS4zMTItMS4zNC0uMTY3LS4yNTUtLjQwMS0uNDEzLS44MDMtLjQxM3ptLTkuMjcgMGMtLjg2IDAtMS42MTUuNzgyLTEuNjE1IDEuNzUzdjEuMDY0YzAgLjMxNyAwIC42NjgtLjAzNi45OTctLjAzNi4zMzgtLjExNi43MTMtLjMxNCAxLjA1N2ExLjk0NiAxLjk0NiAwIDAgMS0uMjUuMzQ1Yy4wOTMuMTAyLjE3Ny4yMTUuMjUuMzQxLjE5OC4zNDQuMjc4LjcxOC4zMTQgMS4wNTYuMDM2LjMyOC4wMzYuNjc4LjAzNi45OTV2MS42MjVjMCAuNDQ4LjE2NC43MzIuNDAxLjkyLjI1OS4yMDYuNjcuMzQ4IDEuMjE0LjM0OEg3LjV2MS41SDYuMzY1Yy0uNzg0IDAtMS41NTUtLjIwMy0yLjE0Ny0uNjc0LS42MTQtLjQ4OC0uOTY4LTEuMjEzLS45NjgtMi4wOTR2LTEuNjA0YzAtLjM0MiAwLS42MTUtLjAyNy0uODU0LS4wMjYtLjIzNi0uMDctLjM3OC0uMTIyLS40NjctLjA1Ni0uMDk2LS4yMi0uMzI1LTEuMTAxLS4zMjVsLS43NS0uNzV2LS4wM2wuNzUtLjc1Yy44NzkgMCAxLjA0My0uMjMgMS4xLS4zMjguMDUyLS4wOTIuMDk3LS4yMzYuMTIzLS40NzMuMDI2LS4yNC4wMjctLjUxNC4wMjctLjg1NlY3LjUwM2MwLTEuNjg3IDEuMzE5LTMuMjUzIDMuMTE1LTMuMjUzSDcuNXYxLjVINi4zNjV6IiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGNsYXNzPSJuYy1pY29uLXdyYXBwZXIiLz48L2c+PC9zdmc+);
-}
-
 #gf_merge_tag_list {
 	background: #FFF;
 	border: 1px solid #D9DAE6;
@@ -974,45 +423,33 @@ div.wrap {
 }
 
 #gf_merge_tag_list li {
-
-	margin: 0;
-
-}
-
-#gf_merge_tag_list li a, #gf_merge_tag_list .group-header {
-
-	border-bottom: 1px solid #ECEDF8;
-	color: #242748;
-	display: block;
-	font-size: .875rem;
-	line-height: 1.1875rem;
-	padding: .75rem 1.1875rem 1.0625rem;
-
-}
-
-#gf_merge_tag_list .group-header {
-
-	font-weight: bold;
-
-}
+		margin: 0;
+	}
 
 #gf_merge_tag_list li a {
-
-	cursor: pointer;
-
-}
+			cursor: pointer;
+		}
 
 #gf_merge_tag_list li a:hover {
-
-	background: #F6F9FC;
-
-}
+				background: #F6F9FC;
+			}
 
 #gf_merge_tag_list li:last-child a {
+			border-bottom: none;
+		}
 
-	border-bottom: none;
+#gf_merge_tag_list li a, #gf_merge_tag_list .group-header {
+		border-bottom: 1px solid #ECEDF8;
+		color: #242748;
+		display: block;
+		font-size: .875rem;
+		line-height: 1.1875rem;
+		padding: .75rem 1.1875rem 1.0625rem;
+	}
 
-}
+#gf_merge_tag_list .group-header {
+		font-weight: bold;
+	}
 
 .right ul#gf_merge_tag_list {
 	right: 0;
@@ -1040,22 +477,35 @@ table#gf_personal_data_field_settings td {
 }
 
 #gf_personal_data_field_settings .gf_personal_data_field_label_title {
-	text-align:left;
-	padding: 0px 10px 10px 0;
-	font-weight:bold;
-}
+		text-align:left;
+		padding: 0px 10px 10px 0;
+		font-weight:bold;
+	}
 
 #gf_personal_data_field_settings .gf_personal_data_cb_title{
-	text-align:center;
-	padding:0;
-	width:50px;
-	font-weight:bold;
-}
+		text-align:center;
+		padding:0;
+		width:50px;
+		font-weight:bold;
+	}
 
 #gf_personal_data_field_settings .gf_personal_data_cb_cell{
-	text-align:center;
-	width:50px;
-}
+		text-align:center;
+		width:50px;
+	}
+
+.gform-admin .ui-autocomplete .ui-state-active {
+			background-color: #F6F9FC;
+			border-right: 2px solid #3E7DA6;
+		}
+
+.gform-admin .ui-menu-item {
+		padding: 0;
+	}
+
+.gform-admin .ui-menu-item div {
+			padding: 0.25rem 0.625rem;
+		}
 
 /*
 * Alert styles.
@@ -1149,7 +599,8 @@ div.delete-alert input.button:hover, div.delete-alert input.button:active {
 }
 
 /*
-* Styles for buttons in the form editor and the gf-button class.
+* Styles for buttons admin wide. Use the gform-button classes at button of this file.
+* Load the dev/components/index.html file to view a living demo of all variants and get code snippets.
 *
 * Used in admin.css.
 */
@@ -1277,6 +728,404 @@ input.button-primary.gfbutton, button.button-primary.gfbutton, a.button-primary.
 }
 
 /*
+	 * Base styles, shared by all buttons
+	 */
+
+.gform-admin .gform-button {
+		align-items: center;
+		border: 1px solid transparent;
+		border-radius: 3px;
+		box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+		cursor: pointer;
+		display: inline-flex;
+		font-family: inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+		font-size: 0.875rem;
+		font-weight: 500;
+		line-height: 1.45rem;
+		padding: 0.5625rem 1.125rem;
+		text-decoration: none;
+		transition: transform 300ms ease, box-shadow 300ms ease, background-color 300ms ease;
+	}
+
+.gform-admin .gform-button:focus {
+			box-shadow: 0 0 0 2px #BED8ED;
+			outline: none;
+		}
+
+.gform-admin .gform-button:disabled {
+			pointer-events: none;
+		}
+
+.gform-admin .gform-button.gform-button--circular {
+			border-radius: 100%;
+			justify-content: center;
+			padding: 0;
+		}
+
+/*
+	 * Style variants
+	 */
+
+.gform-admin .gform-button--primary {
+		background: #3E7DA6;
+		border-color: #3E7DA6;
+		color: #FFFFFF;
+	}
+
+.gform-admin .gform-button--primary:hover, .gform-admin .gform-button--primary:active {
+			background: #3985B7;
+		}
+
+.gform-admin .gform-button--primary:disabled {
+			background: #3E7DA6;
+			color: #639CC1;
+		}
+
+.gform-admin .gform-button--secondary {
+		background: #FFFFFF;
+		border-color: #3E7DA6;
+		color: #3E7DA6;
+	}
+
+.gform-admin .gform-button--secondary:hover, .gform-admin .gform-button--secondary:active {
+			border-color: #3985B7;
+			color: #3985B7;
+		}
+
+.gform-admin .gform-button--secondary:disabled {
+			border-color: #C3C5DB;
+			color: #C3C5DB;
+		}
+
+.gform-admin .gform-button--white {
+		background: #FFFFFF;
+		border-color: #D5D7E9;
+		color: #242748;
+	}
+
+.gform-admin .gform-button--white:hover, .gform-admin .gform-button--white:active {
+			background: #F6F9FC;
+			border-color: #D5D7E9;
+			color: #242748;
+		}
+
+.gform-admin .gform-button--white:focus {
+			border-color: #C3C5DB;
+			box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05), 0px 0px 0px 2px #ECEDF8;
+			color: #242748;
+			background: #FFFFFF;
+		}
+
+.gform-admin .gform-button--white:disabled {
+			border-color: #C3C5DB;
+			color: #C3C5DB;
+		}
+
+.gform-admin .gform-button--white .gform-button__icon {
+			color: #5B5E80;
+		}
+
+/*
+	 * Size variants
+	 */
+
+.gform-admin .gform-button--size-xs {
+		font-size: 0.75rem;
+		line-height: 1rem;
+		padding: 0.4375rem 0.6875rem;
+	}
+
+.gform-admin .gform-button--size-xs .gform-button__icon {
+			font-size: 0.875rem;
+		}
+
+.gform-admin .gform-button--size-sm {
+		line-height: 1rem;
+		padding: 0.5625rem 0.8125rem;
+	}
+
+.gform-admin .gform-button--size-sm .gform-button__icon {
+			font-size: 0.875rem;
+		}
+
+.gform-admin .gform-button--size-l {
+		font-size: 1rem;
+		line-height: 1.5rem;
+	}
+
+.gform-admin .gform-button--size-l .gform-button__icon {
+			font-size: 1.25rem;
+		}
+
+.gform-admin .gform-button--size-xl {
+		font-size: 1rem;
+		line-height: 1.5rem;
+		padding: 0.8125rem 1.5625rem;
+	}
+
+.gform-admin .gform-button--size-xl .gform-button__icon {
+			font-size: 1.25rem;
+		}
+
+/*
+	 * Icon variants
+	 */
+
+.gform-admin .gform-button__icon {
+		font-size: 1.125rem;
+		position: relative;
+		top: -0.0625rem;
+	}
+
+.gform-admin .gform-button--icon-leading .gform-button__icon {
+			margin-right: 0.5rem;
+		}
+
+.gform-admin .gform-button--icon-trailing .gform-button__icon {
+			margin-left: 0.5rem;
+		}
+
+.gform-admin .gform-button--icon-leading.gform-button--size-xs .gform-button__icon {
+				margin-right: 0.375rem;
+			}
+
+.gform-admin .gform-button--icon-leading.gform-button--size-sm .gform-button__icon {
+				margin-right: 0.375rem;
+			}
+
+.gform-admin .gform-button--icon-leading.gform-button--size-l .gform-button__icon {
+				margin-right: 0.625rem;
+			}
+
+.gform-admin .gform-button--icon-leading.gform-button--size-xl .gform-button__icon {
+				margin-right: 0.75rem;
+			}
+
+.gform-admin .gform-button--icon-trailing.gform-button--size-xs .gform-button__icon {
+				margin-left: 0.375rem;
+			}
+
+.gform-admin .gform-button--icon-trailing.gform-button--size-sm .gform-button__icon {
+				margin-left: 0.375rem;
+			}
+
+.gform-admin .gform-button--icon-trailing.gform-button--size-l .gform-button__icon {
+				margin-left: 0.625rem;
+			}
+
+.gform-admin .gform-button--icon-trailing.gform-button--size-xl .gform-button__icon {
+				margin-left: 0.75rem;
+			}
+
+/*
+	 * Rounded variants
+	 */
+
+.gform-admin .gform-button--round {
+		border-radius: 1.1875rem;
+	}
+
+.gform-admin .gform-button--round.gform-button--size-xs {
+			border-radius: 0.9375rem;
+		}
+
+.gform-admin .gform-button--round.gform-button--size-sm {
+			border-radius: 1.0625rem;
+		}
+
+.gform-admin .gform-button--round.gform-button--size-l {
+			border-radius: 1.3125rem;
+		}
+
+.gform-admin .gform-button--round.gform-button--size-xl {
+			border-radius: 1.5625rem;
+		}
+
+/*
+	 * Circular variants
+	 */
+
+.gform-admin .gform-button--circular {
+		height: 2.375rem;
+		width: 2.375rem;
+	}
+
+.gform-admin .gform-button--circular .gform-button__icon {
+			font-size: 1.375rem;
+		}
+
+.gform-admin .gform-button--circular.gform-button--size-xs {
+			height: 1.875rem;
+			width: 1.875rem;
+		}
+
+.gform-admin .gform-button--circular.gform-button--size-xs .gform-button__icon {
+				font-size: 1.125rem;
+			}
+
+.gform-admin .gform-button--circular.gform-button--size-sm {
+			height: 2.125rem;
+			width: 2.125rem;
+		}
+
+.gform-admin .gform-button--circular.gform-button--size-sm .gform-button__icon {
+				font-size: 1.25rem;
+			}
+
+.gform-admin .gform-button--circular.gform-button--size-l {
+			height: 2.625rem;
+			width: 2.625rem;
+		}
+
+.gform-admin .gform-button--circular.gform-button--size-l .gform-button__icon {
+				font-size: 1.75rem;
+			}
+
+.gform-admin .gform-button--circular.gform-button--size-xl {
+			height: 3.125rem;
+			width: 3.125rem;
+		}
+
+.gform-admin .gform-button--circular.gform-button--size-xl .gform-button__icon {
+				font-size: 2rem;
+			}
+
+/*
+* Styles for cards admin wide.
+* Load the dev/components/index.html file to view a living demo of all variants and get code snippets.
+*
+* Used in admin.css.
+*/
+
+.gform-admin .gform-card {
+		
+	}
+
+/*
+* Styles for choice component
+*
+* Used in admin.css.
+*/
+
+.gform-admin .gform-choice {
+		align-items: center;
+		display: flex;
+		flex-flow: row nowrap;
+		padding: 0;
+		position: relative;
+		width: 100%;
+	}
+
+.gform-admin .gform-choice .gform-choice__handle {
+			align-items: center;
+			background: none;
+			color: #9092B2;
+			display: flex;
+			font-size: 20px;
+			justify-content: center;
+			margin-right: 0.625rem;
+			width: 0.588rem;
+		}
+
+.gform-admin .gform-choice .gform-choice__handle:hover {
+				color: #242748;
+			}
+
+.gform-admin .gform-choice .gform-choice__selected {
+			border: 0 none;
+			-webkit-clip-path: inset(50%);
+			        clip-path: inset(50%);
+			clip: rect(0.125rem, 0.125rem, 0.125rem, 0.125rem);
+			height: .0625rem;
+			margin: -0.125rem;
+			overflow: hidden;
+			padding: 0;
+			position: absolute;
+			width: .0625rem;
+			-webkit-appearance: none;
+		}
+
+.gform-admin .gform-choice .gform-choice__selected:checked + .gform-choice__selected-label {
+					background: #22A753;
+					border-color: #E1F6ED;
+				}
+
+.gform-admin .gform-choice .gform-choice__selected-label {
+			align-items: center;
+			background: #9092B2;
+			border: 0.25rem solid #ECEDF8;
+			border-radius: 100%;
+			box-sizing: border-box;
+			cursor: pointer;
+			display: inline-flex;
+			font-size: 1rem;
+			flex-basis: 1.625rem;
+			height: 1.625rem;
+			justify-content: center;
+			margin: 0;
+			width: 1.625rem;
+		}
+
+.gform-admin .gform-choice .gform-choice__selected-label:before {
+				content: none;
+			}
+
+.gform-admin .gform-choice .gform-choice__selected-icon {
+			color: #FFFFFF;
+		}
+
+.gform-admin .gform-choice .gform-choice__input--label {
+			width: calc(100% - 110px);
+		}
+
+.gform-admin .gform-choice .gform-choice__input--value, .gform-admin .gform-choice .gform-choice__input--price {
+			display: none;
+		}
+
+.gform-admin .gform-choice .gform-choice__button--add {
+			margin-left: 0.3125rem;
+		}
+
+.gform-admin .gf_browser_chrome .gform-choice__button--add:after, .gform-admin .gf_browser_chrome .gform-choice__button--delete:after {
+				margin-left: -0.03125rem;
+			}
+
+.gform-admin .choice_with_value .gform-choice__input--label {
+			width: calc(50% - 57px);
+		}
+
+.gform-admin .choice_with_value .gform-choice__input--value {
+			display: inline-block;
+			width: calc(50% - 58px);
+		}
+
+.gform-admin .choice_with_value .gform-choice__button--add {
+			margin-left: 0.625rem;
+		}
+
+.gform-admin .choice_with_price .gform-choice__input--label {
+			width: calc(50% - 57px);
+		}
+
+.gform-admin .choice_with_price .gform-choice__input--price {
+			display: inline-block;
+			width: calc(50% - 58px);
+		}
+
+.gform-admin .choice_with_price .gform-choice__button--add {
+			margin-left: 0.625rem;
+		}
+
+html[dir="rtl"] .gform-admin .gform-choice .gform-choice__button--add {
+				margin-left: 0;
+				margin-right: 0.3125rem;
+			}
+
+html[dir="rtl"] .gform-admin .gform-choice .gform-choice__selected-label:before {
+				margin-left: 0;
+			}
+
+/*
 * Styles for the conditional flyout.
 *
 * Used in admin.css.
@@ -1303,6 +1152,10 @@ input.button-primary.gfbutton, button.button-primary.gfbutton, a.button-primary.
 .conditional_logic_flyout .add_field_choice, .conditional_logic_flyout .delete_field_choice {
         top: 0.5625rem;
     }
+
+.gf_browser_chrome .conditional_logic_flyout .add_field_choice:after, .gf_browser_chrome .conditional_logic_flyout .delete_field_choice:after {
+                margin-left: 0;
+            }
 
 .conditional_logic_flyout .add_field_choice {
         margin-left: 0.625rem;
@@ -1492,10 +1345,6 @@ html[dir=rtl] .conditional_logic_wrapper .conditional_logic_accordion__status_in
         margin-left: 0;
         display: none;
     }
-
-html[dir=rtl] .conditional_logic_wrapper .conditional_logic_accordion__status_indicator .gform-status-indicator {
-            padding: 0 1.5rem 0 0.5rem;
-        }
 
 html[dir=rtl] .conditional_logic_wrapper .conditional_logic_accordion__toggle button {
             padding: 0 0 0 1.125rem;
@@ -1921,6 +1770,226 @@ html[dir=rtl] .conditional_logic_flyout_container .conditional_logic_flyout .add
 					border-color: transparent;
 				}
 
+/*
+* Dropdown/listbox component for use in the admin
+*
+* Used in admin.css.
+*/
+
+.gform-admin .gform-dropdown {
+		font-family: inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+		position: relative;
+	}
+
+.gform-admin .gform-dropdown__control {
+		align-items: center;
+		background: #FFFFFF;
+		border: 0.0625rem solid #D5D7E9;
+		border-radius: 0.1875rem;
+		box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+		cursor: pointer;
+		display: flex;
+		height: 2.375rem;
+		line-height: 1.1;
+		padding: 0 2.25rem 0 1rem;
+		position: relative;
+		width: 100%;
+		z-index: 1;
+	}
+
+.gform-admin .gform-dropdown__control:focus {
+			border-color: #3E7DA6;
+			box-shadow: 0 0 0 2px #BED8ED;
+			outline: none;
+		}
+
+.gform-admin .gform-dropdown__control .gform-dropdown__chevron, .gform-admin .gform-dropdown__control .gform-dropdown__spinner {
+			align-items: center;
+			background-size: 16px 16px;
+			color: #9092B2;
+			font-size: 1.375rem;
+			height: 100%;
+			justify-content: center;
+			position: absolute;
+			right: 0;
+			transition: color .15s ease;
+			top: 0;
+			width: 2.25rem;
+		}
+
+.gform-admin .gform-dropdown__control .gform-dropdown__chevron {
+			display: flex;
+		}
+
+.gform-admin .gform-dropdown__control-text {
+		color: #242748;
+		font-size: 0.875rem;
+		font-weight: 500;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+.gform-admin .gform-dropdown__container {
+		background: #FFFFFF;
+		border: 0.0625rem solid #D5D7E9;
+		border-radius: 0 0 0.1875rem 0.1875rem;
+		border-top: 0;
+		box-shadow: 0 0.125rem 0.75rem rgba(28, 31, 63, 0.09);
+		box-sizing: border-box;
+		display: none;
+		opacity: 0;
+		outline: none;
+		padding-top: 0.25rem;
+		position: absolute;
+		top: 2.3125rem;
+		transition: opacity .15s ease;
+		width: 100%;
+		z-index: 2;
+	}
+
+.gform-admin .gform-dropdown__container:before {
+			background: #FFFFFF;
+			border-left: 0.0625rem solid #D5D7E9;
+			border-right: 0.0625rem solid #D5D7E9;
+			content: '';
+			height: 0.5rem;
+			left: -1px;
+			position: absolute;
+			top: -0.5rem;
+			width: 100%;
+			z-index: 3;
+		}
+
+.gform-admin .gform-dropdown__list-container {
+		max-height: 14.0625rem;
+		overflow-y: auto;
+	}
+
+.gform-admin .gform-dropdown__item {
+		margin: 0;
+	}
+
+.gform-admin .gform-dropdown__search {
+		border-bottom: 1px solid #ECEDF8;
+		padding: 0.375rem 0.625rem 0.875rem 0.625rem;
+		position: relative;
+	}
+
+.gform-admin .gform-dropdown__search .gform-dropdown__search-input {
+			padding-right: 2.125rem;
+			width: 100%;
+		}
+
+.gform-admin .gform-dropdown__search[focus-within] .gform-dropdown__search-icon {
+				color: #3E7DA6;
+			}
+
+.gform-admin .gform-dropdown__search:focus-within .gform-dropdown__search-icon {
+				color: #3E7DA6;
+			}
+
+.gform-admin .gform-dropdown__search-icon {
+		color: #9092B2;
+		font-size: 1.5rem;
+		position: absolute;
+		right: 1rem;
+		top: 0.75rem;
+		transition: color .15s ease;
+	}
+
+.gform-admin .gform-dropdown__list {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+
+.gform-admin .gform-dropdown__trigger {
+		background: transparent;
+		border: 0;
+		border-left: 0.1875rem solid transparent;
+		color: #242748;
+		cursor: pointer;
+		font-size: 0.8125rem;
+		outline: none;
+		overflow: hidden;
+		padding: 0.6875rem 1rem 0.6875rem 0.875rem;
+		text-align: left;
+		text-overflow: ellipsis;
+		transition: all .15s ease;
+		white-space: nowrap;
+		width: 100%;
+	}
+
+.gform-admin .gform-dropdown__trigger:hover, .gform-admin .gform-dropdown__trigger:focus {
+			background: #F6F9FC;
+			border-left-color: #3E7DA6;
+		}
+
+.gform-admin .gform-dropdown--show-spinner .gform-dropdown__chevron {
+			display: none;
+		}
+
+.gform-admin .gform-dropdown--show-spinner .gform-dropdown__spinner {
+			display: flex;
+		}
+
+.gform-admin .gform-dropdown--reveal .gform-dropdown__container {
+			display: block;
+		}
+
+.gform-admin .gform-dropdown--hide .gform-dropdown__container {
+			display: block;
+			opacity: 0;
+		}
+
+.gform-admin .gform-dropdown--open .gform-dropdown__chevron {
+			color: #242748;
+			transform: rotate(180deg);
+		}
+
+.gform-admin .gform-dropdown--open .gform-dropdown__control {
+			box-shadow: 0 0.125rem 0.75rem rgba(28, 31, 63, 0.09);
+		}
+
+.gform-admin .gform-dropdown--open .gform-dropdown__control:focus {
+				border-color: #D5D7E9;
+			}
+
+.gform-admin .gform-dropdown--open .gform-dropdown__container {
+			display: block;
+			opacity: 1;
+		}
+
+html[dir=rtl] .gform-admin .gform-dropdown__control {
+		padding: 0 1rem 0 2.25rem;
+	}
+
+html[dir=rtl] .gform-admin .gform-dropdown__control .gform-dropdown__chevron, html[dir=rtl] .gform-admin .gform-dropdown__control .gform-dropdown__spinner {
+			left: 0;
+			right: auto;
+		}
+
+html[dir=rtl] .gform-admin .gform-dropdown__search .gform-dropdown__search-input {
+			padding-left: 2.125rem;
+			padding-right: 1rem;
+		}
+
+html[dir=rtl] .gform-admin .gform-dropdown__search-icon {
+		left: 1rem;
+		right: auto;
+	}
+
+html[dir=rtl] .gform-admin .gform-dropdown__trigger {
+		border-left: 0;
+		border-right: 0.1875rem solid transparent;
+		text-align: right;
+	}
+
+html[dir=rtl] .gform-admin .gform-dropdown__trigger:hover, html[dir=rtl] .gform-admin .gform-dropdown__trigger:focus {
+			border-right-color: #3E7DA6;
+		}
+
 .gform-settings-panel__content select:not([multiple]), .gform-settings-panel__content .select2-container .select2-selection__rendered {
 	background: url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%239092B2%22%2F%3E%3C%2Fsvg%3E) no-repeat right 0.6rem top 55%;
 	background-color: #FFFFFF;
@@ -1937,7 +2006,17 @@ html[dir=rtl] .conditional_logic_flyout_container .conditional_logic_flyout .add
 	font-size: .875rem;
 	line-height: 1.25rem;
 	max-height: none;
+	min-height: 0;
+	min-height: initial;
 	padding: .6875rem 2rem .6875rem 1rem;
+}
+
+.gform-settings-panel__content .select2-container .select2-selection__rendered {
+	width: auto;
+}
+
+.gform-settings-field__conditional-logic select:not([multiple]), .gform-settings-field__conditional-logic .select2-container .select2-selection__rendered {
+	width: auto;
 }
 
 .gform-settings-panel__content .select2-container .select2-selection[aria-expanded="true"] .select2-selection__rendered {
@@ -2072,8 +2151,7 @@ html[dir=rtl] .conditional_logic_flyout_container .conditional_logic_flyout .add
 			}
 
 .gform-settings-field__select-enhanced-container .select2-results__options[aria-multiselectable="true"] .select2-results__option:before {
-					border: 1px solid #9092B2;
-					border-color: #3E7DA6;
+					border: 1px solid #3E7DA6;
 					border-radius: 3px;
 					content: "";
 					display: inline-block;
@@ -2084,16 +2162,32 @@ html[dir=rtl] .conditional_logic_flyout_container .conditional_logic_flyout .add
 					width: 1.375rem;
 				}
 
-.gform-settings-field__select-enhanced-container .select2-results__options[aria-multiselectable="true"] .select2-results__option--highlighted, .gform-settings-field__select-enhanced-container .select2-results__options[aria-multiselectable="true"] .select2-results__option[data-selected="true"] {
+.gform-settings-field__select-enhanced-container .select2-results__options[aria-multiselectable="true"] .select2-results__option[data-selected="true"] {
 				background-color: #FFFFFF;
 				border-right: 0px;
 			}
 
-.gform-settings-field__select-enhanced-container .select2-results__options[aria-multiselectable="true"] .select2-results__option--highlighted:before, .gform-settings-field__select-enhanced-container .select2-results__options[aria-multiselectable="true"] .select2-results__option[data-selected="true"]:before {
+.gform-settings-field__select-enhanced-container .select2-results__options[aria-multiselectable="true"] .select2-results__option[data-selected="true"]:before {
 					background-color: #3E7DA6;
 					background-image: url(../images/check.svg);
 					background-position: center;
 					background-repeat: no-repeat;
+				}
+
+.gform-settings-field__select-enhanced-container .select2-results__options[aria-multiselectable="true"] .select2-results__option--highlighted {
+				background-color: #F6F9FC;
+				border-left: 2px solid #3E7DA6;
+				border-right: 0px;
+				padding-left: 0.6875rem;
+			}
+
+.gform-settings-field__select-enhanced-container .select2-results__options[aria-multiselectable="true"] .select2-results__option--highlighted:before {
+					background-color: #FFFFFF;
+					background-image: url(../images/grey-check.svg);
+					background-position: center;
+					background-repeat: no-repeat;
+					border: 1px solid #3985B7;
+					box-shadow: 0 0 0 2px #BED8ED;
 				}
 
 .gform-settings-field__select-enhanced-container .select2-results__option {
@@ -2172,15 +2266,24 @@ html[dir=rtl] .conditional_logic_flyout_container .conditional_logic_flyout .add
 		padding: 0 0.75rem;
 	}
 
-.field_setting.accessibility_warning {
+.gform-accessibility-warning {
 	align-items: center;
 	border: 1.5px solid #FFBE03;
 	border-radius: 3px;
 	display: flex;
 	line-height: 1em;
-	margin: 0.875rem 0;
+	margin-bottom: 0.875rem;
 	padding: 0.875rem;
 }
+
+.gform-accessibility-warning.field_setting {
+		margin-top: 0.875rem;
+	}
+
+.gform-accessibility-warning .gform-icon {
+		font-size: 1.5rem;
+		margin-right: 0.375rem;
+	}
 
 div.field_setting.field_error {
 	align-items: center;
@@ -2200,12 +2303,12 @@ div.field_setting.field_error {
 	margin: 1rem 0;
 }
 
-.field_setting.accessibility_warning svg, .field_setting.field_error svg {
+.field_setting.field_error svg {
 	margin-right: 0.375rem;
 	min-width: 1.5rem;
 }
 
-.field_setting.accessibility_warning a, .field_setting.accessibility_warning a:hover, .field_setting.field_error a, .field_setting.field_error a:hover {
+.gform-accessibility-warning a, .gform-accessibility-warning a:hover, .field_setting.field_error a, .field_setting.field_error a:hover {
 	color: #191E23;
 }
 
@@ -2493,7 +2596,6 @@ div.field_setting.field_error {
 	}
 
 .panel-block-tabs__body--settings .choice_with_value .field-choice-text + .field-choice-value {
-		margin: 0 0.25rem;
 		flex: 1;
 		min-width: 1px;
 	}
@@ -2666,38 +2768,49 @@ html[dir="rtl"] .search-button .search-button__input{
  * Eventually all settings input styles need to be migrated
  */
 
-.gform-admin .gform-admin-input {
+.gform-admin .gform-input {
 		background: #FFFFFF;
-		border: 1px solid #9092B2;
+		border: 1px solid #C3C5DB;
 		border-radius: 3px;
 		box-shadow: 0 0 0 transparent;
 		box-sizing: border-box;
 		color: #242748;
+		font-family: inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+		font-size: 0.8125rem;
 		line-height: 2;
 		outline: none;
-		padding: 0 0.75rem;
+		padding: 0.25rem 0.75rem;
 		transition: box-shadow .15s ease, background-color .15s ease;
+		-webkit-appearance: none;
 	}
 
-.gform-admin .gform-admin-input:focus {
+.gform-admin .gform-input:focus {
 			border: 1px solid #3985B7;
 			box-shadow: 0 0.125rem 0.0675rem rgba(28, 31, 63, 0.0634624), 0 0 0 2px #BED8ED;
 			color: #242748;
 		}
 
-.gform-admin .gform-admin-input--radio:hover {
+.gform-admin .gform-input--radio:hover {
 			border: 1px solid #3985B7;
 			box-shadow: 0 0.125rem 0.0675rem rgba(28, 31, 63, 0.0634624), 0 0 0 2px #BED8ED;
 			color: #242748;
 		}
 
-.gform-admin .gform-admin-input--checkbox:hover {
+.gform-admin .gform-input--checkbox {
+		border: 1px solid #9092B2;
+		height: 1.375rem;
+		margin: 0 .75rem 0 0;
+		padding: 0;
+		width: 1.375rem;
+	}
+
+.gform-admin .gform-input--checkbox:hover {
 			border: 1px solid #3985B7;
 			box-shadow: 0 0.125rem 0.0675rem rgba(28, 31, 63, 0.0634624), 0 0 0 2px #BED8ED;
 			color: #242748;
 		}
 
-.gform-admin .gform-admin-input--select {
+.gform-admin .gform-input--select {
 		background: url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%239092B2%22%2F%3E%3C%2Fsvg%3E) no-repeat right 0.6rem top 55%;
 		background-color: #FFFFFF;
 		background-size: 1rem 1rem;
@@ -2709,7 +2822,7 @@ html[dir="rtl"] .search-button .search-button__input{
 		width: 100%;
 	}
 
-.gform-admin .gform-admin-input--select:hover {
+.gform-admin .gform-input--select:hover {
 			box-shadow: 0 0.25rem 0.25rem rgba(18, 25, 97, 0.0405344);
 			color: #242748;
 		}
@@ -2791,13 +2904,32 @@ div.push-alert-red {
 }
 
 /*
+* Loading/action spinner component
+*
+* Used in admin.css.
+*/
+
+.gform-admin .gform-spinner {
+		background-image: url( '../images/spinner.svg' );
+		background-position: 50% 50%;
+		background-repeat: no-repeat;
+		background-size: contain;
+		display: none;
+		height: 1rem;
+		width: 1rem;
+	}
+
+.gform-admin .gform-spinner--active {
+		display: inline-block;
+	}
+
+/*
 * Active/inactive status indicator.
 *
 * Used in admin.css.
 */
 
 .gform-status-indicator {
-
     background: #ECEDF8;
     border: 1px solid #D5D7E9;
     border-radius: 0.75rem;
@@ -2806,9 +2938,8 @@ div.push-alert-red {
     display: inline-block;
     font-size: 0.687rem;
     font-weight: 600;
-    height: 1.375rem;
-    line-height: 1.375rem;
-    padding: 0 0.5rem 0 1.5rem;
+    line-height: 1;
+    padding: 0.375rem 0.5rem 0.375rem 1.5rem;
     position: relative;
     transition: all ease-in-out 200ms;
     white-space: nowrap;
@@ -2834,7 +2965,27 @@ div.push-alert-red {
 
 .gform-status-indicator.gform-status--active svg {
             fill: #57C091;
-            stroke: rgba( 87, 192, 145, 0.22 );
+            stroke: rgba(87, 192, 145, 0.22);
+        }
+
+.gform-status-indicator.gform-status--error {
+        background: #FEEFEF;
+        border-color: rgba(221, 48, 29, 0.2);
+        color: #DD301D;
+    }
+
+.gform-status-indicator.gform-status--error svg {
+            fill: #DD301D;
+            stroke: rgba(221, 48, 29, 0.2);
+        }
+
+.gform-status-indicator.gform-status--static {
+        pointer-events: none;
+    }
+
+.gform-status-indicator.gform-status--static .gform-status-indicator-status {
+            position: relative;
+            bottom: -0.0625rem;
         }
 
 .gform-status-indicator:focus, .gform-status-indicator:hover, .gform-status-indicator:active {
@@ -2844,24 +2995,163 @@ div.push-alert-red {
     }
 
 .wp-list-table .gform-status-indicator {
-    line-height: 1rem;
     margin-left: 0.375rem;
 }
 
-.wp-list-table .gform-status-indicator svg {
-        top: 0.25rem;
-    }
-
 html[dir=rtl] .gform-status-indicator {
 
-    padding-right: 1rem;
-    padding-left: 0;
+    padding-right: 1.5rem;
+    padding-left: 0.75rem;
 }
 
 html[dir=rtl] .gform-status-indicator svg {
         right: .25rem;
         left: auto;
     }
+
+/*
+* Styles for tables admin wide.
+* Load the dev/components/index.html file to view a living demo of all variants and get code snippets.
+*
+* Used in admin.css.
+*/
+
+.gform-admin .gform-table {
+		width: 100%;
+		box-sizing: border-box;
+		max-width: 100%;
+		border: 0.0625rem solid #ECEDF8;
+		font-family: inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+		font-size: 0.8125rem;
+		text-align: left;
+		border-collapse: collapse;
+	}
+
+.gform-admin .gform-table * {
+			box-sizing: border-box;
+		}
+
+.gform-admin .gform-table tr {
+			border-bottom: 0.0625rem solid #ECEDF8;
+		}
+
+.gform-admin .gform-table th {
+			font-weight: 500;
+			padding: 0.8125rem 1.125rem;
+		}
+
+.gform-admin .gform-table td {
+			padding: 1.25rem 1.125rem;
+		}
+
+.gform-admin .gform-table p {
+			margin: 0;
+			font-size: 0.8125rem;
+		}
+
+@media (max-width: 960px) {
+
+.gform-admin .gform-table--responsive thead {
+				position: absolute;
+				clip: rect(1px, 1px, 1px, 1px);
+				padding: 0;
+				border: 0;
+				height: 1px;
+				width: 1px;
+				overflow: hidden
+		}
+			}
+
+@media (max-width: 960px) {
+
+.gform-admin .gform-table--responsive tbody, .gform-admin .gform-table--responsive tr, .gform-admin .gform-table--responsive th, .gform-admin .gform-table--responsive td {
+				display: block;
+				padding: 0;
+				white-space: normal
+		}
+			}
+
+@media (max-width: 960px) {
+
+.gform-admin .gform-table--responsive tr {
+				border-bottom: 0
+		}
+			}
+
+@media (max-width: 960px) {
+
+.gform-admin .gform-table--responsive td, .gform-admin .gform-table--responsive th {
+				padding: 1.25rem 1.125rem;
+				overflow: hidden;
+				position: relative;
+				border-bottom: 1px solid #ECEDF8;
+				vertical-align: top;
+				width: 100%;
+				white-space: normal
+		}
+			}
+
+@media (max-width: 960px) {
+
+.gform-admin .gform-table--responsive td p {
+					padding-left: 1.125rem
+			}
+				}
+
+@media (max-width: 960px) {
+
+.gform-admin .gform-table--responsive td[data-header]:before {
+						content: attr(data-header);
+						display: block;
+						float: left;
+						width: 50%;
+						font-weight: 500
+				}
+					}
+
+@media (max-width: 960px) {
+
+.gform-admin .gform-table--responsive td[data-header] > * {
+						display: block;
+						width: 50%;
+						float: right;
+						clear: right
+				}
+					}
+
+@media (max-width: 960px) {
+
+.gform-admin .gform-table--responsive td[data-header]:after {
+						content: "";
+						position: absolute;
+						left: 0;
+						top: 0;
+						width: 50%;
+						border-right: 1px solid  #ECEDF8;
+						padding-bottom: 200%;
+						display: block
+				}
+					}
+
+.gform-admin .gform-table--fixed {
+		table-layout: fixed;
+	}
+
+.gform-admin .gform-table--no-outer-border {
+		border: 0;
+	}
+
+.gform-admin .gform-table--no-outer-border tbody tr:last-child {
+				border-bottom: 0;
+			}
+
+.gform-admin .gform-table--no-outer-border tbody tr:last-child td:last-child {
+					border-bottom: 0;
+				}
+
+html[dir="rtl"] .gform-admin .gform-table {
+		text-align: right;
+	}
 
 /*
 * Toggles in settings and field editor.
@@ -2973,8 +3263,8 @@ html[dir=rtl] .gform-field__toggle input[type="checkbox"]:checked + .gform-field
 	font-size: 0.8125rem;
 	justify-content: start;
 	margin: 0 0 0 0;
-	max-height: 3.75rem;
-	min-height: 3.75rem;
+	max-height: 4rem;
+	min-height: 4rem;
 	padding: 0 0.5rem 0 0;
 	-webkit-font-smoothing: antialiased;
 	width: 100%;
@@ -3015,10 +3305,10 @@ html[dir=rtl] .gform-field__toggle input[type="checkbox"]:checked + .gform-field
 }
 
 .gform-form-toolbar__menu {
-	border-right: 1px solid #ECEDF8;
 	border-left: 1px solid #ECEDF8;
+	border-right: 1px solid #ECEDF8;
 	display: flex;
-	height: 3.75rem;
+	height: 4rem;
 	padding: 0 0.65rem;
 }
 
@@ -3033,19 +3323,51 @@ html[dir=rtl] .gform-field__toggle input[type="checkbox"]:checked + .gform-field
 .gform-form-toolbar__menu > li {
 		display: inline-block;
 		margin: 0;
+		position: relative;
 	}
+
+.gform-form-toolbar__menu > li:after {
+			bottom: 0;
+			content: '';
+			height: 0.25rem;
+			left: 0;
+			margin-bottom: -0.25rem;
+			position: absolute;
+			width: 100%;
+		}
 
 .gform-form-toolbar__menu > li > a {
 		align-items: center;
-		color: #242748;
+		color: #5B5E80;
 		cursor: pointer;
 		display: inline-flex;
-		font: inherit;
-		height: 3.75rem;
+		font-size: 0.875rem;
+		font-weight: 500;
+		height: 4rem;
 		padding: 0 0.8125rem 0 0.8125rem;
+		position: relative;
 		text-decoration: none;
 		transition: all .2s ease;
 	}
+
+.gform-form-toolbar__menu > li > a:after {
+			background: transparent;
+			bottom: 0;
+			content: '';
+			height: 0.1875rem;
+			left: 0.375rem;
+			position: absolute;
+			transition: all .2s ease;
+			width: calc(100% - .75rem);
+		}
+
+.gform-form-toolbar__menu > li > a:hover, .gform-form-toolbar__menu > li > a:focus, .gform-form-toolbar__menu > li > a.submenu-open, .gform-form-toolbar__menu > li > a.gf_toolbar_active {
+			color: #242748;
+		}
+
+.gform-form-toolbar__menu > li > a:hover:after, .gform-form-toolbar__menu > li > a:focus:after, .gform-form-toolbar__menu > li > a.submenu-open:after, .gform-form-toolbar__menu > li > a.gf_toolbar_active:after {
+				background: #3E7DA6;
+			}
 
 .gform-form-toolbar__menu > li > a.gf-topmenu-dynamic svg {
 		fill: currentColor;
@@ -3058,7 +3380,7 @@ html[dir=rtl] .gform-field__toggle input[type="checkbox"]:checked + .gform-field
 	}
 
 .gform-form-toolbar__menu .gform-form-toolbar__submenu {
-		margin-top: -0.3125rem;
+		margin: 0.1875rem 0 0 0.3125rem;
 		min-width: 14.688rem;
 		opacity: 0;
 		position: absolute;
@@ -3140,43 +3462,21 @@ html[dir=rtl] .gform-field__toggle input[type="checkbox"]:checked + .gform-field
 			}
 
 .gform-form-toolbar__form-title {
-	color: #242748;
-	font-family: inherit;
-	font-size: 0.8125rem;
-	font-style: normal;
-	font-weight: 400;
-	height: 3.5rem;
-	letter-spacing: unset;
-	line-height: 3.5rem;
 	margin-right: 0;
-	padding: 0 1.65rem 0 1.25rem;
+	padding: 0 0.9375rem 0 0.1875rem;
+	width: 13.75rem;
 }
 
-.gform-form-toolbar__form-title a:focus {
-			box-shadow: none;
-			outline: none;
-		}
-
-.gform-form-toolbar__form-title a.form_switcher_arrow svg {
-			fill: currentColor;
-		}
-
-.gform-form-toolbar__form-title a.form_switcher_arrow {
-		color: #1C1F3F;
+.gform-form-toolbar__form-title.gform-form-toolbar__form-title--form-editor {
+		padding: 0 0.9375rem;
 	}
 
-.gform-form-toolbar__form-title a.form_switcher_arrow:hover {
-		color: #3E7DA6;
-	}
+html[dir=rtl] .gform-form-toolbar__form-title {
+	padding: 0 0 0 0.9375rem;
+}
 
-.gform-form-toolbar__form-title span {
-		display: inline-block;
-		line-height: 1.5;
-		max-width: 10.375rem;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		vertical-align: middle;
-		white-space: nowrap;
+html[dir=rtl] .gform-form-toolbar__form-title.gform-form-toolbar__form-title--form-editor {
+		padding: 0 0.9375rem;
 	}
 
 .gform-form-toolbar__form-id {
@@ -3192,7 +3492,7 @@ html[dir=rtl] .gform-field__toggle input[type="checkbox"]:checked + .gform-field
 		background: #FFF;
 		border: 1px solid #C3C5DB;
 		border-radius: 3px;
-		box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05), 0px 10px 15px rgba(0, 0, 0, 0.1);
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.1);
 		box-sizing: border-box;
 		display: none;
 		max-height: calc(100vh - 35rem);
@@ -3203,6 +3503,7 @@ html[dir=rtl] .gform-field__toggle input[type="checkbox"]:checked + .gform-field
 
 .gform-form-toolbar__submenu a, .row-actions .gform-form-toolbar__submenu a {
 	align-items: center;
+	border-right: 0.1875rem solid transparent;
 	color: #242748;
 	cursor: pointer;
 	display: flex;
@@ -3211,8 +3512,9 @@ html[dir=rtl] .gform-field__toggle input[type="checkbox"]:checked + .gform-field
 	transition: all .2s ease;
 }
 
-.gform-form-toolbar__submenu a:hover, .row-actions .gform-form-toolbar__submenu a:hover {
+.gform-form-toolbar__submenu a:hover, .gform-form-toolbar__submenu a:focus, .row-actions .gform-form-toolbar__submenu a:hover, .row-actions .gform-form-toolbar__submenu a:focus {
 		background: #F6F9FC;
+		border-right-color: #3E7DA6;
 	}
 
 .gf_tooltip {
@@ -3309,6 +3611,11 @@ html[dir=rtl] .gform-field__toggle input[type="checkbox"]:checked + .gform-field
         top: 50%;
     }
 
+html[dir="rtl"] .gf_tooltip {
+		margin-left: 0rem;
+		margin-right: 0.25rem;
+	}
+
 /* Deprecated, migrate these files */
 
 /*
@@ -3320,7 +3627,7 @@ http: //www.gravityforms.com
 updated: March 18, 2013 4:15 PM
 
 Gravity Forms is a Rocketgenius project
-copyright 2013 Rocketgenius Inc.
+copyright 2021 Rocketgenius Inc.
 http: //www.rocketgenius.com
 copyright 2009 (http://jqueryui.com/about)
 dual licensed under the MIT (MIT-LICENSE.txt) and GPL (GPL-LICENSE.txt) licenses.
@@ -3794,7 +4101,7 @@ http://www.gravityforms.com
 updated: July 1, 2016 9:48 AM GMT-5
 
 Gravity Forms is a Rocketgenius project
-copyright 2013-2016 Rocketgenius Inc.
+copyright 2013-2021 Rocketgenius Inc.
 http: //www.rocketgenius.com
 this may not be redistributed without the
 express written permission of the author.
@@ -5276,7 +5583,7 @@ div.settings_control_container div.gfield_admin_header_title, div.gfield_admin_i
 
 .choice_with_value .gfield_choice_header_value {
 	padding-left: 120px;
-	display: inline !important;
+	display: inline-block !important;
 }
 
 /* visible value field with price */
@@ -6213,19 +6520,6 @@ ul#gf_form_toolbar_links {
 	outline: none;
 }
 
-#form_switcher_container {
-	display:none;
-	position:absolute;
-	z-index:9999;
-	top:50px;
-}
-
-#form_switcher_container .select2-container {
-
-	display: none;
-
-}
-
 body > .select2-container.gform-select2[style] {
 
 	left: 0;
@@ -6873,7 +7167,6 @@ div#confirmation-editor {
 	position: relative;
 	margin-left: 0.25rem;
 	color: #444;
-	top:3px;
 }
 
 .add_field_choice {
@@ -8710,6 +9003,226 @@ div .gfield_repeater_cell {
 	margin-right: 300px;
 	float: none;
 	width: auto;
+}
+
+/* Vendor */
+
+/*
+ * Simplebar (repo: https://github.com/Grsmto/simplebar/)
+ *
+ * Used in admin.css
+ */
+
+[data-simplebar] {
+	align-content: flex-start;
+	align-items: flex-start;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	position: relative;
+}
+
+.simplebar-wrapper {
+	height: inherit;
+	max-height: inherit;
+	max-width: inherit;
+	overflow: hidden;
+	width: inherit;
+}
+
+.simplebar-mask {
+	bottom: 0;
+	direction: inherit;
+	height: auto !important;
+	left: 0;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: auto !important;
+	z-index: 0;
+}
+
+.simplebar-offset {
+	bottom: 0;
+	box-sizing: inherit !important;
+	direction: inherit !important;
+	left: 0;
+	margin: 0;
+	-webkit-overflow-scrolling: touch;
+	padding: 0;
+	position: absolute;
+	resize: none !important;
+	right: 0;
+	top: 0;
+}
+
+.simplebar-content-wrapper {
+	box-sizing: border-box !important;
+	direction: inherit;
+	display: block;
+	height: 100%; /* Required for horizontal native scrollbar to not appear if parent is taller than natural height */
+	max-height: 100%; /* Needed for vertical scroll to trigger */
+	max-width: 100%; /* Not required for horizontal scroll to trigger */
+	-ms-overflow-style: none;
+	position: relative;
+	scrollbar-width: none;
+	width: auto;
+}
+
+.simplebar-content-wrapper::-webkit-scrollbar, .simplebar-hide-scrollbar::-webkit-scrollbar {
+	height: 0;
+	width: 0;
+}
+
+.simplebar-content:before, .simplebar-content:after {
+	content: ' ';
+	display: table;
+}
+
+.simplebar-placeholder {
+	max-height: 100%;
+	max-width: 100%;
+	pointer-events: none;
+	width: 100%;
+}
+
+.simplebar-height-auto-observer-wrapper {
+	box-sizing: inherit !important;
+	flex-basis: 0;
+	flex-grow: inherit;
+	flex-shrink: 0;
+	float: left;
+	height: 100%;
+	margin: 0;
+	max-height: 1px;
+	max-width: 1px;
+	overflow: hidden;
+	padding: 0;
+	pointer-events: none;
+	position: relative;
+	width: 100%;
+	z-index: -1;
+}
+
+.simplebar-height-auto-observer {
+	box-sizing: inherit;
+	display: block;
+	height: 1000%;
+	left: 0;
+	min-height: 1px;
+	min-width: 1px;
+	opacity: 0;
+	overflow: hidden;
+	pointer-events: none;
+	position: absolute;
+	top: 0;
+	width: 1000%;
+	z-index: -1;
+}
+
+.simplebar-track {
+	bottom: 0;
+	overflow: hidden;
+	pointer-events: none;
+	position: absolute;
+	right: 0;
+	z-index: 1;
+}
+
+[data-simplebar].simplebar-dragging .simplebar-content {
+	pointer-events: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	 -ms-user-select: none;
+	     user-select: none;
+}
+
+[data-simplebar].simplebar-dragging .simplebar-track {
+	pointer-events: all;
+}
+
+.simplebar-scrollbar {
+	left: 0;
+	min-height: 10px;
+	position: absolute;
+	right: 0;
+}
+
+.simplebar-scrollbar:before {
+	background: #D5D7E9;
+	border-radius: 3px;
+	content: '';
+	left: 3px;
+	opacity: 0;
+	position: absolute;
+	right: 4px;
+	transition: opacity 0.2s linear;
+}
+
+.simplebar-scrollbar.simplebar-visible:before {
+	/* When hovered, remove all transitions from drag handle */
+	opacity: 1;
+	transition: opacity 0s linear;
+}
+
+.simplebar-track.simplebar-vertical {
+	top: 0;
+	width: 11px;
+}
+
+.simplebar-track.simplebar-vertical .simplebar-scrollbar:before {
+	bottom: 2px;
+	top: 2px;
+}
+
+.simplebar-track.simplebar-horizontal {
+	height: 11px;
+	left: 0;
+}
+
+.simplebar-track.simplebar-horizontal .simplebar-scrollbar:before {
+	height: 100%;
+	left: 2px;
+	right: 2px;
+}
+
+.simplebar-track.simplebar-horizontal .simplebar-scrollbar {
+	height: 7px;
+	left: 0;
+	min-height: 0;
+	min-width: 10px;
+	right: auto;
+	top: 2px;
+	width: auto;
+}
+
+/* Rtl support */
+
+[data-simplebar-direction='rtl'] .simplebar-track.simplebar-vertical {
+	left: 0;
+	right: auto;
+}
+
+.hs-dummy-scrollbar-size {
+	direction: rtl;
+	height: 500px;
+	opacity: 0;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	position: fixed;
+	visibility: hidden;
+	width: 500px;
+}
+
+.simplebar-hide-scrollbar {
+	left: 0;
+	overflow-y: scroll;
+	position: fixed;
+	scrollbar-width: none;
+	visibility: hidden;
 }
 
 /*# sourceMappingURL=admin.css.map */

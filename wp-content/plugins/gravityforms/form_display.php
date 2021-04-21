@@ -1136,7 +1136,7 @@ class GFFormDisplay {
 				 * @param array $form The Form object to filter through
 				 */
 				$previous_button = gf_apply_filters( array( 'gform_previous_button', $form_id ), $previous_button, $form );
-				$form_string .= '</div>' . self::gform_footer( $form, 'gform_page_footer ' . $form['labelPlacement'], $ajax, $field_values, $previous_button, $display_title, $display_description, $is_postback ) . '
+				$form_string .= '</div>' . self::gform_footer( $form, 'gform_page_footer ' . $form['labelPlacement'], $ajax, $field_values, $previous_button, $display_title, $display_description, $tabindex ) . '
                         </div>'; //closes gform_page
 			}
 
@@ -2336,18 +2336,31 @@ class GFFormDisplay {
 
 			if ( GFCommon::is_legacy_markup_enabled( $form ) ) {
 
-				$assets[] = new GF_Style_Asset( 'gforms_reset_css' );
+				/**
+				 * Allows users to disable legacy CSS files from being loaded on the Front End.
+				 *
+				 * @since 2.5-beta-rc-3
+				 *
+				 * @param boolean Whether to disable legacy css.
+				 */
+				$disable_legacy_css = apply_filters( 'gform_disable_form_legacy_css', false );
 
-				if ( self::has_datepicker_field( $form ) ) {
-					$assets[] = new GF_Style_Asset( 'gforms_datepicker_css' );
-				}
+				if ( ! $disable_legacy_css ) {
 
-				$assets[] = new GF_Style_Asset( 'gforms_formsmain_css' );
-				$assets[] = new GF_Style_Asset( 'gforms_ready_class_css' );
-				$assets[] = new GF_Style_Asset( 'gforms_browsers_css' );
+					$assets[] = new GF_Style_Asset( 'gforms_reset_css' );
 
-				if ( is_rtl() ) {
-					$assets[] = new GF_Style_Asset( 'gforms_rtl_css' );
+					if ( self::has_datepicker_field( $form ) ) {
+						$assets[] = new GF_Style_Asset( 'gforms_datepicker_css' );
+					}
+
+					$assets[] = new GF_Style_Asset( 'gforms_formsmain_css' );
+					$assets[] = new GF_Style_Asset( 'gforms_ready_class_css' );
+					$assets[] = new GF_Style_Asset( 'gforms_browsers_css' );
+
+					if ( is_rtl() ) {
+						$assets[] = new GF_Style_Asset( 'gforms_rtl_css' );
+					}
+
 				}
 
 			} else {
@@ -3084,7 +3097,7 @@ class GFFormDisplay {
 					"	 'truncate': {$truncate}," .
 					"	 'errorStyle' : '{$error_style}'," .
 					"    'displayFormat' : '#input " . esc_js( __( 'of', 'gravityforms' ) ) . ' #max ' . esc_js( __( 'max characters', 'gravityforms' ) ) . "'" .
-					"    });" . "jQuery('{$input_id}').next('.ginput_counter').attr('aria-live','polite');}";
+					"    });" . "jQuery('#{$input_id}').next('.ginput_counter').attr('aria-live','polite');}";
 
 				$script .= gf_apply_filters( array( 'gform_counter_script', $form['id'] ), $field_script, $form['id'], $input_id, $max_length, $field );
 			}
@@ -3465,7 +3478,7 @@ class GFFormDisplay {
 		$is_entry_detail = GFCommon::is_entry_detail();
 		$is_admin = $is_form_editor || $is_entry_detail;
 
-		$custom_class = $is_admin ? '' : esc_attr( self::convert_legacy_class( $form, $field->cssClass ) );
+		$custom_class = $is_admin ? esc_attr( $field->cssClass ) : esc_attr( self::convert_legacy_class( $form, $field->cssClass ) );
 
 		$form_id = (int) rgar( $form, 'id' );
 
@@ -4337,13 +4350,13 @@ class GFFormDisplay {
 		);
 
 		/**
-		* Filter validation errors markup.
-		*
-		* @since 2.5
-		*
-		* @param array $errors Validation errors markup.
-		* @param array $form   The current form object.
-		*/
+		 * Filter validation errors markup.
+		 *
+		 * @since 2.5
+		 *
+		 * @param string $validation_errors_markup Validation errors markup.
+		 * @param array  $form                     The current form object.
+		 */
 		return gf_apply_filters( array( 'gform_form_validation_errors_markup', $form['id'] ), $validation_errors_markup, $form );
 
 	}

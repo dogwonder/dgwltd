@@ -177,6 +177,8 @@ class GF_Field_Number extends GF_Field {
 			$message = sprintf( esc_html__( 'Please enter a number greater than or equal to %s.', 'gravityforms' ), "<strong>$min</strong>" );
 		} elseif ( is_numeric( $numeric_max ) ) {
 			$message = sprintf( esc_html__( 'Please enter a number less than or equal to %s.', 'gravityforms' ), "<strong>$max</strong>" );
+		} elseif ( $this->failed_validation && $this->isRequired ) {
+			$message = ''; // Required validation will take care of adding the message here.
 		} elseif ( $this->failed_validation ) {
 			$message = esc_html__( 'Please enter a valid number.', 'gravityforms' );
 		}
@@ -239,7 +241,7 @@ class GF_Field_Number extends GF_Field {
 		$invalid_attribute      = $this->failed_validation ? 'aria-invalid="true"' : 'aria-invalid="false"';
 
 		$range_message          = $this->get_range_message();
-		$describedby_extra_id   = empty( $range_message ) ? '' : array( "gfield_instruction_{$this->formId}_{$this->id}" );
+		$describedby_extra_id   = empty( $range_message ) ? array() : array( "gfield_instruction_{$this->formId}_{$this->id}" );
 		$aria_describedby       = $this->get_aria_describedby( $describedby_extra_id );
 
 		$autocomplete_attribute = $this->enableAutocomplete ? $this->get_field_autocomplete_attribute() : '';

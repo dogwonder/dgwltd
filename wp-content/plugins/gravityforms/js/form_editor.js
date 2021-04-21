@@ -127,17 +127,9 @@ jQuery( document ).ready( function() {
 		}
 	});
 	jQuery( '#field_settings' ).tabs();
-	jQuery( '.field_settings' ).accordion( {
-		heightStyle: 'content',
-		collapsible: true,
-		animate: false,
-	} );
-	jQuery( '#add_fields_menu .panel-block-tabs__wrapper' ).accordion( {
-		heightStyle: 'content',
-		collapsible: true,
-		animate: false,
-	} );
-	jQuery( '.panel-block-tabs' ).find( '.panel-block-tabs__toggle' ).each( function( i,element ) {
+	jQuery( '.field_settings' ).accordion( gform.options.jqEditorAccordions );
+	jQuery( '#add_fields_menu .panel-block-tabs__wrapper' ).accordion( gform.options.jqEditorAccordions );
+	jQuery( '.panel-block-tabs' ).find( '.panel-block-tabs__toggle' ).each( function( i, element ) {
 		jQuery( element ).append( '<i></i>' );
 	} );
 	ResetFieldAccordions();
@@ -391,7 +383,7 @@ function InitializeFieldSettings(){
 	jQuery( 'input[ name="field_visibility" ]' ).on( 'DOMSubTreeModified change', function() {
 		var field = GetSelectedField();
 		SetFieldProperty( 'visibility', this.value );
-		var hidden_markup = '<div class="admin-hidden-markup"><i class="dashicon dashicons-hidden"></i><span>Hidden</span></div>';
+		var hidden_markup = '<div class="admin-hidden-markup"><i class="gform-icon gform-icon--hidden"></i><span>Hidden</span></div>';
 		if ( field[ 'visibility' ] === 'hidden' ) {
 			jQuery( '#field_' + field.id ).addClass( 'admin-hidden' );
 			jQuery( '#field_' + field.id + ' .gfield_label' ).before( hidden_markup );
@@ -474,8 +466,12 @@ function InitializeFieldSettings(){
 		SetFieldProperty('errorMessage', this.value);
 	});
 
-	jQuery('#field_css_class').on('input propertychange', function(){
-		SetFieldProperty('cssClass', this.value);
+	jQuery( '#field_css_class' ).on( 'focus', function () {
+		jQuery( this ).data( 'previousClass', this.value );
+	}).on( 'change', function() {
+		SetFieldProperty( 'cssClass', this.value );
+		previousClass = jQuery( this ).data( 'previousClass' );
+		jQuery( '#field_' + field.id ).removeClass( previousClass ).addClass( this.value );
 	});
 
 	jQuery('#field_admin_label').on('input propertychange', function(){
@@ -2222,7 +2218,9 @@ function StartDuplicateField(element) {
 
     var sourcefieldId = jQuery(element)[0].id.split("_")[2];
 
-    for(fieldIndex in form.fields){
+	gform.doAction( 'gform_before_field_duplicated', sourcefieldId );
+
+	for(fieldIndex in form.fields){
 
         if(! form.fields.hasOwnProperty(fieldIndex))
             continue;
@@ -2557,8 +2555,10 @@ function ShowSettings( element ) {
 		jQuery( '.field_setting' ).hide();
 		jQuery( '.last_pagination_setting' ).hide();
 		// Show form pagination setting fields
-		InitPaginationOptions();
 		jQuery( '.pagination_setting' ).show();
+		jQuery("#gfield_post_category_initial_item_container").hide();
+		jQuery("#gfield_min_strength_container").hide();
+		InitPaginationOptions();
 		var label = jQuery( '#gform_pagination' ).data( 'title' );
 		var description = jQuery( '#gform_pagination' ).data( 'description' );
 		var icon_classes = 'button-icon dashicons-media-text';
@@ -2697,8 +2697,25 @@ function LoadBulkChoices(field){
 
     for(var i=0; i<field.choices.length; i++){
         choice = field.choices[i].text == field.choices[i].value ? field.choices[i].text : field.choices[i].text + "|" + field.choices[i].value;
+
         if(field.enablePrice && field.choices[i]["price"] != "")
             choice += "|:" + field.choices[i]["price"];
+
+	    /**
+	     * Filter each individual choice as it is loaded.
+	     *
+	     * This filter is generally used in combination with gform_insert_bulk_choices_choice, and is useful
+	     * for generating unique text patterns for adding arbitrary data to a choice.
+	     *
+	     * @since 2.5
+	     *
+	     * @param {string} choice           The string representing the current choice as a text pattern.
+	     * @param {Choice} field.choices[i] The Choice object representing this particular Choice data.
+	     * @param {object} field            The current field being evaluated.
+	     *
+	     * @return {string} The updated text pattern, e.g. Label|Value|Meta|Other
+	     */
+	    choice = gform.applyFilters( 'gform_load_bulk_choices_choice', choice, field.choices[i], field );
 
         choices.push(choice);
     }
@@ -2779,10 +2796,30 @@ function InsertBulkChoices(choices){
         }
 
         text_value = text_value.split("|");
-        field.choices.push(new Choice(jQuery.trim(text_value[0]), jQuery.trim(text_value[text_value.length -1]), jQuery.trim(price)));
 
         if(text_value.length > 1)
             enableValue = true;
+
+	    choice = new Choice(jQuery.trim(text_value[0]), jQuery.trim(text_value[text_value.length -1]), jQuery.trim(price));
+
+	    /**
+	     * Filter each individual Choice object as it is inserted into the UI.
+	     *
+	     * This filter is generally used in combination with gform_load_bulk_choices_choice, and is useful
+	     * for parsing a unique text pattern (e.g., Label|Value|Other) and adding the additional data to
+	     * the resulting Choice object.
+	     *
+	     * @since 2.5
+	     *
+	     * @param {Choice} choice        The Choice object representing this particular Choice data.
+	     * @param {string} choice_string The string representing the current choice as a text pattern.
+	     * @param {object} field         The current field being evaluated.
+	     *
+	     * @return {Choice} The updated Choice object containing any additional data needed.
+	     */
+	    choice = gform.applyFilters( 'gform_insert_bulk_choices_choice', choice, choices[i], field );
+
+	    field.choices.push( choice );
     }
 
 	/**
@@ -2938,6 +2975,10 @@ function UpdateFieldChoices(fieldType){
 			}
 			if(field.choices.length > 5)
 				choices += "<" + inputContainer + " class='gchoice_total'>" + gf_vars["editToViewAll"].replace("%d", field.choices.length) + "</" + inputContainer + ">";
+
+			if ( field.enableSelectAll ) {
+				choices += '<button type="button" id="button_' + id + '_select_all" disabled="disabled">' + gf_vars["selectAll"] + '</button>';
+			}
 			break;
 
 		case "radio" :

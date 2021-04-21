@@ -491,7 +491,7 @@ class GF_Upgrade {
               KEY form_id (form_id)
             ) $charset_collate;";
 
-		if ( version_compare( $wpdb->db_version(), '8.0.17', '<' ) ) {
+		if ( version_compare( GFCommon::get_db_version(), '8.0.17', '<' ) || ( GFCommon::get_dbms_type() === 'MariaDB' ) ) {
 			$tables = $this->make_tables_backward_compatible( $tables );
 		}
 

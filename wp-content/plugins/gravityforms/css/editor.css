@@ -6,7 +6,7 @@ Gravity Forms Form Editor Styles
 http: //www.gravityforms.com
 
 Gravity Forms is a Rocketgenius project
-copyright 2008-2017 Rocketgenius Inc.
+copyright 2008-2021 Rocketgenius Inc.
 http: //www.rocketgenius.com
 this may not be re-distrubited without the
 express written permission of the author.
@@ -124,7 +124,189 @@ AND ANY CHANGES MADE HERE WILL BE OVERWRITTEN.
  * Not to be used more unless absolutely necessary.
  */
 
+/* Components */
+
+/*
+* Styles for the Browser Notice component.
+*
+* Used in editor.css.
+*/
+
+.gform-browser-notice {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.gform-browser-notice__inner {
+    width: 700px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10rem;
+}
+
+..gform-browser-notice__media, .gform-browser-notice__content {
+    flex: 1;
+}
+
+.gform-browser-notice__media {
+    display: flex;
+}
+
+.gform-browser-notice__media--inline {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+.gform-browser-notice__media--inline img {
+    width: 3rem;
+    height: 3rem;
+    margin: 0 0.5rem;
+}
+
+.gform-browser-notice__content p {
+    font-size: 1.0625rem;
+    font-weight: normal;
+    line-height: 1.75;
+    text-align: center;
+}
+
 /* Styles */
+
+/*
+* Add field buttons in the form editor sidebar.
+*
+* Used in editor.css.
+*/
+
+.add-buttons, .panel-block-tabs__body{
+	border: none;
+	border-left: none ;
+	padding: 0.875rem;
+	width: auto ;
+}
+
+html[dir="rtl"] .add-buttons {
+	justify-content: right;
+}
+
+.add-buttons {
+
+	align-content: stretch;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: left;
+	margin: 0;
+	overflow: visible;
+}
+
+.add-buttons li {
+		margin-bottom: 0.8125rem ;
+		width: 33.33%;
+
+	}
+
+.add-buttons li button {
+			align-items: stretch;
+			background: transparent;
+			border-radius: 3px;
+			border: 1px solid #D5D7E9;
+			color: #242748;
+			cursor: -webkit-grab;
+			cursor: grab;
+			display: flex;
+			flex-direction: column;
+			font-size: 0.8125rem;
+			height: 5.8125rem;
+			justify-content: space-around;
+			margin: 0 auto;
+			padding: 0.5rem 0 0 0;
+			width: 6.1875rem;
+			word-break: break-word;
+			transition: 0.1s all ease-in-out;
+
+		}
+
+.add-buttons li button:hover {
+				border-color: #3E7DA6;
+				color: #3E7DA6;
+			}
+
+.add-buttons li button:focus {
+				border:	1px solid #3985B7;
+				border-radius: 3px;
+				box-shadow: 0px 0px 0px 2px #BED8ED;
+				color: #242748;
+				outline: none;
+				transition: box-shadow .15s ease;
+			}
+
+.add-buttons li button.fieldPlaceholder {
+			border: 1px dashed #D5D7E9;
+
+		}
+
+.add-buttons li button.fieldPlaceholder div {
+				opacity: 0;
+			}
+
+button.ui-draggable-dragging {
+	align-items: stretch;
+	background: #FFFFFF;
+	border: 1px solid #D5D7E9;
+	border-radius: 3px;
+	box-shadow: 0px 0px 1px rgba(18, 25, 97, 0.24), 0px 24px 24px rgba(18, 25, 97, 0.03), 0px 2px 2px rgba(18, 25, 97, 0.03), 0px 4px 4px rgba(18, 25, 97, 0.03), 0px 8px 8px rgba(18, 25, 97, 0.03), 0px 16px 16px rgba(18, 25, 97, 0.03);
+	color: #242748;
+	cursor: -webkit-grabbing;
+	cursor: grabbing;
+	display: flex;
+	flex-direction: column;
+	font-size: 0.8125rem;
+	justify-content: space-around;
+	padding: 0.5rem 0 0 0;
+	text-align: center;
+	white-space: normal;
+	z-index: 999999999;
+}
+
+html[dir="rtl"] div.gforms_edit_form button.ui-draggable-dragging, html[dir="rtl"] div.gforms_edit_form button.ui-draggable-dragging div {
+	text-align: center !important;
+}
+
+button .button-text {
+	font-weight: 400;
+	font-size: 0.75rem;
+	line-height: 1rem;
+	padding: 0 0 0.5rem;
+	text-align: center;
+}
+
+.button-icon {
+	border-radius: 3px;
+	font-family: 'dashicons';
+	font-size: 1.3125rem;
+	height: 1.5rem;
+	text-align: center;
+	width: 100%;
+
+}
+
+.button-icon img {
+		width: 1.3125rem;
+		color: #242748;
+		fill: #242748;
+	}
+
+.button-icon:before {
+		line-height: 1.5rem;
+		transition: all 0.1s ease-in-out;
+	}
+
+.button-icon.icon-default:before{
+	content: "\f111";
+}
 
 /*
 * Layout editor styles.
@@ -216,7 +398,7 @@ AND ANY CHANGES MADE HERE WILL BE OVERWRITTEN.
 
 .droppable .dropzone__placeholder {
         height: calc(100vh - 130px);
-        left: -80px;
+        left: -87px;
         position: relative;
         top: -130px;
     }
@@ -234,6 +416,8 @@ AND ANY CHANGES MADE HERE WILL BE OVERWRITTEN.
 .dropzone__placeholder svg {
 		width: 100%;
 		max-width: 270px;
+		display: block;
+		margin: 0 auto;
 	}
 
 .dropzone__placeholder.hovering {
@@ -280,6 +464,14 @@ AND ANY CHANGES MADE HERE WILL BE OVERWRITTEN.
 
 html[dir="rtl"] #no-fields p {
 			text-align: center !important;
+		}
+
+html[dir="rtl"] .dropzone__placeholder {
+		right: -87px;
+	}
+
+.droppable html[dir="rtl"] .dropzone__placeholder {
+			right: -87px;
 		}
 
 .gfield {
@@ -427,7 +619,7 @@ html[dir=rtl] .gfield .ui-resizable-e {
     background: #FFFFFF;
     border-radius: 3px;
     border: 1px solid #D5D7E9;
-    box-shadow: 0px 2px 12px rgba(28, 31, 63, 0.09);
+    box-shadow: 0 2px 12px rgba(28, 31, 63, 0.09);
     display: flex;
     flex-direction: row;
     left: 1rem;
@@ -440,19 +632,23 @@ html[dir=rtl] .gfield .ui-resizable-e {
 }
 
 .gfield-admin-icons .gfield-field-action {
+        align-items: center;
         background-color: #FFFFFF;
         border: 0;
         border-left: 1px solid #D5D7E9;
         cursor: pointer;
-        display: block;
+        display: flex;
         font-size: 0;
         height: 3rem;
-        line-height: 3rem;
+        justify-content: center;
         outline: none;
         position: relative;
-        text-align: center;
         width: 3rem;
     }
+
+.gfield-admin-icons .gfield-field-action .gform-icon--drag-indicator {
+            font-size: 1.625rem;
+        }
 
 .gfield-admin-icons .gfield-field-action .dashicons {
             line-height: 3rem;
@@ -491,7 +687,7 @@ html[dir=rtl] .gfield .ui-resizable-e {
                 transition-delay: 300ms;
             }
 
-.gfield-admin-icons .gfield-drag:hover rect, .gfield-admin-icons .gfield-edit:hover path, .gfield-admin-icons .gfield-delete:hover path {
+.gfield-admin-icons .gfield-edit:hover path, .gfield-admin-icons .gfield-delete:hover path {
         fill: #3E7DA6;
     }
 
@@ -702,6 +898,10 @@ html[dir="rtl"] #sidebar_field_label:after {
     width: 70%;
 }
 
+.admin-hidden-markup .gform-icon--hidden {
+	margin-right: 0.25rem;
+}
+
 /*
 * Global styles for the form editor.
 *
@@ -775,7 +975,7 @@ body.toplevel_page_gf_edit_forms .gforms_edit_form > table {
 	background-color: #FFFFFF;
 }
 
-#form_editor_fields_container{
+.form_editor_fields_container {
 	background-color: transparent;
 	box-sizing: border-box;
 	display: flex;
@@ -793,13 +993,13 @@ body.toplevel_page_gf_edit_forms .gforms_edit_form > table {
 	z-index: 1;
 }
 
-#form_editor_fields_container.droppable {
+.form_editor_fields_container.droppable {
 	max-width: 100%;
 	padding: 2rem 562px 2rem 2rem;
 	z-index: 2;
 }
 
-.folded #form_editor_fields_container {
+.folded .form_editor_fields_container {
 	left: 36px;
 }
 
@@ -1079,7 +1279,7 @@ div.ui-widget-content {
 
 .sidebar .sidebar__nav li.sidebar__nav__item.ui-state-default a::after {
 			background: transparent;
-			border-radius: 3px 3px 0 0;
+			border-radius: 0;
 			content: " ";
 			display: block;
 			height: 2px;
@@ -1089,7 +1289,7 @@ div.ui-widget-content {
 
 .sidebar .sidebar__nav li.sidebar__nav__item.ui-state-hover a::after {
 			background: #D5D7E9;
-			border-radius: 3px 3px 0 0;
+			border-radius: 0;
 			content: " ";
 			display: block;
 			height: 3px;
@@ -1099,7 +1299,7 @@ div.ui-widget-content {
 
 .sidebar .sidebar__nav li.sidebar__nav__item.ui-state-default.ui-state-active a::after {
 		background: #3E7DA6;
-		border-radius: 3px 3px 0 0;
+		border-radius: 0;
 		content: " ";
 		display: block;
 		height: 3px;
@@ -1183,20 +1383,9 @@ html[dir="rtl"] .search-button span {
 		right: initial;
 	}
 
-.add-buttons, .panel-block-tabs__body{
-	border: none;
-	border-left: none ;
-	padding: 14px;
-	width: auto ;
-}
-
 html[dir="rtl"] .search-button:after {
 	left: 1.75rem;
 	right: auto;
-}
-
-html[dir="rtl"] .add-buttons {
-	justify-content: right;
 }
 
 .gf-field-group__no-results {
@@ -1217,121 +1406,6 @@ html[dir="rtl"] .add-buttons {
 		margin-bottom: 0rem;
 	}
 
-.add-buttons {
-
-	display: flex;
-	flex-wrap: wrap;
-	align-content: stretch;
-	justify-content: left;
-	overflow: visible;
-	margin: 0;
-}
-
-.add-buttons li {
-		margin-bottom: 13px ;
-		width: 33.33%;
-
-	}
-
-.add-buttons li button {
-			align-items: stretch;
-			background: transparent;
-			border-radius: 3px;
-			border: 1px solid #D5D7E9;
-			color: #242748;
-			cursor: pointer;
-			display: flex;
-			flex-direction: column;
-			font-size: 0.8125rem;
-			height: 5.8125rem;
-			justify-content: space-around;
-			margin: 0 auto;
-			padding: 0.5rem 0 0 0;
-			width: 6.1875rem;
-			word-break: break-word;
-			transition: 0.1s all ease-in-out;
-
-		}
-
-.add-buttons li button:hover {
-				border-color: #3E7DA6;
-				color: #3E7DA6;
-			}
-
-.add-buttons li button:focus {
-				border:	1px solid #3985B7;
-				border-radius: 3px;
-				box-shadow: 0px 0px 0px 2px #BED8ED;
-				color: #242748;
-				outline: none;
-				transition: box-shadow .15s ease;
-			}
-
-.add-buttons li button.fieldPlaceholder {
-			border: 1px dashed #D5D7E9;
-
-		}
-
-.add-buttons li button.fieldPlaceholder div {
-				opacity: 0;
-			}
-
-button.ui-draggable-dragging {
-	align-items: stretch;
-	background: #FFFFFF;
-	border: 1px solid #D5D7E9;
-	border-radius: 3px;
-	box-shadow: 0px 0px 1px rgba(18, 25, 97, 0.24), 0px 24px 24px rgba(18, 25, 97, 0.03), 0px 2px 2px rgba(18, 25, 97, 0.03), 0px 4px 4px rgba(18, 25, 97, 0.03), 0px 8px 8px rgba(18, 25, 97, 0.03), 0px 16px 16px rgba(18, 25, 97, 0.03);
-	color: #242748;
-	cursor: -webkit-grabbing;
-	cursor: grabbing;
-	display: flex;
-	flex-direction: column;
-	font-size: 0.8125rem;
-	justify-content: space-around;
-	padding: 0.5rem 0 0 0;
-	text-align: center;
-	white-space: normal;
-	z-index: 999999999;
-}
-
-html[dir="rtl"] div.gforms_edit_form button.ui-draggable-dragging, html[dir="rtl"] div.gforms_edit_form button.ui-draggable-dragging div {
-	text-align: center !important;
-}
-
-button .button-text {
-	font-weight: 400;
-	font-size: 0.75rem;
-	line-height: 1rem;
-	padding: 0 0 0.5rem;
-	text-align: center;
-}
-
-.button-icon {
-	border-radius: 3px;
-	font-family: 'dashicons';
-	font-size: 21px;
-	height: 24px;
-	text-align: center;
-	width: 100%;
-
-}
-
-.button-icon img {
-		width: 1.3125rem;
-		color: #242748;
-		fill: #242748;
-	}
-
-.button-icon:before {
-		line-height: 1.5rem;
-		transition: all 0.1s ease-in-out;
-	}
-
-.button-icon.icon-default:before{
-	content: "\f111";
-}
-
 .sidebar .sidebar__panel{
 	padding: 131px 0 0 ;
 }
@@ -1345,13 +1419,7 @@ button .button-text {
 
 .panel-block--flex {
 	display: flex;
-}
-
-.panel-block--hidden {
-}
-
-.panel-block--flex {
-	display: flex;
+	flex-shrink: 0;
 }
 
 .panel-block--hidden {
@@ -1593,7 +1661,7 @@ html[dir="rtl"] #gfield_settings_choices_container label:first-child {
 }
 
 #gfield_settings_choices_container .gfield_choice_header_label{
-	width: 120px ;
+	width: 6.25rem;
 	display: inline-block !important;
 	margin-right: 0.75rem;
 }
@@ -1798,19 +1866,14 @@ html[dir="rtl"] body.toplevel_page_gf_edit_forms #wpcontent {
 }
 
 html[dir="rtl"] #form_editor_fields_container {
-	padding-right: 2rem;
-	padding-left: 400px;
-	right: 160px;
 	left: 0;
-}
-
-html[dir="rtl"] .gforms_edit_form #form_editor_fields_container {
-	right: 0;
-	padding-left: 2rem;
+	max-width: 100%;
+	padding-left: 562px;
 }
 
 html[dir="rtl"] .gforms_edit_form #form_editor_fields_container.droppable {
-	padding-left: 562px;
+	padding: 2rem 2rem 2rem 562px;
+	max-width: 100%;
 }
 
 html[dir="rtl"] .sidebar {
@@ -1979,5 +2042,95 @@ html[dir="rtl"] .right ul#gf_merge_tag_list {
 }
 
 /* dont use this anymore, use inline media queries */
+
+/* Utils */
+
+/*
+* Utility classes to handle styles across various contexts.
+*
+* Used in admin.css.
+*/
+
+/* colors */
+
+.gform-admin .gform-c-warning-text {
+		color: #A16938;
+	}
+
+/* spacing */
+
+.gform-admin .gform-p-16 {
+		padding: 1rem;
+	}
+
+/* a11y */
+
+.gform-admin .gform-visually-hidden {
+        border: 0;
+        clip: rect(0, 0, 0, 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        white-space: nowrap;
+        width: 1px;
+    }
+
+/* IE util classes */
+
+.gform-hide-if-ie {
+    display: inherit;
+}
+
+.gform-show-if-ie {
+    display: none;
+}
+
+.gform-hide-if-not-ie {
+    display: none;
+}
+
+.gform-show-if-not-ie {
+    display: inherit;
+}
+
+.gform-fade-if-not-ie {
+    opacity: 0.4;
+}
+
+.gform-fade-if-not-ie, .gform-fade-if-not-ie * {
+    pointer-events: none;
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+
+    .gform-hide-if-ie {
+        display: none;
+    }
+
+    .gform-show-if-ie {
+        display: inherit;
+    }
+
+    .gform-hide-if-not-ie {
+        display: inherit;
+    }
+
+    .gform-show-if-not-ie {
+        display: none;
+    }
+
+    .gform-fade-if-ie {
+        opacity: 0.4;
+    }
+
+    .gform-fade-if-not-ie {
+        opacity: inherit;
+        cursor: inherit;
+        pointer-events: inherit;
+    }
+
+}
 
 /*# sourceMappingURL=editor.css.map */

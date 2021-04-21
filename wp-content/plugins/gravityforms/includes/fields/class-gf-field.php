@@ -882,6 +882,42 @@ class GF_Field extends stdClass implements ArrayAccess {
 		return rgar( $entry, $input_id );
 	}
 
+	/**
+	 * Apply the gform_get_input_value filter to an entry's value.
+	 *
+	 * @since 2.4.24
+	 *
+	 * @param mixed  $value    The field or input value to be filtered.
+	 * @param array  $entry    The entry currently being processed.
+	 * @param string $input_id The ID of the input being processed from a multi-input field type or an empty string.
+	 *
+	 * @return mixed
+	 */
+	public function filter_input_value( $value, $entry, $input_id = '' ) {
+		/**
+		 * Allows the field or input value to be overridden when populating the entry (usually on retrieval from the database).
+		 *
+		 * @since 1.5.3
+		 * @since 1.9.14 Added the form and field specific versions.
+		 *
+		 * @param mixed    $value    The field or input value to be filtered.
+		 * @param array    $entry    The entry currently being processed.
+		 * @param GF_Field $this     The field currently being processed.
+		 * @param string   $input_id The ID of the input being processed from a multi-input field type or an empty string.
+		 */
+		return gf_apply_filters(
+			array(
+				'gform_get_input_value',
+				$this->formId,
+				$this->id,
+			),
+			$value,
+			$entry,
+			$this,
+			$input_id
+		);
+	}
+
 
 	// # INPUT ATTRIBUTE HELPERS ----------------------------------------------------------------------------------------
 
@@ -1227,7 +1263,7 @@ class GF_Field extends stdClass implements ArrayAccess {
 
 		$drag_handle = '
 			<span class="gfield-field-action gfield-drag">
-				<svg width="11" height="10" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x=".5" y=".5" width="10" height="2" rx="1" fill="#242748"/><rect x=".5" y="7.5" width="10" height="2" rx="1" fill="#242748"/></svg>
+				<i class="gform-icon gform-icon--drag-indicator"></i>
 				<span class="gfield-field-action__description">' . esc_html__( 'Move', 'gravityforms' ) . '</span>
 			</span>';
 
@@ -1264,7 +1300,7 @@ class GF_Field extends stdClass implements ArrayAccess {
 	 */
 	public function get_hidden_admin_markup() {
 
-		 return "<div class='admin-hidden-markup'><i class='dashicon dashicons-hidden'></i><span>Hidden</span></div>";
+		 return "<div class='admin-hidden-markup'><i class='gform-icon gform-icon--hidden'></i><span>Hidden</span></div>";
 
 	}
 

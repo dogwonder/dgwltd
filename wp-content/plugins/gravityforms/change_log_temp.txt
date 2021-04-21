@@ -1,3 +1,74 @@
+### 2.5-rc-3
+- Added the [gform_load_bulk_choices_choice](https://docs.gravityforms.com/gform_load_bulk_choices_choice/) and [gform_insert_bulk_choices_choice](https://docs.gravityforms.com/gform_insert_bulk_choices_choice/) filters.
+- Added an accessibility warning on the field button conditional logic setting.
+- Added support for ready classes in the form editor so the effects of ready classes are visible immediately. Column ready classes will continue to work in the frontend but they are deprecated and will not be supported in the form editor.
+- Added the [gform_disable_form_legacy_css](https://docs.gravityforms.com/gform_disable_form_legacy_css/) filter to disable legacy CSS files.
+- Added some design tweaks to the form editor.
+- Updated the cursor to a grab icon for the buttons to add form fields to better indicate that they can be dragged.
+- Updated the Block Toolbar UI with helper links to the Edit and Settings pages for the currently-selected form.
+- Updated the behavior of imports so that forms created in 2.4 will be imported with legacy mode enabled.
+- Updated the number field to remove unnecessary "aria-describedby" attribute.
+- Updated the date field not to use "maxlength" when the HTML5 setting is enabled.
+- Updated the design of page steps on multi-page forms.
+- Fixed a usability issue with the form switcher.
+- Fixed an issue where unrelated fields display in the pagination settings in the form editor.
+- Fixed form switcher error on entry details screen.
+- Fixed an issue that prevents conditional logic from getting properly set within feed settings.
+- Fixed a typo in the aria-describedby attribute on the date field.
+- Fixed an issue with upgrading the database to version 2.5 if the site is using MariaDB.
+- Fixed the system report to get the correct version of MariaDB and show whether the site is using MySQL or MariaDB.
+- Fixed RTL styles on the sales results page.
+- Fixed the display of hidden fields in the form editor to correctly display the icon indicating that they are hidden.
+- Fixed the select all button for checkbox field to maintain display in preview after settings changes in the form editor.
+- Fixed an issue with Datepicker Fields inside Legacy Forms which causes custom date formats to fail validation when submitted.
+- Fixed an issue with columns on mobile devices.
+- API: Added array keys to form settings fields to allow for easy targeting within hooks of specific fields.
+- API: Added a new dropdown/listbox component; currently only used in the form switcher.
+- API: Updated the display of License Key info on the Settings Page to show more detailed information for each license key.
+- API: Settings API - Fixed validation on the multiple select field which will not throw an error even if it is required but not filled out.
+- API: Settings API - Updated the checkbox and select settings field so the select is disabled instead of hidden if the checkbox isn't checked.
+- API: Settings API - Fixed an issue where the select custom settings field requires the custom value to be a valid url.
+
+### 2.5-rc-2
+- Added a loading placeholder that provides loading feedback when a form field is duplicated on slower networks.
+- Fixed an issue where fields can't be dropped into columns when no conflict mode is enabled.
+- Fixed an issue where some select fields using the enhanced ui display with the wrong height and width.
+- Fixed an issue that causes 2.4 forms with conditional logic to show that section as not enabled when viewed in the new form editor.
+- Fixed drag and drop functionality in the form editor to work with RTL languages.
+- Fixed the positioning of the image that appears in the fields area of an empty form on RTL.
+- Fixed the basic css theme to import all required css for correct functionality and reasonable layout for forms.
+- Fixed tooltip margins in RTL.
+- Fixed an issue with stacked icon buttons causing misalignment in some browsers.
+- Fixed a PHP error that appears when uploading and replacing a Gravity Forms Add-On if the Gravity Forms auto-update API is unavailable.
+- Fixed the unsaved changes warning so that it correctly displays on Gravity Forms settings pages.
+- Fixed the display of the field name and description in the field editor sidebar when editing a field.
+- Fixed the display of the product field with user defined quantity to display price and quantity inline in form editor and Gutenberg block.
+- Fixed the display of the full width settings container so its contents maintain that layout when notifications are displayed.
+- Fixed an accessibility issue with form editor accordions and keyboard navigation.
+- Fixed the display of forms with new markup when they share a page with legacy forms.
+- Fixed the display of the new Gravity Forms icons on all Gravity Forms sidebars in the WordPress admin.
+- Fixed the conditional logic display on the form settings page.
+- Fixed issues with form display in IE11.
+- Fixed the product field so it displays consistently in all themes.
+- Fixed an issue with the accessibility of the character counter on text fields with max characters.
+- Fixed an issue that causes complex fields, such as the Name Field, to be misaligned in some themes.
+- Fixed an issue that causes fields in the Editor to use legacy wrapper markup even when Legacy Markup is disabled.
+- Fixed an issue where using Legacy markup caused credit card field styling issues in the form editor.
+- Fixed an issue where the default value of checkbox_and_select Settings fields were not honored.
+- Fixed a layout issue with checkbox_and_select Settings fields.
+- Updated the display of the autocomplete dropdown for merge tags so that the active element has a background color.
+- Updated the Single Product Quantity Field to provide better Screen Reader feedback.
+- Updated the appearance of the "Select Entry Table Columns" modal.
+- Updated the drag handle icons in the form editor and add-on settings areas.
+- Updated design of the toolbar to make active states and current page more apparent.
+- Updated toolbar to show submenus on hover not click.
+- API: Added new JavaScript namespaces and utilities to gravityforms.js.
+- API: Fixed an issue with the Checkbox and Select settings field which causes validation of its values to fail.
+- API: Added back in the gform_currency_setting_message action to allow outputting markup after the Currency Setting.
+- API: Added the admin icon kit as separate file for third party use.
+- API: Fixed the legacy Font Awesome kit so it won't override other Font Awesome instances found in the WordPress admin.
+
+
 ### 2.5-rc-1
 - Added the 'novalidate' attribute to the form container to block default HTML5 validation. This allows Gravity Forms to provide an accessible validation message.
 - Added required attribute to required inputs to improve accessibility.
@@ -81,6 +152,9 @@
 
 
 ### 2.5-beta-3
+- Added the [gform_enable_legacy_markup](https://docs.gravityforms.com/gform_enable_legacy_markup/) filter so the legacy markup setting can be overridden.
+- Added the [gform_preview_form_link](https://docs.gravityforms.com/gform_preview_form_link/) filter for customizing the form preview link.
+- Added the [gform_field_map_choices](https://docs.gravityforms.com/gform_field_map_choices/) filter for overriding the choices in field mapping drop downs.
 - Added tweaks to the form editor to improve design, performance and usability.
 - Added drag and drop support to the form editor for touch devices.
 - Added cosmetic tweaks to the settings pages.
@@ -138,6 +212,7 @@
 
 
 ### 2.5-beta-2
+- Added the [gform_preview_init](https://docs.gravityforms.com/gform_preview_init/) action hook which is triggered when the form preview is loading.
 - Added the [gform_pre_print_scripts](https://docs.gravityforms.com/gform_pre_print_scripts/) and [gform_print_scripts](https://docs.gravityforms.com/gform_print_scripts/) action hooks which are triggered when printing scripts and styles for the form widget.
 - Added cosmetic tweaks.
 - Added $tab_id as the second parameter to the [gform_field_settings_tab_content](https://docs.gravityforms.com/gform_field_settings_tab_content/) filter.
@@ -233,6 +308,8 @@
 
 ### 2.5-beta-1
 - Added security enhancements.
+- Added the [gform_form_validation_errors](https://docs.gravityforms.com/gform_form_validation_errors/) filter enabling the list of field validation errors to be overridden.
+- Added the [gform_form_validation_errors_markup](https://docs.gravityforms.com/gform_form_validation_errors_markup/) filter enabling the HTML for the field validation errors list to be overridden.
 - Added [gform_confirmation_settings_fields](https://docs.gravityforms.com/gform_confirmation_settings_fields/) filter to modify confirmation settings fields to replace deprecated gform_confirmation_ui_settings filter.
 - Added [gform_editor_sidebar_panels](https://docs.gravityforms.com/gform_editor_sidebar_panels/) filter and [gform_editor_sidebar_panel_content](https://docs.gravityforms.com/gform_editor_sidebar_panel_content/) action to add custom panels to the form editor sidebar.
 - Added [gform_field_settings_tabs](https://docs.gravityforms.com/gform_field_settings_tabs/) filter and [gform_field_settings_tab_content](https://docs.gravityforms.com/gform_field_settings_tab_content/) action to add custom field settings tabs.
@@ -253,7 +330,7 @@
 - Added a form setting to control the required field indicator.
 - Added a message to the top of the form to explain the meaning of the required fields indicator. This is not displayed when the indicator is set to "Required".
 - Added a notice to the top of the form clarifying the meaning of the required field indicator.
-- Added gform_required_legend filter to customize the required field indicator notice.
+- Added [gform_required_legend](https://docs.gravityforms.com/gform_required_legend/) filter to customize the required field indicator notice.
 - Added the {created_by} merge tag to display information about the user who created the entry. Credit: the team at Gravity PDF.
 - Added the {date_created} merge tag to display the date an entry was created. Credit: the team at Gravity PDF.
 - Added the {date_updated} merge tag to display the date an entry was last updated. Formatted using the same modifiers as {date_created}. Credit: the team at Gravity PDF.

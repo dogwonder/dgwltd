@@ -452,6 +452,11 @@ class GF_System_Report {
 								'value'        => get_site_url(),
 							),
 							array(
+								'label'        => esc_html__( 'REST API Base URL', 'gravityforms' ),
+								'label_export' => 'REST API Base URL',
+								'value'        => rest_url(),
+							),
+							array(
 								'label'        => esc_html__( 'WordPress Version', 'gravityforms' ),
 								'label_export' => 'WordPress Version',
 								'value'        => $wp_version,
@@ -645,13 +650,18 @@ class GF_System_Report {
 						),
 					),
 					array(
-						'title'        => esc_html__( 'MySQL', 'gravityforms' ),
-						'title_export' => 'MySQL',
+						'title'        => esc_html__( 'Database Server', 'gravityforms' ),
+						'title_export' => 'Database Server',
 						'items'        => array(
+							array(
+								'label'        => esc_html__( 'Database Management System', 'gravityforms' ),
+								'label_export' => 'Database Management System',
+								'value'        => esc_html( GFCommon::get_dbms_type() ),
+							),
 							array(
 								'label'              => esc_html__( 'Version', 'gravityforms' ),
 								'label_export'       => 'Version',
-								'value'              => esc_html( $wpdb->db_version() ),
+								'value'              => esc_html( GFCommon::get_db_version() ),
 								'type'               => 'version_check',
 								'version_compare'    => '>',
 								'minimum_version'    => '5.0.0',
@@ -865,6 +875,9 @@ class GF_System_Report {
 
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'gravityforms' );
 
+		$web_api       = GFWebAPI::get_instance();
+		$is_v2_enabled = $web_api->is_v2_enabled( $web_api->get_plugin_settings() );
+
 		// Prepare versions array.
 		$gravityforms = array(
 			array(
@@ -926,6 +939,12 @@ class GF_System_Report {
 				'label_export' => 'Locale',
 				'value'        => $locale,
 				'value_export' => $locale,
+			),
+			array(
+				'label'        => esc_html__( 'REST API v2', 'gravityforms' ),
+				'label_export' => 'REST API v2',
+				'value'        => $is_v2_enabled ? __( 'Yes', 'gravityforms' ) : __( 'No', 'gravityforms' ),
+				'value_export' => $is_v2_enabled ? 'Yes' : 'No',
 			),
 			array(
 				'export_only'               => true,

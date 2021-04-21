@@ -258,11 +258,6 @@ abstract class GFAddOn {
 			add_action( 'after_plugin_row_' . $this->get_path(), array( $this, 'plugin_row' ), 10, 2 );
 		}
 
-		// STOP HERE IF GRAVITY FORMS IS NOT SUPPORTED
-		if ( isset( $this->_min_gravityforms_version ) && ! $this->is_gravityforms_supported( $this->_min_gravityforms_version ) ) {
-			return;
-		}
-
 		// STOP HERE IF CANNOT PASS MINIMUM REQUIREMENTS CHECK.
 		$meets_requirements = $this->meets_minimum_requirements();
 		if ( ! $meets_requirements['meets_requirements'] ) {
@@ -455,8 +450,25 @@ abstract class GFAddOn {
 		// Get minimum requirements.
 		$requirements = $this->minimum_requirements();
 
-		// Prepare response.
+		// Initialize response.
 		$meets_requirements = array( 'meets_requirements' => true, 'errors' => array() );
+
+		// Set an error if the minimum version of Gravity Forms is defined and the requirement is not met.
+		if ( ! empty( $this->_min_gravityforms_version ) && ! $this->is_gravityforms_supported( $this->_min_gravityforms_version ) ) {
+			$meets_requirements = array(
+				'meets_requirements' => false,
+				'errors'             => array(
+					esc_html__(
+						sprintf(
+							'%s requires Gravity Forms %s or newer. Please upgrade your installation of Gravity Forms or disable this add-on to remove this message.',
+							$this->_title,
+							$this->_min_gravityforms_version
+						),
+						'gravityforms'
+					),
+				),
+			);
+		}
 
 		// If no minimum requirements are defined, return.
 		if ( empty( $requirements ) ) {
@@ -3227,7 +3239,7 @@ abstract class GFAddOn {
 		$renderer = $this->get_settings_renderer();
 
 		foreach ( $renderer->get_fields() as $group ) {
-			$nested_key = rgar( $group, 'sections' ) ? 'sections' : 'fields';
+			$nested_key = GFCommon::get_nested_key( $group );
 
 			foreach ( rgar( $group, $nested_key, array() ) as $field_obj ) {
 				if ( $field_obj->name === $field['name'] ) {
@@ -3865,7 +3877,7 @@ abstract class GFAddOn {
 				$form = $this->get_current_form();
 
 				// Get fields.
-				$sections = $this->form_settings_fields( $form );
+				$sections = array_values( $this->form_settings_fields( $form ) );
 				$sections = $this->prepare_settings_sections( $sections, 'form_settings' );
 
 				// Initialize new settings renderer.
@@ -5742,25 +5754,15 @@ abstract class GFAddOn {
 	/**
 	 * Returns the current form object based on the id query var. Otherwise returns false
 	 *
-	 * @return array|null If ID is found and is valid form, then the populated Form array is returned.
-	 *                    If the form ID is invalid, null is returned by GFFormsModel::get_form_meta.
-	 *                    If the form ID is not found, a minimal form array with id (set to 0) and empty title is returned.
+	 * @return array|null|false If ID is found and is valid form, then the populated Form array is returned.
 	 */
 	public function get_current_form() {
-		if ( rgempty( 'id', $_GET ) ) {
-			$form = array(
-				'id'    => 0,
-				'title' => '',
-			);
-		} else {
-			$form = GFFormsModel::get_form_meta( rgget( 'id' ) );
-		}
-
-		return $form;
+		return rgempty( 'id', $_GET ) ? false : GFFormsModel::get_form_meta( rgget( 'id' ) );
 	}
 
 	/**
 	 * Returns TRUE if the current request is a postback, otherwise returns FALSE
+	 *
 	 */
 	public function is_postback() {
 		return is_array( $_POST ) && count( $_POST ) > 0;

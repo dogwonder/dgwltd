@@ -400,7 +400,7 @@ class Settings {
 	private function get_scripts_for_group( $scripts, $group, $styles = false ) {
 
 		// Get nested key.
-		$nested_key = rgar( $group, 'sections' ) ? 'sections' : 'fields';
+		$nested_key = GFCommon::get_nested_key( $group );
 
 		foreach ( rgar( $group, $nested_key, array() ) as $item ) {
 			if ( is_object( $item ) ) {
@@ -1094,7 +1094,7 @@ class Settings {
 		$dependencies = array();
 
 		// Get nested key.
-		$nested_key = rgar( $group, 'sections' ) ? 'sections' : 'fields';
+		$nested_key = GFCommon::get_nested_key( $group );
 
 		// Loop through fields, add dependencies.
 		foreach ( rgar( $group, $nested_key, array() ) as $item ) {
@@ -1518,7 +1518,7 @@ class Settings {
 			return $values;
 		}
 
-		$nested_key = rgar( $group, 'sections' ) ? 'sections' : 'fields';
+		$nested_key = GFCommon::get_nested_key( $group );
 
 		/**
 		 * Loop through items, apply filters.
@@ -1631,7 +1631,7 @@ class Settings {
 		foreach ( $groups as $group ) {
 
 			// Determine nested key.
-			$nested_key = rgar( $group, 'sections' ) ? 'sections' : 'fields';
+			$nested_key = GFCommon::get_nested_key( $group );
 
 			foreach ( $group[ $nested_key ] as $field ) {
 
@@ -1702,7 +1702,7 @@ class Settings {
 			return;
 		}
 
-		$nested_key = rgar( $group, 'sections' ) ? 'sections' : 'fields';
+		$nested_key = GFCommon::get_nested_key( $group );
 
 		/**
 		 * Loop through fields and validate.
@@ -1726,8 +1726,13 @@ class Settings {
 				continue;
 			}
 
-			// Get field value.
-			$field_value = $this->get_value( $field->name, null, $values );
+			if ( method_exists( $field, 'get_values_from_post' ) ) {
+				// Get field value from field object.
+				$field_value = $field->get_values_from_post( $values );
+			} else {
+				// Get field value.
+				$field_value = $this->get_value( $field->name, null, $values );
+			}
 
 			// Validate field.
 			$field->handle_validation( $field_value );
@@ -1770,7 +1775,7 @@ class Settings {
 	private function get_group_errors( $group ) {
 
 		$errors     = array();
-		$nested_key = rgar( $group, 'sections' ) ? 'sections' : 'fields';
+		$nested_key = GFCommon::get_nested_key( $group );
 
 		/**
 		 * Loop through fields in section, find errors.
@@ -1956,7 +1961,7 @@ class Settings {
 	private function add_field_to_group( &$group, $name, $fields, $position ) {
 
 		// Get nested key.
-		$nested_key = rgar( $group, 'sections' ) ? 'sections' : 'fields';
+		$nested_key = GFCommon::get_nested_key( $group );
 
 		// If nested key does not exist or is empty, return.
 		if ( ! isset( $group[ $nested_key ] ) || empty( $group[ $nested_key ] ) ) {
@@ -2024,7 +2029,7 @@ class Settings {
 	private function remove_field_from_group( &$group, $name ) {
 
 		// Get nested key.
-		$nested_key = rgar( $group, 'sections' ) ? 'sections' : 'fields';
+		$nested_key = GFCommon::get_nested_key( $group );
 
 		// If nested key does not exist or is empty, return.
 		if ( ! isset( $group[ $nested_key ] ) || empty( $group[ $nested_key ] ) ) {
@@ -2102,7 +2107,7 @@ class Settings {
 	private function replace_field_in_group( &$group, $name, $fields ) {
 
 		// Get nested key.
-		$nested_key = rgar( $group, 'sections' ) ? 'sections' : 'fields';
+		$nested_key = GFCommon::get_nested_key( $group );
 
 		// If nested key does not exist or is empty, return.
 		if ( ! isset( $group[ $nested_key ] ) || empty( $group[ $nested_key ] ) ) {
@@ -2149,7 +2154,7 @@ class Settings {
 		foreach ( $groups as $group ) {
 
 			// Determine nested key.
-			$nested_key = rgar( $group, 'sections' ) ? 'sections' : 'fields';
+			$nested_key = GFCommon::get_nested_key( $group );
 
 			foreach ( rgar( $group, $nested_key ) as $field ) {
 
@@ -2166,8 +2171,15 @@ class Settings {
 					}
 				}
 
-			}
+				// If field has nested inputs, search within.
+				if ( rgar( $field, 'inputs' ) ) {
+					$found = $this->get_field( $name, array( $field ) );
 
+					if ( $found ) {
+						return $found;
+					}
+				}
+			}
 		}
 
 		return false;
@@ -2203,7 +2215,7 @@ class Settings {
 		foreach ( $groups as $group ) {
 
 			// Determine nested key.
-			$nested_key = rgar( $group, 'sections' ) ? 'sections' : 'fields';
+			$nested_key = GFCommon::get_nested_key( $group );
 
 			foreach ( rgar( $group, $nested_key, array() ) as $field ) {
 
@@ -2466,7 +2478,6 @@ class Settings {
 			if ( $field && rgobj( $field, 'default_value' ) ) {
 				$default_value = $field['default_value'];
 			}
-
 		}
 
 		// If no values are defined, return default value.

@@ -112,10 +112,15 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * WordPress dependencies
  */
-const { PanelBody, Placeholder, SelectControl, ServerSideRender, TextControl, TextareaControl, ToggleControl } = wp.components;
-const { InspectorControls } = wp.hasOwnProperty('blockEditor') ? wp.blockEditor : wp.editor;
+const { PanelBody, Placeholder, SelectControl, TextControl, TextareaControl, ToggleControl, ToolbarButton, Tooltip } = wp.components;
+const { InspectorControls, BlockControls } = wp.hasOwnProperty('blockEditor') ? wp.blockEditor : wp.editor;
 const { Component, Fragment } = wp.element;
 const { __ } = wp.i18n;
+
+const { ServerSideRender } = wp.components;
+if (wp.hasOwnProperty('serverSideRender')) {
+	const { serverSideRender: ServerSideRender } = wp;
+}
 
 /**
  * Internal dependencies
@@ -202,6 +207,77 @@ class Edit extends Component {
 		return options;
 	}
 
+	openAdminPage(e, params) {
+		e.preventDefault();
+
+		const { page, formId, view } = params;
+
+		let url = `/wp-admin/admin.php?page=${page}&id=${formId}`;
+
+		if (view) {
+			url += `&view=${view}`;
+		}
+
+		window.open(url, '_blank', 'noopener');
+	}
+
+	externalControls() {
+		let { formId } = this.props.attributes;
+
+		if (!formId) {
+			return null;
+		}
+
+		const editParams = {
+			page: 'gf_edit_forms',
+			formId
+		};
+
+		const settingsParams = {
+			page: 'gf_edit_forms',
+			formId,
+			view: 'settings'
+		};
+
+		return React.createElement(
+			BlockControls,
+			{ key: 'gform-block-custom-controls' },
+			React.createElement(
+				ToolbarButton,
+				{
+					key: 'gform-block-edit-form-buttton',
+					title: __('Edit Form', 'gravityforms'),
+					onClick: e => {
+						this.openAdminPage(e, editParams);
+					},
+					className: 'gform-block__toolbar-button'
+				},
+				React.createElement(
+					Tooltip,
+					{ text: __('Edit Form', 'gravityforms') },
+					React.createElement('i', { className: 'gform-icon gform-icon--create' })
+				)
+			),
+			React.createElement(
+				ToolbarButton,
+				{
+					key: 'gform-block-form-settings-button',
+					label: __('Form Settings', 'gravityforms'),
+					title: __('Form Settings', 'gravityforms'),
+					onClick: e => {
+						this.openAdminPage(e, settingsParams);
+					},
+					className: 'gform-block__toolbar-button'
+				},
+				React.createElement(
+					Tooltip,
+					{ text: __('Form Settings', 'gravityforms') },
+					React.createElement('i', { className: 'gform-icon gform-icon--cog' })
+				)
+			)
+		);
+	}
+
 	render() {
 
 		let { formId, title, description, ajax, tabindex, formPreview, fieldValues, imgPreview } = this.props.attributes;
@@ -225,7 +301,7 @@ class Edit extends Component {
 			);
 		}
 
-		const controls = [isSelected && gform_block_form.forms && gform_block_form.forms.length > 0 && React.createElement(
+		const controls = [this.externalControls(), isSelected && gform_block_form.forms && gform_block_form.forms.length > 0 && React.createElement(
 			InspectorControls,
 			{ key: 'inspector' },
 			React.createElement(

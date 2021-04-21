@@ -280,6 +280,10 @@ class GF_Field_Date extends GF_Field {
 		$year_max_attribute  = $is_html5 && is_numeric( $year_max ) ? "max='{$year_max}'" : '';
 		$year_step_attribute = $is_html5 ? "step='1'" : '';
 
+		$month_maxlength = $is_html5 ? '' : "maxlength='2'";
+		$day_maxlength   = $is_html5 ? '' : "maxlength='2'";
+		$year_maxlength  = $is_html5 ? '' : "maxlength='4'";
+
 		// A11y improvements for the date picker field.
 		$date_format_sr_text = $this->get_date_format( 'screen_reader_text' );
 
@@ -394,12 +398,12 @@ class GF_Field_Date extends GF_Field {
 							$field_str = $is_sub_label_above
 								? "{$clear_multi_div_open}
                                         <div class='gfield_date_day ginput_container ginput_container_date' id='{$field_id}_2_container'>
-                                            <label for='{$field_id}_2' class='{$month_sub_label_class}'>{$day_sub_label}</label>
-                                            <input type='{$date_input_type}' maxlength='2' name='input_{$id}[]' id='{$field_id}_2' value='$day_value' {$tabindex} {$disabled_text} {$day_aria_attributes} {$day_placeholder_attribute} {$day_html5_attributes}/>
+                                            <label for='{$field_id}_2' class='{$day_sub_label_class}'>{$day_sub_label}</label>
+                                            <input type='{$date_input_type}' {$day_maxlength} name='input_{$id}[]' id='{$field_id}_2' value='$day_value' {$tabindex} {$disabled_text} {$day_aria_attributes} {$day_placeholder_attribute} {$day_html5_attributes}/>
                                         </div>"
 								: "{$clear_multi_div_open}
                                         <div class='gfield_date_day ginput_container ginput_container_date' id='{$field_id}_2_container'>
-                                            <input type='{$date_input_type}' maxlength='2' name='input_{$id}[]' id='{$field_id}_2' value='$day_value' {$tabindex} {$disabled_text} {$day_aria_attributes} {$day_placeholder_attribute} {$day_html5_attributes}/>
+                                            <input type='{$date_input_type}' {$day_maxlength} name='input_{$id}[]' id='{$field_id}_2' value='$day_value' {$tabindex} {$disabled_text} {$day_aria_attributes} {$day_placeholder_attribute} {$day_html5_attributes}/>
                                             <label for='{$field_id}_2' class='{$day_sub_label_class}'>{$day_sub_label}</label>
                                         </div>";
 
@@ -408,10 +412,10 @@ class GF_Field_Date extends GF_Field {
 							$field_str .= $is_sub_label_above
 								? "<div class='gfield_date_month ginput_container ginput_container_date' id='{$field_id}_1_container'>
                                         <label for='{$field_id}_1' class='{$month_sub_label_class}'>{$month_sub_label}</label>
-                                        <input type='{$date_input_type}' maxlength='2' name='input_{$id}[]' id='{$field_id}_1' value='{$month_value}' {$tabindex} {$disabled_text} {$month_aria_attributes} {$month_placeholder_attribute} {$month_html5_attributes}/>
+                                        <input type='{$date_input_type}' {$month_maxlength} name='input_{$id}[]' id='{$field_id}_1' value='{$month_value}' {$tabindex} {$disabled_text} {$month_aria_attributes} {$month_placeholder_attribute} {$month_html5_attributes}/>
                                    </div>"
 								: "<div class='gfield_date_month ginput_container ginput_container_date' id='{$field_id}_1_container'>
-                                        <input type='{$date_input_type}' maxlength='2' name='input_{$id}[]' id='{$field_id}_1' value='{$month_value}' {$tabindex} {$disabled_text} {$month_aria_attributes} {$month_placeholder_attribute} {$month_html5_attributes}/>
+                                        <input type='{$date_input_type}' {$month_maxlength} name='input_{$id}[]' id='{$field_id}_1' value='{$month_value}' {$tabindex} {$disabled_text} {$month_aria_attributes} {$month_placeholder_attribute} {$month_html5_attributes}/>
                                         <label for='{$field_id}_1' class='{$month_sub_label_class}'>{$month_sub_label}</label>
                                    </div>";
 
@@ -420,11 +424,11 @@ class GF_Field_Date extends GF_Field {
 							$field_str .= $is_sub_label_above
 								? "<div class='gfield_date_year ginput_container ginput_container_date' id='{$field_id}_3_container'>
                                             <label for='{$field_id}_3' class='{$year_sub_label_class}'>{$year_sub_label}</label>
-                                            <input type='{$date_input_type}' maxlength='4' name='input_{$id}[]' id='{$field_id}_3' value='{$year_value}' {$tabindex} {$disabled_text} {$year_aria_attributes} {$year_placeholder_attribute} {$year_min_attribute} {$year_max_attribute} {$year_step_attribute}/>
+                                            <input type='{$date_input_type}' {$year_maxlength} name='input_{$id}[]' id='{$field_id}_3' value='{$year_value}' {$tabindex} {$disabled_text} {$year_aria_attributes} {$year_placeholder_attribute} {$year_min_attribute} {$year_max_attribute} {$year_step_attribute}/>
                                        </div>
                                     {$clear_multi_div_close}"
 								: "<div class='gfield_date_year ginput_container ginput_container_date' id='{$field_id}_3_container'>
-                                        <input type='{$date_input_type}' maxlength='4' name='input_{$id}[]' id='{$field_id}_3' value='{$year_value}' {$tabindex} {$disabled_text} {$year_aria_attributes} {$year_placeholder_attribute} {$year_min_attribute} {$year_max_attribute} {$year_step_attribute}/>
+                                        <input type='{$date_input_type}' {$year_maxlength} name='input_{$id}[]' id='{$field_id}_3' value='{$year_value}' {$tabindex} {$disabled_text} {$year_aria_attributes} {$year_placeholder_attribute} {$year_min_attribute} {$year_max_attribute} {$year_step_attribute}/>
                                         <label for='{$field_id}_3' class='{$year_sub_label_class}'>{$year_sub_label}</label>
                                    </div>
                                 {$clear_multi_div_close}";
@@ -454,11 +458,11 @@ class GF_Field_Date extends GF_Field {
 								? "{$clear_multi_div_open}
                                             <div class='gfield_date_year ginput_container ginput_container_date' id='{$field_id}_3_container'>
                                                 <label for='{$field_id}_3' class='{$year_sub_label_class}'>{$year_sub_label}</label>
-                                                <input type='{$date_input_type}' maxlength='4' name='input_{$id}[]' id='{$field_id}_3' value='{$year_value}' {$tabindex} {$disabled_text} {$year_aria_attributes} {$year_placeholder_attribute} {$year_min_attribute} {$year_max_attribute} {$year_step_attribute}/>
+                                                <input type='{$date_input_type}' {$year_maxlength} name='input_{$id}[]' id='{$field_id}_3' value='{$year_value}' {$tabindex} {$disabled_text} {$year_aria_attributes} {$year_placeholder_attribute} {$year_min_attribute} {$year_max_attribute} {$year_step_attribute}/>
                                             </div>"
 								: "{$clear_multi_div_open}
                                             <div class='gfield_date_year ginput_container ginput_container_date' id='{$field_id}_3_container'>
-                                                <input type='{$date_input_type}' maxlength='4' name='input_{$id}[]' id='{$field_id}_3' value='{$year_value}' {$tabindex} {$disabled_text} {$year_aria_attributes} {$year_placeholder_attribute} {$year_min_attribute} {$year_max_attribute} {$year_step_attribute}/>
+                                                <input type='{$date_input_type}' {$year_maxlength} name='input_{$id}[]' id='{$field_id}_3' value='{$year_value}' {$tabindex} {$disabled_text} {$year_aria_attributes} {$year_placeholder_attribute} {$year_min_attribute} {$year_max_attribute} {$year_step_attribute}/>
                                                 <label for='{$field_id}_3' class='{$year_sub_label_class}'>{$year_sub_label}</label>
                                             </div>";
 
@@ -467,10 +471,10 @@ class GF_Field_Date extends GF_Field {
 							$field_str .= $is_sub_label_above
 								? "<div class='gfield_date_month ginput_container ginput_container_date' id='{$field_id}_1_container'>
                                                 <label for='{$field_id}_1' class='{$month_sub_label_class}'>{$month_sub_label}</label>
-                                                <input type='{$date_input_type}' maxlength='2' name='input_{$id}[]' id='{$field_id}_1' value='{$month_value}' {$tabindex} {$disabled_text} {$month_aria_attributes} {$month_placeholder_attribute} {$month_html5_attributes}/>
+                                                <input type='{$date_input_type}' {$month_maxlength} name='input_{$id}[]' id='{$field_id}_1' value='{$month_value}' {$tabindex} {$disabled_text} {$month_aria_attributes} {$month_placeholder_attribute} {$month_html5_attributes}/>
                                             </div>"
 								: "<div class='gfield_date_month ginput_container ginput_container_date' id='{$field_id}_1_container'>
-                                                <input type='{$date_input_type}' maxlength='2' name='input_{$id}[]' id='{$field_id}_1' value='{$month_value}' {$tabindex} {$disabled_text} {$month_aria_attributes} {$month_placeholder_attribute} {$month_html5_attributes}/>
+                                                <input type='{$date_input_type}' {$month_maxlength} name='input_{$id}[]' id='{$field_id}_1' value='{$month_value}' {$tabindex} {$disabled_text} {$month_aria_attributes} {$month_placeholder_attribute} {$month_html5_attributes}/>
                                                 <label for='{$field_id}_1' class='{$month_sub_label_class}'>{$month_sub_label}</label>
                                             </div>";
 
@@ -479,11 +483,11 @@ class GF_Field_Date extends GF_Field {
 							$field_str .= $is_sub_label_above
 								? "<div class='gfield_date_day ginput_container ginput_container_date' id='{$field_id}_2_container'>
                                                 <label for='{$field_id}_2' class='{$day_sub_label_class}'>{$day_sub_label}</label>
-                                                <input type='{$date_input_type}' maxlength='2' name='input_{$id}[]' id='{$field_id}_2' value='{$day_value}' {$tabindex} {$disabled_text} {$day_aria_attributes} {$day_placeholder_attribute} {$day_html5_attributes}/>
+                                                <input type='{$date_input_type}' {$day_maxlength} name='input_{$id}[]' id='{$field_id}_2' value='{$day_value}' {$tabindex} {$disabled_text} {$day_aria_attributes} {$day_placeholder_attribute} {$day_html5_attributes}/>
                                            </div>
                                         {$clear_multi_div_close}"
 								: "<div class='gfield_date_day ginput_container ginput_container_date' id='{$field_id}_2_container'>
-                                                <input type='{$date_input_type}' maxlength='2' name='input_{$id}[]' id='{$field_id}_2' value='{$day_value}' {$tabindex} {$disabled_text} {$day_aria_attributes} {$day_placeholder_attribute} {$day_html5_attributes}/>
+                                                <input type='{$date_input_type}' {$day_maxlength} name='input_{$id}[]' id='{$field_id}_2' value='{$day_value}' {$tabindex} {$disabled_text} {$day_aria_attributes} {$day_placeholder_attribute} {$day_html5_attributes}/>
                                                 <label for='{$field_id}_2' class='{$day_sub_label_class}'>{$day_sub_label}</label>
                                            </div>
                                         {$clear_multi_div_close}";
@@ -510,10 +514,10 @@ class GF_Field_Date extends GF_Field {
 							$field_str = $is_sub_label_above
 								? "{$clear_multi_div_open}<div class='gfield_date_month ginput_container ginput_container_date' id='{$field_id}_1_container'>
                                             <label for='{$field_id}_1' class='{$month_sub_label_class}'>{$month_sub_label}</label>
-                                            <input type='{$date_input_type}' maxlength='2' name='input_{$id}[]' id='{$field_id}_1' value='{$month_value}' {$tabindex} {$disabled_text} {$month_aria_attributes} {$month_placeholder_attribute} {$month_html5_attributes}/>
+                                            <input type='{$date_input_type}' {$month_maxlength} name='input_{$id}[]' id='{$field_id}_1' value='{$month_value}' {$tabindex} {$disabled_text} {$month_aria_attributes} {$month_placeholder_attribute} {$month_html5_attributes}/>
                                         </div>"
 								: "{$clear_multi_div_open}<div class='gfield_date_month ginput_container ginput_container_date' id='{$field_id}_1_container'>
-                                            <input type='{$date_input_type}' maxlength='2' name='input_{$id}[]' id='{$field_id}_1' value='{$month_value}' {$tabindex} {$disabled_text} {$month_aria_attributes} {$month_placeholder_attribute} {$month_html5_attributes}/>
+                                            <input type='{$date_input_type}' {$month_maxlength} name='input_{$id}[]' id='{$field_id}_1' value='{$month_value}' {$tabindex} {$disabled_text} {$month_aria_attributes} {$month_placeholder_attribute} {$month_html5_attributes}/>
                                             <label for='{$field_id}_1' class='{$month_sub_label_class}'>{$month_sub_label}</label>
                                         </div>";
 
@@ -522,10 +526,10 @@ class GF_Field_Date extends GF_Field {
 							$field_str .= $is_sub_label_above
 								? "<div class='gfield_date_day ginput_container ginput_container_date' id='{$field_id}_2_container'>
                                             <label for='{$field_id}_2' class='{$day_sub_label_class}'>{$day_sub_label}</label>
-                                            <input type='{$date_input_type}' maxlength='2' name='input_{$id}[]' id='{$field_id}_2' value='{$day_value}' {$tabindex} {$disabled_text} {$day_aria_attributes} {$day_placeholder_attribute} {$day_html5_attributes}/>
+                                            <input type='{$date_input_type}' {$day_maxlength} name='input_{$id}[]' id='{$field_id}_2' value='{$day_value}' {$tabindex} {$disabled_text} {$day_aria_attributes} {$day_placeholder_attribute} {$day_html5_attributes}/>
                                         </div>"
 								: "<div class='gfield_date_day ginput_container ginput_container_date' id='{$field_id}_2_container'>
-                                            <input type='{$date_input_type}' maxlength='2' name='input_{$id}[]' id='{$field_id}_2' value='{$day_value}' {$tabindex} {$disabled_text} {$day_aria_attributes} {$day_placeholder_attribute} {$day_html5_attributes}/>
+                                            <input type='{$date_input_type}' {$day_maxlength} name='input_{$id}[]' id='{$field_id}_2' value='{$day_value}' {$tabindex} {$disabled_text} {$day_aria_attributes} {$day_placeholder_attribute} {$day_html5_attributes}/>
                                             <label for='{$field_id}_2' class='{$day_sub_label_class}'>{$day_sub_label}</label>
                                         </div>";
 
@@ -534,11 +538,11 @@ class GF_Field_Date extends GF_Field {
 							$field_str .= $is_sub_label_above
 								? "<div class='gfield_date_year ginput_container ginput_container_date' id='{$field_id}_3_container'>
                                             <label for='{$field_id}_3' class='{$year_sub_label_class}'>{$year_sub_label}</label>
-                                            <input type='{$date_input_type}' maxlength='4' name='input_{$id}[]' id='{$field_id}_3' value='{$year_value}' {$tabindex} {$disabled_text} {$year_aria_attributes} {$year_placeholder_attribute} {$year_min_attribute} {$year_max_attribute} {$year_step_attribute}/>
+                                            <input type='{$date_input_type}' {$year_maxlength} name='input_{$id}[]' id='{$field_id}_3' value='{$year_value}' {$tabindex} {$disabled_text} {$year_aria_attributes} {$year_placeholder_attribute} {$year_min_attribute} {$year_max_attribute} {$year_step_attribute}/>
                                        </div>
                                    {$clear_multi_div_close}"
 								: "<div class='gfield_date_year ginput_container ginput_container_date' id='{$field_id}_3_container'>
-                                            <input type='{$date_input_type}' maxlength='4' name='input_{$id}[]' id='{$field_id}_3' value='{$year_value}' {$tabindex} {$disabled_text} {$year_aria_attributes} {$year_placeholder_attribute} {$year_min_attribute} {$year_max_attribute} {$year_step_attribute}/>
+                                            <input type='{$date_input_type}' {$year_maxlength} name='input_{$id}[]' id='{$field_id}_3' value='{$year_value}' {$tabindex} {$disabled_text} {$year_aria_attributes} {$year_placeholder_attribute} {$year_min_attribute} {$year_max_attribute} {$year_step_attribute}/>
                                             <label for='{$field_id}_3' class='{$year_sub_label_class}'>{$year_sub_label}</label>
                                        </div>
                                    {$clear_multi_div_close}";
@@ -557,7 +561,7 @@ class GF_Field_Date extends GF_Field {
 
 				$required_attribute     = $this->isRequired ? 'aria-required="true"' : '';
 				$invalid_attribute      = $this->failed_validation ? 'aria-invalid="true"' : 'aria-invalid="false"';
-				$describedby_attribute  = $this->get_aria_describedby( array( "{$field_id}_date_format'" ) );
+				$describedby_attribute  = $this->get_aria_describedby( array( "{$field_id}_date_format" ) );
 
 				return "<div class='ginput_container ginput_container_date'>
                             <input name='input_{$id}' id='{$field_id}' type='text' value='{$picker_value}' class='datepicker {$format} {$icon_class}' {$tabindex} {$disabled_text} {$date_picker_placeholder} {$describedby_attribute} {$invalid_attribute} {$required_attribute}/>
@@ -777,7 +781,14 @@ class GF_Field_Date extends GF_Field {
 	 *
 	 * @return string
 	 */
-	private function get_year_dropdown( $name = '', $id = '', $selected_value = '', $tabindex = '', $disabled_text = '', $placeholder = '', $form, $aria_attributes = '' ) {
+	private function get_year_dropdown( $name, $id, $selected_value, $tabindex, $disabled_text, $placeholder, $form, $aria_attributes = '' ) {
+		$name           = ( is_string( $name ) ) ? $name : '';
+		$id             = ( is_string( $id ) ) ? $id : '';
+		$selected_value = ( is_string( $selected_value ) ) ? $selected_value : '';
+		$tabindex       = ( is_string( $tabindex ) ) ? $tabindex : '';
+		$disabled_text  = ( is_string( $disabled_text ) ) ? $disabled_text : '';
+		$placeholder    = ( is_string( $placeholder ) ) ? $placeholder : '';
+
 		if ( $placeholder == '' ) {
 			$placeholder = esc_html__( 'Year', 'gravityforms' );
 		}

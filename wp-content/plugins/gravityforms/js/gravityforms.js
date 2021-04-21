@@ -1,5 +1,7 @@
 /* eslint-env jquery */
 
+var gform = window.gform || {};
+
 // "prop" method fix for previous versions of jQuery (1.5 and below)
 if( typeof jQuery.fn.prop === 'undefined' ) {
     jQuery.fn.prop = jQuery.fn.attr;
@@ -32,17 +34,24 @@ function gformBindFormatPricingFields(){
 }
 
 //----------------------------------------
-//------ UTIL FUNCTIONS ------------------
+//------ INSTANCES -----------------------
 //----------------------------------------
 
-// Namespace utils to our main gform namespace that hooks and other methods live in.
-var gform = window.gform || {};
+/**
+ * Namespace to store our JavaScript class instances
+ */
 
-// Tack in a util namespace if not already set.
-gform.util = gform.util || {};
+gform.instances = {};
 
-// Create a console messaging utility namespace, mainly made to simplify constant checking for its presence.
-gform.util.console = {
+//----------------------------------------
+//------ CONSOLE FUNCTIONS ---------------
+//----------------------------------------
+
+/**
+ * Console namespace for our safe to use and extendable console functions.
+ */
+
+gform.console = {
     error: function( message ) {
         if( window.console ) {
             console.error( message );
@@ -60,9 +69,541 @@ gform.util.console = {
     },
 };
 
+//----------------------------------------
+//------ ADMIN UTIL FUNCTIONS ------------
+//----------------------------------------
+
+/**
+ * Namespace for our admin utlity functions
+ */
+
+gform.adminUtils = {
+
+	/**
+	 * Handle any unsaved changes to the current settings page.
+	 *
+	 * @since 2.4
+	 *
+	 * @param {string} elemId The ID of the current element to check for changes.
+	 */
+	handleUnsavedChanges: function( elemId ) {
+		var hasUnsavedChanges = null;
+
+		jQuery( elemId ).find( 'input, select, textarea' ).on( 'change keyup', function() {
+
+			if ( jQuery( this ).attr( 'onChange' ) === undefined )  {
+				hasUnsavedChanges = true;
+			}
+
+			// Don't trigger unsaved changes on the enable api access button.
+			if ( ( jQuery( this ).next().data("jsButton") || jQuery( this ).data("jsButton") ) === 'enable-api' ) {
+				hasUnsavedChanges = null;
+			}
+
+		} );
+
+		// Standalone logic for the web api settings page. Trigger unsaved changes if the setting doesn't match the checkbox state.
+		if ( this.getUrlParameter( 'subview' ) === 'gravityformswebapi' ) {
+			if ( gf_webapi_vars.api_enabled !== gf_webapi_vars.enable_api_checkbox_checked ) {
+				hasUnsavedChanges = true;
+			}
+		}
+
+		jQuery( elemId ).on( 'submit', function() {
+			hasUnsavedChanges = null;
+		} );
+
+		window.onbeforeunload = function() {
+			return hasUnsavedChanges;
+		};
+	},
+
+	getUrlParameter: function( param ) {
+		var url = window.location.search.substring( 1 );
+		var urlVariables = url.split( '&' );
+		for ( var i = 0; i < urlVariables.length; i++ ) {
+			var parameterName = urlVariables[i].split( '=' );
+			if ( parameterName[0] == param )
+			{
+				return parameterName[1];
+			}
+		}
+	},
+
+	handleIEDisplay: function() {
+		var isIE = ! gform.tools.isIE();
+
+		var ieShow    = gform.tools.getNodes( 'show-if-ie', true );
+		var ieHide    = gform.tools.getNodes( 'hide-if-ie', true );
+		var otherShow = gform.tools.getNodes( 'show-if-not-ie', true );
+		var otherHide = gform.tools.getNodes( 'hide-if-not-ie', true );
+
+		if ( isIE ) {
+			ieShow.forEach( function( el ) {
+				el.classList.add( 'active' );
+			});
+
+			ieHide.forEach( function( el ) {
+				el.classList.remove( 'active' );
+			});
+		} else {
+			otherShow.forEach( function( el ) {
+				el.classList.add( 'active' );
+			});
+
+			otherHide.forEach( function( el ) {
+				el.classList.remove( 'active' );
+			});
+		}
+	},
+}
+
+window.HandleUnsavedChanges = gform.adminUtils.handleUnsavedChanges;
+
+//----------------------------------------
+//------ TOOL FUNCTIONS ------------------
+//----------------------------------------
+
+/**
+ * Tool namespace to house our common dom/function tools.
+ */
+
+gform.tools = {
+
+    /**
+     * @function gform.tools.defaultFor
+     * @description Returns a default if first arg is undefined. Once we start migrating to es6 or use babel can
+     * easily swap to default args
+     *
+     * @since 2.5
+     *
+     * @param {*} arg
+     * @param {*} val
+     * @returns {*}
+     */
+
+    defaultFor: function( arg, val ) {
+        return typeof arg !== 'undefined' ? arg : val;
+    },
+
+    /**
+     * @function gform.tools.convertElements
+     * @description Efficient function to convert a nodelist into a standard array.
+     * Allows you to run Array.forEach in ie11/saf on result of querySelector functions.
+     * Used by getNodes below.
+     *
+     * @since 2.5
+     *
+     * @param {Element|NodeList} elements Elements to convert
+     *
+     * @returns {Array} Of converted elements
+     */
+
+    convertElements: function( elements ) {
+        var converted = [];
+        var i         = elements.length;
+        for ( i; i--; converted.unshift( elements[ i ] ) ) ;
+
+        return converted;
+    },
+
+	/**
+	 * @function gform.tools.delegate
+	 * @description Simple jQuery on replacement. When migrating to ES6 bundle replace with npm delegate.
+	 *
+	 * @since 2.5
+	 *
+	 * @param {String} selector
+	 * @param {String} event
+	 * @param {String} childSelector
+	 * @param {Function} handler
+	 */
+
+	delegate: function( selector, event, childSelector, handler ) {
+		var is = function( el, selector ) {
+			return ( el.matches || el.msMatchesSelector ).call( el, selector );
+		};
+
+		var elements = document.querySelectorAll( selector );
+		[].forEach.call( elements, function( el, i ) {
+			el.addEventListener( event, function( e ) {
+				if ( is( e.target, childSelector ) ) {
+					handler( e );
+				}
+			} );
+		} );
+	},
+
+    /**
+     * @function gform.tools.getClosest
+     * @description Get a parent node based on selector plus passed in child element.
+     *
+     * @since 2.5
+     *
+     * @param {Element|EventTarget} el
+     * @param {String} selector
+     *
+     * @returns {null|*}
+     */
+
+    getClosest: function( el, selector ) {
+        var matchesFn;
+        var parent;
+
+        [ 'matches', 'webkitMatchesSelector', 'mozMatchesSelector', 'msMatchesSelector', 'oMatchesSelector' ]
+            .some( function( fn ) {
+                if ( typeof document.body[ fn ] === 'function' ) {
+                    matchesFn = fn;
+                    return true;
+                }
+                return false;
+            } );
+
+        while ( el ) {
+            parent = el.parentElement;
+            if ( parent && parent[ matchesFn ]( selector ) ) {
+                return parent;
+            }
+
+            el = parent;
+        }
+
+        return null;
+    },
+
+    /**
+     * @function gform.tools.getNodes
+     * @description Used for getting nodes. Please use the data-js attribute whenever possible.
+     *
+     * @since 2.5
+     *
+     * @param {String} selector The selector string to search for. If arg 4 is false (default) then we search for [data-js="selector"]
+     * @param {Boolean} [convert] Convert the NodeList to an array? Then we can Array.forEach directly. Uses convertElements from above.
+     * @param {Element|EventTarget|Document} [node] Parent node to search from. Defaults to document.
+     * @param {Boolean} [custom] Is this a custom selector were we don't want to use the data-js attribute?
+     *
+     * @returns {NodeList|Array}
+     */
+
+    getNodes: function( selector, convert, node, custom ) {
+        if ( ! selector ) {
+            gform.console.error( 'Please pass a selector to gform.tools.getNodes' );
+            return [];
+        }
+        node = this.defaultFor( node, document );
+        var selectorString = custom ? selector : '[data-js="' + selector + '"]';
+        var nodes          = node.querySelectorAll( selectorString );
+        if ( convert ) {
+            nodes = this.convertElements( nodes );
+        }
+        return nodes;
+    },
+
+	/**
+	 * @function gform.tools.mergeObjects
+	 * @description ES5 Object.assign. Usage: gforms.tools.mergeObjects( obj1, obj2, obj3 );
+	 *
+	 * @since 2.5
+	 *
+	 * @returns {{}}
+	 */
+
+	mergeObjects: function() {
+		var resObj = {};
+		for ( var i = 0; i < arguments.length; i += 1 ) {
+			var obj = arguments[ i ]
+			var keys = Object.keys( obj );
+			for ( var j = 0; j < keys.length; j += 1 ) {
+				resObj[ keys[ j ] ] = obj[ keys[ j ] ];
+			}
+		}
+		return resObj;
+	},
+
+    /**
+     * @function gform.tools.setAttr
+     * @description Sets attributes for a group of nodes based on a passed selector.
+     * Can apply to document or subset, and has optional delay.
+     *
+     * @since 2.5
+     *
+     * @param {String} selector A selector string, and valid js selector string for a dom element.
+     * @param {String} attr The attribute name.
+     * @param {String} value The attribute value.
+     * @param {Element|EventTarget|Document} [container] Node to search from, default is document.
+     * @param {Number} [delay] The delay to apply.
+     */
+
+    setAttr: function( selector, attr, value, container, delay ) {
+        if ( ! selector || ! attr || ! value ) {
+            gform.console.error( 'Please pass a selector, attribute and value to gform.tools.setAttr' );
+            return [];
+        }
+        container = this.defaultFor( container, document );
+        delay = this.defaultFor( delay, 0 );
+
+        setTimeout( function() {
+            gform.tools.getNodes( selector, true, container, true )
+                .forEach( function( node ) {
+                    node.setAttribute( attr, value );
+                } );
+        }, delay );
+    },
+
+	/**
+	 * @function gform.tools.isRtl
+	 * @description Determine if the page is in RTL.
+	 *
+	 * @since 2.5
+	 *
+	 */
+
+	isRtl: function() {
+		if ( jQuery( 'html' ).attr( 'dir' ) === 'rtl' ) {
+			return true;
+		}
+	},
+
+	/**
+	 * @function gform.tools.isIE
+	 * @description Determine if the current client browser is IE.
+	 *
+	 * @return {bool}
+	 */
+	isIE: function() {
+		return window.document.documentMode;
+	}
+};
+
+//------------------------------------------------
+//---------- A11Y FUNCTIONS ----------------------
+//------------------------------------------------
+
+/**
+ * A11y namespace to house our accessibility functions.
+ */
+
+gform.a11y = {};
+
+//------------------------------------------------
+//---------- OPTIONS -----------------------------
+//------------------------------------------------
+
+/**
+ * Options namespace to house common plugin and custom options objects for reuse across out JavaScript.
+ */
+
+gform.options = {
+
+    /**
+     * Accordions in the editor sidebar use these options. Should be applied to any accordions that want to emulate
+     * that look and feel, and patches an a11y issue with jq accordion and our custom usage.
+     */
+
+    jqEditorAccordions: {
+        heightStyle: 'content',
+        collapsible: true,
+        animate: false,
+        create: function( event ) {
+            gform.tools.setAttr( '.ui-accordion-header', 'tabindex', '0', event.target, 100 );
+        },
+        activate: function( event ) {
+            gform.tools.setAttr( '.ui-accordion-header', 'tabindex', '0', event.target, 100 );
+        },
+    }
+};
+
+//----------------------------------------
+//------ COMPONENTS ----------------------
+//----------------------------------------
+
+/**
+ * Components namespace to house scripts associated with our new 2.5 and up components
+ */
+
+gform.components = {};
+
+/**
+ * @function gform.components.dropdown
+ * @description An accessible listbox that allows for a custom function to be passed in for trigger handling on list items.
+ * Passes value of data-value attribute in to the optional custom function.
+ *
+ * @param {Object} options
+ * @constructor
+ */
+
+gform.components.dropdown = function( options ) {
+	this.el = null;
+	this.control = null;
+	this.controlText = null;
+	this.triggers = [];
+	this.state = {
+		open: false,
+	};
+	this.options = {
+		closeOnSelect: true,
+		container : document,
+		onItemSelect: function() {},
+		reveal: 'click',
+		selector : '',
+		showSpinner: false,
+		swapLabel: true,
+	};
+
+	this.options = gform.tools.mergeObjects( this.options, gform.tools.defaultFor( options, {} ) );
+	this.el = gform.tools.getNodes( this.options.selector, false, this.options.container )[ 0 ];
+	if ( ! this.el ) {
+		gform.console.error( 'Gform dropdown couldn\'t find [data-js="' + this.options.selector + '"] to instantiate on.');
+		return;
+	}
+
+	this.bindEvents();
+	this.setupUI();
+	this.storeTriggers();
+
+	this.hideSpinner = function() {
+		this.el.classList.remove( 'gform-dropdown--show-spinner' );
+	}
+
+	this.showSpinner = function() {
+		this.el.classList.add( 'gform-dropdown--show-spinner' );
+	}
+}
+
+gform.components.dropdown.prototype.handleChange = function( e ) {
+	this.options.onItemSelect( e.target.dataset.value );
+	if ( this.options.showSpinner ) {
+		this.showSpinner();
+	}
+	if ( this.options.swapLabel ) {
+		this.controlText.innerText = e.target.innerText;
+	}
+	if ( this.options.closeOnSelect ) {
+		this.handleControl();
+	}
+};
+
+gform.components.dropdown.prototype.handleControl = function() {
+	if ( this.state.open ) {
+		this.closeDropdown();
+	} else {
+		this.openDropdown();
+	}
+};
+
+gform.components.dropdown.prototype.openDropdown = function() {
+	if ( this.state.open ) {
+		return;
+	}
+	this.el.classList.add( 'gform-dropdown--reveal' );
+	setTimeout( function() {
+		this.el.classList.add( 'gform-dropdown--open' );
+		this.control.setAttribute( 'aria-expanded', 'true' );
+		this.state.open = true;
+	}.bind( this ), 25 );
+	setTimeout( function() {
+		this.el.classList.remove( 'gform-dropdown--reveal' );
+	}.bind( this ), 200 );
+};
+
+gform.components.dropdown.prototype.closeDropdown = function() {
+	this.state.open = false;
+	this.el.classList.remove( 'gform-dropdown--open' );
+	this.el.classList.add( 'gform-dropdown--hide' );
+	this.control.setAttribute( 'aria-expanded', 'false' );
+	setTimeout( function() {
+		this.el.classList.remove( 'gform-dropdown--hide' );
+	}.bind( this ), 150 );
+};
+
+gform.components.dropdown.prototype.handleMouseenter = function() {
+	if ( this.options.reveal !== 'hover' || this.state.open ) {
+		return;
+	}
+	this.openDropdown();
+};
+
+gform.components.dropdown.prototype.handleMouseleave = function( e ) {
+	if ( this.options.reveal !== 'hover' ) {
+		return;
+	}
+	this.closeDropdown();
+};
+
+gform.components.dropdown.prototype.handleA11y = function( e ) {
+	if ( ! this.state.open ) {
+		return;
+	}
+	if ( e.keyCode === 27 ) {
+		this.closeDropdown();
+		this.control.focus();
+		return;
+	}
+	if ( e.keyCode === 9  && ! gform.tools.getClosest( e.target, '[data-js="' + this.options.selector + '"]' ) ) {
+		this.triggers[0].focus();
+	}
+};
+
+gform.components.dropdown.prototype.handleSearch = function( e ) {
+	var search = e.target.value.toLowerCase();
+	this.triggers.forEach( function( trigger ) {
+		if ( trigger.innerText.toLowerCase().includes( search ) ) {
+			trigger.parentNode.style.display = '';
+		} else {
+			trigger.parentNode.style.display = 'none';
+		}
+	} );
+};
+
+gform.components.dropdown.prototype.setupUI = function() {
+	if ( this.options.reveal === 'hover' ) {
+		this.el.classList.add( 'gform-dropdown--hover' );
+	}
+};
+
+gform.components.dropdown.prototype.storeTriggers = function() {
+	this.control = gform.tools.getNodes( 'gform-dropdown-control', false, this.el )[ 0 ];
+	this.controlText = gform.tools.getNodes( 'gform-dropdown-control-text', false, this.control )[ 0 ];
+	this.triggers = gform.tools.getNodes( 'gform-dropdown-trigger', true, this.el );
+};
+
+gform.components.dropdown.prototype.bindEvents = function() {
+	gform.tools.delegate(
+		'[data-js="' + this.options.selector + '"]',
+		'click',
+		'[data-js="gform-dropdown-trigger"]',
+		this.handleChange.bind( this )
+	);
+	gform.tools.delegate(
+		'[data-js="' + this.options.selector + '"]',
+		'click',
+		'[data-js="gform-dropdown-control"], [data-js="gform-dropdown-control"] *',
+		this.handleControl.bind( this )
+	);
+	gform.tools.delegate(
+		'[data-js="' + this.options.selector + '"]',
+		'keyup',
+		'[data-js="gform-dropdown-search"]',
+		this.handleSearch.bind( this )
+	);
+
+	this.el.addEventListener( 'mouseenter', this.handleMouseenter.bind( this ) );
+	this.el.addEventListener( 'mouseleave', this.handleMouseleave.bind( this ) );
+	this.el.addEventListener( 'keyup', this.handleA11y.bind( this ) );
+
+	document.addEventListener( 'keyup', this.handleA11y.bind( this ) );
+	document.addEventListener( 'click', function( event ) {
+		if ( this.el.contains( event.target ) || ! this.state.open ) {
+			return;
+		}
+		this.handleControl();
+	}.bind( this ) );
+};
+
 //------------------------------------------------
 //---------- CURRENCY ----------------------------
 //------------------------------------------------
+
 function Currency(currency){
     this.currency = currency;
 
@@ -1886,6 +2427,27 @@ function renderRecaptcha() {
 
 }
 
+/**
+ * Helper function to determine whether a recaptcha is pending.
+ *
+ * @since 2.4.23
+ *
+ * @param {Object} form jQuery form object.
+ * @returns {boolean}
+ */
+function gformIsRecaptchaPending( form ) {
+	var recaptcha = form.find( '.ginput_recaptcha' ),
+		recaptchaResponse;
+
+	if ( !recaptcha.length || recaptcha.data( 'size' ) !== 'invisible' ) {
+		return false;
+	}
+
+	recaptchaResponse = recaptcha.find( '.g-recaptcha-response' );
+
+	return !( recaptchaResponse.length && recaptchaResponse.val() );
+}
+
 //----------------------------------------
 //----- SINGLE FILE UPLOAD FUNCTIONS -----
 //----------------------------------------
@@ -2333,26 +2895,26 @@ function gformAddSpinner(formId, spinnerUrl) {
 function gformReInitTinymceInstance( formId, fieldId ) {
     // check for required arguments
     if ( ! formId || ! fieldId ) {
-        gform.util.console.error( 'gformReInitTinymceInstance requires a form and field id.' );
+        gform.console.error( 'gformReInitTinymceInstance requires a form and field id.' );
         return;
     }
     // make sure we have tinymce
     var tinymce = window.tinymce;
     if ( ! tinymce ) {
-        gform.util.console.error( 'gformReInitTinymceInstance requires tinymce to be available.' );
+        gform.console.error( 'gformReInitTinymceInstance requires tinymce to be available.' );
         return;
     }
     // get the editor instance by form and field id and bail if not found
     var editor = tinymce.get( 'input_' + formId + '_' + fieldId );
     if ( ! editor ) {
-        gform.util.console.error( 'gformReInitTinymceInstance did not find an instance for input_' + formId + '_' + fieldId + '.' );
+        gform.console.error( 'gformReInitTinymceInstance did not find an instance for input_' + formId + '_' + fieldId + '.' );
         return;
     }
     // get the settings, destroy the instance and reinitialize
     var settings = jQuery.extend( {}, editor.settings );
     editor.remove();
     tinymce.init( settings );
-    gform.util.console.log( 'gformReInitTinymceInstance reinitialized TinyMCE on input_' + formId + '_' + fieldId + '.' );
+    gform.console.log( 'gformReInitTinymceInstance reinitialized TinyMCE on input_' + formId + '_' + fieldId + '.' );
 }
 
 //----------------------------------------
@@ -2578,16 +3140,18 @@ String.prototype.format = function () {
  * @since 2.5
  */
 jQuery( document ).ready( function() {
-	jQuery( '#gform-form-toolbar__menu .has_submenu' ).click( function( e ) {
-		e.preventDefault();
-		jQuery( this ).parent().find( '.gform-form-toolbar__submenu' ).toggleClass( 'open' );
-	} );
-
-	jQuery( document ).on( 'click', function( e ) {
-		if ( ! jQuery( e.target ).closest( '#gform-form-toolbar__menu .has_submenu' ).length ) {
+	jQuery( '#gform-form-toolbar__menu > li' )
+		.hover( function() {
+			jQuery( this ).find( '.gform-form-toolbar__submenu' ).toggleClass( 'open' );
+			jQuery( this ).find( '.has_submenu' ).toggleClass( 'submenu-open' );
+		}, function() {
 			jQuery( '.gform-form-toolbar__submenu.open' ).removeClass( 'open' );
-		}
-	} );
+			jQuery( '.has_submenu.submenu-open' ).removeClass( 'submenu-open' );
+		} );
+	jQuery( '#gform-form-toolbar__menu .has_submenu' )
+		.click( function( e ) {
+			e.preventDefault();
+		} );
 } );
 
 /**

@@ -208,11 +208,8 @@ class Select extends Base {
 	 */
 	public function do_validation( $value ) {
 
-		// Determine if field is a multiselect field, required.
-		$multiple = rgobj( $this, 'multiple' ) == 'multiple';
-
 		// If field is not multiselect, but is required with no selection, set field error.
-		if ( ! $multiple && $this->required && rgblank( $value ) ) {
+		if ( ! $this->support_multiple() && $this->required && rgblank( $value ) ) {
 			$this->set_error( rgobj( $this, 'error_message' ) );
 			return;
 		}
@@ -221,11 +218,11 @@ class Select extends Base {
 		$choices = $this->get_choices();
 
 		// If no selection was made or no choices exist, exit.
-		if ( rgblank( $value ) || $choices === false || empty( $choices ) ) {
+		if ( ( rgblank( $value ) && ! $this->required ) || $choices === false || empty( $choices ) ) {
 			return;
 		}
 
-		if ( $multiple ) {
+		if ( $this->support_multiple() ) {
 
 			$selected = 0;
 
@@ -291,6 +288,21 @@ class Select extends Base {
 
 		}
 
+	}
+
+	/**
+	 * Determine if a select field supports multiple choices.
+	 *
+	 * @since 2.5
+	 *
+	 * @return bool true if the field supports multiple choices, false if not.
+	 */
+	public function support_multiple() {
+		$multiple = rgobj( $this, 'multiple' );
+		if ( $multiple === 'multiple' || $multiple === true  ) {
+			return true;
+		}
+		return false;
 	}
 
 }

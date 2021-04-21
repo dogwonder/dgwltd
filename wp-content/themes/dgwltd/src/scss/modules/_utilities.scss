@@ -68,6 +68,7 @@
 .frame {
   --x: 3;
   --y: 2;
+  aspect-ratio: 3/2;
   padding-bottom: calc((var(--y) / var(--x)) * 100%);
   position: relative;
   > * {
@@ -214,16 +215,6 @@ $heights: (
 @each $value, $height in $heights {
   .height--#{$value} {
     min-height: calc(#{$height} - 64px) !important;
-  }
-}
-
-//Custom CSS
-
-//Turn off animations when user has chosen reduced motion
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
   }
 }
 

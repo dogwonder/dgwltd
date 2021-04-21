@@ -54,6 +54,7 @@ class Checkbox_And_Select extends Base {
 			'tooltip'    => false,
 		);
 		$this->inputs['checkbox'] = wp_parse_args( $checkbox_input, $checkbox_field );
+		$this->inputs['checkbox'] = Fields::create( $this->inputs['checkbox'], $this->settings );
 
 		// Prepare Select field.
 		$select_input           = rgars( $props, 'select' );
@@ -62,6 +63,7 @@ class Checkbox_And_Select extends Base {
 			'type'    => 'select',
 			'class'   => '',
 			'tooltip' => false,
+			'disabled' => $this->inputs['checkbox']->get_value() ? false : true,
 		);
 		$select_field['class']  .= ' ' . $select_field['name'];
 		$this->inputs['select'] = wp_parse_args( $select_input, $select_field );
@@ -76,25 +78,16 @@ class Checkbox_And_Select extends Base {
 						"( function( $, elem ) {
 						$( elem ).parents( 'td' ).css( 'position', 'relative' );
 						if( $( elem ).prop( 'checked' ) ) {
-							$( '%1\$s' ).show();
+							$( '%1\$s' ).prop( 'disabled', false );
 						} else {
-							$( '%1\$s' ).hide();
+							$( '%1\$s' ).prop( 'disabled', true );
 						}
 					} )( jQuery, this );",
-						"#{$this->inputs['select']['name']}Span" ),
+						"#{$this->inputs['select']['name']}Span select" ),
 				),
 			);
 		}
-
-		/**
-		 * Prepare input fields.
-		 *
-		 * @var array $input
-		 */
-		foreach ( $this->inputs as &$input ) {
-			$input = Fields::create( $input, $this->settings );
-		}
-
+		$this->inputs['select'] = Fields::create( $this->inputs['select'], $this->settings );
 	}
 
 
@@ -117,11 +110,10 @@ class Checkbox_And_Select extends Base {
 		$html = $this->get_description();
 
 		$html .= sprintf(
-			'<span class="%s">%s <span id="%s" style="%s">%s %s</span></span>',
+			'<span class="%s">%s <span id="%s" class="gform-settings-input__target">%s %s</span></span>',
 			esc_attr( $this->get_container_classes() ),
 			$this->inputs['checkbox']->markup(),
 			$this->inputs['select']->name . 'Span',
-			$this->inputs['checkbox']->get_value() ? '' : 'display: none;',
 			$this->inputs['select']->markup(),
 			$this->settings->maybe_get_tooltip( $this->inputs['select'] )
 		);
@@ -132,7 +124,30 @@ class Checkbox_And_Select extends Base {
 
 	}
 
+	/**
+	 * Get the correctly-grouped values from $_POST for use in validation.
+	 *
+	 * @since 2.5
+	 *
+	 * @param array $values The $_POST values.
+	 *
+	 * @return array
+	 */
+	public function get_values_from_post( $values ) {
+		$return_values = array();
+		$cb_name       = $this->inputs['checkbox']->name;
+		$select_name   = $this->inputs['select']->name;
 
+		if ( isset( $values[ $cb_name ] ) ) {
+			$return_values['checkbox'] = $values[ $cb_name ];
+		}
+
+		if ( isset( $values[ $select_name ] ) ) {
+			$return_values['select'] = $values[ $select_name ];
+		}
+
+		return $return_values;
+	}
 
 
 
@@ -146,10 +161,11 @@ class Checkbox_And_Select extends Base {
 	 * @param array $values Posted field values.
 	 */
 	public function do_validation( $values ) {
+		$cb_value     = isset( $values['checkbox'] ) ? $values['checkbox'] : null;
+		$select_value = isset( $values['select'] ) ? $values['select'] : null;
 
-		$this->inputs['checkbox']->do_validation( $values );
-		$this->inputs['select']->do_validation( $values );
-
+		$this->inputs['checkbox']->handle_validation( $cb_value );
+		$this->inputs['select']->handle_validation( $select_value );
 	}
 
 }

@@ -85,10 +85,6 @@ h2 ~ .dgwltd-block--cards_inner {
     position: relative;
     display: flex;
     flex-direction: column;
-    .frame {
-      --x: 3;
-      --y: 2;
-    }
     img {
       margin: 0;
       max-width: 100%;

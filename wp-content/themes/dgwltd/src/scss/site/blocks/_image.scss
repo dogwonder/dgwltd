@@ -12,6 +12,8 @@
     }
     .frame {
       --x: 1;
+      --y: 1;
+      aspect-ratio: 1/1;
       -ms-scroll-limit-y-min: 1;
       img {
         object-position: 50% 0;
@@ -21,6 +23,7 @@
       .frame {
         --x: 16;
         --y: 4;
+        aspect-ratio: 16/4;
       }
     }
     img {

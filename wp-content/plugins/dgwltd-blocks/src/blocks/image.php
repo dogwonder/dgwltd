@@ -34,6 +34,7 @@ $block_classes      = array( $class_name, $block_aspect_ratio, $block_full_width
 	#<?php echo $block_id; ?> .frame {
 		--x: <?php echo $x; ?>;
 		--y: <?php echo $y; ?>;
+		aspect-ratio: <?php echo $x; ?>/<?php echo $y; ?>;
 	}
   </style>
 <?php endif; ?>

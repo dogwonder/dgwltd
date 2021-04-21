@@ -61,6 +61,7 @@ $block_template = array(
 	#<?php echo $block_id; ?> .dgwltd-cta__image .frame {
 		--x: <?php echo $x; ?>;
 		--y: <?php echo $y; ?>;
+		aspect-ratio: <?php echo $x; ?>/<?php echo $y; ?>;
 	}
   </style>
 <?php endif; ?>

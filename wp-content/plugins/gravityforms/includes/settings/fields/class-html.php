@@ -30,11 +30,15 @@ class HTML extends Base {
 	 *
 	 * @return string
 	 */
-	public function markup()  {
+	public function markup() {
+		$html = rgobj( $this, 'html' );
+
+		if ( is_callable( $html ) ) {
+			return call_user_func( $html );
+		}
 
 		// Prepare markup.
-		return rgobj( $this, 'html' );
-
+		return $html;
 	}
 
 }

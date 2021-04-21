@@ -105,7 +105,7 @@ class GFFormSettings {
 	public static function form_settings_fields( $form ) {
 
 		$fields = array(
-			array(
+			'form_basics' => array(
 				'title'  => esc_html__( 'Form Basics', 'gravityforms' ),
 				'fields' => array(
 					array(
@@ -155,7 +155,7 @@ class GFFormSettings {
 					),
 				),
 			),
-			array(
+			'form_layout' => array(
 				'title'  => esc_html__( 'Form Layout', 'gravityforms' ),
 				'fields' => array(
 					array(
@@ -273,7 +273,7 @@ class GFFormSettings {
 					),
 				),
 			),
-			array(
+			'form_button' => array(
 				'title'  => esc_html__( 'Form Button', 'gravityforms' ),
 				'fields' => array(
 					array(
@@ -335,7 +335,7 @@ class GFFormSettings {
 					),
 				),
 			),
-			array(
+			'save_and_continue' => array(
 				'title'  => esc_html__( 'Save and Continue', 'gravityforms' ),
 				'fields' => array(
 					array(
@@ -364,7 +364,7 @@ class GFFormSettings {
 					),
 				),
 			),
-			array(
+			'restrictions' => array(
 				'title'  => esc_html__( 'Restrictions', 'gravityforms' ),
 				'fields' => array(
 					array(
@@ -536,7 +536,7 @@ class GFFormSettings {
 					),
 				),
 			),
-			array(
+			'form_options' => array(
 				'title'  => esc_html__( 'Form Options', 'gravityforms' ),
 				'fields' => array(
 					array(
@@ -589,7 +589,7 @@ class GFFormSettings {
 			$html .= '</table>';
 
 			// Add section.
-			$fields[] = array(
+			$fields['legacy_settings'] = array(
 				'title'  => esc_html__( 'Legacy Settings', 'gravityforms' ),
 				'fields' => array(
 					array(
@@ -638,7 +638,7 @@ class GFFormSettings {
 		// Initialize new settings renderer.
 		$renderer = new Settings(
 			array(
-				'fields'         => self::form_settings_fields( $form ),
+				'fields'         => array_values( self::form_settings_fields( $form ) ),
 				'initial_values' => self::get_initial_values( $form ),
 				'save_callback'  => function( $values ) use ( &$form ) {
 
