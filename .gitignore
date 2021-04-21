@@ -115,4 +115,4 @@ wp-content/themes/twentytwentyone/
 node_modules/
 
 # ignore composer folder
-vendor/
+# wp-content/themes/vendor/
