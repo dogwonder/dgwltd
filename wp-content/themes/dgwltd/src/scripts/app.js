@@ -1,4 +1,5 @@
 //Import ES6 dependencies - per ES6 imports, we can omit the `.js` at the end.
+// import { cookies } from './modules/cookies';
 
 ;(function () {
 
@@ -65,14 +66,18 @@
     const cookieBanner = ()=>{
 
         // Cookie vars
+        let cookieBanner = document.getElementById('cookieBanner');
         let cookieNotice = document.getElementById('cookieNotice');
         let cookieButtons = document.querySelectorAll('#cookieNotice button');
+        let hideButtons = document.querySelectorAll('#cookieBanner .hide-banner');
         let cookieAccept = document.getElementById('cookieAccept');
+        let cookieReject = document.getElementById('cookieReject');
 
         if (!cookieNotice) return;
 
         //If JS enabled then show the notice - falls back to noscipt if not present
-        cookieNotice.classList.add('open');
+        // cookieNotice.classList.add('open');
+        cookieBanner.hidden = false;
 
         //If no buttons bail
         if (!cookieButtons) return;
@@ -85,7 +90,13 @@
         cookieButtons.forEach(button => {
             button.addEventListener('click', event => {
                 document.cookie = 'dgwltd_cookies_preferences_set=true; expires=' + date.toUTCString() + '; path=/';    
-                cookieNotice.classList.remove('open');
+                cookieNotice.hidden = true;
+            })
+        })
+
+        hideButtons.forEach(button => {
+            button.addEventListener('click', event => {
+                cookieBanner.hidden = true;
             })
         })
 
@@ -93,11 +104,18 @@
         cookieAccept.addEventListener('click', event => {
             let currentConsentCookieVars = { "essential": true, "functional": true, "performance": true, "advertising": true };
             document.cookie = 'dgwltd_cookies_policy=' + JSON.stringify(currentConsentCookieVars) + '; expires=' + date.toUTCString() + '; path=/';    
+            document.getElementById('messageAccept').hidden = false;
+        })
+
+        cookieReject.addEventListener('click', event => {
+            let currentConsentCookieVars = { "essential": true, "functional": false, "performance": false, "advertising": false };
+            document.cookie = 'dgwltd_cookies_policy=' + JSON.stringify(currentConsentCookieVars) + '; expires=' + date.toUTCString() + '; path=/';    
+            document.getElementById('messageReject').hidden = false;
         })
 
         //Remove notice if cookie is set
         if(cookieNotice && getCookie('dgwltd_cookies_preferences_set')) {
-            cookieNotice.classList.remove('open');
+            cookieBanner.hidden = true;
         }
 
     };
@@ -284,7 +302,6 @@
             }
             
         });
-
 
         //Watch the header element 
         observer.observe(header);

@@ -7,7 +7,7 @@ const precacheFiles = [
   'wp-content/themes/dgwltd/dist/css/critical.css', 
   'wp-content/themes/dgwltd/dist/css/vendor.css', 
   'wp-content/themes/dgwltd/dist/scripts/app.js',
-  'wp-content/themes/dgwltd/dist/scripts/govuk-frontend-3.11.0.min.js', 
+  'wp-content/themes/dgwltd/dist/scripts/govuk-frontend-3.12.0.min.js', 
   'wp-content/themes/dgwltd/dist/images/fav/favicon.png',
   'wp-content/themes/dgwltd/dist/images/fav/favicon-192x192.png'
 ];

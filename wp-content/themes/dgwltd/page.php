@@ -22,7 +22,7 @@ get_header();
 		while ( have_posts() ) :
 			the_post();
 
-			get_template_part( 'template-parts/_templates/content', 'page' );
+			get_template_part( 'template-parts/_templates/content', 'page' ); 
 
 		endwhile; // End of the loop.
 		?>

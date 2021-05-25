@@ -1,6 +1,6 @@
-<div id="cookieNotice" class="govuk-cookie-banner " role="region" aria-label="<?php printf( esc_html__( 'Cookies on %s.', 'dgwltd' ), get_bloginfo( 'name' ) ); ?>">
-  <div class="govuk-cookie-banner__message govuk-width-container">
+<div id="cookieBanner" class="govuk-cookie-banner " role="region" aria-label="<?php printf( esc_html__( 'Cookies on %s.', 'dgwltd' ), get_bloginfo( 'name' ) ); ?>" hidden>  
 
+  <div id="cookieNotice" class="govuk-cookie-banner__message govuk-width-container">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <h2 class="govuk-cookie-banner__heading govuk-heading-m"><?php printf( esc_html__( 'Cookies on %s.', 'dgwltd' ), get_bloginfo( 'name' ) ); ?></h2>
@@ -24,4 +24,45 @@
       <a class="govuk-link" href="<?php echo esc_url( home_url( '/cookie-settings' ) ); ?>"><?php esc_html_e( 'View cookies', 'dgwltd' ); ?></a>
     </div>
   </div>
+  
+  <div id="messageAccept" class="govuk-cookie-banner__message govuk-width-container" hidden>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <div class="govuk-cookie-banner__content">
+            <p>
+            <?php 
+            $cookieUrl = '<a class="govuk-link" href="' . esc_url( home_url( '/cookie-settings' ) ) . '">' .  __('change your cookie settings', 'dgwltd') . '</a>';
+            printf( esc_html__( 'You’ve accepted additional cookies. You can %s at any time.', 'dgwltd' ), $cookieUrl ); ?>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="govuk-button-group">
+        <a href="#" role="button" draggable="false" class="govuk-button hide-banner" data-module="govuk-button">
+          <?php esc_html_e( 'Hide this message', 'dgwltd' ); ?>
+        </a>
+      </div>
+  </div>
+
+
+  <div id="messageReject" class="govuk-cookie-banner__message govuk-width-container" hidden>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+
+        <div class="govuk-cookie-banner__content">
+          <p>
+          <?php 
+          printf( esc_html__( 'You’ve rejected additional cookies. You can %s at any time.', 'dgwltd' ), $cookieUrl ); ?>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="govuk-button-group">
+      <a href="#" role="button" draggable="false" class="govuk-button hide-banner" data-module="govuk-button">
+        <?php esc_html_e( 'Hide this message', 'dgwltd' ); ?>
+      </a>
+    </div>
+  </div>
+    
 </div>

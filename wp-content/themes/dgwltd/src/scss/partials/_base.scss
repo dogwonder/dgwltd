@@ -10,12 +10,14 @@ html {
 a {
   color: var(--text-color);
   text-decoration: underline;
+  text-decoration-thickness: unquote("max(1px, .0625rem)");
+  text-underline-offset: .1em;
   &:visited {
-    // color: var(--visited);
+    color: var(--visited);
   }
   &:hover {
     color: var(--hover);
-    text-decoration: none;
+    text-decoration-thickness: unquote("max(3px, .1875rem, .12em)");
   }
   &:active {
     color: var(--highlight);

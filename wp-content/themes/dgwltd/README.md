@@ -62,7 +62,7 @@ Note: if you do use Plausible you can [exclude it](https://plausible.io/docs/exc
 
 These are actived via a custom plugin *dgwltd: Blocks*
 
-This requires [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/pro/). $$ - but it really is the great plugin ever made. 
+This requires [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/pro/). $$ - but it really is the greatest plugin ever made. 
 
 These are saved in `wp-plugins\dgwltd-blocks\src\acf-json`
 

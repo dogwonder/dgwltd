@@ -83,8 +83,6 @@ $nav-height: 64px;
 
     .menu-item {
       list-style-type: none;
-      // font-size: 1rem;
-      // line-height: $nav-height; //Same as header
       @include rhythm(18, 60);
       text-align: left;
       position: relative;

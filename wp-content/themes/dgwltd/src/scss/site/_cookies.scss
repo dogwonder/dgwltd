@@ -1,27 +1,11 @@
 .govuk-cookie-banner {
-  button {
+  .govuk-button {
       border: 2px solid var(--button-background);
       background-color: var(--button-background);
       &:focus, &:hover {
         border-color: var(--button-hover);
         background-color: var(--button-hover);
       }
-  }
-}
-
-//JS not enabled hidebuttons
-.no-js {
-   .govuk-button-group {
-     display:none;
-    }
-}
-
-.js-enabled {
-  .govuk-cookie-banner {
-    display: none;
-    &.open {
-      display: block;
-    }
   }
 }
 
