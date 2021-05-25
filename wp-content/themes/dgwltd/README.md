@@ -19,20 +19,17 @@
 
 This site uses the [GOV.UK design system](https://design-system.service.gov.uk) as the underlying framework. It's used pretty sparingly but userful for [components](https://design-system.service.gov.uk/components/) such as forms and other [layouts](https://design-system.service.gov.uk/styles/layout/)
 
-Comment out `govuk/helpers/_typography.scss` to remove GOV.UK typography
+This is installed via npm `npm install govuk-frontend --save` [see here for more instructions](https://frontend.design-system.service.gov.uk/installing-with-npm/#install-with-node-js-package-manager-npm)
+
+In `vendor.scss` we need to overide the default font family. 
 
 ```
-// @if ($govuk-include-default-font-face) {
-//   @include _govuk-font-face-gds-transport;
-// }
+$govuk-include-default-font-face: false;
+$govuk-font-family: -apple-system, BlinkMacSystemFont,"Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell","Fira Sans", "Droid Sans","Helvetica Neue",sans-serif ;
+@import "../../node_modules/govuk-frontend/govuk/all.scss";
 ```
 
-And replace font-family from `govuk/settings/_typography-font-families.scss`
-
-```
-// $govuk-font-family-gds-transport: "GDS Transport", Arial, sans-serif;
-$govuk-font-family-gds-transport: "Helvetica Neue", Helvetica, Arial, sans-serif;
-```
+For the Javascript we need to [manually download](https://frontend.design-system.service.gov.uk/install-using-precompiled-files/#install-using-precompiled-files) and update the version as we use a precompiled version of the JS. Place it in the `src/vendor/` folder and update `footer.php`, `move.js` and `sw.njk.js` files to new version name
 
 ## Other notable 3rd party integrations
 
