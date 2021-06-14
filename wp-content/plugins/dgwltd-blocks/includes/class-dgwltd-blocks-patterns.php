@@ -291,8 +291,8 @@ class Dgwltd_Blocks_Patterns {
 			'description' => __( 'A cover block with two columns inside', 'dgltd-block-patterns' ),
 			'content'     => '
 				<!-- wp:cover {"url":"' . esc_url( plugin_dir_url( __DIR__ ) . 'public/images/cover.jpg') . '","className":"dgltd-block--cover"} -->
-				<div class="wp-block-cover has-background-dim dgltd-block--cover" style="background-image:url(' . esc_url( plugin_dir_url( __DIR__ ) . 'public/images/cover.jpg') . ')">
-					<div class="wp-block-cover__inner-container">
+				<div class="wp-block-cover has-background-dim dgltd-block--cover dgwltd-section" style="background-image:url(' . esc_url( plugin_dir_url( __DIR__ ) . 'public/images/cover.jpg') . ')">
+					<div class="wp-block-cover__inner-container dgwltd-section__inner">
 						<!-- wp:columns -->
 						<div class="wp-block-columns">
 							<!-- wp:column -->

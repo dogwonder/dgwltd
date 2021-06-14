@@ -6,7 +6,7 @@
     display: grid;
     //Then create a subgrid
     grid-template-columns: 1fr minmax(min-content, var(--containerWidth)) 1fr;
-    .dgwltd-cta__inner {
+    .dgwltd-section__inner {
         //Snap back to our container
         grid-column: 2 / span 1;
     }
