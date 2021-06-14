@@ -290,16 +290,14 @@ class Dgwltd_Blocks_Patterns {
 			'title'       => __( 'Cover - with columns', 'dgltd-block-patterns' ),
 			'description' => __( 'A cover block with two columns inside', 'dgltd-block-patterns' ),
 			'content'     => '
-				<!-- wp:cover {"url":"' . esc_url( plugin_dir_url( __DIR__ ) . 'public/images/cover.jpg') . '","className":"dgltd-block--cover"} -->
-				<div class="wp-block-cover has-background-dim dgltd-block--cover dgwltd-section" style="background-image:url(' . esc_url( plugin_dir_url( __DIR__ ) . 'public/images/cover.jpg') . ')">
+				<!-- wp:cover {"url":"' . esc_url( plugin_dir_url( __DIR__ ) . 'public/images/cover.jpg') . '","className":"dgwltd-block--cover"} -->
+				<div class="wp-block-cover has-background-dim dgwltd-block--cover dgwltd-section" style="background-image:url(' . esc_url( plugin_dir_url( __DIR__ ) . 'public/images/cover.jpg') . ')">
 					<div class="wp-block-cover__inner-container dgwltd-section__inner">
 						<!-- wp:columns -->
 						<div class="wp-block-columns">
 							<!-- wp:column -->
 							<div class="wp-block-column">
-								<!-- wp:heading -->
-								<h2>Column heading</h2>
-								<!-- /wp:heading -->
+								<!-- wp:heading --><h2>Column heading</h2><!-- /wp:heading -->
 							</div>
 							<!-- /wp:column -->
 							<!-- wp:column -->
