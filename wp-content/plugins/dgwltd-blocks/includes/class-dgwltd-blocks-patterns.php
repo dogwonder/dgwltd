@@ -299,7 +299,7 @@ class Dgwltd_Blocks_Patterns {
 							<div class="wp-block-column">
 								<!-- wp:heading -->
 								<h2>Column heading</h2>
-								<!-- /wp:heading -->x
+								<!-- /wp:heading -->
 							</div>
 							<!-- /wp:column -->
 							<!-- wp:column -->
