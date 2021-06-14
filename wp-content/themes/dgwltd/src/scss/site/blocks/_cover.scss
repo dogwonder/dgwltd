@@ -13,7 +13,10 @@
             @extend %dgwltd-body-m;
             font-weight: bold;
             color:inherit;
-            margin-bottom: var(--gap-10)
+            margin-bottom: var(--gap-10);
+            > a {
+                color: inherit;
+            }
         }
     }
     //Forms
