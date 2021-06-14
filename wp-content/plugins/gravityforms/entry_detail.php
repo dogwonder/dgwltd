@@ -444,6 +444,10 @@ class GFEntryDetail {
 
 		$mode = empty( $_POST['screen_mode'] ) ? 'view' : $_POST['screen_mode'];
 
+		if ( $mode === 'edit' ) {
+			wp_print_styles( 'gform_admin_theme' );
+		}
+
 		$screen = get_current_screen();
 
 		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || isset( $_GET['gform_debug'] ) ? '' : '.min';
@@ -723,7 +727,7 @@ class GFEntryDetail {
 				<label for="name"><?php esc_html_e( 'Details', 'gravityforms' ); ?></label>
 			</h3>
 
-			<div class="inside">
+			<div class="inside gform_wrapper gravity-theme">
 				<table class="form-table entry-details">
 					<tbody>
 					<?php
@@ -1296,25 +1300,33 @@ class GFEntryDetail {
 		<?php
 	}
 
-	public static function meta_box_print_entry( $args ){
+	/**
+	 * Display the button to print an entry.
+	 *
+	 * @since 2.5
+	 *
+	 * @param array $args
+	 */
+	public static function meta_box_print_entry( $args ) {
 
-	    $lead = $args['entry'];
-	    $form = $args['form'];
+		$lead = $args['entry'];
+		$form = $args['form'];
 
 		?>
-        <!-- begin print button -->
-        <div class="detail-view-print">
-	        <?php if ( GFCommon::current_user_can_any( 'gravityforms_view_entry_notes' ) ) { ?>
+		<!-- begin print button -->
+		<div class="detail-view-print">
+			<?php if ( GFCommon::current_user_can_any( 'gravityforms_view_entry_notes' ) ) { ?>
 
-                    <input type="checkbox" name="print_notes" value="print_notes" checked="checked" id="gform_print_notes" />
-                    <label for="print_notes"><?php esc_html_e( 'Include Notes', 'gravityforms' ) ?></label>
+				<input type="checkbox" name="print_notes" value="print_notes" checked="checked" id="gform_print_notes" />
+				<label for="print_notes"><?php esc_html_e( 'Include Notes', 'gravityforms' ); ?></label>
 
-	        <?php } ?><br><br>
-            <a href="javascript:;" onclick="var notes_qs = jQuery('#gform_print_notes').is(':checked') ? '&notes=1' : ''; var url='<?php echo trailingslashit( site_url() ) ?>?gf_page=print-entry&fid=<?php echo absint( $form['id'] ) ?>&lid=<?php echo absint( $lead['id'] ); ?>' + notes_qs; window.open (url,'printwindow');" class="button"><?php esc_html_e( 'Print', 'gravityforms' ) ?></a>
-        </div>
-        <!-- end print button -->
-        <?php
-    }
+			<?php } ?>
+			<br><br>
+			<a href="javascript:;" onclick="var notes_qs = jQuery('#gform_print_notes').is(':checked') ? '&notes=1' : ''; var url='<?php echo trailingslashit( site_url() ); ?>?gf_page=print-entry&fid=<?php echo absint( $form['id'] ); ?>&lid=<?php echo absint( $lead['id'] ); ?>' + notes_qs; window.open (url,'printwindow');" class="button"><?php esc_html_e( 'Print', 'gravityforms' ); ?></a>
+		</div>
+		<!-- end print button -->
+		<?php
+	}
 
 	public static function meta_box_notes( $args, $metabox ) {
 		$entry = $args['entry'];

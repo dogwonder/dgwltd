@@ -96,7 +96,6 @@ class Fields {
 
 }
 
-// @todo Replace with autoloader.
 // Load all field files.
 foreach ( glob( plugin_dir_path( __FILE__ ) . '/fields/class-*.php' ) as $filename ) {
 	require_once( $filename );

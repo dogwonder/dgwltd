@@ -71,7 +71,7 @@ class GF_Field_Website extends GF_Field {
 
 		if ( ! empty( $value ) && ! GFCommon::is_valid_url( $value ) ) {
 			$this->failed_validation  = true;
-			$this->validation_message = empty( $this->errorMessage ) ? esc_html__( 'Please enter a valid Website URL (e.g. http://www.gravityforms.com).', 'gravityforms' ) : $this->errorMessage;
+			$this->validation_message = empty( $this->errorMessage ) ? esc_html__( 'Please enter a valid Website URL (e.g. https://gravityforms.com).', 'gravityforms' ) : $this->errorMessage;
 		}
 	}
 

@@ -114,6 +114,19 @@ body {
           }
         }
       }
+      //Cover block
+      //Cover block
+      .dgltd-block--cover {
+        grid-column: 1 / span all;
+        .wp-block-cover__inner-container {
+          max-width: var(--contentWidth);
+          margin: 0 auto;
+          padding: var(--gap-40) var(--gap-20);
+          @include mq($from: tablet) {
+            padding: var(--gap-80) var(--gap-20);
+          }
+        }
+      }
     }
   }
 }

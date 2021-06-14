@@ -90,6 +90,7 @@
 		$noFieldsDropzone = $( '#no-fields-drop' ),
 		$sidebar = $( '.editor-sidebar' ),
 		$button = $( '.gfield-field-action' ),
+		$fields = $elements(),
 		$elem = null,
 		fieldButtonsSelector = '.add-buttons button';
 
@@ -120,7 +121,10 @@
 		deletedFieldGroupId;
 
 	// Initialize fields for layout editor.
-	initElement( $elements() );
+	initElement( $fields );
+
+	// Parse and maybe patch group ids
+	validateGroupIds();
 
 	// Initialize field buttons.
 	initFieldButtons( $( fieldButtonsSelector ) );
@@ -129,7 +133,8 @@
 	$noFields.droppable( {
 		accept: fieldButtonsSelector,
 		activate: function ( event, ui ) {
-			$( this ).addClass( 'ready' )
+			$noFieldsDropzone.show();
+			$( this ).addClass( 'ready' );
 		},
 		over: function () {
 			$( this ).addClass( 'hovering' );
@@ -143,6 +148,13 @@
 			isNoFieldsDrop = true;
 			$( this ).removeClass( 'hovering' );
 			$noFieldsDropzone.removeClass( 'hovering' );
+			if ( $editorContainer.hasClass( 'form_editor_fields_no_fields' ) ) {
+				gform.simplebar.initializeInstance( $editorContainer[ 0 ] );
+				setTimeout( function() {
+					$noFieldsDropzone.hide();
+					$editorContainer.removeClass( 'form_editor_fields_no_fields' );
+				}, 200 );
+			}
 		},
 		deactivate: function () {
 			$( this ).removeClass( 'ready' );
@@ -354,11 +366,20 @@
 			} )
 			.resizable( {
 				handles: 'e, w',
-				start: function() {
+				start: function( event, ui ) {
+					if ( gf_legacy.is_legacy === '1' ) {
+						$element.resizable( 'option', 'minWidth', ui.size.width );
+						$element.resizable( 'option', 'maxWidth', ui.size.width );
+						alert( gf_vars.alertLegacyMode );
+						return;
+					}
 					max = null;
 					$container.addClass( 'resizing' );
 				},
 				resize: function( event, ui ) {
+					if ( gf_legacy.is_legacy === '1' ) {
+						return;
+					}
 					var columnWidth = $container.outerWidth() / columnCount,
 						$item = ui.element,
 						width = $item.outerWidth(),
@@ -414,9 +435,107 @@
 					}
 				},
 				stop: function() {
+					if ( gf_legacy.is_legacy === '1' ) {
+						return;
+					}
 					$container.removeClass( 'resizing' );
 				},
 			} );
+	}
+
+	/**
+	 * @function getFieldsAsRows
+	 * @description Return an array of elements plus group ids grouped into rows as sub arrays.
+	 *
+	 * @since 2.5.1
+	 *
+	 * @returns {*[]}
+	 */
+
+	function getFieldsAsRows() {
+		var rows = [];
+		var row = [];
+		var previousOffset = $fields[ 0 ].offsetTop;
+
+		$fields.each( function() {
+			// this element is on the same row as previous
+			if ( previousOffset === this.offsetTop ) {
+				row.push( {
+					el     : this,
+					groupId: this.dataset.groupid,
+				} );
+			} else {
+				// we are on a new row, push previously stored row and start a new store
+				if ( row.length ) {
+					rows.push( row );
+					row = [];
+				}
+				// push the current item into the new store
+				row.push( {
+					el     : this,
+					groupId: this.dataset.groupid,
+				} );
+			}
+			previousOffset = this.offsetTop;
+		} );
+
+		return rows;
+	}
+
+	/**
+	 * @function setUniqueGroupIdForRow
+	 * @description Get a new unique groupId and apply it to a row of fields.
+	 *
+	 * @since 2.5.1
+	 *
+	 * @param {Array} row An array of objects that each contain a field element and its groupId.
+	 */
+
+	function setUniqueGroupIdForRow( row ) {
+		var groupId = getGroupId();
+		row.forEach( function( entry ) {
+			$( entry.el ).setGroupId( groupId );
+		} );
+	}
+
+	/**
+	 * @function validateGroupIds
+	 * @description Iterate over all fields and patch any duplicate group id's, or rows that have mismatched group id's.
+	 *
+	 * @since 2.5.1
+	 */
+
+	function validateGroupIds() {
+		// no need to run in legacy mode or if no fields
+		if ( window.gf_legacy.is_legacy === '1' || ! $fields.length ) {
+			return;
+		}
+		var rows = getFieldsAsRows();
+		var ids = [];
+
+		rows.forEach( function( currentRow ) {
+			var rowIds = [];
+			var duplicateFound = false;
+
+			currentRow.forEach( function( entry ) {
+				if ( ids.indexOf( entry.groupId ) !== - 1 ) {
+					// this id has already been used in a previous field row
+					duplicateFound = true;
+				}
+				rowIds.push( entry.groupId );
+			} );
+
+			// test if all ids for the row match
+			var groupIdsMatchForRow = rowIds.every( function( val, i, arr ) {
+				return val === arr[ 0 ];
+			} );
+			// if the row has mismatched id's, or contains an id used before, scrub and set fresh group id for the row
+			if ( ! groupIdsMatchForRow || duplicateFound ) {
+				setUniqueGroupIdForRow( currentRow );
+			}
+			// store the id for duplicate check in subsequent iterations
+			ids.push( currentRow[ 0 ].groupId );
+		} );
 	}
 
 	/**
@@ -831,7 +950,7 @@
 		if ( isSpacer( $target ) ) {
 			$spacer = $target;
 			$target = $target.prev();
-		} else if ( isSpacer( $target.next() ) && $targetGroup.index( $target.next() ) !== false ) {
+		} else if ( ( isSpacer( $target.next() ) || isPlaceholder( $target.next() ) ) && $targetGroup.index( $target.next() ) !== false ) {
 			$spacer = $target.next();
 		}
 
@@ -997,7 +1116,13 @@
 	function resizeGroup( groupId ) {
 
 		var $group = getGroup( groupId ),
-			splitSpan = columnCount / ( $group.length );
+			splitSpan = columnCount / ( $group.length ),
+			$spacer = $group.filter( '.spacer' );
+
+		// If the only field in a group is a spacer, remove the spacer.
+		if ( $group[0] === $spacer[0] && $group.length > 0 ) {
+			removeSpacer( $spacer );
+		}
 
 		$group.setGridColumnSpan( splitSpan );
 
@@ -1056,6 +1181,19 @@
 	 */
 	function isSpacer( $elem ) {
 		return $elem.filter( '.spacer' ).length > 0;
+	}
+
+	/**
+	 * Determine whether the given element is a Placeholder.
+	 *
+	 * @since 2.5
+	 *
+	 * @param {jQuery} $elem The element for which to determine if it is a placeholder.
+	 *
+	 * @returns {boolean}
+	 */
+	function isPlaceholder( $elem ) {
+		return $elem.filter( '[data-js-field-loading-placeholder]' ).length > 0;
 	}
 
 	/**

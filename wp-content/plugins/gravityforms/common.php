@@ -42,22 +42,21 @@ class GFCommon {
 	public static function is_numeric( $value, $number_format = '' ) {
 
 		if ( $number_format == 'currency' ) {
-
 			$number_format = self::is_currency_decimal_dot() ? 'decimal_dot' : 'decimal_comma';
 			$value         = self::remove_currency_symbol( $value );
 		}
 
 		switch ( $number_format ) {
-			case 'decimal_dot' :
+			case 'decimal_dot':
 				return preg_match( "/^(-?[0-9]{1,3}(?:,?[0-9]{3})*(?:\.[0-9]+)?)$/", $value );
 				break;
 
-			case 'decimal_comma' :
+			case 'decimal_comma':
 				return preg_match( "/^(-?[0-9]{1,3}(?:\.?[0-9]{3})*(?:,[0-9]+)?)$/", $value );
 				break;
 
-			default :
-				return preg_match( "/^(-?[0-9]{1,3}(?:,?[0-9]{3})*(?:\.[0-9]{2})?)$/", $value ) || preg_match( "/^(-?[0-9]{1,3}(?:\.?[0-9]{3})*(?:,[0-9]{2})?)$/", $value );
+			default:
+				return preg_match( "/^(-?[0-9]{0,3}(?:,?[0-9]{3})*(?:\.[0-9]{1,2})?)$/", $value ) || preg_match( "/^(-?[0-9]{0,3}(?:\.?[0-9]{3})*(?:,[0-9]{2})?)$/", $value );
 
 		}
 	}
@@ -1318,10 +1317,10 @@ class GFCommon {
 						 * In `foo:format:bar`, "bar" will be the returned format
 						 */
 						$format_key_index = array_search( 'format', $exploded, true );
-						$format           = false;
+						$date_format           = false;
 						if ( false !== $format_key_index && isset( $exploded[ $format_key_index + 1 ] ) ) {
 							// Return escaped colons placeholder
-							$format = str_replace( '|COLON|', ':', $exploded[ $format_key_index + 1 ] );
+							$date_format = str_replace( '|COLON|', ':', $exploded[ $format_key_index + 1 ] );
 						}
 
 						$is_human             = in_array( 'human', $exploded, true ); // {date_created:human}
@@ -1333,9 +1332,9 @@ class GFCommon {
 						$date_local_timestamp = self::get_local_timestamp( $date_gmt_time );
 
 						// If we're using time diff, we want to have a different default format
-						if ( empty( $format ) ) {
+						if ( empty( $date_format ) ) {
 							// translators: %s: relative time from now, used for generic date comparisons. "1 day ago", or "20 seconds ago"
-							$format = $is_diff ? esc_html__( '%s ago', 'gravityforms' ) : get_option( 'date_format' );
+							$date_format = $is_diff ? esc_html__( '%s ago', 'gravityforms' ) : get_option( 'date_format' );
 						}
 
 						if ( $is_raw ) {
@@ -1343,15 +1342,15 @@ class GFCommon {
 						} elseif ( $is_timestamp ) {
 							$formatted_date = $date_local_timestamp;
 						} elseif ( $is_diff ) {
-							$formatted_date = sprintf( $format, human_time_diff( $date_gmt_time ) );
+							$formatted_date = sprintf( $date_format, human_time_diff( $date_gmt_time ) );
 						} else {
-							$formatted_date = self::format_date( $date_string, $is_human, $format, $include_time );
+							$formatted_date = self::format_date( $date_string, $is_human, $date_format, $include_time );
 						}
 					} else {
 					    $formatted_date = '';
 					}
 
-					$formatted_date = self::format_variable_value( $formatted_date, $url_encode, $esc_html, '', false );
+					$formatted_date = self::format_variable_value( $formatted_date, $url_encode, $esc_html, $format, false );
 					$text           = str_replace( $full_tag, $formatted_date, $text );
 				}
 			}
@@ -5215,6 +5214,7 @@ Content-Type: text/html;
 		$gf_vars['endsWith']                = esc_html__( 'ends with', 'gravityforms' );
 		$gf_vars['emptyChoice']             = wp_strip_all_tags( __( 'Empty (no choices selected)', 'gravityforms' ) );
 
+		$gf_vars['alertLegacyMode']                  = esc_html__( 'This form has legacy markup enabled and doesn’t support field resizing within the editor. Please disable legacy markup in the form settings to enable live resizing.', 'gravityforms' );
 		$gf_vars['thisConfirmation']                 = esc_html__( 'Use this confirmation if', 'gravityforms' );
 		$gf_vars['thisNotification']                 = esc_html__( 'Send this notification if', 'gravityforms' );
 		$gf_vars['confirmationSave']                 = esc_html__( 'Save', 'gravityforms' );
@@ -5252,6 +5252,9 @@ Content-Type: text/html;
 		$gf_vars['customChoices']     = esc_html__( 'Custom Choices', 'gravityforms' );
 		$gf_vars['predefinedChoices'] = esc_html__( 'Predefined Choices', 'gravityforms' );
 
+		// translators: {field_title} and {field_type} should not be translated , they are variables
+		$gf_vars['fieldLabelAriaLabel'] = esc_html__( '{field_label} - {field_type}, jump to this field\'s settings', 'gravityforms' );
+
 		if ( is_admin() && rgget( 'id' ) ) {
 
 			$form                 = RGFormsModel::get_form_meta( rgget( 'id' ) );
@@ -5284,14 +5287,15 @@ Content-Type: text/html;
 
 		if ( is_admin() && rgget( 'id' ) ) {
 			$gf_vars['conditionalLogic'] = array(
-				'views'                      => array(
-					'sidebar' => file_get_contents( GFCommon::get_base_path() . '/js/components/form_editor/conditional_flyout/views/accordion_header.html' ),
-					'flyout'  => file_get_contents( GFCommon::get_base_path() . '/js/components/form_editor/conditional_flyout/views/flyout.html' ),
-					'main'    => file_get_contents( GFCommon::get_base_path() . '/js/components/form_editor/conditional_flyout/views/main_control.html' ),
-					'rule'    => file_get_contents( GFCommon::get_base_path() . '/js/components/form_editor/conditional_flyout/views/rule.html' ),
-					'option'  => file_get_contents( GFCommon::get_base_path() . '/js/components/form_editor/conditional_flyout/views/option.html' ),
-					'input'   => file_get_contents( GFCommon::get_base_path() . '/js/components/form_editor/conditional_flyout/views/input.html' ),
-					'select'  => file_get_contents( GFCommon::get_base_path() . '/js/components/form_editor/conditional_flyout/views/select.html' ),
+				'views' => array(
+					'sidebar'          => file_get_contents( GFCommon::get_base_path() . '/js/components/form_editor/conditional_flyout/views/accordion_header.html' ),
+					'flyout'           => file_get_contents( GFCommon::get_base_path() . '/js/components/form_editor/conditional_flyout/views/flyout.html' ),
+					'logicDescription' => file_get_contents( GFCommon::get_base_path() . '/js/components/form_editor/conditional_flyout/views/logic_description.html' ),
+					'main'             => file_get_contents( GFCommon::get_base_path() . '/js/components/form_editor/conditional_flyout/views/main_control.html' ),
+					'rule'             => file_get_contents( GFCommon::get_base_path() . '/js/components/form_editor/conditional_flyout/views/rule.html' ),
+					'option'           => file_get_contents( GFCommon::get_base_path() . '/js/components/form_editor/conditional_flyout/views/option.html' ),
+					'input'            => file_get_contents( GFCommon::get_base_path() . '/js/components/form_editor/conditional_flyout/views/input.html' ),
+					'select'           => file_get_contents( GFCommon::get_base_path() . '/js/components/form_editor/conditional_flyout/views/select.html' ),
 				),
 				'conditionalLogicHelperText' => __( 'To use conditional logic, please create a field that supports conditional logic.', 'gravityforms' ),
 				'categories'                 => GFForms::get_post_category_options(),
@@ -5559,7 +5563,7 @@ Content-Type: text/html;
 	 *
 	 * @return bool
 	 */
-	private static function requires_gf_hooks_javascript() {
+	public static function requires_gf_hooks_javascript() {
 		require_once self::get_base_path() . '/form_display.php';
 
 		// Script has already been output; bail to avoid duplicating it.
@@ -5593,21 +5597,6 @@ Content-Type: text/html;
 	public static function notices_section() {
 		?>
 		<div id="gf-admin-notices-wrapper">
-			<?php $has_notices = apply_filters( 'gf_has_admin_notices', false ); ?>
-			<?php if ( $has_notices ) : ?>
-				<div id="gf-wordpress-notices" class="gf-notice">
-					<p>
-						<?php
-						printf(
-							// Translators: 1. Link to dashboard, 2. Closing </a> tag.
-							esc_html__( 'WordPress has new notifications.  %1sGo to your dashboard%2s to see your notifications.', 'gravityforms' ),
-							'<a href="' . admin_url() . '">',
-							'</a>'
-						);
-						?>
-					</p>
-				</div>
-			<?php endif; ?>
 
 			<!-- WP appends notices to the first H tag, so this is here to capture admin notices. -->
 			<h2 class="gf-notice-container"></h2>
@@ -5618,7 +5607,7 @@ Content-Type: text/html;
 	}
 
 	/**
-	 * Determine whether there are any non-Gravity Forms admin notifications that need to be suppressed.
+	 * Parse any admin notices and hide any that are non-GF-related.
 	 *
 	 * @since 2.5
 	 *
@@ -5626,7 +5615,7 @@ Content-Type: text/html;
 	 */
 	public static function find_admin_notices() {
 		if ( ! GFForms::is_gravity_page() ) {
-			return false;
+			return;
 		}
 
 		global $wp_filter;
@@ -5649,22 +5638,12 @@ Content-Type: text/html;
 				call_user_func( $callback['function'] );
 				$content = ob_get_clean();
 
-				if ( '' !== $content && strpos( $content, 'gf-notice' ) == false ) {
-					$has_non_gf_notices = true;
+				if ( strpos( $content, 'gf-notice' ) == false ) {
 					remove_action( 'admin_notices', $name, $priority );
 					remove_action( 'network_admin_notices', $name, $priority );
 				}
 			}
 		}
-
-		add_filter(
-			'gf_has_admin_notices',
-			function( $has ) use ( $has_non_gf_notices ) {
-				return $has_non_gf_notices;
-			},
-			1
-		);
-		return $has_non_gf_notices;
 	}
 
 	/**
@@ -5731,8 +5710,7 @@ Content-Type: text/html;
 			return;
 		}
 
-		$hooks_javascript                = self::get_hooks_javascript_code();
-		GFFormDisplay::$hooks_js_printed = true;
+		$hooks_javascript = self::get_hooks_javascript_code();
 
 		echo '<script type="text/javascript">' . $hooks_javascript . '</script>';
 	}
@@ -5745,7 +5723,11 @@ Content-Type: text/html;
 	 * @return false|string
 	 */
 	public static function get_hooks_javascript_code() {
+		require_once self::get_base_path() . '/form_display.php';
+
 		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || isset( $_GET['gform_debug'] ) ? '' : '.min';
+
+		GFFormDisplay::$hooks_js_printed = true;
 
 		return file_get_contents( GFCommon::get_base_path() . '/js/gforms_hooks' . $min . '.js' );
 	}
@@ -6180,7 +6162,13 @@ Content-Type: text/html;
 		 * @param array
 		 */
 		$data = apply_filters( 'gform_gf_legacy_multi', array() );
-		wp_localize_script( 'gform_gravityforms', 'gf_legacy_multi', $data );
+		if ( ! empty( $data ) ) {
+			wp_localize_script(
+				'gform_gravityforms',
+				'gf_legacy_multi',
+				$data
+			);
+		}
 	}
 
 	public static function send_resume_link( $message, $subject, $email, $embed_url, $resume_token ) {
@@ -6576,11 +6564,18 @@ Content-Type: text/html;
 	 *
 	 * Translation files in the WP_LANG_DIR folder have a higher priority.
 	 *
+	 * @since unknown
+	 * @since 2.5.6   Respect user-specific locale settings.
+	 *
 	 * @param string $domain   The plugin text domain. Default is gravityforms.
 	 * @param string $basename The plugin basename. plugin_basename() will be used to get the Gravity Forms basename when not provided.
+	 *
+	 * @return string
 	 */
 	public static function load_gf_text_domain( $domain = 'gravityforms', $basename = '' ) {
-		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
+		$current_locale = version_compare( get_bloginfo( 'version', 'display' ), '5.0', '>=' ) ? determine_locale() : self::legacy_determine_locale();
+		$locale         = apply_filters( 'plugin_locale', $current_locale, $domain );
+
 		if ( $locale != 'en_US' && ! is_textdomain_loaded( $domain ) ) {
 			if ( empty( $basename ) ) {
 				$basename = plugin_basename( self::get_base_path() );
@@ -6589,6 +6584,84 @@ Content-Type: text/html;
 			load_textdomain( $domain, sprintf( '%s/gravityforms/%s-%s.mo', WP_LANG_DIR, $domain, $locale ) );
 			load_plugin_textdomain( $domain, false, $basename . '/languages' );
 		}
+
+		return $locale;
+	}
+
+	/**
+	 * This is a copy of the determine_locale() method added in Wordpress 5.0. It is used for previous
+	 * WordPress versions to emulate the same behavior.
+	 *
+	 * @since 2.5.6
+	 *
+	 * @return string
+	 */
+	public static function legacy_determine_locale() {
+		/**
+		 * Filters the locale for the current request prior to the default determination process.
+		 *
+		 * Using this filter allows to override the default logic, effectively short-circuiting the function.
+		 *
+		 * @since 5.0.0
+		 *
+		 * @param string|null $locale The locale to return and short-circuit. Default null.
+		 */
+		$determined_locale = apply_filters( 'pre_determine_locale', null );
+
+		if ( ! empty( $determined_locale ) && is_string( $determined_locale ) ) {
+			return $determined_locale;
+		}
+
+		$determined_locale = get_locale();
+
+		if ( function_exists( 'get_user_locale' ) ) {
+			if ( is_admin() ) {
+				$determined_locale = get_user_locale();
+			}
+
+			if ( isset( $_GET['_locale'] ) && 'user' === $_GET['_locale'] && wp_is_json_request() ) {
+				$determined_locale = get_user_locale();
+			}
+		}
+
+		if ( ! empty( $_GET['wp_lang'] ) && ! empty( $GLOBALS['pagenow'] ) && 'wp-login.php' === $GLOBALS['pagenow'] ) {
+			$determined_locale = sanitize_text_field( $_GET['wp_lang'] );
+		}
+
+		/**
+		 * Filters the locale for the current request.
+		 *
+		 * @since 5.0.0
+		 *
+		 * @param string $locale The locale.
+		 */
+		return apply_filters( 'determine_locale', $determined_locale );
+	}
+
+	/**
+	 * Returns an array of locales or mo translation files found in the WP_LANG_DIR/plugins directory.
+	 *
+	 * @since 2.5.6
+	 *
+	 * @param string $domain       The plugin text domain. Default is gravityforms.
+	 * @param bool   $return_files Indicates if the mo files should be returned using the locales as the keys.
+	 *
+	 * @return array
+	 */
+	public static function get_installed_translations( $domain = 'gravityforms', $return_files = false ) {
+		$files = self::glob( $domain . '-*.mo', WP_LANG_DIR . '/plugins/' );
+
+		if ( ! is_array( $files ) ) {
+			return array();
+		}
+
+		$translations = array();
+
+		foreach ( $files as $file ) {
+			$translations[ str_replace( $domain . '-', '', basename( $file, '.mo' ) ) ] = $file;
+		}
+
+		return $return_files ? $translations : array_keys( $translations );
 	}
 
 	public static function replace_field_variable( $text, $form, $lead, $url_encode, $esc_html, $nl2br, $format, $input_id, $match, $esc_attr = false ) {
@@ -7013,6 +7086,15 @@ Content-Type: text/html;
 
 	}
 
+	/**
+	 * Determines if a form has legacy markup enabled.
+	 *
+	 * @since 2.5
+	 *
+	 * @param int|array $form_or_id  Form ID or form array.
+	 *
+	 * @return bool
+	 */
 	public static function is_legacy_markup_enabled( $form_or_id ) {
 
 		if ( is_numeric( $form_or_id ) ) {
@@ -7024,7 +7106,16 @@ Content-Type: text/html;
 		$markup_version = rgar( $form, 'markupVersion' );
 		$is_enabled     = ! $markup_version || (int) $markup_version === 1;
 
-		// @todo document
+		/**
+		 * Enable or disable legacy markup for a form.
+		 *
+		 * Override legacy markup setting for one or all forms.
+		 *
+		 * @since 2.5
+		 *
+		 * @param bool  $is_enabled Indicates if legacy markup is enabled for the current form. Default is false for forms created with Gravity Forms 2.5 and greater.
+		 * @param array $form       The form object.
+		 */
 		$is_enabled = gf_apply_filters( array( 'gform_enable_legacy_markup', rgar( $form, 'id' ) ), $is_enabled, $form );
 
 		return $is_enabled;
@@ -7068,7 +7159,7 @@ Content-Type: text/html;
 	 * @param array $array_path_keys An indexed array containing the path to update on the $source_array.
 	 * @param mixed $value The new value to set on the $source_array.
 	 */
-	public static function set_array_value( $source_array = array(), $array_path_keys, $value ) {
+	public static function set_array_value( $source_array, $array_path_keys, $value ) {
 		if ( empty( $array_path_keys ) ) {
 			return $source_array;
 		}

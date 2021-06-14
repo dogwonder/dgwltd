@@ -804,7 +804,7 @@ class Settings {
 			// Display title.
 			if ( rgar( $section, 'title' ) ) {
 				printf(
-					'<legend class="gform-settings-panel__title gform-settings-panel__title--header">%s</legend>%s',
+					'<legend class="gform-settings-panel__title gform-settings-panel__title--header">%s %s</legend>',
 					esc_html( $section['title'] ),
 					self::maybe_get_tooltip( $section )
 				);
@@ -1883,6 +1883,14 @@ class Settings {
 
 		// Get form.
 		$form = GFAPI::get_form( $form_id );
+
+		if ( ! $form ) {
+			return false;
+		}
+
+		if ( is_admin() ) {
+			$form = gf_apply_filters( array( 'gform_admin_pre_render', $form_id ), $form );
+		}
 
 		return $form;
 

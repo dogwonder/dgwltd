@@ -280,12 +280,44 @@ class Dgwltd_Blocks_Patterns {
                         <!-- /wp:column -->
 						</div>
 					<!-- /wp:columns -->
-						
 					</div></div>
 					<!-- /wp:group -->
 				',
 			'categories'  => array( 'blocks' ),
 		);
+
+		$patterns['dgltd-block-patterns/columns-background'] = [
+			'title'       => __( 'Columns - background', 'dgltd-block-patterns' ),
+			'description' => __( 'Columns for content with a background image', 'dgltd-block-patterns' ),
+			'content'     => '
+				<!-- wp:cover {"url":"' . esc_url( plugin_dir_url( __DIR__ ) . 'public/images/cover.jpg') . '","className":"dgltd-block--cover"} -->
+				<div class="wp-block-cover has-background-dim dgltd-block--cover" style="background-image:url(' . esc_url( plugin_dir_url( __DIR__ ) . 'public/images/cover.jpg') . ')">
+					<div class="wp-block-cover__inner-container">
+						<!-- wp:columns -->
+						<div class="wp-block-columns">
+							<!-- wp:column -->
+							<div class="wp-block-column">
+								<!-- wp:heading -->
+								<h2>Column heading</h2>
+								<!-- /wp:heading -->x
+							</div>
+							<!-- /wp:column -->
+							<!-- wp:column -->
+							<div class="wp-block-column">
+								<!-- wp:list -->
+									<ul><li>List item 1</li><li>List item 2</li><li>List item 3</li></ul>
+								<!-- /wp:list -->
+							</div>
+							<!-- /wp:column -->
+						</div>
+						<!-- /wp:columns -->
+					</div>
+				</div>
+				<!-- /wp:cover -->
+			',
+			'categories'  => [ 'blocks' ],
+		];
+		
 
 		$patterns['dgwltd-blocks/team'] = array(
 			'title'       => __( 'Meet the team', 'dgwltd-blocks' ),

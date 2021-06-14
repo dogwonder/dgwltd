@@ -284,7 +284,6 @@ class Base implements ArrayAccess {
 		 * @param array $field The current field meta to be parsed.
 		 */
 		$excluded_atts = apply_filters(
-		// @todo rename filter
 			'gaddon_no_output_field_properties',
 			array(
 				'default_value', 'label', 'toggle_label', 'choices', 'feedback_callback', 'checked', 'checkbox_label', 'value', 'type',

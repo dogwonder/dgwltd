@@ -64,7 +64,9 @@ class GF_Field_Hidden extends GF_Field {
 		$required_attribute = $this->isRequired ? 'aria-required="true"' : '';
 		$invalid_attribute  = $this->failed_validation ? 'aria-invalid="true"' : 'aria-invalid="false"';
 
-		return sprintf( "<input name='input_%d' id='%s' type='$field_type' {$class_attribute} {$required_attribute} {$invalid_attribute} value='%s' %s/>", $id, $field_id, esc_attr( $value ), $disabled_text );
+		$input = sprintf( "<input name='input_%d' id='%s' type='$field_type' {$class_attribute} {$required_attribute} {$invalid_attribute} value='%s' %s/>", $id, $field_id, esc_attr( $value ), $disabled_text );
+
+		return sprintf( "<div class='ginput_container ginput_container_text'>%s</div>", $input );
 	}
 
 	public function get_field_content( $value, $force_frontend_label, $form ) {

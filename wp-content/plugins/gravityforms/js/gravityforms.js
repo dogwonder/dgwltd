@@ -7,17 +7,25 @@ if( typeof jQuery.fn.prop === 'undefined' ) {
     jQuery.fn.prop = jQuery.fn.attr;
 }
 
-jQuery(document).ready(function(){
+// Announcing validation errors after form render.
+jQuery( document ).on( 'gform_post_render', announceAJAXValidationErrors );
 
+/**
+ * Announce validation errors after form has been rendered.
+ *
+ * @since 2.5.1
+ */
+function announceAJAXValidationErrors() {
 	// Announce validation errors.
-	if ( jQuery('.gform_validation_errors').length ) {
-		jQuery('#gf_form_focus').focus();
-		setTimeout( function() {
-		  wp.a11y.speak( jQuery('.gform_validation_errors > h2').text() );
-		}, 1000);
+	if ( ! jQuery('.gform_validation_errors').length ) {
+		return;
 	}
+	jQuery( '#gf_form_focus' ).focus();
+	setTimeout( function() {
+	  wp.a11y.speak( jQuery( '.gform_validation_errors > h2' ).text() );
+	}, 1000 );
 
-});
+}
 
 //Formatting free form currency fields to currency
 jQuery( document ).bind( 'gform_post_render', gformBindFormatPricingFields );
@@ -91,7 +99,7 @@ gform.adminUtils = {
 
 		jQuery( elemId ).find( 'input, select, textarea' ).on( 'change keyup', function() {
 
-			if ( jQuery( this ).attr( 'onChange' ) === undefined )  {
+			if ( jQuery( this ).attr( 'onChange' ) === undefined && jQuery( this ).attr( 'onClick' ) === undefined )  {
 				hasUnsavedChanges = true;
 			}
 
@@ -169,6 +177,63 @@ window.HandleUnsavedChanges = gform.adminUtils.handleUnsavedChanges;
  */
 
 gform.tools = {
+	/**
+	 * Wrapper to add debouncing to any given callback.
+	 *
+	 * @since 2.5.2
+	 *
+	 * @param {Function} fn             The callback to execute.
+	 * @param {integer}  debounceLength The amount of time for which to debounce (in milliseconds)
+	 * @param {bool}     isImmediate    Whether to fire this immediately, or at the tail end of the timeout.
+	 *
+	 * @returns {function}
+	 */
+	debounce: function( fn, debounceLength, isImmediate ) {
+		// Initialize var to hold our window timeout
+		var timeout;
+		var lastArgs;
+		var lastFn;
+
+		return function() {
+			// Initialize local versions of our context and arguments to pass to apply()
+			var callbackContext = this;
+			var args            = arguments;
+
+			// Create a deferred callback to fire if this shouldn't be immediate.
+			var deferredCallback = function() {
+				timeout = null;
+
+				if ( ! isImmediate ) {
+					fn.apply( callbackContext, args );
+				}
+			};
+
+			// Begin processing the actual callback.
+			var callNow = isImmediate && ! timeout;
+
+			// Reset timeout if it is the same method with the same args.
+			if ( args === lastArgs && ( ''+lastFn == ''+fn ) ) {
+				clearTimeout( timeout );
+			}
+
+			// Set the value of the last function call and arguments to help determine whether the next call is unique.
+			var cachePreviousCall = function( fn, args ) {
+				lastFn    = fn;
+				lastArgs = args;
+			}
+
+			timeout = setTimeout( deferredCallback, debounceLength );
+			cachePreviousCall( fn, args );
+
+			// Method should be executed on the trailing edge of the timeout. Bail for now.
+			if ( ! callNow ) {
+				return;
+			}
+
+			// Callback should be called immediately, and isn't currently debounced; execute it.
+			fn.apply( callbackContext, args );
+		};
+	},
 
     /**
      * @function gform.tools.defaultFor
@@ -185,6 +250,58 @@ gform.tools = {
     defaultFor: function( arg, val ) {
         return typeof arg !== 'undefined' ? arg : val;
     },
+
+	/**
+	 * @function gform.tools.getFocusable
+	 * @description Get focusable elements inside a container and return as an array.
+	 *
+	 * @since 2.5
+	 *
+	 * @param container the parent to search for focusable elements inside of
+	 * @returns {*[]}
+	 */
+
+	getFocusable: function( container ) {
+		container = this.defaultFor( container, document );
+		var focusable = this.convertElements(
+			container.querySelectorAll(
+				'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+			)
+		);
+		return focusable.filter( function( item ) {
+			return this.visible( item );
+		}.bind( this ) );
+	},
+
+	/**
+	 * @function gform.tools.htmlToElement
+	 *
+	 * Allows you to convert an HTML string to a DOM Object.
+	 *
+	 * @param {string} html
+	 *
+	 * @returns {ChildNode}
+	 */
+	htmlToElement: function( html ) {
+		var template       = document.createElement( 'template' );
+		html               = html.trim();
+		template.innerHTML = html;
+
+		return template.content.firstChild;
+	},
+
+	/**
+	 * @function gform.tools.elementToHTML
+	 *
+	 * Converts a DOM Element to an HTML string.
+	 *
+	 * @param {object} el
+	 *
+	 * @returns {string}
+	 */
+	elementToHTML: function( el ) {
+		return el.outerHTML;
+	},
 
     /**
      * @function gform.tools.convertElements
@@ -372,6 +489,84 @@ gform.tools = {
 	 */
 	isIE: function() {
 		return window.document.documentMode;
+	},
+
+	/**
+	 * @function gform.tools.trigger
+	 * @description Trigger custom or native events on any element in a cross browser way, and pass along optional data.
+	 *
+	 * @since 2.5.1.1
+	 *
+	 * @param {String} eventName The event name.
+	 * @param {Element|EventTarget|Document} el Default document. The element to trigger the event on.
+	 * @param {Boolean} native Default fasle. Is this a custom event or native?
+	 * @param {Object} data Custom data to send along, available in event.detail on listener.
+	 */
+
+	trigger: function( eventName, el, native, data ) {
+		var event;
+		eventName =  this.defaultFor( eventName, '' );
+		el =  this.defaultFor( el, document );
+		native =  this.defaultFor( native, false );
+		data =  this.defaultFor( data, {} );
+
+		if ( native ) {
+			event = document.createEvent( 'HTMLEvents' );
+			event.initEvent( eventName, true, false );
+		} else {
+			try {
+				event = new CustomEvent( eventName, { detail: data } );
+			} catch ( e ) {
+				event = document.createEvent( 'CustomEvent' );
+				event.initCustomEvent( eventName, true, true, data );
+			}
+		}
+
+		el.dispatchEvent( event );
+	},
+
+	/**
+	 * @function gform.tools.uniqueId
+	 * @description Generate a unique id
+	 *
+	 * @since 2.5.5.2
+	 *
+	 * @param {String} prefix
+	 * @returns {string}
+	 */
+
+	uniqueId: function( prefix ) {
+		prefix = this.defaultFor( prefix, 'id' );
+		return prefix + '-' + Math.random().toString( 36 ).substr( 2, 9 );
+	},
+
+	/**
+	 * @function gform.tools.visible
+	 * @description Determine if an element is visible in the dom.
+	 *
+	 * @since 2.5
+	 *
+	 * @param elem The element to check
+	 * @returns {boolean}
+	 */
+
+	visible: function( elem ) {
+		return !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length );
+	},
+
+	stripSlashes: function( str ) {
+		return (str + '').replace(/\\(.?)/g, function (s, n1) {
+			switch (n1) {
+				case '\\':
+					return '\\';
+				case '0':
+					return '\u0000';
+				case '':
+					return '';
+				default:
+					return n1;
+			}
+		});
 	}
 };
 
@@ -411,193 +606,6 @@ gform.options = {
             gform.tools.setAttr( '.ui-accordion-header', 'tabindex', '0', event.target, 100 );
         },
     }
-};
-
-//----------------------------------------
-//------ COMPONENTS ----------------------
-//----------------------------------------
-
-/**
- * Components namespace to house scripts associated with our new 2.5 and up components
- */
-
-gform.components = {};
-
-/**
- * @function gform.components.dropdown
- * @description An accessible listbox that allows for a custom function to be passed in for trigger handling on list items.
- * Passes value of data-value attribute in to the optional custom function.
- *
- * @param {Object} options
- * @constructor
- */
-
-gform.components.dropdown = function( options ) {
-	this.el = null;
-	this.control = null;
-	this.controlText = null;
-	this.triggers = [];
-	this.state = {
-		open: false,
-	};
-	this.options = {
-		closeOnSelect: true,
-		container : document,
-		onItemSelect: function() {},
-		reveal: 'click',
-		selector : '',
-		showSpinner: false,
-		swapLabel: true,
-	};
-
-	this.options = gform.tools.mergeObjects( this.options, gform.tools.defaultFor( options, {} ) );
-	this.el = gform.tools.getNodes( this.options.selector, false, this.options.container )[ 0 ];
-	if ( ! this.el ) {
-		gform.console.error( 'Gform dropdown couldn\'t find [data-js="' + this.options.selector + '"] to instantiate on.');
-		return;
-	}
-
-	this.bindEvents();
-	this.setupUI();
-	this.storeTriggers();
-
-	this.hideSpinner = function() {
-		this.el.classList.remove( 'gform-dropdown--show-spinner' );
-	}
-
-	this.showSpinner = function() {
-		this.el.classList.add( 'gform-dropdown--show-spinner' );
-	}
-}
-
-gform.components.dropdown.prototype.handleChange = function( e ) {
-	this.options.onItemSelect( e.target.dataset.value );
-	if ( this.options.showSpinner ) {
-		this.showSpinner();
-	}
-	if ( this.options.swapLabel ) {
-		this.controlText.innerText = e.target.innerText;
-	}
-	if ( this.options.closeOnSelect ) {
-		this.handleControl();
-	}
-};
-
-gform.components.dropdown.prototype.handleControl = function() {
-	if ( this.state.open ) {
-		this.closeDropdown();
-	} else {
-		this.openDropdown();
-	}
-};
-
-gform.components.dropdown.prototype.openDropdown = function() {
-	if ( this.state.open ) {
-		return;
-	}
-	this.el.classList.add( 'gform-dropdown--reveal' );
-	setTimeout( function() {
-		this.el.classList.add( 'gform-dropdown--open' );
-		this.control.setAttribute( 'aria-expanded', 'true' );
-		this.state.open = true;
-	}.bind( this ), 25 );
-	setTimeout( function() {
-		this.el.classList.remove( 'gform-dropdown--reveal' );
-	}.bind( this ), 200 );
-};
-
-gform.components.dropdown.prototype.closeDropdown = function() {
-	this.state.open = false;
-	this.el.classList.remove( 'gform-dropdown--open' );
-	this.el.classList.add( 'gform-dropdown--hide' );
-	this.control.setAttribute( 'aria-expanded', 'false' );
-	setTimeout( function() {
-		this.el.classList.remove( 'gform-dropdown--hide' );
-	}.bind( this ), 150 );
-};
-
-gform.components.dropdown.prototype.handleMouseenter = function() {
-	if ( this.options.reveal !== 'hover' || this.state.open ) {
-		return;
-	}
-	this.openDropdown();
-};
-
-gform.components.dropdown.prototype.handleMouseleave = function( e ) {
-	if ( this.options.reveal !== 'hover' ) {
-		return;
-	}
-	this.closeDropdown();
-};
-
-gform.components.dropdown.prototype.handleA11y = function( e ) {
-	if ( ! this.state.open ) {
-		return;
-	}
-	if ( e.keyCode === 27 ) {
-		this.closeDropdown();
-		this.control.focus();
-		return;
-	}
-	if ( e.keyCode === 9  && ! gform.tools.getClosest( e.target, '[data-js="' + this.options.selector + '"]' ) ) {
-		this.triggers[0].focus();
-	}
-};
-
-gform.components.dropdown.prototype.handleSearch = function( e ) {
-	var search = e.target.value.toLowerCase();
-	this.triggers.forEach( function( trigger ) {
-		if ( trigger.innerText.toLowerCase().includes( search ) ) {
-			trigger.parentNode.style.display = '';
-		} else {
-			trigger.parentNode.style.display = 'none';
-		}
-	} );
-};
-
-gform.components.dropdown.prototype.setupUI = function() {
-	if ( this.options.reveal === 'hover' ) {
-		this.el.classList.add( 'gform-dropdown--hover' );
-	}
-};
-
-gform.components.dropdown.prototype.storeTriggers = function() {
-	this.control = gform.tools.getNodes( 'gform-dropdown-control', false, this.el )[ 0 ];
-	this.controlText = gform.tools.getNodes( 'gform-dropdown-control-text', false, this.control )[ 0 ];
-	this.triggers = gform.tools.getNodes( 'gform-dropdown-trigger', true, this.el );
-};
-
-gform.components.dropdown.prototype.bindEvents = function() {
-	gform.tools.delegate(
-		'[data-js="' + this.options.selector + '"]',
-		'click',
-		'[data-js="gform-dropdown-trigger"]',
-		this.handleChange.bind( this )
-	);
-	gform.tools.delegate(
-		'[data-js="' + this.options.selector + '"]',
-		'click',
-		'[data-js="gform-dropdown-control"], [data-js="gform-dropdown-control"] *',
-		this.handleControl.bind( this )
-	);
-	gform.tools.delegate(
-		'[data-js="' + this.options.selector + '"]',
-		'keyup',
-		'[data-js="gform-dropdown-search"]',
-		this.handleSearch.bind( this )
-	);
-
-	this.el.addEventListener( 'mouseenter', this.handleMouseenter.bind( this ) );
-	this.el.addEventListener( 'mouseleave', this.handleMouseleave.bind( this ) );
-	this.el.addEventListener( 'keyup', this.handleA11y.bind( this ) );
-
-	document.addEventListener( 'keyup', this.handleA11y.bind( this ) );
-	document.addEventListener( 'click', function( event ) {
-		if ( this.el.contains( event.target ) || ! this.state.open ) {
-			return;
-		}
-		this.handleControl();
-	}.bind( this ) );
 };
 
 //------------------------------------------------
@@ -895,48 +903,82 @@ function gformIsHidden(element){
     return element.parents('.gfield').not(".gfield_hidden_product").css("display") == "none";
 }
 
-function gformCalculateTotalPrice(formId){
+/**
+ * Calculate total price when input is updated.
+ *
+ * @since 2.5.2 - This method is run through debounce() to avoid recursions.
+ *
+ */
+var gformCalculateTotalPrice =  gform.tools.debounce(function(formId){
+	if(!_gformPriceFields[formId]) {
+		return;
+	}
 
-    if(!_gformPriceFields[formId])
-        return;
+	var price = 0;
 
-    var price = 0;
+	_anyProductSelected = false; //Will be used by gformCalculateProductPrice().
+	for(var i=0; i<_gformPriceFields[formId].length; i++){
+		price += gformCalculateProductPrice(formId, _gformPriceFields[formId][i]);
+	}
 
-    _anyProductSelected = false; //Will be used by gformCalculateProductPrice().
-    for(var i=0; i<_gformPriceFields[formId].length; i++){
-        price += gformCalculateProductPrice(formId, _gformPriceFields[formId][i]);
-    }
+	//add shipping price if a product has been selected
+	if(_anyProductSelected){
+		//shipping price
+		var shipping = gformGetShippingPrice(formId)
+		price += shipping;
+	}
 
-    //add shipping price if a product has been selected
-    if(_anyProductSelected){
-        //shipping price
-        var shipping = gformGetShippingPrice(formId)
-        price += shipping;
-    }
+	//gform_product_total filter. Allows users to perform custom price calculation
+	if(window["gform_product_total"])
+		price = window["gform_product_total"](formId, price);
 
-		//gform_product_total filter. Allows uers to perform custom price calculation
-    if(window["gform_product_total"])
-        price = window["gform_product_total"](formId, price);
+	price = gform.applyFilters('gform_product_total', price, formId);
 
+	gformUpdateTotalFieldPrice( formId, price );
+}, 50, false );
 
-    price = gform.applyFilters('gform_product_total', price, formId);
+/**
+ * Updates the value of the total field with a new price if it has changed.
+ *
+ * @since 2.5.5
+ *
+ * @param {string|number} formId The ID of the form with the total field.
+ * @param {int} newPrice The current value of the price.
+ *
+ * @return {void}
+ */
+function gformUpdateTotalFieldPrice( formId, newPrice ) {
+	var totalElement = jQuery( '.ginput_total_' + formId );
+	if ( !totalElement.length > 0 ) {
+		return;
+	}
 
-    //updating total
-    var totalElement = jQuery(".ginput_total_" + formId);
-    if( totalElement.length > 0 ) {
+	var price = String( newPrice );
+	var isLegacy = document.querySelector( '#gform_wrapper_' + formId + '.gform_legacy_markup_wrapper' );
+	var currentTotalField = isLegacy ? totalElement.next() : totalElement;
+	var currentTotalPrice = String( currentTotalField.val() );
+	var formattedTotal = gformFormatMoney( price, true );
 
-        var currentTotal = totalElement.val(),
-            formattedTotal = gformFormatMoney(price, true);
+	// Formatted total is the same as the current value, bail before updating.
+	if ( formattedTotal === currentTotalPrice ) {
+		return;
+	}
 
-        if (currentTotal != price) {
-            totalElement.val(price).change();
-        }
+	if ( isLegacy ) {
+		if ( currentTotalPrice !== price ) {
+			currentTotalField.val( price ).change();
+		}
 
-        if (formattedTotal != totalElement.first().text()) {
-            totalElement.val(formattedTotal);
-        }
+		if ( formattedTotal !== totalElement.text() ) {
+			totalElement.html( formattedTotal );
+		}
 
-    }
+		return;
+	}
+
+	if ( formattedTotal !== totalElement.val() ) {
+		totalElement.val( formattedTotal ).change();
+	}
 }
 
 function gformGetShippingPrice(formId){
@@ -1108,7 +1150,6 @@ function gformIsProductSelected( formId, productFieldId ) {
 			return true;
 		}
 	}
-
 	return false;
 }
 
@@ -1302,7 +1343,8 @@ function gformPasswordStrength( password1, password2 ) {
         return 'blank';
     }
 
-    var strength = wp.passwordStrength.meter( password1, wp.passwordStrength.userInputBlacklist(), password2 );
+	var disallowedList = wp.passwordStrength.hasOwnProperty( 'userInputDisallowedList' ) ? wp.passwordStrength.userInputDisallowedList() : wp.passwordStrength.userInputBlacklist(),
+	    strength = wp.passwordStrength.meter( password1, disallowedList, password2 );
 
     switch ( strength ) {
 
@@ -2555,18 +2597,43 @@ function gformValidateFileSize( field, max_file_size ) {
         var formID;
         var uniqueID;
 
-        uploader.bind('Init', function(up, params) {
-            if(!up.features.dragdrop)
-                $(".gform_drop_instructions").hide();
+	    uploader.bind( 'Init', function( up, params ) {
+		    if ( ! up.features.dragdrop ) {
+			    $( ".gform_drop_instructions" ).hide();
+		    }
 
-            toggleLimitReached(up.settings);
-        });
+		    setFieldAccessibility( up.settings.container );
+		    toggleLimitReached( up.settings );
+	    } );
 
-        gfMultiFileUploader.toggleDisabled = function (settings, disabled){
+	    gfMultiFileUploader.toggleDisabled = function (settings, disabled){
 
             var button = typeof settings.browse_button == "string" ? $("#" + settings.browse_button) : $(settings.browse_button);
             button.prop("disabled", disabled);
         };
+
+	    /**
+	     * @function setFieldAccessibility
+	     * @description Patches accessibility issues with the plupload multi file container.
+	     *
+	     * @since 2.5.1
+	     *
+	     * @param {Node} container The generated plupload container.
+	     */
+
+	    function setFieldAccessibility( container ) {
+		    var input = container.querySelectorAll( 'input[type="file"]' )[ 0 ];
+		    var button = container.querySelectorAll( '.gform_button_select_files' )[ 0 ];
+		    var label = $( uploadElement ).closest( '.gfield' ).find( '.gfield_label' )[ 0 ];
+		    if ( ! input || ! label || ! button ) {
+			    return;
+		    }
+
+		    label.setAttribute( 'for', input.id );
+		    button.setAttribute( 'aria-label', button.innerText.toLowerCase() + ', ' + label.innerText.toLowerCase() );
+		    input.setAttribute( 'tabindex', '-1' );
+		    input.setAttribute( 'aria-hidden', 'true' );
+	    }
 
 		function addMessage( messagesID, message) {
 			$( "#" + messagesID ).prepend( "<li>" + htmlEncode( message ) + "</li>" );
@@ -3166,4 +3233,8 @@ jQuery( document ).ready( function() {
 			jQuery( this ).addClass( 'gform-settings-field--multiple-inputs' );
 		}
 	} );
+} );
+
+jQuery( function() {
+	gform.tools.trigger( 'gform_main_scripts_loaded' );
 } );

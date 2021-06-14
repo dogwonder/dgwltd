@@ -127,7 +127,14 @@ $block_template = array(
 				?>
 				<?php if ( ( $parse['host'] == 'youtube.com' ) || ( $parse['host'] == 'www.youtube.com' ) ) { ?>
 				<div class="video-wrapper dgwltd-hero__video">
-				<iframe id="youtube_player" src="http://www.youtube.com/embed/<?php echo $video_id; ?>?enablejsapi=1&rel=0&autoplay=1&loop=1&controls=0" frameborder="0" volume="0" allow="autoplay; fullscreen" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+				<iframe 
+				id="youtube_player" 
+				src="http://www.youtube.com/embed/<?php echo $video_id; ?>?enablejsapi=1&rel=0&autoplay=1&loop=1&controls=0" 
+				frameborder="0" 
+				volume="0" 
+				allow="autoplay; fullscreen" 
+				allowfullscreen 
+				></iframe>
 				<script src="//www.youtube.com/player_api"></script>    
 				<script type="text/javascript">
 						//youtube api
@@ -149,7 +156,13 @@ $block_template = array(
 				<?php if ( ( $parse['host'] == 'vimeo.com' ) || ( $parse['host'] == 'www.vimeo.com' ) ) { ?>
 
 				<div class="vimeo-wrapper dgwltd-hero__video">
-				<iframe id="vimeo_player" src="https://player.vimeo.com/video/<?php echo $video_id; ?>?background=1&muted=1&autoplay=1&loop=1&byline=0&title=0&controls=0" frameborder="0" allow="autoplay; fullscreen" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+				<iframe 
+				id="vimeo_player" 
+				src="https://player.vimeo.com/video/<?php echo $video_id; ?>?background=1&muted=1&autoplay=1&loop=1&byline=0&title=0&controls=0" 
+				frameborder="0" 
+				allow="autoplay; fullscreen" 
+				allowfullscreen 
+				></iframe>
 				<script src="https://player.vimeo.com/api/player.js"></script>
 				</div>
 				<?php } ?>
@@ -172,10 +185,20 @@ $block_template = array(
   </i>
   <h2 id="dialog-title" tabindex="-1"><?php esc_html_e( 'Play the video', 'dgwltd' ); ?></h2>
 		<?php if ( ( $parse['host'] == 'youtube.com' ) || ( $parse['host'] == 'www.youtube.com' ) ) { ?>
-	<iframe id="youtube_player" src="http://www.youtube.com/embed/<?php echo $video_id; ?>" frameborder="0"  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+		<iframe 
+		id="youtube_player" 
+		src="http://www.youtube.com/embed/<?php echo $video_id; ?>" 
+		frameborder="0" 
+		allowfullscreen 
+		></iframe>
   <?php } ?>
 		<?php if ( ( $parse['host'] == 'vimeo.com' ) || ( $parse['host'] == 'www.vimeo.com' ) ) { ?>
-	<iframe id="vimeo_player" src="https://player.vimeo.com/video/<?php echo $video_id; ?>" frameborder="0"  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+		<iframe 
+		id="vimeo_player" 
+		src="https://player.vimeo.com/video/<?php echo $video_id; ?>" 
+		frameborder="0" 
+		allowfullscreen 
+		></iframe>
   <?php } ?>
 </div>
 

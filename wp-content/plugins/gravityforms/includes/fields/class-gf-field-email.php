@@ -102,7 +102,7 @@ class GF_Field_Email extends GF_Field {
 
 		if ( ! $is_blank && ! GFCommon::is_valid_email( $email ) ) {
 			$this->failed_validation  = true;
-			$this->validation_message = empty( $this->errorMessage ) ? esc_html__( 'The email address entered is invalid, please check the formatting (e.g email@domain.com).', 'gravityforms' ) : $this->errorMessage;
+			$this->validation_message = empty( $this->errorMessage ) ? esc_html__( 'The email address entered is invalid, please check the formatting (e.g. email@domain.com).', 'gravityforms' ) : $this->errorMessage;
 		} elseif ( $this->emailConfirmEnabled && ! empty( $email ) ) {
 			$confirm = is_array( $value ) ? rgar( $value, 1 ) : $this->get_input_value_submission( 'input_' . $this->id . '_2' );
 			if ( $confirm != $email ) {

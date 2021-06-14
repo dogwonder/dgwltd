@@ -1,0 +1,47 @@
+.dgltd-block--cover {
+    //Headings
+    h2, h3 {
+        @extend %dgwltd-heading-xl;
+        margin-bottom:var(--gap-30);
+    }
+    h2, h3, p, .govuk-body {
+        color:inherit;
+    }
+    //Lists
+    ul {
+        li {
+            @extend %dgwltd-body-m;
+            font-weight: bold;
+            color:inherit;
+            margin-bottom: var(--gap-10)
+        }
+    }
+    //Forms
+    .gform_wrapper  {
+        .gform_title, .gfield_label, .gfield_label .gfield_required {
+          color:white;
+        }
+        .gfield_label {
+            @extend %dgwltd-body-m;
+            margin-bottom:var(--gap-10);
+        }
+        input[type="text"],
+        input[type="email"] {
+            border-color:white;
+            &:focus {
+                outline: 3px solid var(--secondary);
+                outline-offset: 0;
+                box-shadow: none;
+            }
+        }
+        .gform_button {
+          color: white;
+          border-color: white;
+          background-color: transparent;
+          &:hover {
+            background-color: white;
+            color: #00375c;
+          }
+        }
+    }
+}

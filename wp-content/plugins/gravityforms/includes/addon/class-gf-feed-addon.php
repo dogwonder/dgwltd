@@ -85,27 +85,24 @@ abstract class GFFeedAddOn extends GFAddOn {
 	private $_table_error_rendered = array();
 
 	/**
+	 * Attaches any filters or actions needed to bootstrap the addon.
+	 *
+	 * @since 2.5.2
+	 */
+	public function bootstrap() {
+		parent::bootstrap();
+
+		if ( $this->is_feed_edit_page() ) {
+			add_action( 'init', array( $this, 'feed_settings_init' ), 20 );
+		}
+	}
+
+	/**
 	 * Plugin starting point. Handles hooks and loading of language files.
 	 */
 	public function init() {
 
 		parent::init();
-
-		if ( ! class_exists( 'Gravity_Forms\Gravity_Forms\Settings\Settings' ) ) {
-			require_once( GFCommon::get_base_path() . '/includes/settings/class-settings.php' );
-		}
-
-		// Initialize Settings framework.
-		if ( $this->is_feed_edit_page() ) {
-
-			$this->feed_settings_init();
-
-			// Process save callback.
-			if ( $this->get_settings_renderer()->is_save_postback() ) {
-				$this->get_settings_renderer()->process_postback();
-			}
-
-		}
 
 		add_filter( 'gform_entry_post_save', array( $this, 'maybe_process_feed' ), 10, 2 );
 		add_action( 'gform_after_delete_form', array( $this, 'delete_feeds' ) );
@@ -1220,9 +1217,10 @@ abstract class GFFeedAddOn extends GFAddOn {
 	 * @return bool
 	 */
 	public function is_feed_edit_page() {
+		$view = rgget( 'view' );
+		$fid  = rgget( 'fid' );
 
-		return ( $this->is_detail_page() || $this->_multiple_feeds === false ) && rgget( 'subview' ) === $this->get_slug();
-
+		return $view === 'settings' && is_numeric( $fid ) && rgget( 'subview' ) === $this->get_slug();
 	}
 
 	public function is_feed_list_page() {
@@ -1252,13 +1250,12 @@ abstract class GFFeedAddOn extends GFAddOn {
 	 * @since 2.5
 	 */
 	public function feed_settings_init() {
-
 		// Get current form.
-		$form = $this->get_current_form();
-		$form = gf_apply_filters( array( 'gform_admin_pre_render', $form['id'] ), $form );
+		$form = ( $this->get_current_form() ) ? $this->get_current_form() : array();
+		$form = gf_apply_filters( array( 'gform_admin_pre_render', rgar( $form, 'id', 0 ) ), $form );
 
 		// Get current feed ID, feed object.
-		$feed_id      = $this->_multiple_feeds ? $this->get_current_feed_id() : $this->get_default_feed_id( $form['id'] );
+		$feed_id      = $this->_multiple_feeds ? $this->get_current_feed_id() : $this->get_default_feed_id( rgar( $form, 'id', 0 ) );
 		$current_feed = $feed_id ? $this->get_feed( $feed_id ) : array();
 
 		// Initialize new settings renderer.
@@ -1325,6 +1322,11 @@ abstract class GFFeedAddOn extends GFAddOn {
 
 		} );
 
+		if ( ! $this->get_settings_renderer()->is_save_postback() ) {
+			return;
+		}
+
+		$this->get_settings_renderer()->process_postback();
 	}
 
 	/**
@@ -2477,7 +2479,7 @@ class GFAddOnFeedsTable extends WP_List_Table {
 	 */
 	protected function extra_tablenav( $which ) {
 
-		if ( $which !== 'top' || ! $this->_addon_class->can_create_feed() ) {
+		if ( ! $this->is_new_button_supported( $which ) ) {
 			return;
 		}
 
@@ -2487,6 +2489,34 @@ class GFAddOnFeedsTable extends WP_List_Table {
 			esc_html__( 'Add New', 'gravityforms' )
 		);
 
+	}
+
+	/**
+	 * Generates the table navigation above or below the table.
+	 *
+	 * @since 2.5
+	 *
+	 * @param string $which The location.
+	 */
+	protected function display_tablenav( $which ) {
+		if ( ! $this->has_items() && ! $this->is_new_button_supported( $which ) ) {
+			return;
+		}
+
+		parent::display_tablenav( $which );
+	}
+
+	/**
+	 * Determines if the add new button is supported in the current location.
+	 *
+	 * @since 2.5
+	 *
+	 * @param string $which The location.
+	 *
+	 * @return bool
+	 */
+	protected function is_new_button_supported( $which ) {
+		return $which === 'top' && $this->_addon_class->can_create_feed();
 	}
 
 }

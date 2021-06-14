@@ -363,7 +363,7 @@ if ( class_exists( 'GFForms' ) ) {
 		 */
 		public function get_menu_icon() {
 
-			return 'dashicons-rest-api';
+			return 'gform-icon--api';
 
 		}
 
@@ -634,7 +634,7 @@ if ( class_exists( 'GFForms' ) ) {
 		 */
 		public function is_v1_enabled( $settings = null ) {
 
-			$is_api_enabled = $this->get_setting( 'enabled', '' );
+			$is_api_enabled = $this->get_setting( 'enabled', '', $settings );
 
 			/***
 			 * Allows for disabling the REST API V1.
@@ -1790,13 +1790,29 @@ if ( class_exists( 'GFForms' ) ) {
 			if ( empty( $form_ids ) ) {
 				$forms = RGFormsModel::get_forms( true );
 				foreach ( $forms as $form ) {
-					$form_id              = $form->id;
-					$totals               = GFFormsModel::get_form_counts( $form_id );
-					$form_info            = array(
-						'id'      => $form_id,
-						'title'   => $form->title,
-						'entries' => rgar( $totals, 'total' )
+
+					/**
+					 * Allows third-party code to omit form totals from the API response. This is useful for increasing
+					 * the performance of the endpoint when totals aren't required.
+					 *
+					 * @since 2.5
+					 *
+					 * @var bool   $include_totals Whether to include totals; defaults to true.
+					 * @var object $form           The current form object.
+					 */
+					$include_totals = gf_apply_filters( array( 'gform_web_api_retrieve_form_totals', $form->id ), true, $form );
+
+					$form_id   = $form->id;
+					$form_info = array(
+						'id'    => $form_id,
+						'title' => $form->title,
 					);
+
+					if ( $include_totals ) {
+						$totals               = GFFormsModel::get_form_counts( $form_id );
+						$form_info['entries'] = rgar( $totals, 'total' );
+					}
+
 					$response[ $form_id ] = $form_info;
 				}
 				if ( $schema == 'mtd' ) {

@@ -168,6 +168,8 @@ Class GFNotification {
 		 */
 		$disable_from_warning = gf_apply_filters( array( 'gform_notification_disable_from_warning', $form['id'], rgar( $notification, 'id' ) ), false );
 
+		$from_email_warning = '';
+
 		// Prepare From Email warning.
 		if ( ! $disable_from_warning && self::get_settings_renderer()->get_value( 'service' ) === 'wordpress' ) {
 
@@ -188,10 +190,6 @@ Class GFNotification {
 					)
 				);
 			}
-
-		} else {
-
-			$from_email_warning = '';
 
 		}
 
@@ -551,6 +549,10 @@ Class GFNotification {
 	 */
 	public static function initialize_settings_renderer() {
 
+		if ( ! class_exists( 'GFFormSettings' ) ) {
+			require_once( GFCommon::get_base_path() . '/form_settings.php' );
+		}
+
 		$form_id         = rgget( 'id' );
 		$notification_id = rgget( 'nid' );
 
@@ -592,6 +594,9 @@ Class GFNotification {
 					if ( $is_new_notification ) {
 						$notification_id = $notification['id'] = uniqid();
 					}
+
+					// Save values to the confirmation object in advance so non-custom values will be rewritten when we apply values below.
+					$notification = GFFormSettings::save_changed_form_settings_fields( $notification, $values );
 
 					$notification['name']    = rgar( $values, 'name' );
 					$notification['service'] = rgar( $values, 'service' );

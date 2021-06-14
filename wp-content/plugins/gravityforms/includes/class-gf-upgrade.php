@@ -1853,6 +1853,17 @@ HAVING count(*) > 1;" );
 	 * @since 2.3
 	 */
 	public function add_post_upgrade_admin_notices() {
+		$previous_version = get_option( 'rg_form_version' );
+
+		if ( version_compare( $previous_version, '2.5', '>=' ) ) {
+			$message = sprintf(
+				'%s <a href="https://www.gravityforms.com/two-five/" target="_blank" rel="noopener noreferrer">%s</a> %s',
+				esc_html__( 'Welcome to Gravity Forms 2.5!', 'gravityforms' ),
+				esc_html__( 'Learn more', 'gravityforms' ),
+				esc_html__( 'about all the new features and updates included in this version.', 'gravityforms' )
+			);
+			GFCommon::add_dismissible_message( $message, 'gravityforms_update_2.5', 'success', false, true, null );
+		}
 
 		$previous_db_version = get_option( 'gf_previous_db_version' );
 

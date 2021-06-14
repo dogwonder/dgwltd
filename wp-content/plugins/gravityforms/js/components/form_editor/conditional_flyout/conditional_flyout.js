@@ -144,11 +144,9 @@ function getFieldById( fieldId ) {
 function getOptionsFromSelect( field, value ) {
 	var options = [];
 
-	var emptyLabel = 'Empty (no choices selected)';
+	var emptyLabel = gf_vars.emptyChoice;
 
-	if ( GetInputType( field ) === 'multiselect' ) {
-		emptyLabel = gf_vars.emptyChoice;
-	} else if ( field.placeholder ) {
+	if ( field.placeholder ) {
 		emptyLabel = field.placeholder;
 	}
 
@@ -158,7 +156,10 @@ function getOptionsFromSelect( field, value ) {
 		selected: '' === value ? 'selected="selected"' : '',
 	};
 
-	options.push( emptyChoiceConfig );
+	if ( GetInputType( field ) === 'multiselect' ) {
+		options.push( emptyChoiceConfig );
+	}
+
 
 	for ( var i = 0; i < field.choices.length; i++ ) {
 		var choice = field.choices[ i ];
@@ -294,6 +295,17 @@ function isValidFlyoutClick( e ) {
 }
 
 /**
+ * Determine whether a given rule needs to present a text input for the value.
+ *
+ * @param {object} e The rule object.
+ *
+ * @return {boolean}
+ */
+function ruleNeedsTextValue( rule ) {
+	return ['contains', 'starts_with', 'ends_with', '<', '>' ].indexOf ( rule.operator ) !== -1;
+}
+
+/**
  * Class GFConditionalLogic
  *
  * A JS class encapsulating all of the logic and state for a conditional flyout.
@@ -364,6 +376,54 @@ GFConditionalLogic.prototype.renderFlyout = function() {
 	var html = gf_vars.conditionalLogic.views.flyout;
 
 	renderView( html, this.els.flyouts[ this.objectType ], config, true );
+
+	gform.tools.trigger( 'gform_render_simplebars' );
+};
+
+/**
+ * Render the main controls.
+ *
+ * @param {boolean} echo
+ *
+ * @return {boolean|string}
+ */
+GFConditionalLogic.prototype.renderLogicDescription = function() {
+
+	var config = {
+		actionType: this.state.actionType,
+		logicType: this.state.logicType,
+		objectTypeText: this.getObjectTypeText(),
+		objectShowText: this.getObjectShowText(),
+		objectHideText: this.getObjectHideText(),
+		matchText: gf_vars.ofTheFollowingMatch,
+		allText: gf_vars.all,
+		anyText: gf_vars.any,
+		hideSelected: this.state.actionType === 'hide' ? 'selected="selected"' : '',
+		showSelected: this.state.actionType === 'show' ? 'selected="selected"' : '',
+		allSelected: this.state.logicType === 'all' ? 'selected="selected"' : '',
+		anySelected: this.state.logicType === 'any' ? 'selected="selected"' : '',
+	};
+
+	var html = gf_vars.conditionalLogic.views.logicDescription;
+
+	var markup = renderView( html, this.els.flyouts[ this.objectType ], config, false );
+
+	/**
+	 * @filter gform_conditional_logic_description
+	 *
+	 * Allows add-ons to modify the markup returned for the Conditional Logic description area.
+	 *
+	 * @since unknown
+	 * @since 2.5 descPieces passed as empty array
+	 *
+	 * @param {string} markup The current markup HTML for the description
+	 * @param {array} descPieces The individual markup pieces which make up the final markup (empty here)
+	 * @param {string} objectType The current object type
+	 * @param {object} this The current object
+	 *
+	 * @return {string}
+	 */
+	return gform.applyFilters( 'gform_conditional_logic_description', markup, [], this.objectType, this );
 };
 
 /**
@@ -377,18 +437,7 @@ GFConditionalLogic.prototype.renderMainControls = function( echo ) {
 
 	var config = {
 		enabledClass: this.state.enabled ? 'active' : '',
-		actionType: this.state.actionType,
-		logicType: this.state.logicType,
-		objectTypeText: this.getObjectTypeText(),
-		objectShowText: this.getObjectShowText(),
-		objectHideText: this.getObjectHideText(),
-		matchText: gf_vars.ofTheFollowingMatch,
-		allText: gf_vars.all,
-		anyText: gf_vars.any,
-		hideSelected: this.state.actionType === 'hide' ? 'selected="selected"' : '',
-		showSelected: this.state.actionType === 'show' ? 'selected="selected"' : '',
-		allSelected: this.state.logicType === 'all' ? 'selected="selected"' : '',
-		anySelected: this.state.logicType === 'any' ? 'selected="selected"' : '',
+		logicDescription: this.renderLogicDescription(),
 	};
 
 	var html = gf_vars.conditionalLogic.views.main;
@@ -451,6 +500,11 @@ GFConditionalLogic.prototype.renderFieldOptions = function( rule ) {
 
 	for ( var i = 0; i < options.length; i++ ) {
 		var config = options[ i ];
+
+		if ( ! config.selected ) {
+			config.selected = config.value == rule.fieldId ? 'selected="selected"' : '';
+		}
+
 		html += renderView( template, null, config, false );
 	}
 
@@ -589,16 +643,29 @@ GFConditionalLogic.prototype.renderSelect = function( rule, idx ) {
  */
 GFConditionalLogic.prototype.renderRuleValue = function( rule, idx ) {
 	var fieldValueOptions = this.renderValueOptions( rule, idx );
-	var isSelect = fieldValueOptions.length;
-	var html = '';
+	var isSelect          = fieldValueOptions.length;
+	var html              = '';
+	var needsTextInput    = ruleNeedsTextValue( rule );
 
-	if ( ! isSelect ) {
+	if ( ! isSelect || needsTextInput ) {
 		html = this.renderInput( rule, idx );
 	} else {
 		html = this.renderSelect( rule, idx );
 	}
 
-	return gform.applyFilters( 'gform_conditional_logic_values_input', html, this.objectType, idx, rule.fieldId, rule.value );
+	html = gform.applyFilters( 'gform_conditional_logic_values_input', html, this.objectType, idx, rule.fieldId, rule.value );
+
+	var el = gform.tools.htmlToElement( html );
+
+	if ( ! el.classList.contains( 'active' ) ) {
+		el.classList.add( 'active' );
+	}
+
+	if ( ! el.hasAttribute( 'data-js-rule-input' ) ) {
+		el.setAttribute( 'data-js-rule-input', 'value' );
+	}
+
+	return gform.tools.elementToHTML( el );
 };
 
 /**
@@ -612,7 +679,16 @@ GFConditionalLogic.prototype.renderRuleValue = function( rule, idx ) {
 GFConditionalLogic.prototype.renderRule = function( rule, idx ) {
 	var field = getFieldById( rule.fieldId );
 
-	if ( !field ) {
+	// Field is select - if value doesn't exist, set it to the first choice.
+	if ( field && field.choices && field.choices.length && ! ruleNeedsTextValue( rule ) ) {
+		var found = field.choices.filter( function( choice ) { return rule.value == choice.value; } )[0];
+
+		if ( ! found && field.type !== 'multiselect' ) {
+			rule.value = field.choices[ 0 ].value;
+		}
+	}
+
+	if ( ! field ) {
 		field = {
 			choices: '',
 		};
@@ -674,10 +750,15 @@ GFConditionalLogic.prototype.gatherElements = function() {
  * @returns {{value: string, operator: string, fieldId: number}}
  */
 GFConditionalLogic.prototype.getDefaultRule = function() {
+	var fieldId = GetFirstRuleField();
+	var field = GetFieldById( fieldId );
+
+	var value = field && field.choices && field.choices.length ? field.choices[0].value : '';
+
 	return {
 		fieldId: GetFirstRuleField(),
 		operator: 'is',
-		value: '',
+		value: value,
 	};
 };
 
@@ -990,7 +1071,7 @@ GFConditionalLogic.prototype.handleSidebarClick = function( e ) {
 	}
 
 	if ( ('jsDeleteRule' in e.target.dataset) ) {
-		var parent = e.target.parentNode;
+		var parent = gform.tools.getClosest( e.target, '[data-js-rule-idx]' );
 		this.deleteRule( parent.dataset.jsRuleIdx );
 	}
 

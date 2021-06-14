@@ -252,34 +252,48 @@ class GFFormList {
 
 			jQuery( document ).ready( function( $ ) {
 
-				jQuery( 'body' ).addClass( 'gform_new_form' );
+				$( 'body' ).addClass( 'gform_new_form' );
 				// load new form modal on New Form page
-				<?php if ( rgget( 'page' ) == 'gf_new_form' && ! rgget( 'paged' ) ) :	?>
+				<?php if ( rgget( 'page' ) == 'gf_new_form' && ! rgget( 'paged' ) ) :    ?>
 				loadNewFormModal();
 				<?php endif; ?>
 
 				// form settings submenu support
-				$('.gf_form_action_has_submenu').hover(function(){
-					var l = jQuery(this).offset().left;
-					jQuery(this).find('.gform-form-toolbar__submenu')
+				$( '.gf_form_action_has_submenu' ).hover( function() {
+					var $this = $( this );
+					var offset = $this.offset();
+					var docHeight = $( document ).height();
+					var $subMenu = $this.find( '.gform-form-toolbar__submenu' );
+					var menuHeight = $subMenu.height();
+					var spaceAvailable = docHeight - offset.top;
+
+					// If less space available below submenu than height of it, set height explicitly
+					// If not height is handled by a max height directive in toolbar.pcss component.
+					if ( spaceAvailable < menuHeight ) {
+						$subMenu.height( spaceAvailable - 50 );
+					}
+
+					$subMenu
 						.toggle()
-						.offset({ left: l });
-				}, function(){
-					jQuery(this).find('.gform-form-toolbar__submenu').hide();
-				});
+						.offset( { left: offset.left } );
+				}, function() {
+					$( this ).find( '.gform-form-toolbar__submenu' )
+						.css( 'height', '' )
+						.hide();
+				} );
 
 				// enable form status icons
 				gfPageLoaded = true;
 				$( '.gform_active_icon' ).removeClass( 'gf_not_ready' );
 
-				jQuery( '#current-page-selector').keyup( function( event ) {
-					if (event.keyCode == 13) {
+				$( '#current-page-selector' ).keyup( function( event ) {
+					if ( event.keyCode == 13 ) {
 						var url = <?php echo json_encode( esc_url_raw( remove_query_arg( 'paged' ) ) ); ?>;
 						var page = parseInt( this.value );
 						document.location = url + '&paged=' + page;
 						event.preventDefault();
 					}
-				});
+				} );
 
 			} );
 

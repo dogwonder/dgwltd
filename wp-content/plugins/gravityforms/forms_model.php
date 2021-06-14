@@ -687,11 +687,11 @@ class GFFormsModel {
 
 		$sql             = $wpdb->prepare(
 			"SELECT
-                    (SELECT count(DISTINCT(l.id)) FROM $entry_table_name l INNER JOIN $entry_detail_table_name ld ON l.id=ld.entry_id WHERE l.form_id=%d AND l.status='active') as total,
-                    (SELECT count(DISTINCT(l.id)) FROM $entry_table_name l INNER JOIN $entry_detail_table_name ld ON l.id=ld.entry_id WHERE l.is_read=0 AND l.status='active' AND l.form_id=%d) as unread,
-                    (SELECT count(DISTINCT(l.id)) FROM $entry_table_name l INNER JOIN $entry_detail_table_name ld ON l.id=ld.entry_id WHERE l.is_starred=1 AND l.status='active' AND l.form_id=%d) as starred,
-                    (SELECT count(DISTINCT(l.id)) FROM $entry_table_name l INNER JOIN $entry_detail_table_name ld ON l.id=ld.entry_id WHERE l.status='spam' AND l.form_id=%d) as spam,
-                    (SELECT count(DISTINCT(l.id)) FROM $entry_table_name l INNER JOIN $entry_detail_table_name ld ON l.id=ld.entry_id WHERE l.status='trash' AND l.form_id=%d) as trash",
+                    (SELECT count(DISTINCT(l.id)) FROM $entry_table_name l WHERE l.form_id=%d AND l.status='active') as total,
+                    (SELECT count(DISTINCT(l.id)) FROM $entry_table_name l WHERE l.is_read=0 AND l.status='active' AND l.form_id=%d) as unread,
+                    (SELECT count(DISTINCT(l.id)) FROM $entry_table_name l WHERE l.is_starred=1 AND l.status='active' AND l.form_id=%d) as starred,
+                    (SELECT count(DISTINCT(l.id)) FROM $entry_table_name l WHERE l.status='spam' AND l.form_id=%d) as spam,
+                    (SELECT count(DISTINCT(l.id)) FROM $entry_table_name l WHERE l.status='trash' AND l.form_id=%d) as trash",
 			$form_id, $form_id, $form_id, $form_id, $form_id
 		);
 
@@ -1031,6 +1031,11 @@ class GFFormsModel {
 				if ( $field->type == 'page' ) {
 					$page_number ++;
 					$field->pageNumber = $page_number;
+				}
+
+				// Populate required cssClass property with empty string if not set to avoid JS errors when rendering.
+				if ( ! isset( $field->cssClass ) ) {
+					$field->cssClass = '';
 				}
 
 				$field->post_convert_field();
@@ -3124,9 +3129,19 @@ class GFFormsModel {
 		}
 	}
 
+	/**
+	 * Fill the repeater field with the entry data.
+	 *
+	 * @since Unknown.
+	 * @since 2.5 Added the $apply_filters parameter.
+	 *
+	 * @param       $entry
+	 * @param       $form
+	 * @param bool  $apply_filters Whether to apply the filter_input_value filter to the entry.
+	 */
 	public static function hydrate_repeaters( &$entry, $form, $apply_filters = false ) {
 		$fields = $form['fields'];
-		foreach( $fields as $field ) {
+		foreach ( $fields as $field ) {
 			if ( $field instanceof GF_Field_Repeater && isset( $field->fields ) && is_array( $field->fields ) ) {
 				/* @var GF_Field_Repeater $field */
 				$entry = $field->hydrate( $entry, $form, $apply_filters );
@@ -5875,7 +5890,7 @@ class GFFormsModel {
 	 */
 	public static function get_lead_field_value( $lead, $field ) {
 
-		if ( empty( $lead ) ) {
+		if ( empty( $lead ) || ! is_array( $lead ) ) {
 			return null;
 		}
 
@@ -6608,7 +6623,7 @@ class GFFormsModel {
 	}
 
 	public static function is_html5_enabled() {
-		return get_option( 'rg_gforms_enable_html5', true );
+		return get_option( 'rg_gforms_enable_html5', false );
 	}
 
 	/**
@@ -6690,7 +6705,13 @@ class GFFormsModel {
 					'name'        => __( 'Save and Continue Confirmation', 'gravityforms' ),
 					'isDefault'   => true,
 					'type'        => 'message',
-					'message'     => __( '<h2>Link to continue editing later</h2><p role="alert">Please use the following link to return and complete this form from any computer.</p><p class="resume_form_link_wrapper"> {save_link} </p><p> Note: This link will expire after 30 days.<br />Enter your email address if you would like to receive the link via email.</p></p> {save_email_input}</p>', 'gravityforms' ),
+					'message'     => sprintf(
+						'<h2>%s</h2><p role="alert">%s</p><p class="resume_form_link_wrapper"> {save_link} </p><p> %s<br />%s</p><p> {save_email_input}</p>',
+						__( 'Link to continue editing later', 'gravityforms' ),
+						__( 'Please use the following link to return and complete this form from any computer.', 'gravityforms' ),
+						__( 'Note: This link will expire after 30 days.', 'gravityforms' ),
+						__( 'Enter your email address if you would like to receive the link via email.', 'gravityforms' )
+					),
 					'url'         => '',
 					'pageId'      => '',
 					'queryString' => '',
@@ -6703,7 +6724,11 @@ class GFFormsModel {
 					'name'        => __( 'Save and Continue Email Sent Confirmation', 'gravityforms' ),
 					'isDefault'   => true,
 					'type'        => 'message',
-					'message'     => __( '<h2 class="saved_message_success">Success!</h2><p>The link was sent to the following email address: <span class="saved_message_email">{save_email}</span></p>', 'gravityforms' ),
+					'message'     => sprintf(
+						'<h2 class="saved_message_success">%s</h2><p>%s <span class="saved_message_email">{save_email}</span></p>',
+						__( 'Success!', 'gravityforms' ),
+						__( 'The link was sent to the following email address:', 'gravityforms' )
+					),
 					'url'         => '',
 					'pageId'      => '',
 					'queryString' => '',
