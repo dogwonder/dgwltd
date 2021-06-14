@@ -82,6 +82,7 @@ Included in the plugin *dgwltd: Blocks* alongside the custom blocks this allows 
 - FAQs
 - Columns - dark
 - Columns - light
+- Cover - columns
 - Meet the team
 
 ## Starter content (experimental)

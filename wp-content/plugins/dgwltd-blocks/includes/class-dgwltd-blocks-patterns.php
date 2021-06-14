@@ -286,9 +286,9 @@ class Dgwltd_Blocks_Patterns {
 			'categories'  => array( 'blocks' ),
 		);
 
-		$patterns['dgltd-block-patterns/columns-background'] = [
-			'title'       => __( 'Columns - background', 'dgltd-block-patterns' ),
-			'description' => __( 'Columns for content with a background image', 'dgltd-block-patterns' ),
+		$patterns['dgltd-block-patterns/cover-columns'] = [
+			'title'       => __( 'Cover - with columns', 'dgltd-block-patterns' ),
+			'description' => __( 'A cover block with two columns inside', 'dgltd-block-patterns' ),
 			'content'     => '
 				<!-- wp:cover {"url":"' . esc_url( plugin_dir_url( __DIR__ ) . 'public/images/cover.jpg') . '","className":"dgltd-block--cover"} -->
 				<div class="wp-block-cover has-background-dim dgltd-block--cover" style="background-image:url(' . esc_url( plugin_dir_url( __DIR__ ) . 'public/images/cover.jpg') . ')">

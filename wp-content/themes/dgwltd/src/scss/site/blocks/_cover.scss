@@ -19,6 +19,10 @@
             }
         }
     }
+    //Reset image widths
+    .wp-block-image img {
+        width: auto;
+    }
     //Forms
     .gform_wrapper  {
         .gform_title, .gfield_label, .gfield_label .gfield_required {
