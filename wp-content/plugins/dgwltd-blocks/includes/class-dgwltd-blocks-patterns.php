@@ -291,7 +291,7 @@ class Dgwltd_Blocks_Patterns {
 			'description' => __( 'A cover block with two columns inside', 'dgltd-block-patterns' ),
 			'content'     => '
 			<!-- wp:cover {"url":"https://assets.codepen.io/1801/cover.jpg","className":"dgwltd-block\u002d\u002dcover dgwltd-section"} -->
-			<div class="wp-block-cover has-background-dim dgwltd-block--cover dgwltd-section"><img class="wp-block-cover__image-background" alt="" src="https://assets.codepen.io/1801/cover.jpg" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:columns -->
+			<div class="wp-block-cover has-background-dim dgwltd-block--cover dgwltd-section"><img class="wp-block-cover__image-background" alt="" src="https://assets.codepen.io/1801/cover.jpg" data-object-fit="cover"/><div class="wp-block-cover__inner-container dgwltd-section__inner"><!-- wp:columns -->
 			<div class="wp-block-columns"><!-- wp:column -->
 			<div class="wp-block-column"><!-- wp:heading -->
 			<h2>Column heading</h2>
