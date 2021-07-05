@@ -375,7 +375,7 @@
 
         Array.prototype.forEach.call(cardLinks, function(card, i){
 
-            card.addEventListener("click", handleClick)
+            card.addEventListener("click", handleClick);
 
             // Click handler but only if text is not selected
             function handleClick(event) {
